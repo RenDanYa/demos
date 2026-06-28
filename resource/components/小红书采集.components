@@ -33,6 +33,9 @@
           }
         },
         {
+          "componentId": "57a14d3c-8d84-42bf-9ef6-62234c9daa51"
+        },
+        {
           "componentId": "816c63ae-f518-4afb-ad4e-975c0e6219c5",
           "layout": {
             "mobile": {
@@ -127,7 +130,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-06-28T10:36:13.997Z",
+      "updateAt": "2026-06-28T12:13:05.382Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -583,7 +586,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-06-28T10:44:26.139Z",
+      "updateAt": "2026-06-28T12:13:23.110Z",
       "viewType": "gallary",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -844,6 +847,166 @@
       "layoutType": "list",
       "locked": false,
       "layoutOptions": {}
+    },
+    {
+      "id": "57a14d3c-8d84-42bf-9ef6-62234c9daa51",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "B站视频",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-06-28T21:00:00.000Z",
+      "updateAt": "2026-06-28T11:53:01.079Z",
+      "components": [
+        {
+          "componentId": "f565fecd-8d5e-4b55-ae67-1ae0f81fd4f1"
+        },
+        {
+          "componentId": "6ffd01ef-cb97-4033-a85c-46d05da727f4"
+        }
+      ],
+      "layoutType": "tab",
+      "locked": false,
+      "layoutOptions": {},
+      "title": "B站关注视频"
+    },
+    {
+      "id": "01b4cd00-1f06-49c0-9d8f-96b7abc27293",
+      "type": "button",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2026-06-28T21:00:00.000Z",
+      "updateAt": "2026-06-28T21:00:00.000Z",
+      "text": "🎬 拉取近期视频",
+      "buttonType": "common",
+      "clickActions": [
+        {
+          "type": "RunScript",
+          "id": "bv-runscript-id-0005-0000-000000000005",
+          "options": {
+            "expression": "runPython('D:/obsidian/demo/inbox/python/bilibili_videos.py', {timeout: 600000})"
+          }
+        }
+      ],
+      "checkActions": [],
+      "uncheckActions": [],
+      "isChecked": false,
+      "fullWidth": true,
+      "title": "拉取近期视频 (默认每人 3 条)"
+    },
+    {
+      "id": "010dfa44-78e2-45c8-b8ef-5ff11c59b791",
+      "type": "button",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2026-06-28T21:00:00.000Z",
+      "updateAt": "2026-06-28T21:00:00.000Z",
+      "text": "🔄 先刷新关注列表",
+      "buttonType": "common",
+      "clickActions": [
+        {
+          "type": "RunScript",
+          "id": "bv-runscript-id-0006-0000-000000000006",
+          "options": {
+            "expression": "runPython('D:/obsidian/demo/inbox/python/bilibili_videos.py', {args: ['--refresh'], timeout: 600000})"
+          }
+        }
+      ],
+      "checkActions": [],
+      "uncheckActions": [],
+      "isChecked": false,
+      "fullWidth": true,
+      "title": "先刷新关注列表缓存, 再拉视频 (新关注UP后用)"
+    },
+    {
+      "id": "887148d2-f7d6-4797-b9b2-fffebaef38e7",
+      "type": "markdown",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2026-06-28T11:50:33.120Z",
+      "updateAt": "2026-06-28T11:50:53.749Z",
+      "maxHeight": 900,
+      "contentAlign": "left",
+      "markdownsSource": "file",
+      "markdownValue": "05_long_project/B站关注/关注视频.md"
+    },
+    {
+      "id": "f565fecd-8d5e-4b55-ae67-1ae0f81fd4f1",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "视频明细",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-06-28T11:51:53.851Z",
+      "updateAt": "2026-06-28T12:06:32.438Z",
+      "components": [
+        {
+          "componentId": "01b4cd00-1f06-49c0-9d8f-96b7abc27293"
+        },
+        {
+          "componentId": "887148d2-f7d6-4797-b9b2-fffebaef38e7"
+        }
+      ],
+      "layoutType": "list",
+      "locked": false,
+      "layoutOptions": {},
+      "title": "视频明细"
+    },
+    {
+      "id": "6ffd01ef-cb97-4033-a85c-46d05da727f4",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "关注明细",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-06-28T11:52:41.177Z",
+      "updateAt": "2026-06-28T12:07:11.949Z",
+      "components": [
+        {
+          "componentId": "010dfa44-78e2-45c8-b8ef-5ff11c59b791"
+        },
+        {
+          "componentId": "c21602e8-9e19-42ad-8f3c-1be3c8f27fe6"
+        }
+      ],
+      "layoutType": "list",
+      "locked": false,
+      "layoutOptions": {},
+      "title": "关注明细"
+    },
+    {
+      "id": "c21602e8-9e19-42ad-8f3c-1be3c8f27fe6",
+      "type": "markdown",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2026-06-28T11:53:33.449Z",
+      "updateAt": "2026-06-28T11:53:52.192Z",
+      "maxHeight": 1000,
+      "contentAlign": "left",
+      "markdownsSource": "file",
+      "markdownValue": "05_long_project/B站关注/关注列表.md"
     }
   ],
   "rootComponentId": "7a1b2c3d-4e5f-4a6b-8c9d-0e1f2a3b4c5d",

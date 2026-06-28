@@ -124,31 +124,22 @@ def build_markdown(users, videos_per_user=3):
 
         log(f"[{i}/{len(users)}] {name} (mid={mid})")
 
-        # callout 头
+        # callout 头 (只保留标题, 不显示签名/认证/UID)
         lines.append(f"> [!note] {i}. {name}")
-        lines.append(">")
-        if sign:
-            lines.append(f"> **签名**: {sign[:80]}")
-            lines.append(">")
-        if fans:
-            lines.append(f"> **认证**: {fans}")
-            lines.append(">")
-        lines.append(f"> **UID**: {mid}")
         lines.append(">")
 
         # 拉视频
         videos = fetch_user_videos(mid, limit=videos_per_user) if mid else []
         if videos:
             ok_count += 1
-            lines.append(f"> **近期视频** (共 {len(videos)} 条):")
-            lines.append(">")
             for v in videos:
                 v_title = (v.get("title") or "").replace("|", "\\|").strip()
                 v_plays = fmt_num(v.get("plays", 0))
-                v_likes = fmt_num(v.get("likes", 0))
                 v_date = v.get("date") or ""
                 v_url = v.get("url") or ""
-                lines.append(f"> - [{v_title}]({v_url}) | 播放 {v_plays} | 点赞 {v_likes} | {v_date}")
+                # 链接显示文字: 发布日期+标题 拼接 (日期为空时只显示标题)
+                link_text = f"{v_date} {v_title}".strip() if v_date else v_title
+                lines.append(f"> - [{link_text}]({v_url}) | 播放 {v_plays}")
         else:
             fail_count += 1
             lines.append("> _暂无视频数据_")

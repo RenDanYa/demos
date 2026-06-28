@@ -78,16 +78,18 @@ def build_markdown(users):
         "",
         f"> **最近更新**: {now} | **共 {len(users)} 人**",
         "",
-        "| # | 昵称 | 签名 | 关系 | 认证 | UID |",
-        "|---|------|------|------|------|-----|",
+        "| # | 昵称 | 签名 | 认证 | 主页 |",
+        "|---|------|------|------|------|",
     ]
     for i, u in enumerate(users, 1):
         name = (u.get("name") or "").replace("|", "\\|").replace("\n", " ").strip()
         sign = (u.get("sign") or "").replace("|", "\\|").replace("\n", " ").strip()
-        following = u.get("following") or ""
         fans = (u.get("fans") or "").replace("|", "\\|").strip()
         mid = u.get("mid") or ""
-        lines.append(f"| {i} | {name} | {sign[:50]} | {following} | {fans} | {mid} |")
+        space_url = f"https://space.bilibili.com/{mid}" if mid else ""
+        # 主页用 markdown 链接, 文字 "进入" 加 URL
+        space_link = f"[进入]({space_url})" if space_url else ""
+        lines.append(f"| {i} | {name} | {sign[:50]} | {fans} | {space_link} |")
     lines.append("")
     lines.append(f"> 数据来源: opencli bilibili following | 采集时间: {now}")
     return "\n".join(lines) + "\n"
