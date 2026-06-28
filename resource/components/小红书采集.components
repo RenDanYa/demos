@@ -16,75 +16,7 @@
           "componentId": "2d393d0a-3527-4486-8317-4a7bdb1cd8b7"
         },
         {
-          "componentId": "9c3d4e5f-6a7b-4c8d-0e1f-2a3b4c5d6e7f",
-          "layout": {
-            "mobile": {
-              "x": 0,
-              "y": 4,
-              "w": 4,
-              "h": 4
-            },
-            "laptop": {
-              "x": 4,
-              "y": 0,
-              "w": 4,
-              "h": 4
-            }
-          }
-        },
-        {
           "componentId": "57a14d3c-8d84-42bf-9ef6-62234c9daa51"
-        },
-        {
-          "componentId": "816c63ae-f518-4afb-ad4e-975c0e6219c5",
-          "layout": {
-            "mobile": {
-              "x": 0,
-              "y": 4,
-              "w": 4,
-              "h": 4
-            },
-            "laptop": {
-              "x": 4,
-              "y": 0,
-              "w": 4,
-              "h": 4
-            }
-          }
-        },
-        {
-          "componentId": "0d4e5f6a-7b8c-4d9e-1f2a-3b4c5d6e7f80",
-          "layout": {
-            "mobile": {
-              "x": 0,
-              "y": 8,
-              "w": 4,
-              "h": 4
-            },
-            "laptop": {
-              "x": 8,
-              "y": 0,
-              "w": 4,
-              "h": 4
-            }
-          }
-        },
-        {
-          "componentId": "1e5f6a7b-8c9d-4e0f-2a3b-4c5d6e7f8091",
-          "layout": {
-            "mobile": {
-              "x": 0,
-              "y": 12,
-              "w": 4,
-              "h": 4
-            },
-            "laptop": {
-              "x": 0,
-              "y": 4,
-              "w": 4,
-              "h": 4
-            }
-          }
         }
       ],
       "layoutType": "tab",
@@ -102,8 +34,8 @@
       "showTitle": true,
       "showShadow": true,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-06-28T09:33:17.799Z",
-      "text": "🔍 采集小红书",
+      "updateAt": "2026-06-28T13:20:25.210Z",
+      "text": "🔍 采集多篇笔记",
       "buttonType": "common",
       "clickActions": [
         {
@@ -130,8 +62,8 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-06-28T12:13:05.382Z",
-      "viewType": "table",
+      "updateAt": "2026-06-28T13:25:42.041Z",
+      "viewType": "list",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
         {
@@ -145,33 +77,13 @@
           }
         },
         {
-          "id": "c3d4e5f6-a7b8-4c9d-0e1f-2a3b4c5d6e7f",
-          "name": "likes",
-          "type": "number",
-          "isShow": true,
-          "wrap": false,
-          "options": {
-            "width": "121"
-          }
-        },
-        {
-          "id": "f6a7b8c9-d0e1-4f2a-3b4c-5d6e7f809102",
-          "name": "url",
-          "type": "link",
-          "isShow": true,
-          "wrap": false,
-          "options": {
-            "width": "368"
-          }
-        },
-        {
           "id": "0a1b2c3d-4e5f-4a6b-8c9d-0e1f2a3b4c5e",
           "name": "${file.ctime}",
           "type": "datetime",
           "isShow": true,
           "wrap": false,
           "options": {
-            "width": "213"
+            "width": "181"
           }
         },
         {
@@ -196,63 +108,40 @@
             "width": "100"
           },
           "alias": "标记已看"
-        },
-        {
-          "id": "e0f56add-b332-4e17-8e91-36545a0130f8",
-          "name": "publishedAt",
-          "type": "datetime",
-          "isShow": true,
-          "wrap": false,
-          "options": {},
-          "alias": "发布时间"
-        },
-        {
-          "id": "97002b4c-8814-4688-8975-2583d34e30ba",
-          "name": "imageUrl",
-          "type": "image",
-          "isShow": true,
-          "wrap": false,
-          "options": {
-            "width": "113"
-          }
-        },
-        {
-          "id": "d219fd36-5436-4cf9-91b7-9bfd86af4e69",
-          "name": "createTime",
-          "type": "datetime",
-          "isShow": true,
-          "wrap": false,
-          "options": {}
         }
       ],
       "templates": [],
       "groups": [],
       "colorfulGroups": true,
       "viewOptions": {
-        "openPageIn": "tab",
+        "openPageIn": "modal",
         "openPageAfterCreate": true,
+        "itemSize": "components--page-card-medium",
+        "showPropertyName": false,
+        "showAllProperties": false,
         "items": [],
+        "cover": {
+          "type": "none",
+          "source": "default",
+          "fit": "contains",
+          "layout": "components--page-card-cover-portrait",
+          "position": "top"
+        },
         "pinFiltersToMenuBar": false,
         "hideHeaderMenu": false,
         "showGrid": false,
         "heightType": "fixed",
         "heightValue": 500,
-        "rowHeight": 32
+        "rowHeight": 32,
+        "displaySequenceNumber": true
       },
       "groupStates": {
         "sort": "nameAsc",
         "format": "none",
         "statics": [],
         "orders": [],
-        "hiddens": [
-          "__$uncategorizedGroup"
-        ],
-        "collapseds": [
-          "__$uncategorizedGroup",
-          "05_long_project/小红书",
-          "05_long_project/小红书/单篇采集",
-          "05_long_project/小红书/AI问答"
-        ]
+        "hiddens": [],
+        "collapseds": []
       },
       "filter": {
         "id": "3d4e5f6a-7b8c-4c9d-1f2a-3b4c5d6e7f81",
@@ -262,9 +151,9 @@
           {
             "id": "4e5f6a7b-8c9d-4d0e-2a3b-4c5d6e7f8092",
             "type": "filter",
-            "operator": "contains",
+            "operator": "equals",
             "property": "${file.parent}",
-            "value": "05_long_project/小红书",
+            "value": "05_long_project/小红书/AI问答",
             "conditions": []
           },
           {
@@ -274,18 +163,10 @@
             "property": "${file.extension}",
             "value": "md",
             "conditions": []
-          },
-          {
-            "id": "6a7b8c9d-0e1f-4f2a-4c5d-6e7f80910214",
-            "type": "filter",
-            "operator": "not_equals",
-            "property": "${file.parent}",
-            "value": "05_long_project/小红书",
-            "conditions": []
           }
         ]
       },
-      "title": "小红书采集明细",
+      "title": "AI问答",
       "sort": {
         "orders": [
           {
@@ -296,285 +177,8 @@
           }
         ]
       },
-      "groupBy": "${file.parent}"
-    },
-    {
-      "id": "0d4e5f6a-7b8c-4d9e-1f2a-3b4c5d6e7f80",
-      "type": "timeLine",
-      "titleAlign": "center",
-      "tabTitle": "时间线",
-      "maxWidthRatio": -1,
-      "showBorder": true,
-      "showShadow": true,
-      "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-06-28T06:52:22.724Z",
-      "filter": {
-        "id": "8c9d0e1f-2a3b-4b4c-6e7f-809102132436",
-        "type": "group",
-        "operator": "and",
-        "conditions": [
-          {
-            "id": "9d0e1f2a-3b4c-4c5d-7f80-910213243547",
-            "type": "filter",
-            "operator": "contains",
-            "property": "${file.parent}",
-            "value": "05_long_project/小红书",
-            "conditions": []
-          },
-          {
-            "id": "0e1f2a3b-4c5d-4d6e-8091-021324354648",
-            "type": "filter",
-            "operator": "equals",
-            "property": "${file.extension}",
-            "value": "md",
-            "conditions": []
-          },
-          {
-            "id": "1f2a3b4c-5d6e-4e7f-9102-132435464759",
-            "type": "filter",
-            "operator": "not_contains",
-            "property": "${file.name}",
-            "value": "_运行日志",
-            "conditions": []
-          }
-        ]
-      },
-      "sort": {
-        "orders": [
-          {
-            "id": "2a3b4c5d-6e7f-4a80-9102-132435464760",
-            "property": "publishedAt",
-            "direction": "desc",
-            "disabled": false
-          }
-        ]
-      },
-      "nodeTitle": {
-        "property": "createTime",
-        "format": "yyyy-MM-dd"
-      },
-      "nodeCover": {
-        "type": "image",
-        "coverTypeLabel": "节点封面",
-        "source": "property",
-        "sourceValue": "imageUrl"
-      },
-      "title": "采集时间线",
-      "nodeStatus": {
-        "options": [
-          {
-            "id": "3b4c5d6e-7f80-4b91-0213-243546475861",
-            "value": "status",
-            "color": "#7bdcb5"
-          }
-        ],
-        "property": "status"
-      },
-      "titleElement": {
-        "properties": [
-          {
-            "id": "4c5d6e7f-8091-4c02-1324-354647586972",
-            "property": "title"
-          }
-        ]
-      },
-      "subtitleElement": {
-        "properties": [
-          {
-            "id": "693670da-4a18-4b51-960a-021a6517966e",
-            "property": "publishedAt"
-          }
-        ]
-      },
-      "direction": "horizontal"
-    },
-    {
-      "id": "1e5f6a7b-8c9d-4e0f-2a3b-4c5d6e7f8091",
-      "type": "multi",
-      "titleAlign": "center",
-      "tabTitle": "统计",
-      "maxWidthRatio": -1,
-      "showBorder": false,
-      "showTitle": true,
-      "showShadow": false,
-      "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-06-28T19:30:00.000Z",
-      "components": [
-        {
-          "componentId": "5c9d0e1f-2a3b-4c4d-6e7f-809102132435",
-          "layout": {
-            "mobile": {
-              "x": 0,
-              "y": 0,
-              "w": 2,
-              "h": 3
-            },
-            "laptop": {
-              "x": 0,
-              "y": 0,
-              "w": 2,
-              "h": 3
-            }
-          }
-        },
-        {
-          "componentId": "6d0e1f2a-3b4c-4d5e-7f80-910213243546",
-          "layout": {
-            "mobile": {
-              "x": 2,
-              "y": 0,
-              "w": 2,
-              "h": 3
-            },
-            "laptop": {
-              "x": 2,
-              "y": 0,
-              "w": 2,
-              "h": 3
-            }
-          }
-        }
-      ],
-      "layoutType": "list",
-      "locked": false,
-      "layoutOptions": {},
-      "title": "统计"
-    },
-    {
-      "id": "5c9d0e1f-2a3b-4c4d-6e7f-809102132435",
-      "type": "count",
-      "titleAlign": "center",
-      "tabTitle": "",
-      "maxWidthRatio": -1,
-      "showBorder": true,
-      "showShadow": true,
-      "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-06-28T19:30:00.000Z",
-      "countValueAlign": "center",
-      "contentPrefix": "",
-      "contentSuffix": " 篇",
-      "countType": "number",
-      "precision": 0,
-      "query": {
-        "valueType": "totalRecords",
-        "value": 100,
-        "filter": {
-          "id": "7e1f2a3b-4c5d-4e6f-8091-021324354748",
-          "type": "group",
-          "operator": "and",
-          "conditions": [
-            {
-              "id": "8f2a3b4c-5d6e-4f70-9102-132435464759",
-              "type": "filter",
-              "operator": "contains",
-              "property": "${file.parent}",
-              "value": "05_long_project/小红书",
-              "conditions": []
-            },
-            {
-              "id": "9a3b4c5d-6e7f-4a81-0213-243546475860",
-              "type": "filter",
-              "operator": "equals",
-              "property": "${file.extension}",
-              "value": "md",
-              "conditions": []
-            },
-            {
-              "id": "0b4c5d6e-7f80-4b92-1324-354647586971",
-              "type": "filter",
-              "operator": "not_contains",
-              "property": "${file.name}",
-              "value": "_运行日志",
-              "conditions": []
-            }
-          ]
-        },
-        "sort": {
-          "orders": []
-        }
-      },
-      "totalQuery": {
-        "valueType": "constant",
-        "value": 100,
-        "filter": {
-          "id": "1c5d6e7f-8091-4c03-2435-464758697082",
-          "type": "group",
-          "operator": "and",
-          "conditions": []
-        },
-        "sort": {
-          "orders": []
-        }
-      },
-      "title": "📚 总采集数"
-    },
-    {
-      "id": "6d0e1f2a-3b4c-4d5e-7f80-910213243546",
-      "type": "count",
-      "titleAlign": "center",
-      "tabTitle": "",
-      "maxWidthRatio": -1,
-      "showBorder": true,
-      "showShadow": true,
-      "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-06-28T19:30:00.000Z",
-      "countValueAlign": "center",
-      "contentPrefix": "",
-      "contentSuffix": " 个",
-      "countType": "number",
-      "precision": 0,
-      "query": {
-        "valueType": "totalRecords",
-        "value": 100,
-        "filter": {
-          "id": "2d6e7f80-9102-4e14-3546-475869708193",
-          "type": "group",
-          "operator": "and",
-          "conditions": [
-            {
-              "id": "3e7f8091-0213-4f25-4647-5869718294",
-              "type": "filter",
-              "operator": "contains",
-              "property": "${file.parent}",
-              "value": "05_long_project/小红书",
-              "conditions": []
-            },
-            {
-              "id": "4f809102-1324-4a36-4758-6970829315",
-              "type": "filter",
-              "operator": "equals",
-              "property": "${file.extension}",
-              "value": "md",
-              "conditions": []
-            },
-            {
-              "id": "50910213-2435-4b47-5869-7082931627",
-              "type": "filter",
-              "operator": "not_contains",
-              "property": "${file.name}",
-              "value": "_运行日志",
-              "conditions": []
-            }
-          ]
-        },
-        "sort": {
-          "orders": []
-        }
-      },
-      "totalQuery": {
-        "valueType": "constant",
-        "value": 100,
-        "filter": {
-          "id": "61021324-3546-4c58-6970-8293172839",
-          "type": "group",
-          "operator": "and",
-          "conditions": []
-        },
-        "sort": {
-          "orders": []
-        }
-      },
-      "title": "🔑 关键词数"
+      "groupBy": "",
+      "icon": "SquareDashedBottomCode"
     },
     {
       "id": "816c63ae-f518-4afb-ad4e-975c0e6219c5",
@@ -586,7 +190,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-06-28T12:13:23.110Z",
+      "updateAt": "2026-06-28T13:25:53.854Z",
       "viewType": "gallary",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -621,19 +225,9 @@
           }
         },
         {
-          "id": "0a1b2c3d-4e5f-4a6b-8c9d-0e1f2a3b4c5e",
-          "name": "${file.ctime}",
-          "type": "datetime",
-          "isShow": false,
-          "wrap": false,
-          "options": {
-            "width": "213"
-          }
-        },
-        {
           "id": "1b2c3d4e-5f6a-4b7c-9d0e-1f2a3b4c5d6f",
           "name": "按钮",
-          "isShow": false,
+          "isShow": true,
           "type": "button",
           "options": {
             "action": {
@@ -661,42 +255,24 @@
           "wrap": false,
           "options": {},
           "alias": "发布时间"
-        },
-        {
-          "id": "97002b4c-8814-4688-8975-2583d34e30ba",
-          "name": "imageUrl",
-          "type": "image",
-          "isShow": false,
-          "wrap": false,
-          "options": {
-            "width": "113"
-          }
-        },
-        {
-          "id": "d219fd36-5436-4cf9-91b7-9bfd86af4e69",
-          "name": "createTime",
-          "type": "datetime",
-          "isShow": false,
-          "wrap": false,
-          "options": {}
         }
       ],
       "templates": [],
       "groups": [],
       "colorfulGroups": true,
       "viewOptions": {
-        "openPageIn": "tab",
+        "openPageIn": "modal",
         "openPageAfterCreate": true,
-        "itemSize": "components--page-card-medium",
+        "itemSize": "components--page-card-large",
         "showPropertyName": false,
         "showAllProperties": false,
         "items": [],
         "cover": {
           "type": "image",
           "source": "property",
-          "fit": "contains",
+          "fit": "cover",
           "layout": "components--page-card-cover-landscape",
-          "position": "top",
+          "position": "left",
           "sourceValue": "imageUrl"
         },
         "pinFiltersToMenuBar": false,
@@ -711,16 +287,8 @@
         "format": "none",
         "statics": [],
         "orders": [],
-        "hiddens": [
-          "__$uncategorizedGroup"
-        ],
-        "collapseds": [
-          "__$uncategorizedGroup",
-          "05_long_project/小红书",
-          "05_long_project/小红书/obsidian",
-          "05_long_project/小红书/单篇采集",
-          "05_long_project/小红书/AI问答"
-        ]
+        "hiddens": [],
+        "collapseds": []
       },
       "filter": {
         "id": "3d4e5f6a-7b8c-4c9d-1f2a-3b4c5d6e7f81",
@@ -730,9 +298,9 @@
           {
             "id": "4e5f6a7b-8c9d-4d0e-2a3b-4c5d6e7f8092",
             "type": "filter",
-            "operator": "contains",
+            "operator": "equals",
             "property": "${file.parent}",
-            "value": "05_long_project/小红书",
+            "value": "05_long_project/小红书/单篇采集",
             "conditions": []
           },
           {
@@ -742,29 +310,22 @@
             "property": "${file.extension}",
             "value": "md",
             "conditions": []
-          },
-          {
-            "id": "6a7b8c9d-0e1f-4f2a-4c5d-6e7f80910214",
-            "type": "filter",
-            "operator": "not_equals",
-            "property": "${file.parent}",
-            "value": "05_long_project/小红书",
-            "conditions": []
           }
         ]
       },
-      "title": "小红书采集明细",
+      "title": "小红书单篇笔记采集",
       "sort": {
         "orders": [
           {
             "id": "7b8c9d0e-1f2a-4a3b-5d6e-7f8091021325",
-            "property": "publishedAt",
+            "property": "${file.ctime}",
             "direction": "desc",
             "disabled": false
           }
         ]
       },
-      "groupBy": "${file.parent}"
+      "groupBy": "",
+      "icon": "Star"
     },
     {
       "id": "ai-btn-button-0002-0000-000000000002",
@@ -776,7 +337,7 @@
       "showTitle": true,
       "showShadow": true,
       "createAt": "2026-06-28T20:00:00.000Z",
-      "updateAt": "2026-06-28T20:00:00.000Z",
+      "updateAt": "2026-06-28T13:20:43.828Z",
       "text": "🤖 问点点AI",
       "buttonType": "common",
       "clickActions": [
@@ -826,13 +387,13 @@
       "id": "2d393d0a-3527-4486-8317-4a7bdb1cd8b7",
       "type": "multi",
       "titleAlign": "center",
-      "tabTitle": "",
+      "tabTitle": "小红书",
       "maxWidthRatio": -1,
       "showBorder": false,
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T10:37:12.400Z",
-      "updateAt": "2026-06-28T10:38:48.781Z",
+      "updateAt": "2026-06-28T13:26:31.219Z",
       "components": [
         {
           "componentId": "ai-btn-button-0002-0000-000000000002"
@@ -842,11 +403,21 @@
         },
         {
           "componentId": "2f6a7b8c-9d0e-4f1a-3b4c-5d6e7f809102"
+        },
+        {
+          "componentId": "9c3d4e5f-6a7b-4c8d-0e1f-2a3b4c5d6e7f"
+        },
+        {
+          "componentId": "816c63ae-f518-4afb-ad4e-975c0e6219c5"
+        },
+        {
+          "componentId": "b3ca6d34-416f-4764-89c6-c4c3643ab09b"
         }
       ],
       "layoutType": "list",
       "locked": false,
-      "layoutOptions": {}
+      "layoutOptions": {},
+      "title": "小红书"
     },
     {
       "id": "57a14d3c-8d84-42bf-9ef6-62234c9daa51",
@@ -858,16 +429,16 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T21:00:00.000Z",
-      "updateAt": "2026-06-28T11:53:01.079Z",
+      "updateAt": "2026-06-28T13:32:43.270Z",
       "components": [
         {
-          "componentId": "f565fecd-8d5e-4b55-ae67-1ae0f81fd4f1"
+          "componentId": "6ffd01ef-cb97-4033-a85c-46d05da727f4"
         },
         {
-          "componentId": "6ffd01ef-cb97-4033-a85c-46d05da727f4"
+          "componentId": "f565fecd-8d5e-4b55-ae67-1ae0f81fd4f1"
         }
       ],
-      "layoutType": "tab",
+      "layoutType": "column",
       "locked": false,
       "layoutOptions": {},
       "title": "B站关注视频"
@@ -876,13 +447,13 @@
       "id": "01b4cd00-1f06-49c0-9d8f-96b7abc27293",
       "type": "button",
       "titleAlign": "center",
-      "tabTitle": "",
+      "tabTitle": "拉取近期视频",
       "maxWidthRatio": -1,
       "showBorder": true,
       "showTitle": true,
       "showShadow": true,
       "createAt": "2026-06-28T21:00:00.000Z",
-      "updateAt": "2026-06-28T21:00:00.000Z",
+      "updateAt": "2026-06-28T13:31:59.851Z",
       "text": "🎬 拉取近期视频",
       "buttonType": "common",
       "clickActions": [
@@ -898,19 +469,19 @@
       "uncheckActions": [],
       "isChecked": false,
       "fullWidth": true,
-      "title": "拉取近期视频 (默认每人 3 条)"
+      "title": "拉取近期视频"
     },
     {
       "id": "010dfa44-78e2-45c8-b8ef-5ff11c59b791",
       "type": "button",
       "titleAlign": "center",
-      "tabTitle": "",
+      "tabTitle": "先刷新关注列表缓存, 再拉视频",
       "maxWidthRatio": -1,
       "showBorder": true,
       "showTitle": true,
       "showShadow": true,
       "createAt": "2026-06-28T21:00:00.000Z",
-      "updateAt": "2026-06-28T21:00:00.000Z",
+      "updateAt": "2026-06-28T13:32:18.763Z",
       "text": "🔄 先刷新关注列表",
       "buttonType": "common",
       "clickActions": [
@@ -926,7 +497,7 @@
       "uncheckActions": [],
       "isChecked": false,
       "fullWidth": true,
-      "title": "先刷新关注列表缓存, 再拉视频 (新关注UP后用)"
+      "title": "先刷新关注列表缓存, 再拉视频"
     },
     {
       "id": "887148d2-f7d6-4797-b9b2-fffebaef38e7",
@@ -954,7 +525,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T11:51:53.851Z",
-      "updateAt": "2026-06-28T12:06:32.438Z",
+      "updateAt": "2026-06-28T13:31:46.001Z",
       "components": [
         {
           "componentId": "01b4cd00-1f06-49c0-9d8f-96b7abc27293"
@@ -1002,11 +573,184 @@
       "showTitle": true,
       "showShadow": true,
       "createAt": "2026-06-28T11:53:33.449Z",
-      "updateAt": "2026-06-28T11:53:52.192Z",
-      "maxHeight": 1000,
+      "updateAt": "2026-06-28T13:33:43.965Z",
+      "maxHeight": 900,
       "contentAlign": "left",
       "markdownsSource": "file",
       "markdownValue": "05_long_project/B站关注/关注列表.md"
+    },
+    {
+      "id": "b3ca6d34-416f-4764-89c6-c4c3643ab09b",
+      "type": "dynamicDataView",
+      "titleAlign": "center",
+      "tabTitle": "明细",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-06-28T19:30:00.000Z",
+      "updateAt": "2026-06-28T13:32:59.874Z",
+      "viewType": "table",
+      "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
+      "properties": [
+        {
+          "id": "__componentsTitleProperty_0x7c00",
+          "name": "文件名",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "189"
+          }
+        },
+        {
+          "id": "c3d4e5f6-a7b8-4c9d-0e1f-2a3b4c5d6e7f",
+          "name": "likes",
+          "type": "number",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "121"
+          }
+        },
+        {
+          "id": "f6a7b8c9-d0e1-4f2a-3b4c-5d6e7f809102",
+          "name": "url",
+          "type": "link",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "368"
+          }
+        },
+        {
+          "id": "1b2c3d4e-5f6a-4b7c-9d0e-1f2a3b4c5d6f",
+          "name": "按钮",
+          "isShow": true,
+          "type": "button",
+          "options": {
+            "action": {
+              "type": "updateProperty",
+              "properties": [
+                {
+                  "id": "2c3d4e5f-6a7b-4c8d-0e1f-2a3b4c5d6e70",
+                  "name": "status",
+                  "type": "string",
+                  "value": "已看完",
+                  "valueSource": "constant",
+                  "modifier": "replaceValue"
+                }
+              ]
+            },
+            "width": "100"
+          },
+          "alias": "标记已看"
+        },
+        {
+          "id": "e0f56add-b332-4e17-8e91-36545a0130f8",
+          "name": "publishedAt",
+          "type": "datetime",
+          "isShow": true,
+          "wrap": false,
+          "options": {},
+          "alias": "发布时间"
+        }
+      ],
+      "templates": [],
+      "groups": [],
+      "colorfulGroups": true,
+      "viewOptions": {
+        "openPageIn": "modal",
+        "openPageAfterCreate": true,
+        "itemSize": "components--page-card-large",
+        "showPropertyName": false,
+        "showAllProperties": false,
+        "items": [],
+        "cover": {
+          "type": "image",
+          "source": "property",
+          "fit": "cover",
+          "layout": "components--page-card-cover-landscape",
+          "position": "left",
+          "sourceValue": "imageUrl"
+        },
+        "pinFiltersToMenuBar": false,
+        "hideHeaderMenu": false,
+        "showGrid": false,
+        "heightType": "fixed",
+        "heightValue": 500,
+        "rowHeight": 32
+      },
+      "groupStates": {
+        "sort": "nameAsc",
+        "format": "none",
+        "statics": [],
+        "orders": [],
+        "hiddens": [],
+        "collapseds": [
+          "__$uncategorizedGroup"
+        ]
+      },
+      "filter": {
+        "id": "3d4e5f6a-7b8c-4c9d-1f2a-3b4c5d6e7f81",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "4e5f6a7b-8c9d-4d0e-2a3b-4c5d6e7f8092",
+            "type": "filter",
+            "operator": "contains",
+            "property": "${file.parent}",
+            "value": "05_long_project/小红书",
+            "conditions": []
+          },
+          {
+            "id": "5f6a7b8c-9d0e-4e1f-3b4c-5d6e7f809103",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.extension}",
+            "value": "md",
+            "conditions": []
+          },
+          {
+            "id": "0954c5c1-9f3c-410a-99bf-72f9fa8a554c",
+            "type": "filter",
+            "operator": "not_equals",
+            "property": "${file.parent}",
+            "value": "05_long_project/小红书/单篇采集",
+            "conditions": []
+          },
+          {
+            "id": "8f0a0b72-22d6-4c7b-aa49-17f4ea8c47b5",
+            "type": "filter",
+            "operator": "not_equals",
+            "property": "${file.parent}",
+            "value": "05_long_project/小红书/AI问答",
+            "conditions": []
+          },
+          {
+            "id": "73080ff1-df78-41ec-9608-a3bb2e8d45a2",
+            "type": "filter",
+            "operator": "not_equals",
+            "property": "${file.parent}",
+            "value": "05_long_project/小红书",
+            "conditions": []
+          }
+        ]
+      },
+      "title": "小红书多篇笔记采集",
+      "sort": {
+        "orders": [
+          {
+            "id": "7b8c9d0e-1f2a-4a3b-5d6e-7f8091021325",
+            "property": "${file.ctime}",
+            "direction": "desc",
+            "disabled": false
+          }
+        ]
+      },
+      "groupBy": "${file.parent}",
+      "icon": "PlugZap"
     }
   ],
   "rootComponentId": "7a1b2c3d-4e5f-4a6b-8c9d-0e1f2a3b4c5d",
