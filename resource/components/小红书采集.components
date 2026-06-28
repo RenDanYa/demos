@@ -10,24 +10,10 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-06-28T06:59:31.543Z",
+      "updateAt": "2026-06-28T10:37:16.985Z",
       "components": [
         {
-          "componentId": "8b2c3d4e-5f6a-4b7c-9d0e-1f2a3b4c5d6e",
-          "layout": {
-            "mobile": {
-              "x": 0,
-              "y": 0,
-              "w": 4,
-              "h": 4
-            },
-            "laptop": {
-              "x": 0,
-              "y": 0,
-              "w": 4,
-              "h": 4
-            }
-          }
+          "componentId": "2d393d0a-3527-4486-8317-4a7bdb1cd8b7"
         },
         {
           "componentId": "9c3d4e5f-6a7b-4c8d-0e1f-2a3b4c5d6e7f",
@@ -99,47 +85,9 @@
         }
       ],
       "layoutType": "tab",
-      "locked": false,
+      "locked": true,
       "layoutOptions": {},
       "title": "小红书采集"
-    },
-    {
-      "id": "8b2c3d4e-5f6a-4b7c-9d0e-1f2a3b4c5d6e",
-      "type": "multi",
-      "titleAlign": "center",
-      "tabTitle": "采集",
-      "maxWidthRatio": -1,
-      "showBorder": false,
-      "showTitle": true,
-      "showShadow": false,
-      "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-06-28T06:25:23.437Z",
-      "components": [
-        {
-          "componentId": "2f6a7b8c-9d0e-4f1a-3b4c-5d6e7f809102",
-          "layout": {
-            "mobile": {
-              "x": 0,
-              "y": 0,
-              "w": 4,
-              "h": 2
-            },
-            "laptop": {
-              "x": 0,
-              "y": 0,
-              "w": 4,
-              "h": 2
-            }
-          }
-        },
-        {
-          "componentId": "aef7ee9b-1f55-4495-80b2-dfe2b62f94f9"
-        }
-      ],
-      "layoutType": "list",
-      "locked": false,
-      "layoutOptions": {},
-      "title": "采集"
     },
     {
       "id": "2f6a7b8c-9d0e-4f1a-3b4c-5d6e7f809102",
@@ -151,7 +99,7 @@
       "showTitle": true,
       "showShadow": true,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-06-28T04:28:43.015Z",
+      "updateAt": "2026-06-28T09:33:17.799Z",
       "text": "🔍 采集小红书",
       "buttonType": "common",
       "clickActions": [
@@ -167,40 +115,7 @@
       "uncheckActions": [],
       "isChecked": false,
       "fullWidth": true,
-      "title": "采集小红书",
-      "icon": "Search"
-    },
-    {
-      "id": "3a7b8c9d-0e1f-4a2b-4c5d-6e7f80910213",
-      "type": "markdown",
-      "titleAlign": "left",
-      "tabTitle": "",
-      "maxWidthRatio": -1,
-      "showBorder": true,
-      "showTitle": true,
-      "showShadow": true,
-      "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-06-28T06:25:37.950Z",
-      "maxHeight": 600,
-      "contentAlign": "left",
-      "markdownsSource": "content",
-      "markdownValue": "## 使用说明\n\n1. 点击上方「采集小红书」按钮\n2. 在弹窗中输入关键词(如 `obsidian`)\n3. 输入采集数量(1-50, 默认10)\n4. 等待脚本执行(每条间隔 5-8 秒防风控)\n5. 结果保存到 `05_long_project/小红书/{关键词}/`\n6. 在「明细」Tab 查看采集结果\n\n**防风控策略**: 5-8秒间隔 + 每50条休息30-60秒 + 连续3次失败暂停60-120秒\n\n**依赖**: `opencli` v1.8.5+ (`npm install -g @jackwener/opencli`)"
-    },
-    {
-      "id": "4b8c9d0e-1f2a-4b3c-5d6e-7f8091021324",
-      "type": "markdown",
-      "titleAlign": "left",
-      "tabTitle": "",
-      "maxWidthRatio": -1,
-      "showBorder": true,
-      "showTitle": true,
-      "showShadow": false,
-      "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-06-28T19:30:00.000Z",
-      "maxHeight": 400,
-      "contentAlign": "left",
-      "markdownsSource": "content",
-      "markdownValue": "## 最近运行日志\n\n![[05_long_project/小红书/_运行日志]]\n\n_日志文件路径: `05_long_project/小红书/_运行日志.md`_"
+      "title": "采集小红书"
     },
     {
       "id": "9c3d4e5f-6a7b-4c8d-0e1f-2a3b4c5d6e7f",
@@ -212,7 +127,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-06-28T07:00:30.043Z",
+      "updateAt": "2026-06-28T10:36:13.997Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -332,7 +247,8 @@
         "collapseds": [
           "__$uncategorizedGroup",
           "05_long_project/小红书",
-          "05_long_project/小红书/obsidian"
+          "05_long_project/小红书/单篇采集",
+          "05_long_project/小红书/AI问答"
         ]
       },
       "filter": {
@@ -658,29 +574,6 @@
       "title": "🔑 关键词数"
     },
     {
-      "id": "aef7ee9b-1f55-4495-80b2-dfe2b62f94f9",
-      "type": "multi",
-      "titleAlign": "center",
-      "tabTitle": "",
-      "maxWidthRatio": -1,
-      "showBorder": false,
-      "showTitle": true,
-      "showShadow": false,
-      "createAt": "2026-06-28T06:36:58.697Z",
-      "updateAt": "2026-06-28T06:37:10.052Z",
-      "components": [
-        {
-          "componentId": "3a7b8c9d-0e1f-4a2b-4c5d-6e7f80910213"
-        },
-        {
-          "componentId": "4b8c9d0e-1f2a-4b3c-5d6e-7f8091021324"
-        }
-      ],
-      "layoutType": "column",
-      "locked": false,
-      "layoutOptions": {}
-    },
-    {
       "id": "816c63ae-f518-4afb-ad4e-975c0e6219c5",
       "type": "dynamicDataView",
       "titleAlign": "center",
@@ -867,6 +760,88 @@
         ]
       },
       "groupBy": "${file.parent}"
+    },
+    {
+      "id": "ai-btn-button-0002-0000-000000000002",
+      "type": "button",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2026-06-28T20:00:00.000Z",
+      "updateAt": "2026-06-28T20:00:00.000Z",
+      "text": "🤖 问点点AI",
+      "buttonType": "common",
+      "clickActions": [
+        {
+          "type": "RunScript",
+          "id": "ai-runscript-id-0004-0000-000000000004",
+          "options": {
+            "expression": "runPython('D:/obsidian/demo/inbox/python/xiaohongshu_ai.py', {timeout: 180000})"
+          }
+        }
+      ],
+      "checkActions": [],
+      "uncheckActions": [],
+      "isChecked": false,
+      "fullWidth": true,
+      "title": "问点点AI"
+    },
+    {
+      "id": "single-btn-button-0002-0000-000000000020",
+      "type": "button",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2026-06-28T20:30:00.000Z",
+      "updateAt": "2026-06-28T20:30:00.000Z",
+      "text": "📥 采集单篇笔记",
+      "buttonType": "common",
+      "clickActions": [
+        {
+          "type": "RunScript",
+          "id": "single-runscript-id-0004-0000-000000000040",
+          "options": {
+            "expression": "runPython('D:/obsidian/demo/inbox/python/xiaohongshu_note.py', {timeout: 120000})"
+          }
+        }
+      ],
+      "checkActions": [],
+      "uncheckActions": [],
+      "isChecked": false,
+      "fullWidth": true,
+      "title": "采集单篇笔记"
+    },
+    {
+      "id": "2d393d0a-3527-4486-8317-4a7bdb1cd8b7",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-06-28T10:37:12.400Z",
+      "updateAt": "2026-06-28T10:38:48.781Z",
+      "components": [
+        {
+          "componentId": "ai-btn-button-0002-0000-000000000002"
+        },
+        {
+          "componentId": "single-btn-button-0002-0000-000000000020"
+        },
+        {
+          "componentId": "2f6a7b8c-9d0e-4f1a-3b4c-5d6e7f809102"
+        }
+      ],
+      "layoutType": "list",
+      "locked": false,
+      "layoutOptions": {}
     }
   ],
   "rootComponentId": "7a1b2c3d-4e5f-4a6b-8c9d-0e1f2a3b4c5d",

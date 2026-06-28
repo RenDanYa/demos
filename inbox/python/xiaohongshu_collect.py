@@ -25,6 +25,12 @@ def _resolve_opencli():
     npm_root = os.environ.get("APPDATA", "")
     npm_dir = Path(npm_root) / "npm" if npm_root else None
 
+    # 优先 0: 本地开发版 (含 note-full 等新命令)
+    local_main = Path("d:/voice/opencli-main/dist/main.js")
+    if local_main.exists():
+        node_bin = shutil.which("node") or "node"
+        return ("node", str(local_main))
+
     # 优先: 直接 node + main.js (避免 cmd.exe 解析 &)
     if npm_dir:
         main_js = npm_dir / "node_modules" / "@jackwener" / "opencli" / "dist" / "src" / "main.js"
@@ -247,8 +253,49 @@ def get_note(url):
     return parse_note_fields(stdout)
 
 
+def get_note_full(url):
+    """调用 opencli note-full, 一次返回 note + comments (省 2 次 page.goto)
+
+    返回: (note_data: dict, comments: list)
+    note_data 字段同 get_note, 额外包含 publishedAt
+    comments: [{author, text, likes, time}, ...]
+    """
+    ok, stdout, err = run_opencli(
+        ["xiaohongshu", "note-full", url, "--comment-limit", "5", "-f", "json"],
+        max(TIMEOUT_NOTE, TIMEOUT_COMMENTS),
+    )
+    if not ok:
+        log(f"  note-full 失败: {err}")
+        return None, []
+
+    # note-full 输出为 [{field, value}, ...], value 是 JSON 字符串需要反序列化
+    fields = parse_note_fields(stdout)
+    if not fields:
+        return None, []
+
+    # 解析 comments (JSON 字符串 -> list[dict])
+    comments_raw = fields.pop("comments", "[]")
+    try:
+        comments = json.loads(comments_raw) if comments_raw else []
+    except (json.JSONDecodeError, TypeError):
+        comments = []
+
+    # 解析 media (可选, 目前 download 命令会单独下载, 这里仅保留字段)
+    media_raw = fields.pop("media", "[]")
+    try:
+        fields["_media"] = json.loads(media_raw) if media_raw else []
+    except (json.JSONDecodeError, TypeError):
+        fields["_media"] = []
+
+    # comments_count 字段对齐 note 命令的 'comments' 字段
+    if "comments_count" in fields:
+        fields.setdefault("comments", fields["comments_count"])
+
+    return fields, comments
+
+
 def get_comments(url):
-    """调用 opencli comments"""
+    """调用 opencli comments (备用, note-full 不可用时回退)"""
     ok, stdout, err = run_opencli(
         ["xiaohongshu", "comments", url, "-f", "json"],
         TIMEOUT_COMMENTS,
@@ -259,9 +306,75 @@ def get_comments(url):
     return parse_comments(stdout)
 
 
-def download_images(url, output_dir):
-    """调用 opencli download, 返回相对 output_dir 的图片路径列表"""
-    # 清空并重建目录 (避免上次残留)
+def download_media_urls(media_list, output_dir, note_id):
+    """用 note-full 返回的 media URL 直接下载 (不依赖 opencli download 命令)
+
+    优势: 省 1 次 page.goto; URL 来自 __INITIAL_STATE__ 不受 swiper 懒加载影响
+    media_list: [{type: "image"/"video", url: "..."}, ...]
+    返回: 相对 output_dir 的文件路径列表
+    """
+    import urllib.request
+    import shutil as _shutil
+
+    if output_dir.exists():
+        _shutil.rmtree(output_dir, ignore_errors=True)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    if not media_list:
+        log("  media_list 为空, 跳过直接下载")
+        return []
+
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        "Referer": "https://www.xiaohongshu.com/",
+    }
+
+    rel_files = []
+    for i, item in enumerate(media_list, 1):
+        murl = item.get("url", "")
+        mtype = item.get("type", "image")
+        if not murl:
+            continue
+        # 确定扩展名
+        if mtype == "video":
+            ext = ".mp4"
+        else:
+            ext = ".jpg"
+            for e in (".png", ".webp", ".gif", ".jpeg"):
+                if e in murl.lower():
+                    ext = e
+                    break
+        filename = f"{note_id}_{i}{ext}"
+        filepath = output_dir / filename
+        try:
+            req = urllib.request.Request(murl, headers=headers)
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                with open(filepath, "wb") as f:
+                    f.write(resp.read())
+            rel_files.append(filename)
+            log(f"  下载 {mtype} {i}/{len(media_list)}: {filename} OK")
+        except Exception as e:
+            log(f"  下载 {mtype} {i}/{len(media_list)} 失败: {e}")
+
+    return rel_files
+
+
+def download_images(url, output_dir, media_list=None):
+    """下载图片/视频, 返回相对 output_dir 的文件路径列表
+
+    优先用 note-full 返回的 media_list 直接下载 (省 1 次 page.goto)
+    回退到 opencli download 命令
+    """
+    note_id = extract_note_id(url)
+
+    # 优先: 用 note-full 返回的 media URL 直接下载
+    if media_list:
+        files = download_media_urls(media_list, output_dir, note_id)
+        if files:
+            return files
+        log("  media_list 直接下载失败, 回退到 download 命令")
+
+    # 回退: opencli download 命令
     import shutil as _shutil
     if output_dir.exists():
         _shutil.rmtree(output_dir, ignore_errors=True)
@@ -334,11 +447,14 @@ def build_markdown(keyword, note_data, comments, image_files, images_rel_dir, ur
     lines.append(f"> **原链接**: {url}")
     lines.append("")
 
-    # 正文
+    # 正文 (放在 callout 中增加美观)
     if content:
-        lines.append("## 正文")
-        lines.append("")
-        lines.append(content)
+        lines.append("> [!note] 正文")
+        lines.append(">")
+        # 多行转为无序列表项, 跳过空行 (阅读视图下显示为带圆点列表)
+        for cl in content.split("\n"):
+            if cl.strip():
+                lines.append(f"> - {cl}")
         lines.append("")
 
     # 图片
@@ -483,23 +599,23 @@ def collect(keyword, limit):
         last_err = ""
         for attempt in range(3):
             try:
-                note_data = get_note(url)
+                # 用 note-full 一次获取 note + comments + media URL (省 2 次 page.goto)
+                note_data, comments = get_note_full(url)
                 if not note_data:
-                    raise RuntimeError("note 返回空")
-
-                comments = get_comments(url)
-                # comments 失败不阻断
+                    raise RuntimeError("note-full 返回空")
 
                 note_id = extract_note_id(url)
                 images_dir = OUTPUT_ROOT / images_root_name / "images" / note_id
                 # 相对于 markdown 文件所在目录 (OUTPUT_ROOT/{keyword}/) 的路径
                 images_rel_dir = f"images/{note_id}"
-                image_files = download_images(url, images_dir)
+                image_files = download_images(url, images_dir, media_list=note_data.get("_media", []))
 
+                # 优先用 note-full 返回的 publishedAt, 回退到 search 结果
+                published_at = note_data.get("publishedAt") or item.get("published_at", "")
                 md_content = build_markdown(
                     keyword, note_data, comments, image_files,
                     images_rel_dir, url, note_id,
-                    published_at=item.get("published_at", ""),
+                    published_at=published_at,
                 )
                 md_title = note_data.get("title", "") or title
                 md_path = write_markdown(keyword, md_content, note_id, title=md_title)
