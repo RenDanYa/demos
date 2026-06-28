@@ -1,0 +1,180 @@
+{
+  "components": [
+    {
+      "id": "db45bdd2-230f-4afa-99b8-ba2d7f8070b7",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2025-09-09T04:51:54.810Z",
+      "updateAt": "2026-01-22T23:26:15.870Z",
+      "components": [
+        {
+          "componentId": "8b32089e-173c-46b6-98b5-cd128005aacc"
+        },
+        {
+          "componentId": "2891aee0-4ae6-478a-b496-7f00f1ec7f97"
+        },
+        {
+          "componentId": "ee13873c-f7a0-49d9-85e6-266b6e0c6808"
+        },
+        {
+          "componentId": "7e1c832d-17ce-4887-85d9-e98b4a8ec24a"
+        },
+        {
+          "componentId": "921c11c7-a62b-445e-a768-2dfac91de49b"
+        }
+      ],
+      "layoutType": "list",
+      "locked": true,
+      "layoutOptions": {}
+    },
+    {
+      "id": "2891aee0-4ae6-478a-b496-7f00f1ec7f97",
+      "type": "button",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2025-11-22T08:51:32.476Z",
+      "updateAt": "2026-01-22T23:28:24.007Z",
+      "text": "今日日记",
+      "buttonType": "common",
+      "clickActions": [
+        {
+          "type": "CallCommand",
+          "id": "131dfdb7-f50a-4f44-9021-a2649ad64c91",
+          "options": {
+            "commandId": "daily-notes",
+            "commandName": "日记: 打开/创建今天的日记"
+          }
+        }
+      ],
+      "checkActions": [],
+      "uncheckActions": [],
+      "isChecked": false,
+      "fullWidth": true,
+      "title": "打开今日日记",
+      "icon": "MousePointerClick"
+    },
+    {
+      "id": "8b32089e-173c-46b6-98b5-cd128005aacc",
+      "type": "button",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2025-11-22T08:51:32.476Z",
+      "updateAt": "2026-01-08T13:01:24.680Z",
+      "text": "打字打卡",
+      "buttonType": "common",
+      "clickActions": [
+        {
+          "type": "OpenUrl",
+          "id": "131dfdb7-f50a-4f44-9021-a2649ad64c91",
+          "options": {
+            "commandId": "daily-notes",
+            "commandName": "日记: 打开/创建今天的日记",
+            "url": "https://dazi.91xjr.com/typing/train/py_word.html",
+            "openInExternal": "true"
+          }
+        }
+      ],
+      "checkActions": [],
+      "uncheckActions": [],
+      "isChecked": false,
+      "fullWidth": true,
+      "title": "打字打卡",
+      "icon": "AlignHorizontalJustifyCenter"
+    },
+    {
+      "id": "7e1c832d-17ce-4887-85d9-e98b4a8ec24a",
+      "type": "button",
+      "titleAlign": "center",
+      "tabTitle": "创建待办",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2026-01-18T01:30:59.938Z",
+      "updateAt": "2026-01-22T23:29:09.089Z",
+      "text": "创建待办",
+      "buttonType": "common",
+      "clickActions": [
+        {
+          "type": "CreateFile",
+          "id": "86af422f-5b7a-4356-a17f-faed02617f8b",
+          "options": {
+            "templateFilePath": "00_template/T-待办模版.md",
+            "targetFolder": "待办",
+            "openPageIn": "split"
+          }
+        }
+      ],
+      "checkActions": [],
+      "uncheckActions": [],
+      "isChecked": false,
+      "fullWidth": true,
+      "icon": "FileSearch2",
+      "title": "创建待办"
+    },
+    {
+      "id": "ee13873c-f7a0-49d9-85e6-266b6e0c6808",
+      "type": "button",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2025-11-22T08:51:32.476Z",
+      "updateAt": "2026-01-22T23:27:26.400Z",
+      "text": "灵感收集",
+      "buttonType": "common",
+      "clickActions": [
+        {
+          "type": "OpenFile",
+          "id": "131dfdb7-f50a-4f44-9021-a2649ad64c91",
+          "options": {
+            "commandId": "daily-notes",
+            "commandName": "日记: 打开/创建今天的日记",
+            "filePath": "resource/components/md/灵感.md",
+            "fileName": "灵感.md",
+            "openPageIn": "tab"
+          }
+        }
+      ],
+      "checkActions": [],
+      "uncheckActions": [],
+      "isChecked": false,
+      "fullWidth": true,
+      "title": "打开今日日记",
+      "icon": "MonitorDown"
+    },
+    {
+      "id": "921c11c7-a62b-445e-a768-2dfac91de49b",
+      "type": "markdown",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-02-09T00:51:12.293Z",
+      "updateAt": "2026-02-09T00:51:16.469Z",
+      "maxHeight": 300,
+      "contentAlign": "left",
+      "markdownsSource": "content",
+      "markdownValue": "###  精力值评分参考\n- **1-3分**：非常疲惫，难以专注\n- **4-5分**：精力一般，效率较低\n- **6-7分**：状态良好，正常发挥\n- **8-9分**：精力充沛，高效专注\n- **10分**：巅峰状态，创造力强"
+    }
+  ],
+  "rootComponentId": "db45bdd2-230f-4afa-99b8-ba2d7f8070b7",
+  "version": 3.1
+}

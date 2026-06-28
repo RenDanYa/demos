@@ -1,0 +1,820 @@
+{
+  "components": [
+    {
+      "id": "c85cbda2-e747-420e-b54f-bd67a3a302bd",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showShadow": false,
+      "createAt": "2024-05-13T08:01:51.193Z",
+      "updateAt": "2025-11-03T06:18:58.759Z",
+      "components": [
+        {
+          "componentId": "f87878bc-4452-40be-9dcd-6f914c60dfde",
+          "layout": {
+            "mobile": {
+              "x": 0,
+              "y": 0,
+              "w": 4,
+              "h": 4
+            },
+            "laptop": {
+              "x": 0,
+              "y": 7,
+              "w": 12,
+              "h": 39
+            }
+          }
+        },
+        {
+          "componentId": "ee5aaa0f-084a-4e63-bc07-28b2903c4fa0",
+          "layout": {
+            "mobile": {
+              "x": 0,
+              "y": 4,
+              "w": 4,
+              "h": 4
+            },
+            "laptop": {
+              "x": 0,
+              "y": 0,
+              "w": 2,
+              "h": 7
+            }
+          }
+        },
+        {
+          "componentId": "c1c2b15f-0c81-4817-b24e-5fe96c21a506",
+          "layout": {
+            "mobile": {
+              "x": 0,
+              "y": 8,
+              "w": 4,
+              "h": 4
+            },
+            "laptop": {
+              "x": 2,
+              "y": 0,
+              "w": 2,
+              "h": 7
+            }
+          }
+        },
+        {
+          "componentId": "4622f9c8-34e1-4da3-935f-e9bffda96b52",
+          "layout": {
+            "mobile": {
+              "x": 0,
+              "y": 12,
+              "w": 4,
+              "h": 4
+            },
+            "laptop": {
+              "x": 4,
+              "y": 0,
+              "w": 3,
+              "h": 7
+            }
+          }
+        }
+      ],
+      "layoutType": "grid"
+    },
+    {
+      "id": "f87878bc-4452-40be-9dcd-6f914c60dfde",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "组合",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showShadow": false,
+      "createAt": "2024-12-27T11:10:56.348Z",
+      "updateAt": "2025-11-03T04:55:50.248Z",
+      "components": [
+        {
+          "componentId": "173037e6-c89f-4c87-bfe2-a5557ebd26ab"
+        },
+        {
+          "componentId": "30090b1a-636f-4495-924e-be1fcbdf12d4"
+        },
+        {
+          "componentId": "89f04535-7e5b-4884-b4d2-50fde1465f33"
+        }
+      ],
+      "layoutType": "tab",
+      "locked": false,
+      "layoutOptions": {}
+    },
+    {
+      "id": "ee5aaa0f-084a-4e63-bc07-28b2903c4fa0",
+      "type": "count",
+      "titleAlign": "center",
+      "tabTitle": "🤺 总计\n",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showShadow": false,
+      "createAt": "2024-12-27T11:11:15.406Z",
+      "updateAt": "2025-12-01T10:11:02.996Z",
+      "countValueAlign": "center",
+      "contentPrefix": "",
+      "contentSuffix": "篇",
+      "countType": "number",
+      "precision": 0,
+      "query": {
+        "valueType": "totalRecords",
+        "value": 100,
+        "filter": {
+          "id": "a89cca03-bb0b-4af4-9bb8-c0eec69cdbbc",
+          "type": "group",
+          "operator": "and",
+          "conditions": [
+            {
+              "id": "3ea01221-a846-4e18-b528-4daff4358c65",
+              "type": "filter",
+              "operator": "contains",
+              "property": "${file.parent}",
+              "value": "05_long_project/书/豆瓣",
+              "conditions": []
+            }
+          ]
+        },
+        "sort": {
+          "orders": []
+        }
+      },
+      "totalQuery": {
+        "valueType": "constant",
+        "value": 100,
+        "filter": {
+          "id": "03b29510-572d-46a8-8909-2b790ce061b6",
+          "type": "group",
+          "operator": "and",
+          "conditions": []
+        },
+        "sort": {
+          "orders": []
+        }
+      },
+      "title": "🤺 总计\n"
+    },
+    {
+      "id": "4622f9c8-34e1-4da3-935f-e9bffda96b52",
+      "type": "countdown",
+      "titleAlign": "center",
+      "tabTitle": "⌛️距下次发布还有",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showShadow": false,
+      "createAt": "2024-12-27T11:12:12.795Z",
+      "updateAt": "2025-11-03T04:57:05.819Z",
+      "repeatType": "monthly",
+      "pictureFit": "cover",
+      "picturePosition": "left",
+      "showEndDateTime": true,
+      "endDayOfWeek": 0,
+      "endHour": 14,
+      "endMinute": 0,
+      "endSecond": 0,
+      "title": "字数",
+      "endDayOfMonth": 20,
+      "timeTextPattern": "d"
+    },
+    {
+      "id": "30090b1a-636f-4495-924e-be1fcbdf12d4",
+      "type": "dynamicDataView",
+      "titleAlign": "center",
+      "tabTitle": "发布计划",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showShadow": false,
+      "createAt": "2024-05-13T08:13:00.687Z",
+      "updateAt": "2025-12-04T00:36:06.371Z",
+      "viewType": "table",
+      "properties": [
+        {
+          "id": "__componentsTitleProperty_0x7c00",
+          "name": "文件名",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "4a14642d-e483-4c9f-9c7c-606eec2a3f88",
+          "name": "tags",
+          "type": "multiSelect",
+          "isShow": false,
+          "options": {
+            "width": "97"
+          }
+        },
+        {
+          "id": "bf5cf40d-5b34-47ca-8b8a-81c1efaa6adc",
+          "name": "开始",
+          "isShow": true,
+          "type": "button",
+          "options": {
+            "action": {
+              "type": "updateProperty",
+              "properties": [
+                {
+                  "id": "2e77b24d-8c5b-4ee5-9c38-bb732d1d3381",
+                  "name": "CreateDate",
+                  "type": "datetime",
+                  "value": "now()",
+                  "valueSource": "formula",
+                  "modifier": "replaceValue"
+                },
+                {
+                  "id": "6601aea4-9263-4e2c-a670-ac94870225bc",
+                  "name": "status",
+                  "type": "string",
+                  "value": "DOING",
+                  "valueSource": "constant",
+                  "modifier": "replaceValue"
+                }
+              ]
+            },
+            "width": "80"
+          }
+        },
+        {
+          "id": "d8f2bfb4-b4c7-414f-b163-7b3b28e468f4",
+          "name": "完成",
+          "isShow": true,
+          "type": "button",
+          "options": {
+            "action": {
+              "type": "updateProperty",
+              "properties": [
+                {
+                  "id": "9cee9ca9-b658-45ee-9eb7-94686aee8ae5",
+                  "name": "status",
+                  "type": "string",
+                  "value": "DONE"
+                },
+                {
+                  "id": "89d9a3b8-d434-42dc-a29b-cffdc50c8d17",
+                  "name": "DoneDate",
+                  "type": "string",
+                  "value": "now()",
+                  "valueSource": "formula",
+                  "modifier": "replaceValue"
+                }
+              ]
+            },
+            "width": "82"
+          },
+          "alias": ""
+        },
+        {
+          "id": "9484087c-b982-4530-b66f-716eb8e1d3ff",
+          "name": "status",
+          "type": "select",
+          "isShow": true,
+          "options": {
+            "width": "99"
+          },
+          "alias": ""
+        },
+        {
+          "id": "9e52f1aa-6f52-4653-8ce3-45c22a8df32f",
+          "name": "CreateDate",
+          "type": "datetime",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "165"
+          }
+        },
+        {
+          "id": "c6bd0872-c9e0-4739-adf2-e22ce60d4e63",
+          "name": "DoneDate",
+          "type": "datetime",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "116"
+          }
+        },
+        {
+          "id": "aade62d0-85ce-4f45-9434-48fa3567b0f9",
+          "name": "tasks",
+          "isShow": true,
+          "type": "taskList",
+          "options": {
+            "showTaskList": true,
+            "showAllTasks": false,
+            "hideTaskFields": false,
+            "timeRecordStyle": "tasks",
+            "insertPosition": {
+              "position": "BottomOfNote",
+              "headingLine": ""
+            },
+            "width": "159"
+          }
+        },
+        {
+          "id": "761d03b6-bc12-4f29-882a-f39e0b385c94",
+          "name": "module",
+          "type": "link",
+          "isShow": true,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "9e885094-4534-42a4-ab9a-dff8ffbfb6fa",
+          "name": "${file.ctime}",
+          "isShow": true,
+          "type": "datetime",
+          "options": {}
+        }
+      ],
+      "templates": [
+        {
+          "id": "ca750bc1-508b-49ee-9ca6-93455c5b9b6e",
+          "path": "00_template/T-工作模版.md",
+          "name": "T-工作模版.md",
+          "type": "normal"
+        }
+      ],
+      "groups": [],
+      "viewOptions": {
+        "openPageIn": "modal",
+        "openPageAfterCreate": false,
+        "itemSize": "components--page-card-medium",
+        "showPropertyName": false,
+        "showAllProperties": false,
+        "items": [],
+        "cover": {
+          "type": "pageFirstImage",
+          "value": "",
+          "fit": "contains",
+          "layout": "components--page-card-cover-landscape"
+        },
+        "headColumnWidth": "266",
+        "headColumnStatisticType": "count",
+        "pinFiltersToMenuBar": true
+      },
+      "filter": {
+        "id": "bc9afa86-0c6d-4468-8401-583c2f7074d6",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "75cf6053-82c9-4c1f-a37e-eaedfedf7460",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.parent}",
+            "value": "05_Task_Todo",
+            "conditions": []
+          }
+        ]
+      },
+      "newPageLocation": {
+        "location": "05_Task_Todo"
+      },
+      "newPageNameFormat": "{{date: YYMMDD}} ",
+      "showTitle": false,
+      "groupBy": "module",
+      "groupStates": {
+        "sort": "nameAsc",
+        "format": "none",
+        "statics": [],
+        "orders": [],
+        "hiddens": [
+          "__$uncategorizedGroup"
+        ],
+        "collapseds": [
+          "[[Obsidian]]",
+          "[[Components]]"
+        ]
+      },
+      "colorfulGroups": true,
+      "title": "列表"
+    },
+    {
+      "id": "89f04535-7e5b-4884-b4d2-50fde1465f33",
+      "type": "dynamicDataView",
+      "titleAlign": "center",
+      "tabTitle": "发布计划",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showShadow": false,
+      "createAt": "2024-05-13T08:13:00.687Z",
+      "updateAt": "2025-11-03T04:55:54.965Z",
+      "viewType": "timeline",
+      "properties": [
+        {
+          "id": "__componentsTitleProperty_0x7c00",
+          "name": "文件名",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "9e52f1aa-6f52-4653-8ce3-45c22a8df32f",
+          "name": "createDate",
+          "type": "datetime",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "115"
+          }
+        },
+        {
+          "id": "4a14642d-e483-4c9f-9c7c-606eec2a3f88",
+          "name": "tags",
+          "type": "multiSelect",
+          "isShow": false,
+          "options": {
+            "width": "97"
+          }
+        },
+        {
+          "id": "d8f2bfb4-b4c7-414f-b163-7b3b28e468f4",
+          "name": "完成",
+          "isShow": false,
+          "type": "button",
+          "options": {
+            "action": {
+              "type": "updateProperty",
+              "properties": [
+                {
+                  "id": "6fbf6fe4-f23a-4f25-bf2b-bbc76c196bf4",
+                  "name": "doneTime",
+                  "type": "datetime",
+                  "value": "$now"
+                },
+                {
+                  "id": "9cee9ca9-b658-45ee-9eb7-94686aee8ae5",
+                  "name": "status",
+                  "type": "string",
+                  "value": "DONE"
+                }
+              ]
+            },
+            "width": "82"
+          },
+          "alias": ""
+        },
+        {
+          "id": "9484087c-b982-4530-b66f-716eb8e1d3ff",
+          "name": "status",
+          "type": "select",
+          "isShow": false,
+          "options": {
+            "width": "95"
+          },
+          "alias": ""
+        },
+        {
+          "id": "c6bd0872-c9e0-4739-adf2-e22ce60d4e63",
+          "name": "DoneDate",
+          "type": "text",
+          "isShow": false,
+          "wrap": false,
+          "options": {
+            "width": "200"
+          }
+        },
+        {
+          "id": "aade62d0-85ce-4f45-9434-48fa3567b0f9",
+          "name": "tasks",
+          "isShow": false,
+          "type": "taskList",
+          "options": {
+            "showTaskList": true,
+            "showAllTasks": false,
+            "hideTaskFields": false,
+            "timeRecordStyle": "tasks",
+            "insertPosition": {
+              "position": "BottomOfNote",
+              "headingLine": ""
+            },
+            "width": "159"
+          }
+        },
+        {
+          "id": "761d03b6-bc12-4f29-882a-f39e0b385c94",
+          "name": "module",
+          "type": "link",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        }
+      ],
+      "templates": [
+        {
+          "id": "ca750bc1-508b-49ee-9ca6-93455c5b9b6e",
+          "path": "00_template/T-工作模版.md",
+          "name": "T-工作模版.md",
+          "type": "normal"
+        }
+      ],
+      "groups": [],
+      "viewOptions": {
+        "openPageIn": "modal",
+        "openPageAfterCreate": false,
+        "itemSize": "components--page-card-medium",
+        "showPropertyName": false,
+        "showAllProperties": false,
+        "items": [],
+        "cover": {
+          "type": "pageFirstImage",
+          "value": "",
+          "fit": "contains",
+          "layout": "components--page-card-cover-landscape"
+        },
+        "headColumnWidth": "266",
+        "headColumnStatisticType": "count",
+        "pinFiltersToMenuBar": true,
+        "dateProperty": "CreateDate",
+        "endDateProperty": "DoneDate",
+        "colorProperty": "status",
+        "hideTable": false
+      },
+      "filter": {
+        "id": "bc9afa86-0c6d-4468-8401-583c2f7074d6",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "75cf6053-82c9-4c1f-a37e-eaedfedf7460",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.parent}",
+            "value": "05_Task_Todo",
+            "conditions": []
+          }
+        ]
+      },
+      "newPageLocation": {
+        "location": "05_Task_Todo"
+      },
+      "newPageNameFormat": "{{date: YYMMDD}} ",
+      "showTitle": true,
+      "groupBy": "",
+      "groupStates": {
+        "sort": "nameAsc",
+        "format": "none",
+        "statics": [],
+        "orders": [],
+        "hiddens": [],
+        "collapseds": []
+      },
+      "colorfulGroups": true,
+      "title": "甘特图"
+    },
+    {
+      "id": "173037e6-c89f-4c87-bfe2-a5557ebd26ab",
+      "type": "dynamicDataView",
+      "titleAlign": "center",
+      "tabTitle": "发布计划",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showShadow": false,
+      "createAt": "2024-05-13T08:13:00.687Z",
+      "updateAt": "2025-11-03T04:55:54.965Z",
+      "viewType": "kanban",
+      "properties": [
+        {
+          "id": "__componentsTitleProperty_0x7c00",
+          "name": "文件名",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "9e52f1aa-6f52-4653-8ce3-45c22a8df32f",
+          "name": "createDate",
+          "type": "datetime",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "115"
+          }
+        },
+        {
+          "id": "4a14642d-e483-4c9f-9c7c-606eec2a3f88",
+          "name": "tags",
+          "type": "multiSelect",
+          "isShow": false,
+          "options": {
+            "width": "97"
+          }
+        },
+        {
+          "id": "d8f2bfb4-b4c7-414f-b163-7b3b28e468f4",
+          "name": "完成",
+          "isShow": true,
+          "type": "button",
+          "options": {
+            "action": {
+              "type": "updateProperty",
+              "properties": [
+                {
+                  "id": "6fbf6fe4-f23a-4f25-bf2b-bbc76c196bf4",
+                  "name": "doneTime",
+                  "type": "datetime",
+                  "value": "$now"
+                },
+                {
+                  "id": "9cee9ca9-b658-45ee-9eb7-94686aee8ae5",
+                  "name": "status",
+                  "type": "string",
+                  "value": "DONE"
+                }
+              ]
+            },
+            "width": "82"
+          },
+          "alias": ""
+        },
+        {
+          "id": "9484087c-b982-4530-b66f-716eb8e1d3ff",
+          "name": "status",
+          "type": "select",
+          "isShow": true,
+          "options": {
+            "width": "95"
+          },
+          "alias": ""
+        },
+        {
+          "id": "c6bd0872-c9e0-4739-adf2-e22ce60d4e63",
+          "name": "DoneDate",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "200"
+          }
+        },
+        {
+          "id": "aade62d0-85ce-4f45-9434-48fa3567b0f9",
+          "name": "tasks",
+          "isShow": true,
+          "type": "taskList",
+          "options": {
+            "showTaskList": true,
+            "showAllTasks": false,
+            "hideTaskFields": false,
+            "timeRecordStyle": "tasks",
+            "insertPosition": {
+              "position": "BottomOfNote",
+              "headingLine": ""
+            },
+            "width": "159"
+          }
+        },
+        {
+          "id": "761d03b6-bc12-4f29-882a-f39e0b385c94",
+          "name": "module",
+          "type": "link",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        }
+      ],
+      "templates": [
+        {
+          "id": "ca750bc1-508b-49ee-9ca6-93455c5b9b6e",
+          "path": "00_template/T-工作模版.md",
+          "name": "T-工作模版.md",
+          "type": "normal"
+        }
+      ],
+      "groups": [],
+      "viewOptions": {
+        "openPageIn": "modal",
+        "openPageAfterCreate": false,
+        "itemSize": "components--page-card-medium",
+        "showPropertyName": false,
+        "showAllProperties": false,
+        "items": [],
+        "cover": {
+          "type": "pageFirstImage",
+          "value": "",
+          "fit": "contains",
+          "layout": "components--page-card-cover-landscape"
+        },
+        "headColumnWidth": "266",
+        "headColumnStatisticType": "count",
+        "pinFiltersToMenuBar": true
+      },
+      "filter": {
+        "id": "bc9afa86-0c6d-4468-8401-583c2f7074d6",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "75cf6053-82c9-4c1f-a37e-eaedfedf7460",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.parent}",
+            "value": "05_Task_Todo",
+            "conditions": []
+          }
+        ]
+      },
+      "newPageLocation": {
+        "location": "05_Task_Todo"
+      },
+      "newPageNameFormat": "{{date: YYMMDD}} ",
+      "showTitle": false,
+      "groupBy": "status",
+      "groupStates": {
+        "sort": "manual",
+        "format": "none",
+        "statics": [
+          "DOING",
+          "DONE",
+          "你好",
+          "__$uncategorizedGroup",
+          "TODO",
+          "COMPLETED"
+        ],
+        "orders": [
+          "TODO",
+          "COMPLETED",
+          "DOING"
+        ],
+        "hiddens": [
+          "你好",
+          "__$uncategorizedGroup",
+          "COMPLETED"
+        ],
+        "collapseds": []
+      },
+      "colorfulGroups": true,
+      "title": "进度"
+    },
+    {
+      "id": "c1c2b15f-0c81-4817-b24e-5fe96c21a506",
+      "type": "count",
+      "titleAlign": "center",
+      "tabTitle": "✅ 待办任务",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showShadow": false,
+      "createAt": "2024-12-27T11:11:15.406Z",
+      "updateAt": "2025-11-03T04:55:50.249Z",
+      "countValueAlign": "center",
+      "contentPrefix": "",
+      "contentSuffix": "篇",
+      "countType": "number",
+      "precision": 0,
+      "query": {
+        "valueType": "totalRecords",
+        "value": 100,
+        "filter": {
+          "id": "a89cca03-bb0b-4af4-9bb8-c0eec69cdbbc",
+          "type": "group",
+          "operator": "and",
+          "conditions": [
+            {
+              "id": "3ea01221-a846-4e18-b528-4daff4358c65",
+              "type": "filter",
+              "operator": "contains",
+              "property": "${file.parent}",
+              "value": "05_Task_Todo",
+              "conditions": []
+            },
+            {
+              "id": "39bccfc6-c400-4900-b4d7-1a074bcf424a",
+              "type": "filter",
+              "operator": "not_contains",
+              "property": "status",
+              "value": "DONE",
+              "conditions": []
+            }
+          ]
+        },
+        "sort": {
+          "orders": []
+        }
+      },
+      "totalQuery": {
+        "valueType": "constant",
+        "value": 100,
+        "filter": {
+          "id": "03b29510-572d-46a8-8909-2b790ce061b6",
+          "type": "group",
+          "operator": "and",
+          "conditions": []
+        },
+        "sort": {
+          "orders": []
+        }
+      },
+      "title": "✅ 待办任务"
+    }
+  ],
+  "rootComponentId": "c85cbda2-e747-420e-b54f-bd67a3a302bd",
+  "version": 3.1
+}

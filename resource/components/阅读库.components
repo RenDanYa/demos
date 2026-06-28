@@ -1,0 +1,2853 @@
+{
+  "components": [
+    {
+      "id": "bde5561a-88e2-4da5-a3d4-351ec22bba2b",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showShadow": false,
+      "createAt": "2024-12-13T04:44:07.769Z",
+      "updateAt": "2026-01-19T23:27:34.213Z",
+      "components": [
+        {
+          "componentId": "b90cd23a-70c0-467d-9a9b-9e3c83d5122b",
+          "layout": {
+            "mobile": {
+              "x": 0,
+              "y": 0,
+              "w": 4,
+              "h": 4
+            },
+            "laptop": {
+              "x": 0,
+              "y": 0,
+              "w": 4,
+              "h": 4
+            }
+          }
+        },
+        {
+          "componentId": "ab9ae479-f9ac-4c76-a37e-ef63c830d8f2"
+        },
+        {
+          "componentId": "fe5f235e-254d-4b8d-a475-8ef366536652"
+        },
+        {
+          "componentId": "e1fe219d-d715-4c26-95e4-594e9b5e82a7"
+        },
+        {
+          "componentId": "7dabc784-cad9-4643-bd47-c7c05b7db67c"
+        }
+      ],
+      "layoutType": "tab",
+      "locked": false,
+      "layoutOptions": {}
+    },
+    {
+      "id": "2d5833ae-2bf4-420f-bc61-79494db86038",
+      "type": "count",
+      "titleAlign": "center",
+      "tabTitle": "📚 书库量",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showShadow": true,
+      "createAt": "2024-12-13T04:47:59.487Z",
+      "updateAt": "2026-01-07T08:17:35.738Z",
+      "countValueAlign": "center",
+      "contentPrefix": "",
+      "contentSuffix": "",
+      "countType": "number",
+      "precision": 0,
+      "query": {
+        "valueType": "totalRecords",
+        "value": 100,
+        "filter": {
+          "id": "6ceceacf-02bb-47a0-8e15-ce7dbfff2050",
+          "type": "group",
+          "operator": "and",
+          "conditions": [
+            {
+              "id": "9cf73f94-2aa0-46ee-9c79-dd5af34a79f2",
+              "type": "filter",
+              "operator": "equals",
+              "property": "${file.parent}",
+              "value": "05_long_project/书/豆瓣",
+              "conditions": []
+            },
+            {
+              "id": "2eff9789-b2c6-4ff3-b043-6d101838bd73",
+              "type": "filter",
+              "operator": "equals",
+              "property": "${file.extension}",
+              "value": "md",
+              "conditions": []
+            }
+          ]
+        },
+        "sort": {
+          "orders": []
+        }
+      },
+      "totalQuery": {
+        "valueType": "constant",
+        "value": 100,
+        "filter": {
+          "id": "946fd8db-0b55-4c4c-b072-680f8ab726a8",
+          "type": "group",
+          "operator": "and",
+          "conditions": []
+        },
+        "sort": {
+          "orders": []
+        }
+      },
+      "title": "📚 书库量"
+    },
+    {
+      "id": "c2a7d53e-1a52-4605-ba8a-ef115692b7a7",
+      "type": "count",
+      "titleAlign": "center",
+      "tabTitle": "🎉 已完成阅读",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showShadow": true,
+      "createAt": "2024-12-13T04:47:59.487Z",
+      "updateAt": "2026-01-07T08:17:35.739Z",
+      "countValueAlign": "center",
+      "contentPrefix": "",
+      "contentSuffix": "",
+      "countType": "number",
+      "precision": 0,
+      "query": {
+        "valueType": "totalRecords",
+        "value": 100,
+        "filter": {
+          "id": "6ceceacf-02bb-47a0-8e15-ce7dbfff2050",
+          "type": "group",
+          "operator": "and",
+          "conditions": [
+            {
+              "id": "b50d87df-6d59-4d2b-960f-803de9a422c3",
+              "type": "filter",
+              "operator": "equals",
+              "property": "${file.parent}",
+              "value": "05_long_project/书/豆瓣",
+              "conditions": []
+            },
+            {
+              "id": "e3f8ac5d-3707-4cb9-8df9-792527b172de",
+              "type": "group",
+              "operator": "or",
+              "conditions": [
+                {
+                  "id": "aa87b56f-46c8-435b-8516-e1ec295e4905",
+                  "type": "filter",
+                  "operator": "contains",
+                  "property": "status",
+                  "value": "已笔记",
+                  "conditions": []
+                },
+                {
+                  "id": "31d66c6d-fbe3-434c-b906-6047940f0b9e",
+                  "type": "filter",
+                  "operator": "contains",
+                  "property": "status",
+                  "value": "已看完",
+                  "conditions": []
+                },
+                {
+                  "id": "e3e958cd-79b2-46dd-8c40-a67970e3f480",
+                  "type": "filter",
+                  "operator": "contains",
+                  "property": "status",
+                  "value": "已思考",
+                  "conditions": []
+                }
+              ]
+            }
+          ]
+        },
+        "sort": {
+          "orders": []
+        }
+      },
+      "totalQuery": {
+        "valueType": "constant",
+        "value": 100,
+        "filter": {
+          "id": "946fd8db-0b55-4c4c-b072-680f8ab726a8",
+          "type": "group",
+          "operator": "and",
+          "conditions": []
+        },
+        "sort": {
+          "orders": []
+        }
+      },
+      "title": "🎉 已完成阅读"
+    },
+    {
+      "id": "699e4171-afab-4268-9121-ba1531fe1184",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "明细",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showShadow": false,
+      "createAt": "2024-12-13T04:53:26.433Z",
+      "updateAt": "2026-01-19T23:17:50.337Z",
+      "components": [
+        {
+          "componentId": "5ef33371-f381-45fb-8553-c774438ef2cc"
+        },
+        {
+          "componentId": "2b336b0b-fabe-4f76-87fb-d818d7343b6b"
+        },
+        {
+          "componentId": "35faec0a-9011-4649-9f0c-e589ff534613"
+        },
+        {
+          "componentId": "0f2fc293-9c66-4aeb-a3bb-722a080efb41"
+        },
+        {
+          "componentId": "7018fa4a-fbcc-48c4-922b-0e92ae921dfa"
+        },
+        {
+          "componentId": "00359f33-2412-4137-9ff5-bfd24a238e62"
+        },
+        {
+          "componentId": "21b4c0de-6b08-4006-a701-0c856b4f2812"
+        }
+      ],
+      "layoutType": "tab",
+      "locked": false,
+      "layoutOptions": {},
+      "title": "明细"
+    },
+    {
+      "id": "d62a83d7-ca59-44d8-b733-b3f9a788518d",
+      "type": "count",
+      "titleAlign": "center",
+      "tabTitle": "🔥 月目标",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showShadow": true,
+      "createAt": "2024-12-13T04:47:59.487Z",
+      "updateAt": "2026-01-07T08:17:35.741Z",
+      "countValueAlign": "center",
+      "contentPrefix": "",
+      "contentSuffix": "%",
+      "countType": "percent",
+      "precision": 0,
+      "query": {
+        "valueType": "totalRecords",
+        "value": 100,
+        "filter": {
+          "id": "6ceceacf-02bb-47a0-8e15-ce7dbfff2050",
+          "type": "group",
+          "operator": "and",
+          "conditions": [
+            {
+              "id": "9cf73f94-2aa0-46ee-9c79-dd5af34a79f2",
+              "type": "filter",
+              "operator": "contains",
+              "property": "${file.parent}",
+              "value": "05_long_project/书/豆瓣",
+              "conditions": []
+            },
+            {
+              "id": "65b9bc6a-9e1d-4159-897e-702cb501c928",
+              "type": "filter",
+              "operator": "equals",
+              "property": "status",
+              "value": "已思考",
+              "conditions": []
+            }
+          ]
+        },
+        "sort": {
+          "orders": []
+        },
+        "property": "${file.words}"
+      },
+      "totalQuery": {
+        "valueType": "constant",
+        "value": 4,
+        "filter": {
+          "id": "946fd8db-0b55-4c4c-b072-680f8ab726a8",
+          "type": "group",
+          "operator": "and",
+          "conditions": []
+        },
+        "sort": {
+          "orders": []
+        }
+      },
+      "title": "🔥 月目标"
+    },
+    {
+      "id": "21b4c0de-6b08-4006-a701-0c856b4f2812",
+      "type": "timeLine",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showShadow": true,
+      "createAt": "2024-12-13T05:08:22.652Z",
+      "updateAt": "2025-11-03T23:23:02.998Z",
+      "filter": {
+        "id": "a78b3aea-cff4-4ccb-a7fa-6b3aa81e5d14",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "5eec171a-c1b6-4da1-a461-48df32f278d1",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.parent}",
+            "value": "05_long_project/书/豆瓣",
+            "conditions": []
+          },
+          {
+            "id": "62858dec-6798-4b75-9e5d-a66bdc827b3f",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.extension}",
+            "value": "md",
+            "conditions": []
+          }
+        ]
+      },
+      "sort": {
+        "orders": [
+          {
+            "id": "d7103fe1-3be3-49f4-bd0e-3546f3e9f237",
+            "property": "${file.mtime}",
+            "direction": "desc",
+            "disabled": false
+          }
+        ]
+      },
+      "nodeTitle": {
+        "property": "createTime",
+        "format": "yyyy-MM-dd"
+      },
+      "nodeCover": {
+        "type": "image",
+        "coverTypeLabel": "节点封面",
+        "source": "property",
+        "sourceValue": "imageUrl"
+      },
+      "title": "",
+      "nodeStatus": {
+        "options": [
+          {
+            "id": "bfa808c8-cde3-4dc0-8ea1-607d34f91e70",
+            "value": "status",
+            "color": "#7bdcb5"
+          }
+        ],
+        "property": "status"
+      },
+      "titleElement": {
+        "properties": [
+          {
+            "id": "fc7365b6-e593-4bb0-86c6-8663518b673d",
+            "property": "title"
+          }
+        ]
+      },
+      "subtitleElement": {
+        "properties": []
+      }
+    },
+    {
+      "id": "0f2fc293-9c66-4aeb-a3bb-722a080efb41",
+      "type": "dynamicDataView",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2025-10-30T09:44:24.972Z",
+      "updateAt": "2025-12-01T10:12:36.039Z",
+      "viewType": "table",
+      "newPageNameFormat": "{{date:YYYYMMDDHHmmss}} ",
+      "properties": [
+        {
+          "id": "__componentsTitleProperty_0x7c00",
+          "name": "文件名",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "128"
+          }
+        },
+        {
+          "id": "596010af-7e35-4218-8d54-b40c5ea3cbe5",
+          "name": "title",
+          "type": "text",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "f0b7e5f3-99d2-4e66-a15e-718037cd0db9",
+          "name": "subTitle",
+          "type": "text",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "b2f38f83-b28a-4127-b2e4-4f296004a09f",
+          "name": "originalTitle",
+          "type": "text",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "823f8308-506f-43fc-ad55-b8d7c3d37770",
+          "name": "author",
+          "type": "multiSelect",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "118"
+          }
+        },
+        {
+          "id": "ba278233-1747-437b-8111-c9a279fae6c2",
+          "name": "score",
+          "type": "number",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "112"
+          }
+        },
+        {
+          "id": "c20f7e4a-42b2-4ca0-adb3-8f1a0a13cddb",
+          "name": "scoreStar",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "110"
+          }
+        },
+        {
+          "id": "fd0eda03-fae9-4e3f-b027-a4dff34b261d",
+          "name": "datePublished",
+          "type": "datetime",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "106"
+          }
+        },
+        {
+          "id": "7deb9fa1-1fa7-45f0-84b5-ffd2a575a32c",
+          "name": "publisher",
+          "type": "text",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "173f96a0-c36e-4564-a795-70dc96332ef8",
+          "name": "字数",
+          "isShow": false,
+          "type": "datetime",
+          "options": {}
+        },
+        {
+          "id": "6d056ae8-f0cb-4bba-99fb-856fa61a0161",
+          "name": "url",
+          "type": "link",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "380f182f-c6cb-413c-a841-e27b904bc587",
+          "name": "totalPage",
+          "type": "number",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "122"
+          }
+        },
+        {
+          "id": "9c1fb36d-d597-46ef-a1c0-893925e77157",
+          "name": "tags",
+          "type": "multiSelect",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "d14ab99e-35d7-4a22-b700-8573863d9254",
+          "name": "imageUrl",
+          "type": "link",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "b1978bc5-1a96-4c61-a45c-d4c6db270df3",
+          "name": "image",
+          "type": "text",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "eb566550-d0c3-4dbc-b0e8-9d1dc4393060",
+          "name": "price",
+          "type": "number",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "e99af522-4358-4d8c-a8aa-2263fc52eb88",
+          "name": "category",
+          "type": "multiSelect",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "110"
+          }
+        },
+        {
+          "id": "482316d4-93d8-484a-906c-ed10291f0ba6",
+          "name": "status",
+          "type": "text",
+          "isShow": false,
+          "wrap": false,
+          "options": {
+            "width": "79"
+          }
+        },
+        {
+          "id": "1e517872-c675-4df2-95bd-b230f175abc1",
+          "name": "PC地址",
+          "type": "link",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "6bd30656-7aa8-42ea-87dc-2104742620fa",
+          "name": "pageCategory",
+          "isShow": true,
+          "type": "text",
+          "options": {
+            "width": "92"
+          }
+        },
+        {
+          "id": "3c336330-ffca-419b-93a7-fcc77ab1b68e",
+          "name": "scoreCategory",
+          "isShow": true,
+          "type": "text",
+          "options": {
+            "width": "158"
+          }
+        },
+        {
+          "id": "285147e4-1e60-4ccb-9038-75391576f548",
+          "name": "按钮",
+          "isShow": true,
+          "type": "button",
+          "options": {
+            "action": {
+              "type": "updateProperty",
+              "properties": [
+                {
+                  "id": "d63721a8-12b9-476e-8567-05d2583b4da1",
+                  "name": "status",
+                  "type": "string",
+                  "value": "已看完",
+                  "valueSource": "constant",
+                  "modifier": "replaceValue"
+                }
+              ]
+            },
+            "width": "110"
+          },
+          "alias": "阅读完毕"
+        },
+        {
+          "id": "a28c41fc-ef5a-4249-aa95-85c7ca861103",
+          "name": "微信读书",
+          "type": "link",
+          "isShow": true,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "91cca2db-80a3-4a54-a56d-0c7b803b240c",
+          "name": "${file.mtime}",
+          "isShow": false,
+          "type": "datetime",
+          "options": {}
+        }
+      ],
+      "templates": [],
+      "groups": [],
+      "colorfulGroups": false,
+      "viewOptions": {
+        "openPageIn": "tab",
+        "openPageAfterCreate": true,
+        "items": [],
+        "pinFiltersToMenuBar": false,
+        "hideHeaderMenu": false,
+        "showGrid": false,
+        "heightType": "fixed",
+        "heightValue": 400,
+        "rowHeight": 32
+      },
+      "groupStates": {
+        "sort": "nameAsc",
+        "statics": [],
+        "orders": [],
+        "hiddens": [],
+        "collapseds": []
+      },
+      "filter": {
+        "id": "e3b55d5f-4d93-488d-851a-bcca26b40c91",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "c84e5afd-f2d2-46c9-ac93-0972f4bc24a5",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.parent}",
+            "value": "05_long_project/书/豆瓣",
+            "conditions": []
+          },
+          {
+            "id": "d56f362f-fe18-4deb-8577-e5271d237021",
+            "type": "filter",
+            "operator": "contains",
+            "property": "${file.extension}",
+            "value": "md",
+            "conditions": []
+          },
+          {
+            "id": "6927ebd9-ae04-4083-b38b-e686ff6d18c6",
+            "type": "filter",
+            "operator": "not_equals",
+            "property": "status",
+            "value": "已笔记",
+            "conditions": []
+          },
+          {
+            "id": "4e4a2a9e-be8b-4e1d-8147-9d219cd65496",
+            "type": "jsQuery",
+            "operator": "contains",
+            "property": "${file.tags}",
+            "value": "!['历史', '政治', '文学', '经济学', '人物传记'].some(str => $item.frontmatter.category?.includes(str))",
+            "conditions": []
+          },
+          {
+            "id": "47b70bde-deaa-438b-9a39-e6f34325c5f2",
+            "type": "filter",
+            "operator": "less_than",
+            "property": "totalPage",
+            "value": "500",
+            "conditions": []
+          }
+        ]
+      },
+      "title": "豆瓣书库",
+      "sort": {
+        "orders": [
+          {
+            "id": "e24014e4-1390-45b0-8a57-12f5bddc0abc",
+            "property": "score",
+            "direction": "desc",
+            "disabled": false
+          },
+          {
+            "id": "12976c9a-b262-407e-b98f-117da48cb125",
+            "property": "totalPage",
+            "direction": "asc",
+            "disabled": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "83262dbe-99f1-496a-9d0c-4dde75d35e10",
+      "type": "chart",
+      "titleAlign": "left",
+      "tabTitle": "评分分布",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showShadow": true,
+      "createAt": "2024-12-13T05:00:18.258Z",
+      "updateAt": "2026-01-19T23:12:28.606Z",
+      "chartType": "bar",
+      "filter": {
+        "id": "b8bd417d-3ba9-4301-b7ce-40fac155ccb3",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "ef51db58-d3b5-4ece-a631-0c318009a28e",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.parent}",
+            "value": "05_long_project/书/豆瓣",
+            "conditions": []
+          },
+          {
+            "id": "552be2d0-0052-4335-b329-18b84f45ba02",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.extension}",
+            "value": "md",
+            "conditions": []
+          },
+          {
+            "id": "0ba742bd-d170-4565-8a67-d1d2f094fa85",
+            "type": "filter",
+            "operator": "not_contains",
+            "property": "status",
+            "value": "已笔记",
+            "conditions": []
+          }
+        ]
+      },
+      "labelProperty": "scoreCategory",
+      "labelFormat": "$none",
+      "valueProperty": "$file_count",
+      "valuePrecision": 0,
+      "sortField": "xAxisValue",
+      "sortOrder": "asc",
+      "maxHeight": 450,
+      "chartColorSet": "1ac16c31-99d3-4432-80e9-fb500a31fb17",
+      "chartLabelPosition": "hidden",
+      "showDataValue": true,
+      "valueScaleStartFromZero": true,
+      "smoothLine": false,
+      "options": {},
+      "title": "评分分布",
+      "valueFormatPattern": "yyyy-MM",
+      "enableMarkLine": false,
+      "labelRotation": 30,
+      "customizeColorSets": [
+        {
+          "id": "ac7a9a97-7b47-458c-b873-6f54b309c111",
+          "colors": [
+            "#0693e3cc",
+            "#d34ad099"
+          ]
+        },
+        {
+          "id": "1ac16c31-99d3-4432-80e9-fb500a31fb17",
+          "colors": [
+            "#7749bab3"
+          ]
+        }
+      ],
+      "categoryProperty": "scoreCategory",
+      "categoryFormatPattern": "yyyy-MM",
+      "series": [
+        {
+          "id": "ef652397-3123-4636-8804-343a817de0f5",
+          "name": "$file_count",
+          "precision": 0
+        }
+      ]
+    },
+    {
+      "id": "1b9c6b00-07d0-40e0-87fe-2ac8dfa54e0c",
+      "type": "chart",
+      "titleAlign": "left",
+      "tabTitle": "每月阅读时长",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showShadow": true,
+      "createAt": "2024-12-13T05:00:18.258Z",
+      "updateAt": "2026-01-19T23:12:50.283Z",
+      "chartType": "bar",
+      "filter": {
+        "id": "b8bd417d-3ba9-4301-b7ce-40fac155ccb3",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "ef51db58-d3b5-4ece-a631-0c318009a28e",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.parent}",
+            "value": "05_long_project/书/微信",
+            "conditions": []
+          },
+          {
+            "id": "552be2d0-0052-4335-b329-18b84f45ba02",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.extension}",
+            "value": "md",
+            "conditions": []
+          }
+        ]
+      },
+      "labelProperty": "category",
+      "labelFormat": "$timeFormat",
+      "valueProperty": "$file_count",
+      "valuePrecision": 0,
+      "sortField": "xAxisValue",
+      "sortOrder": "asc",
+      "maxHeight": 450,
+      "chartColorSet": "7f1b763d-05e5-423b-8e9e-ed067dc90bca",
+      "chartLabelPosition": "hidden",
+      "showDataValue": true,
+      "valueScaleStartFromZero": true,
+      "smoothLine": false,
+      "options": {},
+      "title": "每月阅读时长",
+      "valueFormatPattern": "yyyy-MM",
+      "enableMarkLine": false,
+      "labelRotation": 0,
+      "customizeColorSets": [
+        {
+          "id": "ac7a9a97-7b47-458c-b873-6f54b309c111",
+          "colors": [
+            "#0693e3cc",
+            "#d34ad099"
+          ]
+        },
+        {
+          "id": "1ac16c31-99d3-4432-80e9-fb500a31fb17",
+          "colors": [
+            "#7749bab3"
+          ]
+        },
+        {
+          "id": "7f1b763d-05e5-423b-8e9e-ed067dc90bca",
+          "colors": [
+            "#3a9fcf"
+          ]
+        }
+      ],
+      "categoryProperty": "lastReadDate",
+      "categoryFormatPattern": "yyyy-MM",
+      "series": [
+        {
+          "id": "4c24028f-0b50-4754-b551-a96bf16cdb69",
+          "name": "readingTime",
+          "precision": 0
+        }
+      ]
+    },
+    {
+      "id": "5ef33371-f381-45fb-8553-c774438ef2cc",
+      "type": "dynamicDataView",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2025-11-01T08:02:59.394Z",
+      "updateAt": "2026-01-18T13:51:54.369Z",
+      "viewType": "timeline",
+      "newPageNameFormat": "{{date:YYYYMMDDHHmmss}} ",
+      "properties": [
+        {
+          "id": "__componentsTitleProperty_0x7c00",
+          "name": "文件名",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "62d234b5-7540-463e-9537-90e9fc6cf9c2",
+          "name": "progress",
+          "isShow": true,
+          "type": "text",
+          "options": {}
+        },
+        {
+          "id": "e53550a7-f93b-4324-8153-5956e619e6d7",
+          "name": "readingTime",
+          "isShow": true,
+          "type": "text",
+          "options": {}
+        }
+      ],
+      "templates": [],
+      "groups": [],
+      "colorfulGroups": false,
+      "viewOptions": {
+        "openPageIn": "modal",
+        "openPageAfterCreate": true,
+        "itemSize": "components--page-card-medium",
+        "showPropertyName": false,
+        "showAllProperties": false,
+        "items": [],
+        "cover": {
+          "type": "textContent",
+          "source": "default",
+          "fit": "contains",
+          "layout": "components--page-card-cover-landscape",
+          "position": "top"
+        },
+        "pinFiltersToMenuBar": false,
+        "hideHeaderMenu": false,
+        "showGrid": false,
+        "heightType": "auto",
+        "heightValue": 600,
+        "tableWidthRatio": 16.959406713505096,
+        "dateProperty": "startDate",
+        "endDateProperty": "finishedDate",
+        "colorProperty": "TQ_show_on_completion",
+        "hideTable": false
+      },
+      "groupStates": {
+        "sort": "nameAsc",
+        "statics": [],
+        "orders": [],
+        "hiddens": [],
+        "collapseds": []
+      },
+      "filter": {
+        "id": "dfd9b03e-fbd3-4e83-9021-2ae811dc5cde",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "fc236892-d62e-4274-9658-49fba715a906",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.parent}",
+            "value": "05_long_project/书/微信",
+            "conditions": []
+          }
+        ]
+      },
+      "sort": {
+        "orders": [
+          {
+            "id": "cdf83257-68ef-4a8c-af6d-d1ab729ce5bf",
+            "property": "startDate",
+            "direction": "desc",
+            "disabled": false
+          }
+        ]
+      },
+      "loadLimitPerPage": "10",
+      "title": "甘特图"
+    },
+    {
+      "id": "35faec0a-9011-4649-9f0c-e589ff534613",
+      "type": "dynamicDataView",
+      "titleAlign": "center",
+      "tabTitle": "在读",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showShadow": false,
+      "createAt": "2024-12-13T04:44:31.582Z",
+      "updateAt": "2026-04-25T14:41:59.189Z",
+      "viewType": "kanban",
+      "newPageNameFormat": "{{date: YYMMDD}}",
+      "properties": [
+        {
+          "id": "__componentsTitleProperty_0x7c00",
+          "name": "文件名",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "931b81dd-b251-4080-8e25-1dff85909b30",
+          "name": "title",
+          "type": "text",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "3a04736c-a7e9-4690-9c3a-8c238a39ac23",
+          "name": "subTitle",
+          "type": "text",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "f64032aa-2dff-4ae5-98ba-1442fc8c2ed9",
+          "name": "originalTitle",
+          "type": "text",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "1fa402fc-554b-489b-be1b-579854921936",
+          "name": "author",
+          "type": "multiSelect",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "e8145bd3-9319-4c3c-80f5-201a34c5b615",
+          "name": "score",
+          "type": "number",
+          "isShow": true,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "c1bc3a62-c418-4c3c-b766-f742f74e5eeb",
+          "name": "scoreStar",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "7f9e4bf6-523e-48ee-ab27-356e6b01f6a2",
+          "name": "datePublished",
+          "type": "datetime",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "0960bb57-74db-49e4-94f9-c5f665133098",
+          "name": "微信读书",
+          "type": "link",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "4ceac45f-2d46-4135-9d5a-a01af738159f",
+          "name": "PC地址",
+          "type": "link",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "7c8b5e43-cf0e-4ef3-9f3a-e2efca5f1d5b",
+          "name": "status",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "167126dc-e17f-463d-8d0f-4c1fd478d8db",
+          "name": "category",
+          "type": "multiSelect",
+          "isShow": true,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "8bd92b05-dda1-4482-9c4a-636905c3bdb2",
+          "name": "publisher",
+          "type": "text",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "0df44913-1a1e-4f5f-b36f-336bc0df03fe",
+          "name": "url",
+          "type": "link",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "061d80c9-09db-4858-b4fc-be8a106ad4b7",
+          "name": "totalPage",
+          "type": "number",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "prefix": "",
+            "suffix": "页",
+            "totalValueType": "constant",
+            "color": "components--color-none",
+            "uiType": "number",
+            "total": 100
+          }
+        },
+        {
+          "id": "479491bd-11e9-4824-b866-ad54acdf000d",
+          "name": "tags",
+          "type": "multiSelect",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "afff921b-8626-4e83-ae72-2ff36058b533",
+          "name": "imageUrl",
+          "type": "link",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "f70c6311-d93c-49e7-a0c7-4e93aafc0b7f",
+          "name": "image",
+          "type": "text",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "4abd1392-ebaa-4b6e-8442-cdf915e8ff92",
+          "name": "price",
+          "type": "number",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        }
+      ],
+      "templates": [
+        {
+          "id": "e23d1e2d-72ab-44e9-a414-4a80506f6e9c",
+          "path": "resource/template/book.md",
+          "name": "book.md",
+          "type": "normal"
+        }
+      ],
+      "groups": [
+        {
+          "id": "已思考",
+          "name": "已思考",
+          "items": [
+            "05_long_project/书/豆瓣/吃掉那只青蛙.md",
+            "05_long_project/书/豆瓣/深度工作.md",
+            "05_long_project/书/豆瓣/学习之道.md"
+          ]
+        },
+        {
+          "id": "已笔记",
+          "name": "已笔记",
+          "items": [
+            "05_long_project/书/豆瓣/简单的逻辑学.md",
+            "05_long_project/书/豆瓣/成功，动机与目标.md",
+            "05_long_project/书/豆瓣/深度工作.md",
+            "05_long_project/书/豆瓣/思维导图完整手册.md",
+            "05_long_project/书/豆瓣/如何阅读一本书.md",
+            "05_long_project/书/豆瓣/刘擎西方现代思想讲义.md",
+            "05_long_project/书/豆瓣/刘嘉概率论通识讲义.md",
+            "05_long_project/书/豆瓣/你的灯亮着吗.md",
+            "05_long_project/书/豆瓣/黑天鹅.md",
+            "05_long_project/书/豆瓣/非理性繁荣.md",
+            "05_long_project/书/豆瓣/贫穷的本质.md",
+            "05_long_project/书/豆瓣/贾宁财务讲义.md",
+            "05_long_project/书/豆瓣/贫穷的本质(修订版).md",
+            "05_long_project/书/豆瓣/肖星的财务思维课.md",
+            "05_long_project/书/豆瓣/稀缺.md",
+            "05_long_project/书/豆瓣/纳瓦尔宝典.md",
+            "05_long_project/书/豆瓣/简读中国史.md",
+            "05_long_project/书/豆瓣/思考，快与慢.md",
+            "05_long_project/书/豆瓣/影响力.md",
+            "05_long_project/书/豆瓣/开窍.md",
+            "05_long_project/书/豆瓣/学会提问.md",
+            "05_long_project/书/豆瓣/反脆弱.md",
+            "05_long_project/书/豆瓣/刻意练习.md",
+            "05_long_project/书/豆瓣/关键对话.md",
+            "05_long_project/书/豆瓣/今日简史.md",
+            "05_long_project/书/豆瓣/乌合之众.md",
+            "05_long_project/书/豆瓣/一本书读懂财报.md",
+            "05_long_project/书/豆瓣/怪诞行为学.md",
+            "05_long_project/书/豆瓣/底层逻辑.md",
+            "05_long_project/书/豆瓣/原则.md",
+            "05_long_project/书/豆瓣/经济学原理.md"
+          ]
+        },
+        {
+          "id": "已看完",
+          "name": "已看完",
+          "items": [
+            "05_long_project/书/豆瓣/时间贫困.md",
+            "05_long_project/书/豆瓣/娱乐至死.md",
+            "05_long_project/书/豆瓣/如何成为优秀的大脑饲养员.md",
+            "05_long_project/书/豆瓣/人类简史.md",
+            "05_long_project/书/豆瓣/助推.md",
+            "05_long_project/书/豆瓣/瞬变.md",
+            "05_long_project/书/豆瓣/精力管理.md",
+            "05_long_project/书/豆瓣/粉红色柔软的学习者.md",
+            "05_long_project/书/豆瓣/拖延心理学.md",
+            "05_long_project/书/豆瓣/一万小时天才理论.md",
+            "05_long_project/书/豆瓣/你经历了什么？.md",
+            "05_long_project/书/豆瓣/番茄工作法图解.md",
+            "05_long_project/书/豆瓣/搞定.md",
+            "05_long_project/书/豆瓣/斯坦福大学人生设计课.md",
+            "05_long_project/书/豆瓣/影响历史的商业七巨头.md",
+            "05_long_project/书/豆瓣/饥饿的盛世.md",
+            "05_long_project/书/豆瓣/金融的逻辑.md",
+            "05_long_project/书/豆瓣/遥远的救世主.md",
+            "05_long_project/书/豆瓣/遇见未知的自己.md",
+            "05_long_project/书/豆瓣/赫逊河畔谈中国历史.md",
+            "05_long_project/书/豆瓣/谁说大象不能跳舞.md",
+            "05_long_project/书/豆瓣/薛兆丰经济学讲义.md",
+            "05_long_project/书/豆瓣/许倬云观世变.md",
+            "05_long_project/书/豆瓣/自控力.md",
+            "05_long_project/书/豆瓣/美国种族简史.md",
+            "05_long_project/书/豆瓣/经济学通识.md",
+            "05_long_project/书/豆瓣/禅与摩托车维修艺术.md",
+            "05_long_project/书/豆瓣/牛奶可乐经济学.md",
+            "05_long_project/书/豆瓣/激荡30年.md",
+            "05_long_project/书/豆瓣/灰犀牛.md",
+            "05_long_project/书/豆瓣/潜规则.md",
+            "05_long_project/书/豆瓣/未来简史.md",
+            "05_long_project/书/豆瓣/显微镜下的大明.md",
+            "05_long_project/书/豆瓣/帝国的惆怅.md",
+            "05_long_project/书/豆瓣/工作、消费主义和新穷人.md",
+            "05_long_project/书/豆瓣/好的婚姻，要守护财产和爱.md",
+            "05_long_project/书/豆瓣/大明王朝的七张面孔.md",
+            "05_long_project/书/豆瓣/基业长青.md",
+            "05_long_project/书/豆瓣/大明王朝1566.md",
+            "05_long_project/书/豆瓣/华杉讲透孙子兵法.md",
+            "05_long_project/书/豆瓣/千古文人侠客梦.md",
+            "05_long_project/书/豆瓣/创新者的窘境.md",
+            "05_long_project/书/豆瓣/中国历代政治得失.md",
+            "05_long_project/书/豆瓣/中国国民性演变史.md",
+            "05_long_project/书/豆瓣/三国史话.md",
+            "05_long_project/书/豆瓣/隐形冠军.md",
+            "05_long_project/书/豆瓣/闲话中国人.md",
+            "05_long_project/书/豆瓣/顽疾.md",
+            "05_long_project/书/豆瓣/长安客.md",
+            "05_long_project/书/豆瓣/血酬定律.md",
+            "05_long_project/书/豆瓣/许倬云说历史.md",
+            "05_long_project/书/豆瓣/被讨厌的勇气.md",
+            "05_long_project/书/豆瓣/置身事内.md",
+            "05_long_project/书/豆瓣/翦商.md",
+            "05_long_project/书/豆瓣/王二的经济学故事.md",
+            "05_long_project/书/豆瓣/病隙碎笔.md",
+            "05_long_project/书/豆瓣/活法.md",
+            "05_long_project/书/豆瓣/枪炮、病菌与钢铁.md",
+            "05_long_project/书/豆瓣/棉花帝国.md",
+            "05_long_project/书/豆瓣/毫无意义的工作.md",
+            "05_long_project/书/豆瓣/旧制度与大革命.md",
+            "05_long_project/书/豆瓣/曾国藩传.md",
+            "05_long_project/书/豆瓣/我与地坛.md",
+            "05_long_project/书/豆瓣/我的遥远的清平湾.md",
+            "05_long_project/书/豆瓣/弃长安.md",
+            "05_long_project/书/豆瓣/弗兰克尔自传.md",
+            "05_long_project/书/豆瓣/帝国的终结.md",
+            "05_long_project/书/豆瓣/富爸爸穷爸爸.md",
+            "05_long_project/书/豆瓣/定位.md",
+            "05_long_project/书/豆瓣/在深渊里仰望星空.md",
+            "05_long_project/书/豆瓣/品三国.md",
+            "05_long_project/书/豆瓣/品人录.md",
+            "05_long_project/书/豆瓣/史蒂夫·乔布斯传.md",
+            "05_long_project/书/豆瓣/只有偏执狂才能生存.md",
+            "05_long_project/书/豆瓣/半小时漫画中国史2.md",
+            "05_long_project/书/豆瓣/千年悖论.md",
+            "05_long_project/书/豆瓣/务虚笔记.md",
+            "05_long_project/书/豆瓣/兵者不祥.md",
+            "05_long_project/书/豆瓣/倒退的帝国.md",
+            "05_long_project/书/豆瓣/人生的智慧.md",
+            "05_long_project/书/豆瓣/万古江河.md",
+            "05_long_project/书/豆瓣/万历十五年.md",
+            "05_long_project/书/豆瓣/1984.md",
+            "05_long_project/书/豆瓣/自卑与超越.md",
+            "05_long_project/书/豆瓣/秦制两千年.md",
+            "05_long_project/书/豆瓣/坐天下.md",
+            "05_long_project/书/豆瓣/中国人的性格历程.md",
+            "05_long_project/书/豆瓣/一九八四.md"
+          ]
+        },
+        {
+          "id": "进行中",
+          "name": "进行中",
+          "items": [
+            "05_long_project/书/豆瓣/大脑喜欢听你这样说.md",
+            "05_long_project/书/豆瓣/如何成为优秀的大脑饲养员.md",
+            "05_long_project/书/豆瓣/奇特的一生.md",
+            "05_long_project/书/豆瓣/大脑想要这样学.md",
+            "05_long_project/书/豆瓣/瞬变.md",
+            "05_long_project/书/豆瓣/精力管理.md",
+            "05_long_project/书/豆瓣/长尾理论.md",
+            "05_long_project/书/豆瓣/驱动力.md",
+            "05_long_project/书/豆瓣/一万小时天才理论.md",
+            "05_long_project/书/豆瓣/时间贫困.md",
+            "05_long_project/书/豆瓣/粉红色柔软的学习者.md",
+            "05_long_project/书/豆瓣/别独自用餐（十周年修订珍藏版）.md",
+            "05_long_project/书/豆瓣/战胜拖拉.md",
+            "05_long_project/书/豆瓣/沃顿商学院最受欢迎的成功课.md",
+            "05_long_project/书/豆瓣/OKR工作法.md"
+          ]
+        },
+        {
+          "id": "未看完",
+          "name": "未看完",
+          "items": [
+            "05_long_project/书/豆瓣/自私的基因.md",
+            "05_long_project/书/豆瓣/白板.md",
+            "05_long_project/书/豆瓣/别独自用餐（十周年修订珍藏版）.md",
+            "05_long_project/书/豆瓣/KK三部曲.md",
+            "05_long_project/书/豆瓣/博弈论.md",
+            "05_long_project/书/豆瓣/思辨与立场.md",
+            "05_long_project/书/豆瓣/第三种黑猩猩.md",
+            "05_long_project/书/豆瓣/卡片笔记写作法.md",
+            "05_long_project/书/豆瓣/沃顿商学院最受欢迎的成功课.md",
+            "05_long_project/书/豆瓣/深度思考.md",
+            "05_long_project/书/豆瓣/为什么中国人勤劳而不富有.md",
+            "05_long_project/书/豆瓣/杰克·韦尔奇自传.md",
+            "05_long_project/书/豆瓣/叔本华思想随笔.md",
+            "05_long_project/书/豆瓣/蔡康永的说话之道.md",
+            "05_long_project/书/豆瓣/你一定爱读的极简欧洲史.md",
+            "05_long_project/书/豆瓣/最好的告别.md",
+            "05_long_project/书/豆瓣/跃迁.md",
+            "05_long_project/书/豆瓣/赢.md",
+            "05_long_project/书/豆瓣/男人来自火星女人来自金星.md",
+            "05_long_project/书/豆瓣/旁观者.md",
+            "05_long_project/书/豆瓣/潜意识控制你行为的秘密.md",
+            "05_long_project/书/豆瓣/谈话的力量.md",
+            "05_long_project/书/豆瓣/战斗细胞.md",
+            "05_long_project/书/豆瓣/马伯庸笑翻中国简史.md",
+            "05_long_project/书/豆瓣/隐性逻辑.md",
+            "05_long_project/书/豆瓣/随机漫步的傻瓜.md",
+            "05_long_project/书/豆瓣/重新定义团队：谷歌如何工作.md",
+            "05_long_project/书/豆瓣/远见.md",
+            "05_long_project/书/豆瓣/逃不开的经济周期.md",
+            "05_long_project/书/豆瓣/过得刚好.md",
+            "05_long_project/书/豆瓣/路西法效应.md",
+            "05_long_project/书/豆瓣/谁动了我的奶酪.md",
+            "05_long_project/书/豆瓣/萧条经济学的回归和2008年经济危机.md",
+            "05_long_project/书/豆瓣/自我导向行为.md",
+            "05_long_project/书/豆瓣/聪明人用方格笔记本.md",
+            "05_long_project/书/豆瓣/经济学的思维方式.md",
+            "05_long_project/书/豆瓣/粉红色柔软的学习者.md",
+            "05_long_project/书/豆瓣/穿越抑郁的正念之道.md",
+            "05_long_project/书/豆瓣/百万富翁快车道.md",
+            "05_long_project/书/豆瓣/生活中的经济学.md",
+            "05_long_project/书/豆瓣/理解人性.md",
+            "05_long_project/书/豆瓣/爱的艺术.md",
+            "05_long_project/书/豆瓣/爱的五种语言.md",
+            "05_long_project/书/豆瓣/漫长的告别.md",
+            "05_long_project/书/豆瓣/清单革命.md",
+            "05_long_project/书/豆瓣/活出生命的意义.md",
+            "05_long_project/书/豆瓣/活出最乐观的自己.md",
+            "05_long_project/书/豆瓣/津巴多时间心理学.md",
+            "05_long_project/书/豆瓣/沟通的艺术.md",
+            "05_long_project/书/豆瓣/极简主义.md",
+            "05_long_project/书/豆瓣/沉默的大多数.md",
+            "05_long_project/书/豆瓣/时间贫困.md",
+            "05_long_project/书/豆瓣/时间简史.md",
+            "05_long_project/书/豆瓣/故事思维.md",
+            "05_long_project/书/豆瓣/掌控习惯.md",
+            "05_long_project/书/豆瓣/拆掉思维里的墙.md",
+            "05_long_project/书/豆瓣/情绪急救.md",
+            "05_long_project/书/豆瓣/情绪.md",
+            "05_long_project/书/豆瓣/怦然心动的人生整理魔法.md",
+            "05_long_project/书/豆瓣/周期.md",
+            "05_long_project/书/豆瓣/半小时漫画世界史.md",
+            "05_long_project/书/豆瓣/动物农场.md",
+            "05_long_project/书/豆瓣/别让猴子跳回背上.md",
+            "05_long_project/书/豆瓣/分手心理学.md",
+            "05_long_project/书/豆瓣/做自己擅长的事，还是喜欢的？.md",
+            "05_long_project/书/豆瓣/你经历了什么？.md",
+            "05_long_project/书/豆瓣/你其实不懂消费心理学.md",
+            "05_long_project/书/豆瓣/他者的消失.md",
+            "05_long_project/书/豆瓣/伯恩斯新情绪疗法.md",
+            "05_long_project/书/豆瓣/人世间.md",
+            "05_long_project/书/豆瓣/乡下人的悲歌.md",
+            "05_long_project/书/豆瓣/亲密关系.md",
+            "05_long_project/书/豆瓣/一万小时天才理论.md",
+            "05_long_project/书/豆瓣/一本正经又怪诞的行为心理学.md",
+            "05_long_project/书/豆瓣/意志力.md",
+            "05_long_project/书/豆瓣/21世纪资本论.md",
+            "05_long_project/书/豆瓣/穷查理宝典.md",
+            "05_long_project/书/豆瓣/驱动力.md",
+            "05_long_project/书/豆瓣/魔鬼经济学系列.md",
+            "05_long_project/书/豆瓣/门口的野蛮人.md",
+            "05_long_project/书/豆瓣/长尾理论.md",
+            "05_long_project/书/豆瓣/金钱心理学.md",
+            "05_long_project/书/豆瓣/这世上的偶然.md",
+            "05_long_project/书/豆瓣/野心优雅.md",
+            "05_long_project/书/豆瓣/通向财务自由之路.md",
+            "05_long_project/书/豆瓣/身体从未忘记.md",
+            "05_long_project/书/豆瓣/进化心理学.md",
+            "05_long_project/书/豆瓣/谈判力.md",
+            "05_long_project/书/豆瓣/被偷走的人生.md",
+            "05_long_project/书/豆瓣/营销革命3.0.md",
+            "05_long_project/书/豆瓣/税的真相.md",
+            "05_long_project/书/豆瓣/社会性动物.md",
+            "05_long_project/书/豆瓣/社会心理学.md",
+            "05_long_project/书/豆瓣/美联储的诞生.md",
+            "05_long_project/书/豆瓣/精力管理.md",
+            "05_long_project/书/豆瓣/知识分子与社会.md",
+            "05_long_project/书/豆瓣/硬球.md",
+            "05_long_project/书/豆瓣/瞬变.md",
+            "05_long_project/书/豆瓣/生命中不能承受之轻.md",
+            "05_long_project/书/豆瓣/社交天性.md",
+            "05_long_project/书/豆瓣/煤气灯效应.md",
+            "05_long_project/书/豆瓣/看脸.md",
+            "05_long_project/书/豆瓣/爱的起源.md",
+            "05_long_project/书/豆瓣/爱的博弈.md",
+            "05_long_project/书/豆瓣/活着.md",
+            "05_long_project/书/豆瓣/江村经济.md",
+            "05_long_project/书/豆瓣/横向领导力.md",
+            "05_long_project/书/豆瓣/最好的晚年.md",
+            "05_long_project/书/豆瓣/朱元璋传.md",
+            "05_long_project/书/豆瓣/有些事现在不做，一辈子都不会做了.md",
+            "05_long_project/书/豆瓣/我们为什么会受骗.md",
+            "05_long_project/书/豆瓣/态度改变与社会影响.md",
+            "05_long_project/书/豆瓣/思考致富.md",
+            "05_long_project/书/豆瓣/手机大脑.md",
+            "05_long_project/书/豆瓣/情人.md",
+            "05_long_project/书/豆瓣/搞定.md",
+            "05_long_project/书/豆瓣/引爆点.md",
+            "05_long_project/书/豆瓣/幸福之路.md",
+            "05_long_project/书/豆瓣/对赌.md",
+            "05_long_project/书/豆瓣/奇特的一生.md",
+            "05_long_project/书/豆瓣/大脑想要这样学.md",
+            "05_long_project/书/豆瓣/大数据时代.md",
+            "05_long_project/书/豆瓣/坚毅.md",
+            "05_long_project/书/豆瓣/君主论.md",
+            "05_long_project/书/豆瓣/叙事经济学.md",
+            "05_long_project/书/豆瓣/厌女.md",
+            "05_long_project/书/豆瓣/历史从未走远.md",
+            "05_long_project/书/豆瓣/发现东亚.md",
+            "05_long_project/书/豆瓣/南渡北归.md",
+            "05_long_project/书/豆瓣/单向度的人.md",
+            "05_long_project/书/豆瓣/卓越密码.md",
+            "05_long_project/书/豆瓣/半小时漫画预防常见病.md",
+            "05_long_project/书/豆瓣/共情的力量.md",
+            "05_long_project/书/豆瓣/公正该如何做是好.md",
+            "05_long_project/书/豆瓣/伟大的博弈.md",
+            "05_long_project/书/豆瓣/了不起的我.md",
+            "05_long_project/书/豆瓣/九型人格销售经大全集.md",
+            "05_long_project/书/豆瓣/从0到1.md",
+            "05_long_project/书/豆瓣/中国改革三部曲.md",
+            "05_long_project/书/豆瓣/OKR工作法.md",
+            "05_long_project/书/豆瓣/万万没想到.md",
+            "05_long_project/书/豆瓣/财富方程式.md",
+            "05_long_project/书/豆瓣/罗辑思维.md",
+            "05_long_project/书/豆瓣/我们内心的冲突.md",
+            "05_long_project/书/豆瓣/如何成为优秀的大脑饲养员.md",
+            "05_long_project/书/豆瓣/好战略，坏战略.md",
+            "05_long_project/书/豆瓣/大脑喜欢听你这样说.md",
+            "05_long_project/书/豆瓣/唐骏日记.md",
+            "05_long_project/书/豆瓣/动物精神.md",
+            "05_long_project/书/豆瓣/人心的本质.md",
+            "05_long_project/书/豆瓣/习惯的力量.md",
+            "05_long_project/书/豆瓣/这才是心理学.md"
+          ]
+        }
+      ],
+      "colorfulGroups": true,
+      "viewOptions": {
+        "openPageIn": "modal",
+        "openPageAfterCreate": true,
+        "itemSize": "components--page-card-large",
+        "showPropertyName": false,
+        "showAllProperties": false,
+        "items": [],
+        "cover": {
+          "type": "image",
+          "source": "property",
+          "fit": "contains",
+          "layout": "components--page-card-cover-landscape",
+          "position": "left",
+          "sourceValue": "imageUrl"
+        },
+        "showGrid": false,
+        "heightType": "auto",
+        "heightValue": 600,
+        "pinFiltersToMenuBar": true,
+        "hideHeaderMenu": false
+      },
+      "filter": {
+        "id": "6ab2ebdb-5617-4a77-98ec-748c09fc11bc",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "25584918-829c-4de9-92fc-1118b4ad88e0",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.parent}",
+            "value": "05_long_project/书/豆瓣",
+            "conditions": []
+          },
+          {
+            "id": "937a40dd-555e-44e1-be10-54972347c665",
+            "type": "filter",
+            "operator": "contains",
+            "property": "${file.extension}",
+            "value": "md",
+            "conditions": []
+          },
+          {
+            "id": "e72ddf7c-4154-4c48-b74f-facd68bc9576",
+            "type": "filter",
+            "operator": "contains",
+            "property": "${file.tags}",
+            "value": "",
+            "conditions": []
+          }
+        ]
+      },
+      "newPageLocation": {
+        "location": "area/books"
+      },
+      "defaultTemplate": "e23d1e2d-72ab-44e9-a414-4a80506f6e9c",
+      "groupBy": "status",
+      "groupStates": {
+        "collapseds": [
+          "已笔记",
+          "未看完"
+        ],
+        "hiddens": [
+          "__$uncategorizedGroup"
+        ],
+        "statics": [
+          "已笔记",
+          "已思考",
+          "__$uncategorizedGroup"
+        ],
+        "sort": "manual",
+        "orders": [
+          "__$uncategorizedGroup",
+          "已笔记",
+          "未看完",
+          "进行中",
+          "已看完",
+          "已思考"
+        ]
+      },
+      "sort": {
+        "orders": [
+          {
+            "id": "00e4c741-a5b4-440c-8474-871399483770",
+            "property": "${file.mtime}",
+            "direction": "desc",
+            "disabled": false
+          }
+        ]
+      },
+      "showTitle": false,
+      "loadLimitPerPage": "10"
+    },
+    {
+      "id": "2b336b0b-fabe-4f76-87fb-d818d7343b6b",
+      "type": "dynamicDataView",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2025-11-01T08:02:59.394Z",
+      "updateAt": "2026-03-07T23:44:07.045Z",
+      "viewType": "calendar",
+      "newPageNameFormat": "{{date:YYYYMMDDHHmmss}} ",
+      "properties": [
+        {
+          "id": "__componentsTitleProperty_0x7c00",
+          "name": "文件名",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "62d234b5-7540-463e-9537-90e9fc6cf9c2",
+          "name": "progress",
+          "isShow": true,
+          "type": "text",
+          "options": {}
+        },
+        {
+          "id": "e53550a7-f93b-4324-8153-5956e619e6d7",
+          "name": "readingTime",
+          "isShow": true,
+          "type": "text",
+          "options": {}
+        }
+      ],
+      "templates": [],
+      "groups": [],
+      "colorfulGroups": false,
+      "viewOptions": {
+        "openPageIn": "modal",
+        "openPageAfterCreate": true,
+        "itemSize": "components--page-card-medium",
+        "showPropertyName": false,
+        "showAllProperties": false,
+        "items": [],
+        "cover": {
+          "type": "textContent",
+          "source": "default",
+          "fit": "contains",
+          "layout": "components--page-card-cover-landscape",
+          "position": "top"
+        },
+        "pinFiltersToMenuBar": false,
+        "hideHeaderMenu": true,
+        "showGrid": false,
+        "heightType": "auto",
+        "heightValue": 600,
+        "tableWidthRatio": 16.959406713505096,
+        "dateProperty": "startDate",
+        "endDateProperty": "finishedDate",
+        "colorProperty": "status",
+        "hideTable": true,
+        "calendarViewType": "week",
+        "cardColorFrom": "property",
+        "cardColorProperty": "startDate"
+      },
+      "groupStates": {
+        "sort": "nameAsc",
+        "statics": [],
+        "orders": [],
+        "hiddens": [],
+        "collapseds": []
+      },
+      "filter": {
+        "id": "dfd9b03e-fbd3-4e83-9021-2ae811dc5cde",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "fc236892-d62e-4274-9658-49fba715a906",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.parent}",
+            "value": "05_long_project/书/微信",
+            "conditions": []
+          },
+          {
+            "id": "3da4167b-eb6b-4eaf-96db-a2c0f8be385a",
+            "type": "filter",
+            "operator": "has_value",
+            "property": "startDate",
+            "value": null,
+            "conditions": []
+          }
+        ]
+      },
+      "sort": {
+        "orders": []
+      },
+      "loadLimitPerPage": "10",
+      "title": "日历"
+    },
+    {
+      "id": "00359f33-2412-4137-9ff5-bfd24a238e62",
+      "type": "dynamicDataView",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2025-10-30T09:44:24.972Z",
+      "updateAt": "2026-01-18T13:56:24.158Z",
+      "viewType": "table",
+      "newPageNameFormat": "{{date:YYYYMMDDHHmmss}} ",
+      "properties": [
+        {
+          "id": "__componentsTitleProperty_0x7c00",
+          "name": "文件名",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "159"
+          }
+        },
+        {
+          "id": "afe36e0f-a27e-4bef-aa82-9e29f657c03a",
+          "name": "开始阅读",
+          "isShow": true,
+          "type": "button",
+          "options": {
+            "action": {
+              "type": "updateProperty",
+              "properties": [
+                {
+                  "id": "838337f8-8153-4b27-ba00-94c78bbeecb1",
+                  "name": "startDate",
+                  "type": "date",
+                  "value": "moment().format('YYYY-MM-DD')",
+                  "valueSource": "formula",
+                  "modifier": "replaceValue"
+                },
+                {
+                  "id": "b77c4a3b-570d-45b9-bcdc-c8a2628286aa",
+                  "name": "status",
+                  "type": "string",
+                  "value": "进行中",
+                  "valueSource": "constant",
+                  "modifier": "replaceValue"
+                }
+              ]
+            },
+            "width": "106"
+          }
+        },
+        {
+          "id": "4001711f-ab25-463a-9559-83a88e64c887",
+          "name": "阅读完成",
+          "isShow": true,
+          "type": "button",
+          "options": {
+            "action": {
+              "type": "updateProperty",
+              "properties": [
+                {
+                  "id": "0f0d8d6f-56fd-4e01-b2d7-bd710c9f8687",
+                  "name": "status",
+                  "type": "string",
+                  "value": "已看完",
+                  "valueSource": "constant",
+                  "modifier": "replaceValue"
+                },
+                {
+                  "id": "54b91377-1aa1-40cb-b3f9-c4ea7d8e5bb9",
+                  "name": "finishedDate",
+                  "type": "date",
+                  "value": "moment().format('YYYY-MM-DD')",
+                  "valueSource": "formula",
+                  "modifier": "replaceValue"
+                }
+              ]
+            },
+            "width": "98"
+          }
+        },
+        {
+          "id": "a367b238-19cf-4d73-96b0-93cbf44d01fe",
+          "name": "progress",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "132"
+          }
+        },
+        {
+          "id": "9eefdda9-58c0-4b0c-ad33-84456cac79da",
+          "name": "readingTime",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "119"
+          }
+        },
+        {
+          "id": "87e661bc-b10c-4caf-8816-d53149a28ab1",
+          "name": "readingDate",
+          "type": "datetime",
+          "isShow": false,
+          "wrap": false,
+          "options": {
+            "width": "125"
+          }
+        },
+        {
+          "id": "3f35cc43-eb15-4ee7-b081-43e1e8cd7b39",
+          "name": "lastReadDate",
+          "type": "datetime",
+          "isShow": false,
+          "wrap": false,
+          "options": {
+            "width": "116"
+          }
+        },
+        {
+          "id": "03a7008e-3f0f-4c10-9910-f327187a5dbb",
+          "name": "status",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "150"
+          }
+        },
+        {
+          "id": "f1802d2a-32fc-467f-ad49-db51d9dd5137",
+          "name": "startDate",
+          "isShow": true,
+          "type": "date",
+          "options": {
+            "width": "204"
+          }
+        },
+        {
+          "id": "f986a6c9-8d72-45fc-bc17-354aa2af1810",
+          "name": "finishedDate",
+          "isShow": true,
+          "type": "date",
+          "options": {
+            "width": "198"
+          }
+        },
+        {
+          "id": "049eae4b-984d-4b3e-9608-0891fa0ea51c",
+          "name": "day",
+          "isShow": true,
+          "type": "formula",
+          "options": {
+            "formula": "duration(prop('startDate'), prop('finishedDate'), 'day')"
+          },
+          "alias": "耗时"
+        }
+      ],
+      "templates": [],
+      "groups": [],
+      "colorfulGroups": false,
+      "viewOptions": {
+        "openPageIn": "tab",
+        "openPageAfterCreate": true,
+        "items": [],
+        "pinFiltersToMenuBar": false,
+        "hideHeaderMenu": false,
+        "showGrid": false,
+        "heightType": "fixed",
+        "heightValue": 400,
+        "rowHeight": 32
+      },
+      "groupStates": {
+        "sort": "nameAsc",
+        "statics": [],
+        "orders": [],
+        "hiddens": [],
+        "collapseds": []
+      },
+      "filter": {
+        "id": "e3b55d5f-4d93-488d-851a-bcca26b40c91",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "c84e5afd-f2d2-46c9-ac93-0972f4bc24a5",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.parent}",
+            "value": "05_long_project/书/微信",
+            "conditions": []
+          },
+          {
+            "id": "d56f362f-fe18-4deb-8577-e5271d237021",
+            "type": "filter",
+            "operator": "contains",
+            "property": "${file.extension}",
+            "value": "md",
+            "conditions": []
+          },
+          {
+            "id": "d2464d73-6fa3-41d6-8e49-2bf75facb3f1",
+            "type": "filter",
+            "operator": "contains",
+            "property": "status",
+            "value": null,
+            "conditions": []
+          }
+        ]
+      },
+      "title": "微信书库",
+      "sort": {
+        "orders": [
+          {
+            "id": "f8d8b890-19e6-4d29-976e-ff33041eba22",
+            "property": "startDate",
+            "direction": "desc",
+            "disabled": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "7018fa4a-fbcc-48c4-922b-0e92ae921dfa",
+      "type": "dynamicDataView",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2025-10-30T09:44:24.972Z",
+      "updateAt": "2025-11-29T09:58:47.632Z",
+      "viewType": "table",
+      "newPageNameFormat": "{{date:YYYYMMDDHHmmss}} ",
+      "properties": [
+        {
+          "id": "__componentsTitleProperty_0x7c00",
+          "name": "文件名",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "128"
+          }
+        },
+        {
+          "id": "596010af-7e35-4218-8d54-b40c5ea3cbe5",
+          "name": "title",
+          "type": "text",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "f0b7e5f3-99d2-4e66-a15e-718037cd0db9",
+          "name": "subTitle",
+          "type": "text",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "b2f38f83-b28a-4127-b2e4-4f296004a09f",
+          "name": "originalTitle",
+          "type": "text",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "823f8308-506f-43fc-ad55-b8d7c3d37770",
+          "name": "author",
+          "type": "multiSelect",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "118"
+          }
+        },
+        {
+          "id": "ba278233-1747-437b-8111-c9a279fae6c2",
+          "name": "score",
+          "type": "number",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "93"
+          }
+        },
+        {
+          "id": "c20f7e4a-42b2-4ca0-adb3-8f1a0a13cddb",
+          "name": "scoreStar",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "110"
+          }
+        },
+        {
+          "id": "fd0eda03-fae9-4e3f-b027-a4dff34b261d",
+          "name": "datePublished",
+          "type": "datetime",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "106"
+          }
+        },
+        {
+          "id": "66955173-188d-4571-83a1-6a6e152e9aff",
+          "name": "${file.chars}",
+          "isShow": true,
+          "type": "datetime",
+          "options": {}
+        },
+        {
+          "id": "7deb9fa1-1fa7-45f0-84b5-ffd2a575a32c",
+          "name": "publisher",
+          "type": "text",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "6d056ae8-f0cb-4bba-99fb-856fa61a0161",
+          "name": "url",
+          "type": "link",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "380f182f-c6cb-413c-a841-e27b904bc587",
+          "name": "totalPage",
+          "type": "number",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "74"
+          }
+        },
+        {
+          "id": "9c1fb36d-d597-46ef-a1c0-893925e77157",
+          "name": "tags",
+          "type": "multiSelect",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "d14ab99e-35d7-4a22-b700-8573863d9254",
+          "name": "imageUrl",
+          "type": "link",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "b1978bc5-1a96-4c61-a45c-d4c6db270df3",
+          "name": "image",
+          "type": "text",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "eb566550-d0c3-4dbc-b0e8-9d1dc4393060",
+          "name": "price",
+          "type": "number",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "e99af522-4358-4d8c-a8aa-2263fc52eb88",
+          "name": "category",
+          "type": "multiSelect",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "110"
+          }
+        },
+        {
+          "id": "482316d4-93d8-484a-906c-ed10291f0ba6",
+          "name": "status",
+          "type": "text",
+          "isShow": false,
+          "wrap": false,
+          "options": {
+            "width": "79"
+          }
+        },
+        {
+          "id": "1e517872-c675-4df2-95bd-b230f175abc1",
+          "name": "PC地址",
+          "type": "link",
+          "isShow": false,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "6bd30656-7aa8-42ea-87dc-2104742620fa",
+          "name": "pageCategory",
+          "isShow": true,
+          "type": "text",
+          "options": {
+            "width": "92"
+          }
+        },
+        {
+          "id": "3c336330-ffca-419b-93a7-fcc77ab1b68e",
+          "name": "scoreCategory",
+          "isShow": true,
+          "type": "text",
+          "options": {
+            "width": "60"
+          }
+        },
+        {
+          "id": "a28c41fc-ef5a-4249-aa95-85c7ca861103",
+          "name": "微信读书",
+          "type": "link",
+          "isShow": true,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "91cca2db-80a3-4a54-a56d-0c7b803b240c",
+          "name": "${file.mtime}",
+          "isShow": true,
+          "type": "datetime",
+          "options": {}
+        }
+      ],
+      "templates": [],
+      "groups": [],
+      "colorfulGroups": false,
+      "viewOptions": {
+        "openPageIn": "modal",
+        "openPageAfterCreate": true,
+        "itemSize": "components--page-card-medium",
+        "showPropertyName": false,
+        "showAllProperties": false,
+        "items": [],
+        "cover": {
+          "type": "textContent",
+          "source": "default",
+          "fit": "contains",
+          "layout": "components--page-card-cover-landscape",
+          "position": "top"
+        },
+        "pinFiltersToMenuBar": false,
+        "hideHeaderMenu": false,
+        "showGrid": false,
+        "heightType": "fixed",
+        "heightValue": 400,
+        "rowHeight": 32
+      },
+      "groupStates": {
+        "sort": "nameAsc",
+        "statics": [],
+        "orders": [],
+        "hiddens": [],
+        "collapseds": []
+      },
+      "filter": {
+        "id": "e3b55d5f-4d93-488d-851a-bcca26b40c91",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "c84e5afd-f2d2-46c9-ac93-0972f4bc24a5",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.parent}",
+            "value": "05_long_project/书/豆瓣",
+            "conditions": []
+          },
+          {
+            "id": "d56f362f-fe18-4deb-8577-e5271d237021",
+            "type": "filter",
+            "operator": "contains",
+            "property": "${file.extension}",
+            "value": "md",
+            "conditions": []
+          },
+          {
+            "id": "1c00546a-a67a-423b-ade4-361dd46af148",
+            "type": "group",
+            "operator": "or",
+            "conditions": [
+              {
+                "id": "cd74c013-15e6-4aa9-b39b-995fc8da9cdf",
+                "type": "filter",
+                "operator": "contains",
+                "property": "status",
+                "value": "已看完",
+                "conditions": []
+              },
+              {
+                "id": "10fc7423-12ad-4b35-819e-41b445de9b52",
+                "type": "filter",
+                "operator": "contains",
+                "property": "status",
+                "value": "已思考",
+                "conditions": []
+              }
+            ]
+          }
+        ]
+      },
+      "title": "豆瓣书库-已看",
+      "sort": {
+        "orders": [
+          {
+            "id": "4b161d5f-1581-4b4a-8ee8-eb91513eaa37",
+            "property": "${file.mtime}",
+            "direction": "desc",
+            "disabled": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "46c7519e-24b4-4afc-bce6-2e80a4a192b3",
+      "type": "chart",
+      "titleAlign": "left",
+      "tabTitle": "页数分布",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showShadow": true,
+      "createAt": "2024-12-13T05:00:18.258Z",
+      "updateAt": "2026-01-19T23:12:42.911Z",
+      "chartType": "bar",
+      "filter": {
+        "id": "b8bd417d-3ba9-4301-b7ce-40fac155ccb3",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "ef51db58-d3b5-4ece-a631-0c318009a28e",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.parent}",
+            "value": "05_long_project/书/豆瓣",
+            "conditions": []
+          },
+          {
+            "id": "552be2d0-0052-4335-b329-18b84f45ba02",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.extension}",
+            "value": "md",
+            "conditions": []
+          },
+          {
+            "id": "0ba742bd-d170-4565-8a67-d1d2f094fa85",
+            "type": "filter",
+            "operator": "not_contains",
+            "property": "status",
+            "value": "已笔记",
+            "conditions": []
+          }
+        ]
+      },
+      "labelProperty": "scoreCategory",
+      "labelFormat": "$none",
+      "valueProperty": "$file_count",
+      "valuePrecision": 0,
+      "sortField": "xAxisValue",
+      "sortOrder": "asc",
+      "maxHeight": 450,
+      "chartColorSet": "default",
+      "chartLabelPosition": "hidden",
+      "showDataValue": true,
+      "valueScaleStartFromZero": true,
+      "smoothLine": false,
+      "options": {},
+      "title": "页数分布",
+      "valueFormatPattern": "yyyy-MM",
+      "enableMarkLine": false,
+      "labelRotation": 30,
+      "customizeColorSets": [
+        {
+          "id": "ac7a9a97-7b47-458c-b873-6f54b309c111",
+          "colors": [
+            "#0693e3cc",
+            "#d34ad099"
+          ]
+        },
+        {
+          "id": "1ac16c31-99d3-4432-80e9-fb500a31fb17",
+          "colors": [
+            "#7749bab3"
+          ]
+        }
+      ],
+      "categoryProperty": "pageCategory",
+      "categoryFormatPattern": "yyyy-MM",
+      "series": [
+        {
+          "id": "ef652397-3123-4636-8804-343a817de0f5",
+          "name": "$file_count",
+          "precision": 0
+        }
+      ]
+    },
+    {
+      "id": "8ba894ea-08f3-4cb6-b422-c5860ffd50f2",
+      "type": "count",
+      "titleAlign": "center",
+      "tabTitle": "💦 已笔记",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showShadow": true,
+      "createAt": "2024-12-13T04:47:59.487Z",
+      "updateAt": "2026-01-07T08:17:35.739Z",
+      "countValueAlign": "center",
+      "contentPrefix": "",
+      "contentSuffix": "",
+      "countType": "number",
+      "precision": 0,
+      "query": {
+        "valueType": "totalRecords",
+        "value": 100,
+        "filter": {
+          "id": "6ceceacf-02bb-47a0-8e15-ce7dbfff2050",
+          "type": "group",
+          "operator": "and",
+          "conditions": [
+            {
+              "id": "b50d87df-6d59-4d2b-960f-803de9a422c3",
+              "type": "filter",
+              "operator": "equals",
+              "property": "${file.parent}",
+              "value": "05_long_project/书/豆瓣",
+              "conditions": []
+            },
+            {
+              "id": "e3f8ac5d-3707-4cb9-8df9-792527b172de",
+              "type": "group",
+              "operator": "or",
+              "conditions": [
+                {
+                  "id": "aa87b56f-46c8-435b-8516-e1ec295e4905",
+                  "type": "filter",
+                  "operator": "contains",
+                  "property": "status",
+                  "value": "已笔记",
+                  "conditions": []
+                }
+              ]
+            }
+          ]
+        },
+        "sort": {
+          "orders": []
+        }
+      },
+      "totalQuery": {
+        "valueType": "constant",
+        "value": 100,
+        "filter": {
+          "id": "946fd8db-0b55-4c4c-b072-680f8ab726a8",
+          "type": "group",
+          "operator": "and",
+          "conditions": []
+        },
+        "sort": {
+          "orders": []
+        }
+      },
+      "title": "💦 已笔记"
+    },
+    {
+      "id": "9df828f4-4a1c-43e1-822a-c4cf4870f0f0",
+      "type": "count",
+      "titleAlign": "center",
+      "tabTitle": "☑️ 已思考",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showShadow": true,
+      "createAt": "2024-12-13T04:47:59.487Z",
+      "updateAt": "2026-01-07T08:17:35.740Z",
+      "countValueAlign": "center",
+      "contentPrefix": "",
+      "contentSuffix": "",
+      "countType": "number",
+      "precision": 0,
+      "query": {
+        "valueType": "totalRecords",
+        "value": 100,
+        "filter": {
+          "id": "6ceceacf-02bb-47a0-8e15-ce7dbfff2050",
+          "type": "group",
+          "operator": "and",
+          "conditions": [
+            {
+              "id": "b50d87df-6d59-4d2b-960f-803de9a422c3",
+              "type": "filter",
+              "operator": "equals",
+              "property": "${file.parent}",
+              "value": "05_long_project/书/豆瓣",
+              "conditions": []
+            },
+            {
+              "id": "e3f8ac5d-3707-4cb9-8df9-792527b172de",
+              "type": "group",
+              "operator": "or",
+              "conditions": [
+                {
+                  "id": "aa87b56f-46c8-435b-8516-e1ec295e4905",
+                  "type": "filter",
+                  "operator": "contains",
+                  "property": "status",
+                  "value": "已思考",
+                  "conditions": []
+                }
+              ]
+            }
+          ]
+        },
+        "sort": {
+          "orders": []
+        }
+      },
+      "totalQuery": {
+        "valueType": "constant",
+        "value": 100,
+        "filter": {
+          "id": "946fd8db-0b55-4c4c-b072-680f8ab726a8",
+          "type": "group",
+          "operator": "and",
+          "conditions": []
+        },
+        "sort": {
+          "orders": []
+        }
+      },
+      "title": "☑️ 已思考"
+    },
+    {
+      "id": "1f521ab6-b630-43a7-9c44-e693987a8119",
+      "type": "chart",
+      "titleAlign": "left",
+      "tabTitle": "每月阅读量",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showShadow": true,
+      "createAt": "2024-12-13T05:00:18.258Z",
+      "updateAt": "2026-01-19T23:12:57.287Z",
+      "chartType": "bar",
+      "filter": {
+        "id": "b8bd417d-3ba9-4301-b7ce-40fac155ccb3",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "ef51db58-d3b5-4ece-a631-0c318009a28e",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.parent}",
+            "value": "05_long_project/书/微信",
+            "conditions": []
+          },
+          {
+            "id": "552be2d0-0052-4335-b329-18b84f45ba02",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.extension}",
+            "value": "md",
+            "conditions": []
+          },
+          {
+            "id": "68f53400-c6f4-475f-82eb-7303b9bedef3",
+            "type": "filter",
+            "operator": "contains",
+            "property": "status",
+            "value": "已看完",
+            "conditions": []
+          }
+        ]
+      },
+      "labelProperty": "category",
+      "labelFormat": "$timeFormat",
+      "valueProperty": "$file_count",
+      "valuePrecision": 0,
+      "sortField": "xAxisValue",
+      "sortOrder": "asc",
+      "maxHeight": 450,
+      "chartColorSet": "F",
+      "chartLabelPosition": "hidden",
+      "showDataValue": true,
+      "valueScaleStartFromZero": true,
+      "smoothLine": false,
+      "options": {},
+      "title": "每月阅读量",
+      "valueFormatPattern": "yyyy-MM",
+      "enableMarkLine": false,
+      "labelRotation": 0,
+      "customizeColorSets": [
+        {
+          "id": "ac7a9a97-7b47-458c-b873-6f54b309c111",
+          "colors": [
+            "#0693e3cc",
+            "#d34ad099"
+          ]
+        },
+        {
+          "id": "1ac16c31-99d3-4432-80e9-fb500a31fb17",
+          "colors": [
+            "#7749bab3"
+          ]
+        },
+        {
+          "id": "7f1b763d-05e5-423b-8e9e-ed067dc90bca",
+          "colors": [
+            "#3a9fcf"
+          ]
+        }
+      ],
+      "categoryProperty": "finishedDate",
+      "categoryFormatPattern": "yyyy-MM",
+      "series": [
+        {
+          "id": "4c24028f-0b50-4754-b551-a96bf16cdb69",
+          "name": "$file_count",
+          "precision": 0
+        }
+      ]
+    },
+    {
+      "id": "dbc66e67-ffdf-4569-a949-c195560224da",
+      "type": "count",
+      "titleAlign": "center",
+      "tabTitle": "🦄未笔记",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showShadow": true,
+      "createAt": "2024-12-13T04:47:59.487Z",
+      "updateAt": "2026-01-07T08:17:35.740Z",
+      "countValueAlign": "center",
+      "contentPrefix": "",
+      "contentSuffix": "",
+      "countType": "number",
+      "precision": 0,
+      "query": {
+        "valueType": "totalRecords",
+        "value": 100,
+        "filter": {
+          "id": "6ceceacf-02bb-47a0-8e15-ce7dbfff2050",
+          "type": "group",
+          "operator": "and",
+          "conditions": [
+            {
+              "id": "b50d87df-6d59-4d2b-960f-803de9a422c3",
+              "type": "filter",
+              "operator": "equals",
+              "property": "${file.parent}",
+              "value": "05_long_project/书/豆瓣",
+              "conditions": []
+            },
+            {
+              "id": "e3f8ac5d-3707-4cb9-8df9-792527b172de",
+              "type": "group",
+              "operator": "or",
+              "conditions": [
+                {
+                  "id": "aa87b56f-46c8-435b-8516-e1ec295e4905",
+                  "type": "filter",
+                  "operator": "contains",
+                  "property": "status",
+                  "value": "已看完",
+                  "conditions": []
+                }
+              ]
+            }
+          ]
+        },
+        "sort": {
+          "orders": []
+        }
+      },
+      "totalQuery": {
+        "valueType": "constant",
+        "value": 100,
+        "filter": {
+          "id": "946fd8db-0b55-4c4c-b072-680f8ab726a8",
+          "type": "group",
+          "operator": "and",
+          "conditions": []
+        },
+        "sort": {
+          "orders": []
+        }
+      },
+      "title": "🦄未笔记"
+    },
+    {
+      "id": "b90cd23a-70c0-467d-9a9b-9e3c83d5122b",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-01-19T22:56:23.082Z",
+      "updateAt": "2026-01-19T23:20:53.138Z",
+      "components": [
+        {
+          "componentId": "884b5a8c-551c-464f-b24b-0fd76aef8993"
+        },
+        {
+          "componentId": "b6a2491f-9d15-4a15-88cc-304550949a3d"
+        },
+        {
+          "componentId": "699e4171-afab-4268-9121-ba1531fe1184"
+        }
+      ],
+      "layoutType": "list",
+      "locked": false,
+      "layoutOptions": {}
+    },
+    {
+      "id": "884b5a8c-551c-464f-b24b-0fd76aef8993",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "统计数据",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-01-19T23:09:38.425Z",
+      "updateAt": "2026-01-19T23:13:30.176Z",
+      "components": [
+        {
+          "componentId": "2d5833ae-2bf4-420f-bc61-79494db86038"
+        },
+        {
+          "componentId": "c2a7d53e-1a52-4605-ba8a-ef115692b7a7"
+        },
+        {
+          "componentId": "8ba894ea-08f3-4cb6-b422-c5860ffd50f2"
+        },
+        {
+          "componentId": "dbc66e67-ffdf-4569-a949-c195560224da"
+        },
+        {
+          "componentId": "9df828f4-4a1c-43e1-822a-c4cf4870f0f0"
+        },
+        {
+          "componentId": "d62a83d7-ca59-44d8-b733-b3f9a788518d"
+        }
+      ],
+      "layoutType": "column",
+      "locked": false,
+      "layoutOptions": {},
+      "title": "统计数据"
+    },
+    {
+      "id": "b6a2491f-9d15-4a15-88cc-304550949a3d",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "图表",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-01-19T23:10:36.349Z",
+      "updateAt": "2026-01-19T23:11:32.126Z",
+      "components": [
+        {
+          "componentId": "83262dbe-99f1-496a-9d0c-4dde75d35e10"
+        },
+        {
+          "componentId": "46c7519e-24b4-4afc-bce6-2e80a4a192b3"
+        },
+        {
+          "componentId": "1b9c6b00-07d0-40e0-87fe-2ac8dfa54e0c"
+        },
+        {
+          "componentId": "1f521ab6-b630-43a7-9c44-e693987a8119"
+        }
+      ],
+      "layoutType": "column",
+      "locked": false,
+      "layoutOptions": {},
+      "title": "图表"
+    },
+    {
+      "id": "ab9ae479-f9ac-4c76-a37e-ef63c830d8f2",
+      "type": "dataview",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-01-19T23:14:27.619Z",
+      "updateAt": "2026-01-30T23:51:38.062Z",
+      "query": "// ==== 请在这里指定文件前缀 ====\nconst filePrefix = `{{name}}`; // 只读取以 \"03_\" 开头的文件\n// =============================\n\n// 获取所有以指定前缀开头的文件\nconst files = app.vault.getMarkdownFiles().filter(f => f.name.startsWith(filePrefix));\n\n// 如果未找到任何文件，显示提示并退出\nif (files.length === 0) {\n    dv.paragraph(`未找到以 \"${filePrefix}\" 开头的文件`);\n    return;\n}\n\n// 用于存储所有阅读记录的数组\nconst allReadingRecords = [];\n\n// 遍历每个文件\nfor (const file of files) {\n    try {\n        const content = await app.vault.read(file);\n        const lines = content.split('\\n');\n        \n        // 解析时间记录部分\n        for (let i = 0; i < lines.length; i++) {\n            const line = lines[i].trim();\n            \n            // 寻找带有 #时间记录/阅读 标签的行\n            if (line.includes('#时间记录/阅读')) {\n                // 尝试从当前行提取时间信息（格式：HH:MM-HH:MM）\n                const timeMatch = line.match(/(\\d{1,2}:\\d{2})-(\\d{1,2}:\\d{2})/);\n                \n                if (timeMatch) {\n                    const startTime = timeMatch[1];\n                    const endTime = timeMatch[2];\n                    const duration = calculateDuration(startTime, endTime);\n                    \n                    // 提取阅读内容\n                    let contentText = extractReadingContent(line, i > 0 ? lines[i-1] : \"\");\n                    \n                    // 将记录添加到数组中\n                    if (contentText) {\n                        allReadingRecords.push({\n                            文件: file.name.replace('.md', ''),\n                            日期: getDateFromFilename(file.name) || getDateFromContent(content),\n                            内容: contentText,\n                            开始时间: startTime,\n                            结束时间: endTime,\n                            持续时间: duration,\n                            持续时间分钟: duration\n                        });\n                    }\n                }\n            }\n        }\n    } catch (error) {\n        console.error(`读取文件 ${file.name} 时出错:`, error);\n        dv.paragraph(`⚠️ 读取文件 ${file.name} 时出错`);\n    }\n}\n\n// 按内容分组统计\nconst contentStats = {};\n\nallReadingRecords.forEach(record => {\n    if (!contentStats[record.内容]) {\n        contentStats[record.内容] = {\n            总时长: 0,\n            记录次数: 0,\n            文件列表: new Set(),\n            日期列表: new Set()\n        };\n    }\n    \n    contentStats[record.内容].总时长 += record.持续时间分钟;\n    contentStats[record.内容].记录次数 += 1;\n    contentStats[record.内容].文件列表.add(record.文件);\n    contentStats[record.内容].日期列表.add(record.日期);\n});\n\n// 转换统计结果为数组并排序\nconst statsArray = Object.entries(contentStats).map(([content, stats]) => ({\n    内容: content,\n    总时长小时: (stats.总时长 / 60).toFixed(2),\n    总时长分钟: stats.总时长,\n    记录次数: stats.记录次数,\n    文件数: stats.文件列表.size,\n    文件列表: Array.from(stats.文件列表).join(', '),\n    日期列表: Array.from(stats.日期列表).sort().join(', ')\n}));\n\n// 按总时长降序排序\nstatsArray.sort((a, b) => b.总时长分钟 - a.总时长分钟);\n\n// 显示统计结果\nif (statsArray.length > 0) {\n   \n    // 显示详细统计表\n    dv.table(\n        [\"阅读内容\", \"总时长(小时)\", \"记录次数\", \"涉及文件数\", \"日期\"],\n        statsArray.map(s => [\n            s.内容,\n            s.总时长小时,\n            s.记录次数,\n            s.文件数,\n            s.日期列表\n        ])\n    );\n    \n} else {\n    dv.paragraph(`在以 \"${filePrefix}\" 开头的文件中未找到带有 #时间记录/阅读 标签的记录`);\n}\n\n// 辅助函数：提取阅读内容\nfunction extractReadingContent(currentLine, previousLine) {\n    let contentText = currentLine\n        .replace(/(\\d{1,2}:\\d{2})-(\\d{1,2}:\\d{2})/, '')\n        .replace(/#时间记录\\/阅读/, '')\n        .trim()\n        .replace(/^-\\s*/, '')\n        .trim();\n    \n    // 如果内容为空，尝试获取前一行内容\n    if (!contentText && previousLine) {\n        const prevLine = previousLine.trim();\n        if (prevLine.startsWith('- ') && !prevLine.includes('#')) {\n            contentText = prevLine.replace(/^-\\s*/, '').trim();\n        }\n    }\n    \n    // 如果内容仍然为空，尝试提取标签前的内容\n    if (!contentText) {\n        const tagIndex = currentLine.indexOf('#时间记录/阅读');\n        if (tagIndex > 0) {\n            contentText = currentLine.substring(0, tagIndex).trim();\n            contentText = contentText.replace(/(\\d{1,2}:\\d{2})-(\\d{1,2}:\\d{2})/, '').trim();\n            contentText = contentText.replace(/^-\\s*/, '').trim();\n        }\n    }\n    \n    return contentText;\n}\n\n// 辅助函数：计算两个时间之间的分钟数\nfunction calculateDuration(startTime, endTime) {\n    const start = parseTime(startTime);\n    const end = parseTime(endTime);\n    \n    // 处理跨天情况（结束时间小于开始时间）\n    if (end < start) {\n        return (24 * 60 - start) + end;\n    }\n    \n    return end - start;\n}\n\n// 辅助函数：将时间字符串转换为分钟数\nfunction parseTime(timeStr) {\n    const [hours, minutes] = timeStr.split(':').map(Number);\n    return hours * 60 + minutes;\n}\n\n// 辅助函数：从文件名提取日期\nfunction getDateFromFilename(filename) {\n    // 匹配常见的日期格式，如：03_2026_01_18.md\n    const match = filename.match(/(\\d{2})_(\\d{4})_(\\d{1,2})_(\\d{1,2})/);\n    if (match) {\n        const year = match[2];\n        const month = match[3];\n        const day = match[4];\n        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;\n    }\n    \n    // 尝试其他常见的日期格式\n    const match2 = filename.match(/(\\d{4})[-_]?(\\d{1,2})[-_]?(\\d{1,2})/);\n    if (match2) {\n        const year = match2[1];\n        const month = match2[2];\n        const day = match2[3];\n        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;\n    }\n    \n    return null;\n}\n\n// 辅助函数：从内容中提取日期\nfunction getDateFromContent(content) {\n    // 尝试从YAML frontmatter提取日期\n    const yamlMatch = content.match(/created:\\s*(\\d{4}-\\d{2}-\\d{2})/);\n    if (yamlMatch) {\n        return yamlMatch[1];\n    }\n    \n    // 尝试从内容中查找日期\n    const dateMatch = content.match(/\\d{4}-\\d{2}-\\d{2}/);\n    if (dateMatch) {\n        return dateMatch[0];\n    }\n    \n    return \"未知日期\";\n}",
+      "queryType": "dataviewjs",
+      "maxHeight": 1000,
+      "dynamicParamComponents": [
+        {
+          "id": "0f8862ec-c879-4d64-a24e-9b498657aea0",
+          "type": "text",
+          "name": "name",
+          "defaultValue": "0",
+          "placeholder": "",
+          "fromProperty": "",
+          "label": "文件前缀"
+        }
+      ],
+      "title": "阅读时长汇总"
+    },
+    {
+      "id": "fe5f235e-254d-4b8d-a475-8ef366536652",
+      "type": "dataview",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-01-19T23:25:08.880Z",
+      "updateAt": "2026-04-25T14:38:02.209Z",
+      "query": "// 定义查询条件\nconst targetFolder = \"03_输出_每日日记\";\nconst filePrefix = `{{name}}`;\nconst targetHeading = \"📝 时间记录\";\nconst targetTag = \"#时间记录/阅读\";\n\n// 1. 获取目标文件列表\nconst allFiles = dv.pages(`\"${targetFolder}\"`);\nconst targetFiles = allFiles\n    .filter(p => p.file.name.startsWith(filePrefix))\n    .sort(p => p.file.name, 'asc');\n\n// 2. 处理每个文件，提取包含特定标签的行\nconst tableRows = await Promise.all(\n    targetFiles.map(async (page) => {\n        try {\n            const rawContent = await dv.io.load(page.file.path);\n            const lines = rawContent.split('\\n');\n            let inTargetSection = false;\n            let matchingLines = []; // 存储匹配的行\n            \n            for (let i = 0; i < lines.length; i++) {\n                const line = lines[i];\n                \n                // 检测目标标题开始\n                if (line.startsWith('## ') && line.includes(targetHeading)) {\n                    inTargetSection = true;\n                    continue;\n                }\n                \n                // 如果遇到下一个标题，则退出当前节\n                if (inTargetSection && line.match(/^#{1,6}\\s/)) {\n                    break;\n                }\n                \n                // 在目标节内，检查是否包含目标标签\n                if (inTargetSection && line.includes(targetTag)) {\n                    matchingLines.push(line.trim());\n                }\n            }\n            \n            let resultContent = '无相关记录';\n            if (matchingLines.length > 0) {\n                // 将匹配的行用换行符连接，并去除多余的空白\n                resultContent = matchingLines.join('\\n');\n            }\n            \n            return [page.file.link, resultContent];\n        } catch (error) {\n            return [page.file.link, `读取错误: ${error.message}`];\n        }\n    })\n);\n\n// 3. 渲染表格\ndv.table([`文件 (${targetFiles.length}个)`, `“${targetHeading}”中包含 ${targetTag} 的行`], tableRows);\n",
+      "queryType": "dataviewjs",
+      "maxHeight": 1000,
+      "dynamicParamComponents": [
+        {
+          "id": "0ba245f9-54ba-4c6e-b958-fb815900188a",
+          "type": "text",
+          "name": "name",
+          "defaultValue": "1",
+          "placeholder": "",
+          "fromProperty": "",
+          "label": "文件前缀"
+        }
+      ],
+      "title": "本周阅读汇总"
+    },
+    {
+      "id": "e1fe219d-d715-4c26-95e4-594e9b5e82a7",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "指令",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-02-02T00:34:24.749Z",
+      "updateAt": "2026-03-09T06:57:50.934Z",
+      "components": [
+        {
+          "componentId": "221f6d23-9987-4a8a-872a-33c44cc26cfe"
+        },
+        {
+          "componentId": "12096f91-b3ea-4fa0-9ce0-06e09fe86a67"
+        }
+      ],
+      "layoutType": "list",
+      "locked": false,
+      "layoutOptions": {},
+      "title": "指令"
+    },
+    {
+      "id": "7dabc784-cad9-4643-bd47-c7c05b7db67c",
+      "type": "dynamicDataView",
+      "titleAlign": "center",
+      "tabTitle": "书笔记",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-02-02T03:29:25.435Z",
+      "updateAt": "2026-03-28T04:20:19.989Z",
+      "viewType": "table",
+      "newPageNameFormat": "{{date:YYYYMMDDHHmmss}} ",
+      "properties": [
+        {
+          "id": "__componentsTitleProperty_0x7c00",
+          "name": "文件名",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "568"
+          }
+        },
+        {
+          "id": "17966ffa-b95f-4623-b4c5-2a18e6f63d1c",
+          "name": "${file.words}",
+          "isShow": true,
+          "type": "text",
+          "options": {}
+        },
+        {
+          "id": "1bf0aa17-9a93-488b-b8ef-ef8add2a25c9",
+          "name": "${file.mtime}",
+          "isShow": true,
+          "type": "datetime",
+          "options": {}
+        }
+      ],
+      "templates": [],
+      "groups": [],
+      "colorfulGroups": false,
+      "viewOptions": {
+        "openPageIn": "tab",
+        "openPageAfterCreate": true,
+        "items": [],
+        "pinFiltersToMenuBar": false,
+        "hideHeaderMenu": false,
+        "showGrid": false,
+        "heightType": "auto",
+        "heightValue": 600
+      },
+      "groupStates": {
+        "sort": "nameAsc",
+        "statics": [],
+        "orders": [],
+        "hiddens": [],
+        "collapseds": []
+      },
+      "filter": {
+        "id": "f5405a56-6251-4999-9240-264a9e89b541",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "bcc684d4-51cf-4ae7-8aea-0bc7299c2171",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.parent}",
+            "value": "书大纲",
+            "conditions": []
+          }
+        ]
+      },
+      "title": "书笔记",
+      "sort": {
+        "orders": [
+          {
+            "id": "e00755da-b1b9-4a01-9050-f655239211ed",
+            "property": "${file.size}",
+            "direction": "desc",
+            "disabled": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "221f6d23-9987-4a8a-872a-33c44cc26cfe",
+      "type": "markdown",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-02-02T00:34:03.202Z",
+      "updateAt": "2026-03-09T06:58:30.480Z",
+      "maxHeight": 300,
+      "contentAlign": "left",
+      "markdownsSource": "content",
+      "markdownValue": "请帮我重新梳理笔记\n1.笔记中案例的部分不需要总结，直接删除\n2.理论部分更有结构性，但同时不要丢弃太多细节信息，因为我还没有吸收笔记中的知识\n3.输出字数1万字"
+    },
+    {
+      "id": "12096f91-b3ea-4fa0-9ce0-06e09fe86a67",
+      "type": "markdown",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-02-02T00:34:03.202Z",
+      "updateAt": "2026-03-10T00:50:48.984Z",
+      "maxHeight": 300,
+      "contentAlign": "left",
+      "markdownsSource": "content",
+      "markdownValue": "请帮我重新梳理笔记\n1.笔记中案例的部分不需要总结，直接删除\n2.理论部分更有结构性，但同时不要丢弃太多细节信息，因为我还没有吸收笔记中的知识\n3.8千字＜输出字数<1万2千字（中文）\n4.内容仅限于本笔记，不要有笔记之外无关的内容"
+    }
+  ],
+  "rootComponentId": "bde5561a-88e2-4da5-a3d4-351ec22bba2b",
+  "version": 3.1
+}

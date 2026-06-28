@@ -1,0 +1,3981 @@
+{
+  "components": [
+    {
+      "id": "cb8bee17-a1df-4ae2-950a-5d487637c6c1",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showShadow": false,
+      "createAt": "2024-12-13T04:16:25.409Z",
+      "updateAt": "2026-01-25T07:39:18.543Z",
+      "components": [
+        {
+          "componentId": "614f2899-6178-40ba-af4c-476b8538d68b"
+        },
+        {
+          "componentId": "34c85148-f492-4a32-948f-d96547c68bd0"
+        },
+        {
+          "componentId": "062f8c41-ac11-4f49-98b9-10908ab044a5"
+        },
+        {
+          "componentId": "60ab5417-20bf-46f3-9c8e-d4f209b0bd76"
+        }
+      ],
+      "layoutType": "tab",
+      "locked": true,
+      "layoutOptions": {
+        "headerWidthRatio": 11.268888180371366
+      }
+    },
+    {
+      "id": "8721543a-ed04-422f-9f9c-c4c0b908c4ae",
+      "type": "quote",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showShadow": false,
+      "createAt": "2024-05-13T07:06:57.589Z",
+      "updateAt": "2024-05-13T07:06:57.589Z",
+      "contentType": "page",
+      "coverType": "pageFirstImage",
+      "filter": {
+        "id": "811bd9bd-c0bb-4d18-9830-4d387c638588",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "409b6073-1331-479d-b667-2d66d57a7c27",
+            "type": "filter",
+            "operator": "contains",
+            "property": "${file.tags}",
+            "value": "",
+            "conditions": []
+          }
+        ]
+      },
+      "maxHeight": 300
+    },
+    {
+      "id": "fc1f59fb-6619-4994-9432-8f230ff642c8",
+      "type": "dataview",
+      "titleAlign": "center",
+      "tabTitle": "Dataview",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2025-12-02T02:08:08.346Z",
+      "updateAt": "2026-01-04T08:13:37.369Z",
+      "query": "// 按时间段分组，显示汇总时长和记录列表\ntry {\n    const targetFileName = `{{name}}`;\n    const folderPath = \"03_输出_每日日记\";\n    const fullPath = `${folderPath}/${targetFileName}`;\n    \n    const content = await dv.io.load(fullPath);\n    if (!content) {\n        dv.paragraph(`文件不存在或为空`);\n        return;\n    }\n    \n    // 查找时间记录部分\n    const lines = content.split(\"\\n\");\n    const startIdx = lines.findIndex(l => l.includes(\"## 📝 时间记录\"));\n    if (startIdx === -1) {\n        dv.paragraph(\"未找到时间记录部分\");\n        return;\n    }\n    \n    // 提取记录\n    const records = [];\n    for (let i = startIdx + 1; i < lines.length; i++) {\n        const line = lines[i].trim();\n        if (line.startsWith(\"## \")) break;\n        if (line && !line.includes(\"#时间记录/休息\") && !line.includes(\"#时间记录/运动\")&& !line.includes(\"#时间记录/机动\")) {\n            records.push(line);\n        }\n    }\n    \n    if (records.length === 0) {\n        dv.paragraph(\"没有找到时间记录\");\n        return;\n    }\n    \n    // 时间解析函数\n    function parseTime(timeStr) {\n        if (!timeStr) return null;\n        timeStr = timeStr.trim().replace(/^-\\s*/, '');\n        const match = timeStr.match(/(\\d{1,2})[:.](\\d{2})/);\n        if (match) {\n            const hours = parseInt(match[1]);\n            const minutes = parseInt(match[2]);\n            if (hours >= 0 && hours <= 23 && minutes >= 0 && minutes <= 59) {\n                return hours + minutes / 60;\n            }\n        }\n        return null;\n    }\n    \n    // 计算持续时间\n    function calculateDuration(record) {\n        const cleanRecord = record.replace(/^-\\s*/, '');\n        const timeMatch = cleanRecord.match(/(\\d{1,2}[:.]\\d{2})-(\\d{1,2}[:.]\\d{2})/);\n        if (!timeMatch) return 0;\n        \n        const startTime = parseTime(timeMatch[1]);\n        const endTime = parseTime(timeMatch[2]);\n        \n        if (startTime === null || endTime === null) return 0;\n        \n        let duration = endTime - startTime;\n        if (duration < 0) duration += 24;\n        return Math.max(0, duration);\n    }\n    \n    // 分组\n    const groups = {\n        morning: { records: [], duration: 0 },\n        afternoon: { records: [], duration: 0 },\n        evening: { records: [], duration: 0 },\n        night: { records: [], duration: 0 },\n        other: { records: [], duration: 0 }\n    };\n    \n    records.forEach(record => {\n        const cleanRecord = record.replace(/^-\\s*/, '');\n        const timeMatch = cleanRecord.match(/(\\d{1,2})[:.]?(\\d{2})?/);\n        \n        if (timeMatch) {\n            let hours = parseInt(timeMatch[1]);\n            if (timeMatch[2]) {\n                const minutes = parseInt(timeMatch[2]);\n                hours += minutes / 60;\n            }\n            \n            const duration = calculateDuration(record);\n            \n            if (hours >= 21 || hours < 6) {\n                groups.night.records.push(record);\n                groups.night.duration += duration;\n            } else if (hours >= 6 && hours < 14) {\n                groups.morning.records.push(record);\n                groups.morning.duration += duration;\n            } else if (hours >= 14 && hours < 17) {\n                groups.afternoon.records.push(record);\n                groups.afternoon.duration += duration;\n            } else if (hours >= 17 && hours < 21) {\n                groups.evening.records.push(record);\n                groups.evening.duration += duration;\n            } else {\n                groups.other.records.push(record);\n                groups.other.duration += duration;\n            }\n        } else {\n            groups.other.records.push(record);\n            groups.other.duration += calculateDuration(record);\n        }\n    });\n    \n    // 构建输出\n    let markdown = `## ${targetFileName.replace('.md', '')} 时间记录\\n`;\n    markdown += `共 ${records.length} 条记录\\n\\n`;\n    \n    const groupNames = {\n        morning: \"🌅 早上 (6:00-14:00)\",\n        afternoon: \"🌞 下午 (14:00-17:00)\",\n        evening: \"🌆 晚上 (17:00-21:00)\",\n        night: \"🌙 深夜 (21:00以后及6:00前)\",\n        other: \"⏰ 其他时间段\"\n    };\n    \n    const groupOrder = [\"morning\", \"afternoon\", \"evening\", \"night\", \"other\"];\n    \n    // 输出每个分组\n    groupOrder.forEach(key => {\n        if (groups[key].records.length > 0) {\n            const duration = groups[key].duration.toFixed(2);\n            markdown += `${groupNames[key]} (${groups[key].records.length}条，${duration}小时):\\n`;\n            \n            // 输出该分组的记录列表\n            groups[key].records.forEach(record => {\n                const cleanRecord = record.replace(/^-\\s*/, '');\n                markdown += `- ${cleanRecord}\\n`;\n            });\n            \n            markdown += \"\\n\";\n        }\n    });\n    \n    // 添加简单的统计\n    let totalDuration = 0;\n    groupOrder.forEach(key => {\n        totalDuration += groups[key].duration;\n    });\n    \n    markdown += `**总计: ${totalDuration.toFixed(2)}小时**`;\n    \n    // 输出\n    dv.paragraph(markdown);\n    \n} catch (error) {\n    dv.paragraph(`错误: ${error.message}`);\n}",
+      "queryType": "dataviewjs",
+      "maxHeight": 700,
+      "dynamicParamComponents": [
+        {
+          "id": "e4f5a84d-bdd5-4433-889c-fa376778af22",
+          "type": "propertyValueSuggestions",
+          "name": "name",
+          "defaultValue": "",
+          "placeholder": "",
+          "fromProperty": "file_name",
+          "label": "文件名"
+        }
+      ],
+      "fontColor": "#4d5356",
+      "components": []
+    },
+    {
+      "id": "a6ae5f7a-1027-4821-bb3b-b9af0534aaa8",
+      "type": "dataview",
+      "titleAlign": "center",
+      "tabTitle": "Dataview",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2025-12-02T02:08:08.346Z",
+      "updateAt": "2026-01-04T08:13:41.958Z",
+      "query": "// 按时间段分组，只显示带有休息标签的时间记录\ntry {\n    const targetFileName = `{{name}}`;\n    const folderPath = \"03_输出_每日日记\";\n    const fullPath = `${folderPath}/${targetFileName}`;\n    \n    const content = await dv.io.load(fullPath);\n    if (!content) {\n        dv.paragraph(`文件不存在或为空`);\n        return;\n    }\n    \n    // 查找时间记录部分\n    const lines = content.split(\"\\n\");\n    const startIdx = lines.findIndex(l => l.includes(\"## 📝 时间记录\"));\n    if (startIdx === -1) {\n        dv.paragraph(\"未找到时间记录部分\");\n        return;\n    }\n    \n    // 提取记录 - 现在只提取包含休息标签的记录\n    const records = [];\n    for (let i = startIdx + 1; i < lines.length; i++) {\n        const line = lines[i].trim();\n        if (line.startsWith(\"## \")) break;\n        \n        // 只包含休息标签的记录\n        if (line.includes(\"#时间记录/休息\")||line.includes(\"#时间记录/机动\")) {\n            records.push(line);\n        }\n    }\n    \n    if (records.length === 0) {\n        dv.paragraph(\"没有找到带有休息标签的时间记录\");\n        return;\n    }\n    \n    // 时间解析函数\n    function parseTime(timeStr) {\n        if (!timeStr) return null;\n        timeStr = timeStr.trim().replace(/^-\\s*/, '');\n        const match = timeStr.match(/(\\d{1,2})[:.](\\d{2})/);\n        if (match) {\n            const hours = parseInt(match[1]);\n            const minutes = parseInt(match[2]);\n            if (hours >= 0 && hours <= 23 && minutes >= 0 && minutes <= 59) {\n                return hours + minutes / 60;\n            }\n        }\n        return null;\n    }\n    \n    // 计算持续时间\n    function calculateDuration(record) {\n        const cleanRecord = record.replace(/^-\\s*/, '');\n        const timeMatch = cleanRecord.match(/(\\d{1,2}[:.]\\d{2})-(\\d{1,2}[:.]\\d{2})/);\n        if (!timeMatch) return 0;\n        \n        const startTime = parseTime(timeMatch[1]);\n        const endTime = parseTime(timeMatch[2]);\n        \n        if (startTime === null || endTime === null) return 0;\n        \n        let duration = endTime - startTime;\n        if (duration < 0) duration += 24;\n        return Math.max(0, duration);\n    }\n    \n    // 分组\n    const groups = {\n        morning: { records: [], duration: 0 },\n        afternoon: { records: [], duration: 0 },\n        evening: { records: [], duration: 0 },\n        night: { records: [], duration: 0 },\n        other: { records: [], duration: 0 }\n    };\n    \n    records.forEach(record => {\n        const cleanRecord = record.replace(/^-\\s*/, '');\n        const timeMatch = cleanRecord.match(/(\\d{1,2})[:.]?(\\d{2})?/);\n        \n        if (timeMatch) {\n            let hours = parseInt(timeMatch[1]);\n            if (timeMatch[2]) {\n                const minutes = parseInt(timeMatch[2]);\n                hours += minutes / 60;\n            }\n            \n            const duration = calculateDuration(record);\n            \n            if (hours >= 21 || hours < 6) {\n                groups.night.records.push(record);\n                groups.night.duration += duration;\n            } else if (hours >= 6 && hours < 14) {\n                groups.morning.records.push(record);\n                groups.morning.duration += duration;\n            } else if (hours >= 14 && hours < 17) {\n                groups.afternoon.records.push(record);\n                groups.afternoon.duration += duration;\n            } else if (hours >= 17 && hours < 21) {\n                groups.evening.records.push(record);\n                groups.evening.duration += duration;\n            } else {\n                groups.other.records.push(record);\n                groups.other.duration += duration;\n            }\n        } else {\n            groups.other.records.push(record);\n            groups.other.duration += calculateDuration(record);\n        }\n    });\n    \n    // 构建输出\n    let markdown = `## ${targetFileName.replace('.md', '')} 休息时间记录\\n`;\n    markdown += `共 ${records.length} 条休息记录\\n\\n`;\n    \n    const groupNames = {\n        morning: \"🌅 早上 (6:00-14:00)\",\n        afternoon: \"🌞 下午 (14:00-17:00)\",\n        evening: \"🌆 晚上 (17:00-21:00)\",\n        night: \"🌙 深夜 (21:00以后及6:00前)\",\n        other: \"⏰ 其他时间段\"\n    };\n    \n    const groupOrder = [\"morning\", \"afternoon\", \"evening\", \"night\", \"other\"];\n    \n    // 输出每个分组\n    groupOrder.forEach(key => {\n        if (groups[key].records.length > 0) {\n            const duration = groups[key].duration.toFixed(2);\n            markdown += `${groupNames[key]} (${groups[key].records.length}条，${duration}小时):\\n`;\n            \n            // 输出该分组的记录列表\n            groups[key].records.forEach(record => {\n                const cleanRecord = record.replace(/^-\\s*/, '');\n                markdown += `- ${cleanRecord}\\n`;\n            });\n            \n            markdown += \"\\n\";\n        }\n    });\n    \n    // 添加简单的统计\n    let totalDuration = 0;\n    groupOrder.forEach(key => {\n        totalDuration += groups[key].duration;\n    });\n    \n    markdown += `**总计: ${totalDuration.toFixed(2)}小时**`;\n    \n    // 输出\n    dv.paragraph(markdown);\n    \n} catch (error) {\n    dv.paragraph(`错误: ${error.message}`);\n}",
+      "queryType": "dataviewjs",
+      "maxHeight": 700,
+      "dynamicParamComponents": [
+        {
+          "id": "e4f5a84d-bdd5-4433-889c-fa376778af22",
+          "type": "propertyValueSuggestions",
+          "name": "name",
+          "defaultValue": "",
+          "placeholder": "",
+          "fromProperty": "file_name",
+          "label": "文件名"
+        }
+      ],
+      "fontColor": "#4d5356",
+      "components": []
+    },
+    {
+      "id": "6799f263-a6f5-4cf0-a85a-7c7c1867b20d",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "组合",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2025-12-02T02:15:00.804Z",
+      "updateAt": "2026-01-04T08:13:04.219Z",
+      "components": [
+        {
+          "componentId": "26147d48-1731-4fab-aff0-2ff10a722253"
+        },
+        {
+          "componentId": "096ac4ca-315c-47c2-9269-b5b6c460f5b3"
+        },
+        {
+          "componentId": "010718f3-cd9a-4815-b532-bb73517eae7b"
+        }
+      ],
+      "layoutType": "column",
+      "locked": false,
+      "layoutOptions": {}
+    },
+    {
+      "id": "34c85148-f492-4a32-948f-d96547c68bd0",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "单日记录汇总",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2025-12-02T02:07:50.899Z",
+      "updateAt": "2026-01-13T06:32:54.003Z",
+      "components": [
+        {
+          "componentId": "9786906b-0b6b-4b2c-9137-13ec0d80dc56"
+        },
+        {
+          "componentId": "c99aa1f4-a699-4ecf-a39d-9a3e77aaae80"
+        }
+      ],
+      "layoutType": "list",
+      "locked": false,
+      "layoutOptions": {}
+    },
+    {
+      "id": "9786906b-0b6b-4b2c-9137-13ec0d80dc56",
+      "type": "button",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2025-12-03T09:46:22.383Z",
+      "updateAt": "2026-01-04T08:12:56.811Z",
+      "text": "复盘内容",
+      "buttonType": "common",
+      "clickActions": [
+        {
+          "type": "OpenFile",
+          "id": "56224117-f7e4-428d-9307-851ec9905676",
+          "options": {
+            "filePath": "resource/components/md/复盘页面.md",
+            "fileName": "复盘页面.md",
+            "openPageIn": "current"
+          }
+        },
+        {
+          "type": "CallCommand",
+          "id": "21fda96a-6b5a-47d4-b279-a1b95ad2c23b",
+          "options": {
+            "filePath": "00_template/清空页面.md",
+            "fileName": "清空页面.md",
+            "commandId": "templater-obsidian:insert-templater",
+            "commandName": "Templater: 打开插入模板模式"
+          }
+        }
+      ],
+      "checkActions": [],
+      "uncheckActions": [],
+      "isChecked": false,
+      "fullWidth": true,
+      "title": "获取复盘内容",
+      "icon": "ListFilter"
+    },
+    {
+      "id": "ad586ede-7ba7-4acd-ac08-2141fc03672d",
+      "type": "button",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2025-12-03T10:09:56.593Z",
+      "updateAt": "2026-01-04T08:13:04.217Z",
+      "text": "时间记录",
+      "buttonType": "common",
+      "clickActions": [
+        {
+          "type": "None",
+          "id": "6994f506-6f9d-4203-bf06-6fd5db331c7a",
+          "options": {}
+        }
+      ],
+      "checkActions": [],
+      "uncheckActions": [],
+      "isChecked": false,
+      "fullWidth": true,
+      "title": "时间记录",
+      "icon": "ChartNoAxesCombined"
+    },
+    {
+      "id": "c99aa1f4-a699-4ecf-a39d-9a3e77aaae80",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "时间记录",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2025-12-03T10:10:56.945Z",
+      "updateAt": "2026-01-04T08:12:56.812Z",
+      "components": [
+        {
+          "componentId": "ad586ede-7ba7-4acd-ac08-2141fc03672d"
+        },
+        {
+          "componentId": "6799f263-a6f5-4cf0-a85a-7c7c1867b20d"
+        }
+      ],
+      "layoutType": "list",
+      "locked": false,
+      "layoutOptions": {}
+    },
+    {
+      "id": "614f2899-6178-40ba-af4c-476b8538d68b",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "待办页面",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showShadow": false,
+      "createAt": "2024-05-13T08:01:51.193Z",
+      "updateAt": "2026-01-13T06:32:54.002Z",
+      "components": [
+        {
+          "componentId": "1e1f638a-d300-4a99-b345-5532b905f53e"
+        },
+        {
+          "componentId": "c93eff94-e939-45aa-a5cd-efc2afee8e83",
+          "layout": {
+            "mobile": {
+              "x": 0,
+              "y": 0,
+              "w": 4,
+              "h": 4
+            },
+            "laptop": {
+              "x": 0,
+              "y": 0,
+              "w": 12,
+              "h": 39
+            }
+          }
+        }
+      ],
+      "layoutType": "list"
+    },
+    {
+      "id": "c93eff94-e939-45aa-a5cd-efc2afee8e83",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "页面",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showShadow": false,
+      "createAt": "2024-12-27T11:10:56.348Z",
+      "updateAt": "2026-02-26T03:05:52.898Z",
+      "components": [
+        {
+          "componentId": "b307affb-fac6-4486-a310-9194494790e4"
+        },
+        {
+          "componentId": "04f54207-31a8-47f7-b3f8-8b20b8cfd863"
+        },
+        {
+          "componentId": "28916c82-9034-4673-8a8a-915a6fefe264"
+        },
+        {
+          "componentId": "52dc09fd-6e8b-4778-b046-b868487a3f2b"
+        },
+        {
+          "componentId": "d51bbc87-21f9-438f-b34a-75aa995e9582"
+        },
+        {
+          "componentId": "68353537-2c4a-4379-986c-875a24acb5ac"
+        },
+        {
+          "componentId": "9421fa20-0c73-4925-b2c9-8b23b4085142"
+        },
+        {
+          "componentId": "e3405350-6673-41e4-88d9-6fd9921a7812"
+        },
+        {
+          "componentId": "9fda651d-3fcb-460c-96e7-654b12ee333b"
+        },
+        {
+          "componentId": "f7c9f674-d532-48f2-9f20-3342a0b520f7"
+        },
+        {
+          "componentId": "681f10f6-92de-47e0-a3cd-39f37d56c994"
+        },
+        {
+          "componentId": "a951ed1b-25ff-4f46-b00c-c338e58135cc"
+        },
+        {
+          "componentId": "41bb45fb-38c2-4fc1-a168-deda27837af6"
+        },
+        {
+          "componentId": "4afc6b93-183e-474f-8681-fafe7be05d12"
+        }
+      ],
+      "layoutType": "tab",
+      "locked": false,
+      "layoutOptions": {}
+    },
+    {
+      "id": "17194386-232c-4ea8-9c1f-e26613eaa47a",
+      "type": "quote",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showShadow": false,
+      "createAt": "2024-05-13T07:06:57.589Z",
+      "updateAt": "2024-05-13T07:06:57.589Z",
+      "contentType": "page",
+      "coverType": "pageFirstImage",
+      "filter": {
+        "id": "811bd9bd-c0bb-4d18-9830-4d387c638588",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "409b6073-1331-479d-b667-2d66d57a7c27",
+            "type": "filter",
+            "operator": "contains",
+            "property": "${file.tags}",
+            "value": "",
+            "conditions": []
+          }
+        ]
+      },
+      "maxHeight": 300
+    },
+    {
+      "id": "1e1f638a-d300-4a99-b345-5532b905f53e",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "待办",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2025-11-26T06:56:52.054Z",
+      "updateAt": "2026-01-13T06:33:04.032Z",
+      "components": [
+        {
+          "componentId": "75b8a2a5-a8e4-42cd-9b9d-57c4786b14d2"
+        }
+      ],
+      "layoutType": "list",
+      "locked": false,
+      "layoutOptions": {}
+    },
+    {
+      "id": "75b8a2a5-a8e4-42cd-9b9d-57c4786b14d2",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "按钮",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2025-11-26T07:31:57.106Z",
+      "updateAt": "2026-01-29T13:05:59.486Z",
+      "components": [
+        {
+          "componentId": "b768e8e2-5ccf-4958-aa00-9a89825c420e"
+        },
+        {
+          "componentId": "14ea7466-5360-40eb-a186-300be672b35a"
+        },
+        {
+          "componentId": "6d7e75d4-34a9-4824-814f-9ab12b85ba29"
+        },
+        {
+          "componentId": "744a2b60-3ad7-4367-abb9-f0e7ef800680"
+        },
+        {
+          "componentId": "c9e97c6c-2dd6-46e8-aa2c-a9e180f8042a"
+        }
+      ],
+      "layoutType": "column",
+      "locked": false,
+      "layoutOptions": {}
+    },
+    {
+      "id": "14ea7466-5360-40eb-a186-300be672b35a",
+      "type": "card",
+      "titleAlign": "center",
+      "tabTitle": "打开其他SOP",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2025-11-26T07:32:20.174Z",
+      "updateAt": "2026-01-13T06:34:02.504Z",
+      "title": "打开其他SOP",
+      "description": "",
+      "coverFit": "cover",
+      "coverPosition": "left",
+      "clickAction": {
+        "type": "OpenFile",
+        "id": "5cb0e9d4-b290-4837-b4e2-240949d5ad82",
+        "options": {
+          "filePath": "resource/components/md/其他SOP.md",
+          "fileName": "其他SOP.md",
+          "openPageIn": "modal"
+        }
+      },
+      "coverCoordinate": {
+        "x": "50%",
+        "y": "50%"
+      },
+      "icon": "StretchHorizontal"
+    },
+    {
+      "id": "b768e8e2-5ccf-4958-aa00-9a89825c420e",
+      "type": "card",
+      "titleAlign": "center",
+      "tabTitle": "打开习惯待办",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2025-11-26T07:32:20.174Z",
+      "updateAt": "2026-01-13T06:34:02.502Z",
+      "title": "打开习惯待办",
+      "description": "",
+      "coverFit": "cover",
+      "coverPosition": "left",
+      "clickAction": {
+        "type": "OpenFile",
+        "id": "5cb0e9d4-b290-4837-b4e2-240949d5ad82",
+        "options": {
+          "filePath": "resource/components/md/习惯待办.md",
+          "fileName": "习惯待办.md",
+          "openPageIn": "modal"
+        }
+      },
+      "coverCoordinate": {
+        "x": "50%",
+        "y": "50%"
+      },
+      "icon": "BookA"
+    },
+    {
+      "id": "a951ed1b-25ff-4f46-b00c-c338e58135cc",
+      "type": "dynamicDataView",
+      "titleAlign": "center",
+      "tabTitle": "实际执行表",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showShadow": false,
+      "createAt": "2024-05-13T08:13:00.687Z",
+      "updateAt": "2026-01-22T02:46:47.319Z",
+      "viewType": "calendar",
+      "properties": [
+        {
+          "id": "__componentsTitleProperty_0x7c00",
+          "name": "文件名",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "eaf42920-ac64-4b5c-a2b9-5f319c13ad0d",
+          "name": "Project",
+          "isShow": false,
+          "type": "text",
+          "options": {}
+        },
+        {
+          "id": "aaebf9fa-a545-4c03-8ae1-f2038127490e",
+          "name": "Next Steps",
+          "isShow": false,
+          "type": "text",
+          "options": {}
+        },
+        {
+          "id": "7cac7d64-30b0-4e0e-81a9-5981c9b94db5",
+          "name": "${file.outgoingLinks}",
+          "isShow": false,
+          "type": "text",
+          "options": {}
+        },
+        {
+          "id": "379b6052-7725-493c-8ea9-69d3e1e327b8",
+          "name": "status",
+          "isShow": true,
+          "type": "select",
+          "options": {}
+        },
+        {
+          "id": "91efe9a8-32a9-4df8-9cd7-8a136019745b",
+          "name": "startDate",
+          "isShow": true,
+          "type": "date",
+          "options": {},
+          "alias": "开始时间"
+        },
+        {
+          "id": "525e84ee-24f6-48f6-bbbf-e45c65a317ee",
+          "name": "endDate",
+          "isShow": true,
+          "type": "datetime",
+          "options": {},
+          "alias": "结束时间"
+        }
+      ],
+      "templates": [
+        {
+          "id": "7c6d9b95-6944-4e13-8dc1-a2166d74fa0b",
+          "path": "00_template/T-待办模版.md",
+          "name": "T-待办模版.md",
+          "type": "normal"
+        }
+      ],
+      "groups": [],
+      "viewOptions": {
+        "openPageIn": "modal",
+        "openPageAfterCreate": false,
+        "itemSize": "components--page-card-medium",
+        "showPropertyName": false,
+        "showAllProperties": false,
+        "items": [],
+        "cover": {
+          "type": "pageFirstImage",
+          "value": "",
+          "fit": "contains",
+          "layout": "components--page-card-cover-landscape"
+        },
+        "headColumnWidth": "266",
+        "headColumnStatisticType": "count",
+        "pinFiltersToMenuBar": true,
+        "dateProperty": "startDate",
+        "calendarViewType": "month",
+        "cardColorFrom": "property",
+        "cardColorProperty": "${file.basename}",
+        "endDateProperty": "endDate",
+        "hideHeaderMenu": true
+      },
+      "filter": {
+        "id": "bc9afa86-0c6d-4468-8401-583c2f7074d6",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "3bfe4cbf-7738-421b-974b-c242a2eb7a82",
+            "type": "filter",
+            "operator": "contains_any",
+            "property": "status",
+            "value": [
+              "DONE",
+              "DOING"
+            ],
+            "conditions": []
+          },
+          {
+            "id": "79019e8c-1c77-4e64-ac05-0badd0f70cd1",
+            "type": "group",
+            "operator": "or",
+            "conditions": [
+              {
+                "id": "0d619539-37d1-46e9-9674-0674e67d2e9d",
+                "type": "filter",
+                "operator": "equals",
+                "property": "${file.parent}",
+                "value": "待办",
+                "conditions": []
+              },
+              {
+                "id": "2b70c9ee-b0a6-46e7-afbb-308250b7d55a",
+                "type": "filter",
+                "operator": "equals",
+                "property": "${file.parent}",
+                "value": "03_输出_每日日记/每周",
+                "conditions": []
+              },
+              {
+                "id": "b85eb677-4e9a-4907-ab85-5c22192ad3db",
+                "type": "filter",
+                "operator": "equals",
+                "property": "${file.parent}",
+                "value": "03_输出_每日日记/每月",
+                "conditions": []
+              }
+            ]
+          },
+          {
+            "id": "f3ef24a9-c7d1-407c-ac59-31a3dfcbae46",
+            "type": "filter",
+            "operator": "not_contains",
+            "property": "Project",
+            "value": "循环",
+            "conditions": []
+          },
+          {
+            "id": "2c2ae5d7-9d89-40fc-b846-488d3c02f620",
+            "type": "filter",
+            "operator": "not_contains",
+            "property": "Project",
+            "value": "生活",
+            "conditions": []
+          }
+        ]
+      },
+      "newPageLocation": {
+        "location": "待办"
+      },
+      "newPageNameFormat": "{{date: YYMMDD}} ",
+      "showTitle": false,
+      "groupBy": "",
+      "groupStates": {
+        "sort": "nameAsc",
+        "format": "none",
+        "statics": [],
+        "orders": [],
+        "hiddens": [],
+        "collapseds": []
+      },
+      "colorfulGroups": true,
+      "title": "实际执行表",
+      "sort": {
+        "orders": [
+          {
+            "id": "aabcef74-613f-4291-980d-f25b92a11e79",
+            "property": "tag",
+            "direction": "desc",
+            "disabled": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "7baad6e4-5de1-4c2c-9b98-fc3f82415579",
+      "type": "dataview",
+      "titleAlign": "center",
+      "tabTitle": "Dataview",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2025-12-02T02:08:08.346Z",
+      "updateAt": "2025-12-07T00:39:00.184Z",
+      "query": "// 按时间段分组，只显示带有休息标签的时间记录\ntry {\n    const targetFileName = `{{name}}`;\n    const folderPath = \"03_输出_每日日记\";\n    const fullPath = `${folderPath}/${targetFileName}`;\n    \n    const content = await dv.io.load(fullPath);\n    if (!content) {\n        dv.paragraph(`文件不存在或为空`);\n        return;\n    }\n    \n    // 查找时间记录部分\n    const lines = content.split(\"\\n\");\n    const startIdx = lines.findIndex(l => l.includes(\"## 📝 时间记录\"));\n    if (startIdx === -1) {\n        dv.paragraph(\"未找到时间记录部分\");\n        return;\n    }\n    \n    // 提取记录 - 现在只提取包含休息标签的记录\n    const records = [];\n    for (let i = startIdx + 1; i < lines.length; i++) {\n        const line = lines[i].trim();\n        if (line.startsWith(\"## \")) break;\n        \n        // 只包含休息标签的记录\n        if (line.includes(\"#时间记录/运动\")||line.includes(\"#时间记录/阅读\")||line.includes(\"#时间记录/播客\")||line.includes(\"#时间记录/放松模式\")) {\n            records.push(line);\n        }\n    }\n    \n    if (records.length === 0) {\n        dv.paragraph(\"没有找到带有休息标签的时间记录\");\n        return;\n    }\n    \n    // 时间解析函数\n    function parseTime(timeStr) {\n        if (!timeStr) return null;\n        timeStr = timeStr.trim().replace(/^-\\s*/, '');\n        const match = timeStr.match(/(\\d{1,2})[:.](\\d{2})/);\n        if (match) {\n            const hours = parseInt(match[1]);\n            const minutes = parseInt(match[2]);\n            if (hours >= 0 && hours <= 23 && minutes >= 0 && minutes <= 59) {\n                return hours + minutes / 60;\n            }\n        }\n        return null;\n    }\n    \n    // 计算持续时间\n    function calculateDuration(record) {\n        const cleanRecord = record.replace(/^-\\s*/, '');\n        const timeMatch = cleanRecord.match(/(\\d{1,2}[:.]\\d{2})-(\\d{1,2}[:.]\\d{2})/);\n        if (!timeMatch) return 0;\n        \n        const startTime = parseTime(timeMatch[1]);\n        const endTime = parseTime(timeMatch[2]);\n        \n        if (startTime === null || endTime === null) return 0;\n        \n        let duration = endTime - startTime;\n        if (duration < 0) duration += 24;\n        return Math.max(0, duration);\n    }\n    \n    // 分组\n    const groups = {\n        morning: { records: [], duration: 0 },\n        afternoon: { records: [], duration: 0 },\n        evening: { records: [], duration: 0 },\n        night: { records: [], duration: 0 },\n        other: { records: [], duration: 0 }\n    };\n    \n    records.forEach(record => {\n        const cleanRecord = record.replace(/^-\\s*/, '');\n        const timeMatch = cleanRecord.match(/(\\d{1,2})[:.]?(\\d{2})?/);\n        \n        if (timeMatch) {\n            let hours = parseInt(timeMatch[1]);\n            if (timeMatch[2]) {\n                const minutes = parseInt(timeMatch[2]);\n                hours += minutes / 60;\n            }\n            \n            const duration = calculateDuration(record);\n            \n            if (hours >= 21 || hours < 6) {\n                groups.night.records.push(record);\n                groups.night.duration += duration;\n            } else if (hours >= 6 && hours < 14) {\n                groups.morning.records.push(record);\n                groups.morning.duration += duration;\n            } else if (hours >= 14 && hours < 17) {\n                groups.afternoon.records.push(record);\n                groups.afternoon.duration += duration;\n            } else if (hours >= 17 && hours < 21) {\n                groups.evening.records.push(record);\n                groups.evening.duration += duration;\n            } else {\n                groups.other.records.push(record);\n                groups.other.duration += duration;\n            }\n        } else {\n            groups.other.records.push(record);\n            groups.other.duration += calculateDuration(record);\n        }\n    });\n    \n    // 构建输出\n    let markdown = `## ${targetFileName.replace('.md', '')} 休息时间记录\\n`;\n    markdown += `共 ${records.length} 条休息记录\\n\\n`;\n    \n    const groupNames = {\n        morning: \"🌅 早上 (6:00-14:00)\",\n        afternoon: \"🌞 下午 (14:00-17:00)\",\n        evening: \"🌆 晚上 (17:00-21:00)\",\n        night: \"🌙 深夜 (21:00以后及6:00前)\",\n        other: \"⏰ 其他时间段\"\n    };\n    \n    const groupOrder = [\"morning\", \"afternoon\", \"evening\", \"night\", \"other\"];\n    \n    // 输出每个分组\n    groupOrder.forEach(key => {\n        if (groups[key].records.length > 0) {\n            const duration = groups[key].duration.toFixed(2);\n            markdown += `${groupNames[key]} (${groups[key].records.length}条，${duration}小时):\\n`;\n            \n            // 输出该分组的记录列表\n            groups[key].records.forEach(record => {\n                const cleanRecord = record.replace(/^-\\s*/, '');\n                markdown += `- ${cleanRecord}\\n`;\n            });\n            \n            markdown += \"\\n\";\n        }\n    });\n    \n    // 添加简单的统计\n    let totalDuration = 0;\n    groupOrder.forEach(key => {\n        totalDuration += groups[key].duration;\n    });\n    \n    markdown += `**总计: ${totalDuration.toFixed(2)}小时**`;\n    \n    // 输出\n    dv.paragraph(markdown);\n    \n} catch (error) {\n    dv.paragraph(`错误: ${error.message}`);\n}",
+      "queryType": "dataviewjs",
+      "maxHeight": 700,
+      "dynamicParamComponents": [
+        {
+          "id": "e4f5a84d-bdd5-4433-889c-fa376778af22",
+          "type": "propertyValueSuggestions",
+          "name": "name",
+          "defaultValue": "",
+          "placeholder": "",
+          "fromProperty": "file_name",
+          "label": "文件名"
+        }
+      ],
+      "fontColor": "#4d5356",
+      "components": []
+    },
+    {
+      "id": "26147d48-1731-4fab-aff0-2ff10a722253",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "工作",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2025-12-07T00:21:47.281Z",
+      "updateAt": "2026-01-04T08:13:39.751Z",
+      "components": [
+        {
+          "componentId": "b31125ce-5204-419a-b824-699057a0d099"
+        },
+        {
+          "componentId": "fc1f59fb-6619-4994-9432-8f230ff642c8"
+        }
+      ],
+      "layoutType": "list",
+      "locked": false,
+      "layoutOptions": {}
+    },
+    {
+      "id": "b31125ce-5204-419a-b824-699057a0d099",
+      "type": "button",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2025-12-07T00:21:59.914Z",
+      "updateAt": "2026-01-04T08:13:37.368Z",
+      "text": "工作",
+      "buttonType": "common",
+      "clickActions": [],
+      "checkActions": [],
+      "uncheckActions": [],
+      "isChecked": false,
+      "fullWidth": true,
+      "title": "按钮",
+      "icon": "BotOff"
+    },
+    {
+      "id": "096ac4ca-315c-47c2-9269-b5b6c460f5b3",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "休息",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2025-12-07T00:22:29.747Z",
+      "updateAt": "2026-01-04T08:13:39.752Z",
+      "components": [
+        {
+          "componentId": "189eda94-5282-4770-bfd5-4313c426d704"
+        },
+        {
+          "componentId": "a6ae5f7a-1027-4821-bb3b-b9af0534aaa8"
+        }
+      ],
+      "layoutType": "list",
+      "locked": false,
+      "layoutOptions": {}
+    },
+    {
+      "id": "189eda94-5282-4770-bfd5-4313c426d704",
+      "type": "button",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2025-12-07T00:22:33.241Z",
+      "updateAt": "2026-01-04T08:13:41.956Z",
+      "text": "休息",
+      "buttonType": "common",
+      "clickActions": [],
+      "checkActions": [],
+      "uncheckActions": [],
+      "isChecked": false,
+      "fullWidth": true,
+      "title": "休息",
+      "icon": "Eraser"
+    },
+    {
+      "id": "010718f3-cd9a-4815-b532-bb73517eae7b",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "习惯",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2025-12-07T00:23:17.011Z",
+      "updateAt": "2026-01-04T08:13:39.753Z",
+      "components": [
+        {
+          "componentId": "35a80c0d-e503-4488-9f7f-f5b0ea12d61f"
+        },
+        {
+          "componentId": "7baad6e4-5de1-4c2c-9b98-fc3f82415579"
+        }
+      ],
+      "layoutType": "list",
+      "locked": false,
+      "layoutOptions": {}
+    },
+    {
+      "id": "35a80c0d-e503-4488-9f7f-f5b0ea12d61f",
+      "type": "button",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2025-12-07T00:23:26.214Z",
+      "updateAt": "2025-12-07T00:38:06.830Z",
+      "text": "习惯",
+      "buttonType": "common",
+      "clickActions": [],
+      "checkActions": [],
+      "uncheckActions": [],
+      "isChecked": false,
+      "fullWidth": true,
+      "title": "习惯",
+      "icon": "Settings"
+    },
+    {
+      "id": "6d7e75d4-34a9-4824-814f-9ab12b85ba29",
+      "type": "count",
+      "titleAlign": "center",
+      "tabTitle": "总待办",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2026-01-13T06:33:27.866Z",
+      "updateAt": "2026-01-13T06:34:02.507Z",
+      "countValueAlign": "center",
+      "contentPrefix": "",
+      "contentSuffix": "篇",
+      "countType": "number",
+      "precision": 0,
+      "uiType": "raw",
+      "query": {
+        "valueType": "totalRecords",
+        "value": 100,
+        "filter": {
+          "id": "a5cdad9c-c6bd-49f4-9474-e94762ca9df2",
+          "type": "group",
+          "operator": "and",
+          "conditions": [
+            {
+              "id": "5307f1af-e2bc-4c21-b3f1-4f5066848c3b",
+              "type": "filter",
+              "operator": "equals",
+              "property": "${file.parent}",
+              "value": "待办",
+              "conditions": []
+            }
+          ]
+        },
+        "sort": {
+          "orders": []
+        }
+      },
+      "totalQuery": {
+        "valueType": "constant",
+        "value": 100,
+        "filter": {
+          "id": "88e7b9c3-81dc-4a0c-912b-5054b3529247",
+          "type": "group",
+          "operator": "and",
+          "conditions": []
+        },
+        "sort": {
+          "orders": []
+        }
+      },
+      "title": "总待办"
+    },
+    {
+      "id": "744a2b60-3ad7-4367-abb9-f0e7ef800680",
+      "type": "count",
+      "titleAlign": "center",
+      "tabTitle": "总待办",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2026-01-13T06:33:27.866Z",
+      "updateAt": "2026-01-13T06:34:32.189Z",
+      "countValueAlign": "center",
+      "contentPrefix": "",
+      "contentSuffix": "篇",
+      "countType": "number",
+      "precision": 0,
+      "uiType": "raw",
+      "query": {
+        "valueType": "totalRecords",
+        "value": 100,
+        "filter": {
+          "id": "a5cdad9c-c6bd-49f4-9474-e94762ca9df2",
+          "type": "group",
+          "operator": "and",
+          "conditions": [
+            {
+              "id": "5307f1af-e2bc-4c21-b3f1-4f5066848c3b",
+              "type": "filter",
+              "operator": "equals",
+              "property": "${file.parent}",
+              "value": "待办",
+              "conditions": []
+            },
+            {
+              "id": "61fd4cc7-ed07-4113-bed9-a6b48f5a7a5c",
+              "type": "filter",
+              "operator": "equals",
+              "property": "status",
+              "value": "TODO",
+              "conditions": []
+            }
+          ]
+        },
+        "sort": {
+          "orders": []
+        }
+      },
+      "totalQuery": {
+        "valueType": "constant",
+        "value": 100,
+        "filter": {
+          "id": "88e7b9c3-81dc-4a0c-912b-5054b3529247",
+          "type": "group",
+          "operator": "and",
+          "conditions": []
+        },
+        "sort": {
+          "orders": []
+        }
+      },
+      "title": "未处理"
+    },
+    {
+      "id": "9421fa20-0c73-4925-b2c9-8b23b4085142",
+      "type": "dynamicDataView",
+      "titleAlign": "center",
+      "tabTitle": "重要紧急",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showShadow": false,
+      "createAt": "2024-05-13T08:13:00.687Z",
+      "updateAt": "2026-02-25T09:43:14.812Z",
+      "viewType": "table",
+      "properties": [
+        {
+          "id": "__componentsTitleProperty_0x7c00",
+          "name": "文件名",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "244"
+          }
+        },
+        {
+          "id": "a5a7a58e-7efb-4a5c-aa4f-2af8961ea763",
+          "name": "${file.ctime}",
+          "isShow": true,
+          "type": "datetime",
+          "options": {
+            "formatType": "datetime",
+            "format": "yyyy-MM-dd",
+            "width": "138"
+          },
+          "alias": "创建日期"
+        },
+        {
+          "id": "afbb2fdd-242e-41b3-980d-7da56e1b7f73",
+          "name": "开始",
+          "isShow": true,
+          "type": "button",
+          "options": {
+            "action": {
+              "type": "updateProperty",
+              "properties": [
+                {
+                  "id": "7d824545-fa87-4166-a77d-e4e8b4c749bc",
+                  "name": "status",
+                  "type": "string",
+                  "value": "DOING",
+                  "valueSource": "constant",
+                  "modifier": "replaceValue"
+                },
+                {
+                  "id": "77169e6e-9d97-4579-9901-0b06d8d662e3",
+                  "name": "startDate",
+                  "type": "datetime",
+                  "value": "$now",
+                  "valueSource": "constant",
+                  "modifier": "replaceValue"
+                },
+                {
+                  "id": "372a7204-48f5-4330-8585-bbea2dc1e420",
+                  "name": "priority",
+                  "type": "string",
+                  "value": "",
+                  "valueSource": "formula",
+                  "modifier": "replaceValue"
+                }
+              ]
+            },
+            "width": "91"
+          }
+        },
+        {
+          "id": "d9048058-9893-4c75-89b7-0af1574151a9",
+          "name": "结束",
+          "isShow": true,
+          "type": "button",
+          "options": {
+            "action": {
+              "type": "updateProperty",
+              "properties": [
+                {
+                  "id": "72570ed7-8144-46b1-b7de-dff80eb25e37",
+                  "name": "status",
+                  "type": "string",
+                  "value": "DONE",
+                  "valueSource": "constant",
+                  "modifier": "replaceValue"
+                },
+                {
+                  "id": "8b901f48-f8b2-4543-a1fc-927ca2f17253",
+                  "name": "endDate",
+                  "type": "datetime",
+                  "value": "$now",
+                  "valueSource": "constant",
+                  "modifier": "replaceValue"
+                }
+              ]
+            },
+            "width": "85"
+          }
+        },
+        {
+          "id": "ac3e86ca-1943-4757-b2c7-1fe2901f0fbd",
+          "name": "status",
+          "isShow": true,
+          "type": "select",
+          "options": {
+            "width": "100"
+          }
+        },
+        {
+          "id": "ca5af196-498c-4488-ac05-80e0829afa6c",
+          "name": "Project",
+          "isShow": true,
+          "type": "select",
+          "options": {
+            "width": "94"
+          },
+          "alias": "项目"
+        },
+        {
+          "id": "1ce65a14-b3b2-4444-ac02-7456ff23835f",
+          "name": "${file.words}",
+          "isShow": true,
+          "type": "number",
+          "options": {}
+        },
+        {
+          "id": "0fd6b4c9-6587-4043-9f6a-7ac726ca4e26",
+          "name": "imp_urg",
+          "isShow": true,
+          "type": "select",
+          "options": {
+            "items": [
+              {
+                "id": "b714640e-6f99-4133-864d-6da3b43ff36b",
+                "value": "重要紧急",
+                "color": "components--color-gray"
+              },
+              {
+                "id": "c587f8a4-c22c-40c3-ab01-6a35e9931778",
+                "value": "重要不紧急",
+                "color": "components--color-pink"
+              },
+              {
+                "id": "c1128959-d85c-45b4-a845-c2247951d7b4",
+                "value": "不重要不紧急",
+                "color": "components--color-yellow"
+              },
+              {
+                "id": "cf06ab28-0289-453d-9983-9e751aaca1fd",
+                "value": "不重要紧急",
+                "color": "components--color-purple"
+              }
+            ],
+            "width": "134"
+          },
+          "alias": "重要紧急度"
+        },
+        {
+          "id": "f1e460db-fc4c-4dc2-9a33-a0aa052a3cde",
+          "name": "sub_Project",
+          "isShow": true,
+          "type": "select",
+          "options": {
+            "width": "128"
+          },
+          "alias": "子项目"
+        },
+        {
+          "id": "c96ea1bf-e0e4-4ab0-adb4-cae0c8d0c2c9",
+          "name": "priority",
+          "isShow": false,
+          "type": "text",
+          "options": {
+            "width": "109"
+          },
+          "alias": "优先级"
+        },
+        {
+          "id": "979555eb-e8fb-4d3a-ab7d-b764dd1af4ab",
+          "name": "Next Steps",
+          "isShow": true,
+          "type": "formula",
+          "options": {
+            "width": "414",
+            "pinned": null,
+            "formula": "extractHeadingContent('## 第一阶段：📋 计划', { hideHeading: true })",
+            "renderType": "markdown"
+          },
+          "alias": "下一步",
+          "wrap": true
+        },
+        {
+          "id": "ecf089e2-9070-49d7-b171-205c60049196",
+          "name": "startDate",
+          "isShow": true,
+          "type": "datetime",
+          "options": {
+            "width": "287"
+          },
+          "alias": "开始日期"
+        },
+        {
+          "id": "6f2a2e80-1159-4ffe-8483-1005efd00488",
+          "name": "PlannedDate",
+          "isShow": true,
+          "type": "datetime",
+          "options": {
+            "formatType": "datetime",
+            "width": "273",
+            "format": "yyyy-MM-dd'T'HH:mm"
+          },
+          "alias": "计划日期"
+        },
+        {
+          "id": "946a168b-576d-4f04-bd16-d8e6198a4d64",
+          "name": "Estimated Hours",
+          "isShow": true,
+          "type": "number",
+          "options": {
+            "width": "145"
+          },
+          "alias": "预估时间 (h)"
+        },
+        {
+          "id": "6e9211ab-1bee-4907-a238-621bb9e9f389",
+          "name": "计划",
+          "isShow": true,
+          "type": "formula",
+          "options": {
+            "formula": "extractHeadingContent('## 第一阶段：📋 计划', { hideHeading: true })",
+            "renderType": "markdown"
+          }
+        }
+      ],
+      "templates": [
+        {
+          "id": "7c6d9b95-6944-4e13-8dc1-a2166d74fa0b",
+          "path": "00_template/T-待办模版.md",
+          "name": "T-待办模版.md",
+          "type": "normal"
+        }
+      ],
+      "groups": [],
+      "viewOptions": {
+        "openPageIn": "split",
+        "openPageAfterCreate": true,
+        "itemSize": "components--page-card-medium",
+        "showPropertyName": false,
+        "showAllProperties": false,
+        "items": [],
+        "cover": {
+          "type": "pageFirstImage",
+          "value": "",
+          "fit": "contains",
+          "layout": "components--page-card-cover-landscape"
+        },
+        "headColumnWidth": "266",
+        "headColumnStatisticType": "count",
+        "pinFiltersToMenuBar": true,
+        "rowHeight": 32,
+        "showGrid": true,
+        "heightType": "fixed",
+        "heightValue": 1000,
+        "hideHeaderMenu": true
+      },
+      "filter": {
+        "id": "bc9afa86-0c6d-4468-8401-583c2f7074d6",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "75cf6053-82c9-4c1f-a37e-eaedfedf7460",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.parent}",
+            "value": "待办",
+            "conditions": []
+          },
+          {
+            "id": "a34a206d-4072-486b-9d86-daa7fc1c98aa",
+            "type": "filter",
+            "operator": "not_equals",
+            "property": "status",
+            "value": "DONE",
+            "conditions": []
+          },
+          {
+            "id": "c64c9ead-bcca-423b-92ae-72e62c01891d",
+            "type": "filter",
+            "operator": "equals",
+            "property": "imp_urg",
+            "value": "重要紧急",
+            "conditions": []
+          },
+          {
+            "id": "57538032-35ac-491d-b5af-a76b3f4d4ee9",
+            "type": "filter",
+            "operator": "equals",
+            "property": "sub_Project",
+            "value": "",
+            "conditions": []
+          }
+        ]
+      },
+      "newPageLocation": {
+        "location": "待办"
+      },
+      "newPageNameFormat": "{{date: YYMMDD}} ",
+      "showTitle": false,
+      "groupBy": "",
+      "groupStates": {
+        "sort": "nameAsc",
+        "format": "none",
+        "statics": [],
+        "orders": [],
+        "hiddens": [],
+        "collapseds": []
+      },
+      "colorfulGroups": true,
+      "title": "重要紧急",
+      "sort": {
+        "orders": [
+          {
+            "id": "feca368d-148c-48a6-b36c-99d87bec3c52",
+            "property": "Project",
+            "direction": "desc",
+            "disabled": false
+          }
+        ]
+      },
+      "defaultTemplate": "7c6d9b95-6944-4e13-8dc1-a2166d74fa0b",
+      "loadLimitPerPage": "10"
+    },
+    {
+      "id": "b307affb-fac6-4486-a310-9194494790e4",
+      "type": "dynamicDataView",
+      "titleAlign": "center",
+      "tabTitle": "类型",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showShadow": false,
+      "createAt": "2024-05-13T08:13:00.687Z",
+      "updateAt": "2026-02-26T03:35:21.138Z",
+      "viewType": "gallary",
+      "properties": [
+        {
+          "id": "__componentsTitleProperty_0x7c00",
+          "name": "文件名",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "cf00430c-c25e-4fbe-a7fe-2b94ea61a8e9",
+          "name": "startDate",
+          "isShow": false,
+          "type": "datetime",
+          "options": {}
+        },
+        {
+          "id": "a6f91727-1910-49b0-8636-7291bf7812e4",
+          "name": "Next Steps",
+          "isShow": true,
+          "type": "text",
+          "options": {},
+          "alias": "下一步"
+        },
+        {
+          "id": "ccbf2f4e-61c1-4408-b19c-c8d2cc531909",
+          "name": "priority",
+          "isShow": true,
+          "type": "text",
+          "options": {},
+          "alias": "优先级"
+        },
+        {
+          "id": "da764506-bb58-4c43-a003-dd2245efeedc",
+          "name": "status",
+          "isShow": true,
+          "type": "text",
+          "options": {}
+        },
+        {
+          "id": "acfb5fd2-8372-4cdb-acdf-16e8cbe366eb",
+          "name": "sub_Project",
+          "isShow": true,
+          "type": "text",
+          "options": {}
+        }
+      ],
+      "templates": [
+        {
+          "id": "7c6d9b95-6944-4e13-8dc1-a2166d74fa0b",
+          "path": "00_template/T-待办模版.md",
+          "name": "T-待办模版.md",
+          "type": "normal"
+        }
+      ],
+      "groups": [
+        {
+          "id": "习惯",
+          "name": "习惯",
+          "items": [
+            "待办/模版.md",
+            "待办/AI指令模块学习.md",
+            "待办/AI.md",
+            "待办/之前读过的书应该不用再读一遍.md",
+            "待办/运动.md",
+            "待办/阅读流程优化.md",
+            "待办/阅读调整.md",
+            "待办/阅读-大纲整理.md",
+            "待办/习惯时长.md",
+            "待办/习惯平衡.md",
+            "待办/晚上的习惯是对我白天工作时长达标或者效率拉满的奖赏.md",
+            "待办/书.md",
+            "待办/结构化设计怎么迭代.md",
+            "待办/将习惯追踪表中的数据进行完善.md",
+            "待办/高效阅读.md",
+            "待办/播客下一阶段处理.md",
+            "待办/播客流程问题.md",
+            "待办/播客管理.md"
+          ]
+        },
+        {
+          "id": "其他",
+          "name": "其他",
+          "items": [
+            "待办/闭环.md",
+            "待办/将个人思考笔记单个笔记整合，复现问题解决思路和迭代流程.md"
+          ]
+        },
+        {
+          "id": "待办",
+          "name": "待办",
+          "items": [
+            "待办/AI指令模块学习.md",
+            "待办/问题处理.md",
+            "待办/复盘-待办.md",
+            "待办/待办类型2.md",
+            "待办/待办类型.md",
+            "待办/待办.md"
+          ]
+        },
+        {
+          "id": "头脑风暴",
+          "name": "头脑风暴",
+          "items": [
+            "待办/纸质梳理.md",
+            "待办/职业规划，到底干什么？.md",
+            "待办/永远泄气，比如领导力不竞选导师；亚马逊泄气；间歇性.md",
+            "待办/新的一年开始，一切都可以从头开始，年计划，月计划，周计划.md",
+            "待办/心态改变.md",
+            "待办/是否值得.md",
+            "待办/识别我拖延的事情，在习惯追踪中进行解决.md",
+            "待办/什么时候和我爸谈.md",
+            "待办/签合同的重要性.md",
+            "待办/培训机构.md",
+            "待办/女生是否不是天时地利人和就跨不过去.md",
+            "待办/明年亚马逊怎么处理，公司要怎么处理，是否拖着和我爸相似.md",
+            "待办/经历.md",
+            "待办/规划.md",
+            "待办/分-门市.md",
+            "待办/对回宁波，亚马逊的总结复盘1.md",
+            "待办/对回宁波，亚马逊的总结复盘 1.md",
+            "待办/挫折.md",
+            "待办/成功失败.md",
+            "待办/病如何捋顺.md"
+          ]
+        },
+        {
+          "id": "实践",
+          "name": "实践",
+          "items": [
+            "待办/番茄工作.md",
+            "待办/与理论相悖.md",
+            "待办/能力先起来，不然如何实践.md",
+            "待办/番茄可以通过Obsidian属性追踪.md",
+            "待办/番茄的休息优先级评估和我的周评估相悖.md",
+            "待办/待办页面一，二，三的思想应该是每日安排，我觉得应该和gtd的思想是相悖的.md"
+          ]
+        },
+        {
+          "id": "工作",
+          "name": "工作",
+          "items": [
+            "待办/状态影响.md",
+            "待办/优化.md",
+            "待办/意外事件.md",
+            "待办/晚上工作安排.md",
+            "待办/深度工作时长.md",
+            "待办/每周工作安排.md",
+            "待办/精力恢复.md",
+            "待办/解决问题方式.md",
+            "待办/工作时长.md",
+            "待办/工作安排.md"
+          ]
+        }
+      ],
+      "viewOptions": {
+        "openPageIn": "modal",
+        "openPageAfterCreate": false,
+        "itemSize": "components--page-card-small",
+        "showPropertyName": true,
+        "showAllProperties": true,
+        "items": [],
+        "cover": {
+          "type": "textContent",
+          "value": "",
+          "fit": "contains",
+          "layout": "components--page-card-cover-portrait",
+          "position": "top"
+        },
+        "headColumnWidth": "266",
+        "headColumnStatisticType": "count",
+        "pinFiltersToMenuBar": true,
+        "hideHeaderMenu": true
+      },
+      "filter": {
+        "id": "bc9afa86-0c6d-4468-8401-583c2f7074d6",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "75cf6053-82c9-4c1f-a37e-eaedfedf7460",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.parent}",
+            "value": "待办",
+            "conditions": []
+          },
+          {
+            "id": "c6f2471e-5573-459f-ab87-5af544ff4b48",
+            "type": "group",
+            "operator": "and",
+            "conditions": [
+              {
+                "id": "e0740269-2e56-486b-bd70-3af5e11604dd",
+                "type": "filter",
+                "operator": "not_equals",
+                "property": "status",
+                "value": "DONE",
+                "conditions": []
+              }
+            ]
+          }
+        ]
+      },
+      "newPageLocation": {
+        "location": "待办"
+      },
+      "newPageNameFormat": "请填写标题",
+      "showTitle": false,
+      "groupBy": "Project",
+      "groupStates": {
+        "sort": "manual",
+        "format": "none",
+        "statics": [
+          "其他",
+          "青蛙"
+        ],
+        "orders": [
+          "",
+          "__$uncategorizedGroup",
+          "闭环",
+          "待办",
+          "工作",
+          "设计",
+          "实践",
+          "习惯",
+          "头脑风暴",
+          "外部",
+          "周复盘",
+          "Obsidian"
+        ],
+        "hiddens": [],
+        "collapseds": [
+          "__$uncategorizedGroup",
+          "工作",
+          "青蛙",
+          "设计",
+          "实践",
+          "习惯",
+          "头脑风暴",
+          "周复盘",
+          "Obsidian",
+          "笔记",
+          "其他",
+          "外部",
+          "待办"
+        ]
+      },
+      "colorfulGroups": true,
+      "title": "类型-未完",
+      "sort": {
+        "orders": [
+          {
+            "id": "9b856b80-3a49-42db-bd1a-e2d1c010c78c",
+            "property": "Project",
+            "direction": "desc",
+            "disabled": false
+          }
+        ]
+      },
+      "defaultTemplate": "7c6d9b95-6944-4e13-8dc1-a2166d74fa0b",
+      "icon": "DraftingCompass"
+    },
+    {
+      "id": "68353537-2c4a-4379-986c-875a24acb5ac",
+      "type": "dynamicDataView",
+      "titleAlign": "center",
+      "tabTitle": "待排期",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showShadow": false,
+      "createAt": "2024-05-13T08:13:00.687Z",
+      "updateAt": "2026-01-22T02:40:08.566Z",
+      "viewType": "calendar",
+      "properties": [
+        {
+          "id": "__componentsTitleProperty_0x7c00",
+          "name": "文件名",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "0f2eec00-40e9-4415-9e75-c8d198a24c32",
+          "name": "Project",
+          "isShow": true,
+          "type": "text",
+          "options": {},
+          "alias": "问题类型"
+        },
+        {
+          "id": "65b8c47d-e74a-4c12-a89c-dafff84c6fc5",
+          "name": "PlannedDate",
+          "isShow": false,
+          "type": "date",
+          "options": {
+            "formatType": "datetime",
+            "format": "yyyy-MM-dd'T'HH:mm"
+          },
+          "alias": "计划日期"
+        },
+        {
+          "id": "b4130aa5-63b8-463b-a8db-6197a6958cd5",
+          "name": "startDate",
+          "isShow": false,
+          "type": "datetime",
+          "options": {
+            "formatType": "datetime",
+            "format": "yyyy-MM-dd'T'HH:mm"
+          },
+          "alias": "开始时间"
+        },
+        {
+          "id": "8e195a96-8a11-4dc9-9bda-49b880568f4b",
+          "name": "endDate",
+          "isShow": false,
+          "type": "datetime",
+          "options": {},
+          "alias": "结束时间"
+        },
+        {
+          "id": "7bca8d9a-b440-4490-bc6c-664bb26ac63b",
+          "name": "status",
+          "isShow": false,
+          "type": "select",
+          "options": {},
+          "alias": "状态"
+        }
+      ],
+      "templates": [
+        {
+          "id": "7c6d9b95-6944-4e13-8dc1-a2166d74fa0b",
+          "path": "00_template/T-待办模版.md",
+          "name": "T-待办模版.md",
+          "type": "normal"
+        }
+      ],
+      "groups": [],
+      "viewOptions": {
+        "openPageIn": "modal",
+        "openPageAfterCreate": false,
+        "itemSize": "components--page-card-medium",
+        "showPropertyName": true,
+        "showAllProperties": true,
+        "items": [],
+        "cover": {
+          "type": "pageFirstImage",
+          "value": "",
+          "fit": "contains",
+          "layout": "components--page-card-cover-landscape"
+        },
+        "headColumnWidth": "266",
+        "headColumnStatisticType": "count",
+        "pinFiltersToMenuBar": true,
+        "dateProperty": "PlannedDate",
+        "calendarViewType": "month",
+        "cardColorFrom": "property",
+        "cardColorProperty": "${file.basename}",
+        "endDateProperty": ""
+      },
+      "filter": {
+        "id": "bc9afa86-0c6d-4468-8401-583c2f7074d6",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "0fbc067d-272f-49c7-bd9f-86ea6e53c69e",
+            "type": "filter",
+            "operator": "equals",
+            "property": "priority",
+            "value": "1",
+            "conditions": []
+          },
+          {
+            "id": "c6da570e-cd09-4376-b6d4-382a09bf8dff",
+            "type": "filter",
+            "operator": "not_contains",
+            "property": "status",
+            "value": "DONE",
+            "conditions": []
+          }
+        ]
+      },
+      "newPageLocation": {
+        "location": "待办"
+      },
+      "newPageNameFormat": "{{date: YYMMDD}} ",
+      "showTitle": false,
+      "groupBy": "",
+      "groupStates": {
+        "sort": "nameAsc",
+        "format": "none",
+        "statics": [],
+        "orders": [],
+        "hiddens": [],
+        "collapseds": []
+      },
+      "colorfulGroups": true,
+      "title": "待排期",
+      "sort": {
+        "orders": [
+          {
+            "id": "a0659d73-ef54-4131-9d76-0279d799b870",
+            "property": "Project",
+            "direction": "asc",
+            "disabled": false
+          }
+        ]
+      },
+      "defaultTemplate": "7c6d9b95-6944-4e13-8dc1-a2166d74fa0b"
+    },
+    {
+      "id": "681f10f6-92de-47e0-a3cd-39f37d56c994",
+      "type": "dynamicDataView",
+      "titleAlign": "center",
+      "tabTitle": "已完成",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showShadow": false,
+      "createAt": "2024-05-13T08:13:00.687Z",
+      "updateAt": "2026-02-25T09:09:20.365Z",
+      "viewType": "table",
+      "properties": [
+        {
+          "id": "__componentsTitleProperty_0x7c00",
+          "name": "文件名",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "208"
+          }
+        },
+        {
+          "id": "a5a7a58e-7efb-4a5c-aa4f-2af8961ea763",
+          "name": "${file.ctime}",
+          "isShow": true,
+          "type": "datetime",
+          "options": {
+            "formatType": "datetime",
+            "format": "yyyy-MM-dd",
+            "width": "138"
+          },
+          "alias": "创建日期"
+        },
+        {
+          "id": "23584442-4709-45ce-8276-2c11c0dc338e",
+          "name": "Actual Hours",
+          "isShow": true,
+          "type": "formula",
+          "options": {
+            "width": "106",
+            "formula": "fixed(duration(prop('startDate'), prop('endDate') ,'day'),2)"
+          },
+          "alias": "耗时"
+        },
+        {
+          "id": "1252c98b-90c0-4a0c-9a56-a3540d7d1389",
+          "name": "Project",
+          "isShow": true,
+          "type": "select",
+          "options": {}
+        },
+        {
+          "id": "259a34ca-257f-42f4-9f1c-a02c26ede649",
+          "name": "sub_Project",
+          "isShow": true,
+          "type": "select",
+          "options": {}
+        },
+        {
+          "id": "ecf089e2-9070-49d7-b171-205c60049196",
+          "name": "startDate",
+          "isShow": true,
+          "type": "datetime",
+          "options": {
+            "formatType": "datetime",
+            "width": "158",
+            "format": ""
+          },
+          "alias": "开始日期"
+        },
+        {
+          "id": "7e8acaf7-a032-4b0c-be4b-5baac45eefd8",
+          "name": "endDate",
+          "isShow": true,
+          "type": "datetime",
+          "options": {
+            "width": "168"
+          },
+          "alias": "结束日期"
+        },
+        {
+          "id": "8c31b607-39ec-421a-b8a1-523002ab6ec3",
+          "name": "${file.words}",
+          "isShow": true,
+          "type": "text",
+          "options": {
+            "width": "146"
+          }
+        },
+        {
+          "id": "3cad6939-df01-4ca7-95b7-6930e294fade",
+          "name": "${file.outgoingLinks}",
+          "isShow": false,
+          "type": "text",
+          "options": {
+            "width": "391"
+          }
+        },
+        {
+          "id": "5c180761-f3c7-4223-9569-c259b6d48dfa",
+          "name": "偏差",
+          "isShow": true,
+          "type": "formula",
+          "options": {
+            "formula": "extractHeadingContent('## 第三阶段：🔍 检查', { hideHeading: true })",
+            "renderType": "markdown",
+            "width": "833"
+          },
+          "wrap": false
+        },
+        {
+          "id": "4d817c36-7930-4053-92f7-b65c996dcc0b",
+          "name": "sop",
+          "isShow": true,
+          "type": "formula",
+          "options": {
+            "formula": "extractHeadingContent('## 🔄 SOP抽取', { hideHeading: true })",
+            "renderType": "markdown",
+            "width": "680"
+          },
+          "wrap": false
+        },
+        {
+          "id": "d7bcd663-1550-4e3f-b038-8a027973606d",
+          "name": "${file.mtime}",
+          "isShow": true,
+          "type": "datetime",
+          "options": {}
+        }
+      ],
+      "templates": [
+        {
+          "id": "7c6d9b95-6944-4e13-8dc1-a2166d74fa0b",
+          "path": "00_template/T-待办模版.md",
+          "name": "T-待办模版.md",
+          "type": "normal"
+        }
+      ],
+      "groups": [],
+      "viewOptions": {
+        "openPageIn": "split",
+        "openPageAfterCreate": false,
+        "itemSize": "components--page-card-medium",
+        "showPropertyName": false,
+        "showAllProperties": false,
+        "items": [],
+        "cover": {
+          "type": "pageFirstImage",
+          "value": "",
+          "fit": "contains",
+          "layout": "components--page-card-cover-landscape"
+        },
+        "headColumnWidth": "266",
+        "headColumnStatisticType": "count",
+        "pinFiltersToMenuBar": true,
+        "rowHeight": 32,
+        "showGrid": true,
+        "heightType": "fixed",
+        "heightValue": 600
+      },
+      "filter": {
+        "id": "bc9afa86-0c6d-4468-8401-583c2f7074d6",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "75cf6053-82c9-4c1f-a37e-eaedfedf7460",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.parent}",
+            "value": "待办",
+            "conditions": []
+          },
+          {
+            "id": "a34a206d-4072-486b-9d86-daa7fc1c98aa",
+            "type": "filter",
+            "operator": "contains_any",
+            "property": "status",
+            "value": [
+              "DONE"
+            ],
+            "conditions": []
+          }
+        ]
+      },
+      "newPageLocation": {
+        "location": "待办"
+      },
+      "newPageNameFormat": "{{date: YYMMDD}} ",
+      "showTitle": false,
+      "groupBy": "",
+      "groupStates": {
+        "sort": "nameAsc",
+        "format": "none",
+        "statics": [],
+        "orders": [],
+        "hiddens": [],
+        "collapseds": []
+      },
+      "colorfulGroups": true,
+      "title": "已完成",
+      "sort": {
+        "orders": [
+          {
+            "id": "9b856b80-3a49-42db-bd1a-e2d1c010c78c",
+            "property": "endDate",
+            "direction": "desc",
+            "disabled": false
+          }
+        ]
+      },
+      "defaultTemplate": "7c6d9b95-6944-4e13-8dc1-a2166d74fa0b",
+      "loadLimitPerPage": "10"
+    },
+    {
+      "id": "41bb45fb-38c2-4fc1-a168-deda27837af6",
+      "type": "dynamicDataView",
+      "titleAlign": "center",
+      "tabTitle": "进展图",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showShadow": false,
+      "createAt": "2024-05-13T08:13:00.687Z",
+      "updateAt": "2026-01-21T09:52:11.825Z",
+      "viewType": "timeline",
+      "properties": [
+        {
+          "id": "__componentsTitleProperty_0x7c00",
+          "name": "文件名",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "eaf42920-ac64-4b5c-a2b9-5f319c13ad0d",
+          "name": "Project",
+          "isShow": false,
+          "type": "text",
+          "options": {}
+        },
+        {
+          "id": "aaebf9fa-a545-4c03-8ae1-f2038127490e",
+          "name": "Next Steps",
+          "isShow": false,
+          "type": "text",
+          "options": {}
+        },
+        {
+          "id": "7cac7d64-30b0-4e0e-81a9-5981c9b94db5",
+          "name": "${file.outgoingLinks}",
+          "isShow": false,
+          "type": "text",
+          "options": {}
+        },
+        {
+          "id": "379b6052-7725-493c-8ea9-69d3e1e327b8",
+          "name": "status",
+          "isShow": true,
+          "type": "select",
+          "options": {}
+        }
+      ],
+      "templates": [
+        {
+          "id": "7c6d9b95-6944-4e13-8dc1-a2166d74fa0b",
+          "path": "00_template/T-待办模版.md",
+          "name": "T-待办模版.md",
+          "type": "normal"
+        }
+      ],
+      "groups": [],
+      "viewOptions": {
+        "openPageIn": "modal",
+        "openPageAfterCreate": false,
+        "itemSize": "components--page-card-medium",
+        "showPropertyName": false,
+        "showAllProperties": false,
+        "items": [],
+        "cover": {
+          "type": "pageFirstImage",
+          "value": "",
+          "fit": "contains",
+          "layout": "components--page-card-cover-landscape"
+        },
+        "headColumnWidth": "266",
+        "headColumnStatisticType": "count",
+        "pinFiltersToMenuBar": true,
+        "dateProperty": "startDate",
+        "calendarViewType": "month",
+        "cardColorFrom": "property",
+        "cardColorProperty": "${file.basename}",
+        "endDateProperty": "endDate",
+        "colorProperty": "${file.basename}"
+      },
+      "filter": {
+        "id": "bc9afa86-0c6d-4468-8401-583c2f7074d6",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "3bfe4cbf-7738-421b-974b-c242a2eb7a82",
+            "type": "filter",
+            "operator": "contains_any",
+            "property": "status",
+            "value": [
+              "DONE",
+              "DOING"
+            ],
+            "conditions": []
+          },
+          {
+            "id": "79019e8c-1c77-4e64-ac05-0badd0f70cd1",
+            "type": "group",
+            "operator": "or",
+            "conditions": [
+              {
+                "id": "0d619539-37d1-46e9-9674-0674e67d2e9d",
+                "type": "filter",
+                "operator": "equals",
+                "property": "${file.parent}",
+                "value": "待办",
+                "conditions": []
+              },
+              {
+                "id": "2b70c9ee-b0a6-46e7-afbb-308250b7d55a",
+                "type": "filter",
+                "operator": "equals",
+                "property": "${file.parent}",
+                "value": "03_输出_每日日记/每周",
+                "conditions": []
+              },
+              {
+                "id": "b85eb677-4e9a-4907-ab85-5c22192ad3db",
+                "type": "filter",
+                "operator": "equals",
+                "property": "${file.parent}",
+                "value": "03_输出_每日日记/每月",
+                "conditions": []
+              }
+            ]
+          },
+          {
+            "id": "d252e249-5047-4eaa-a3ba-55e222915052",
+            "type": "filter",
+            "operator": "has_value",
+            "property": "startDate",
+            "value": null,
+            "conditions": []
+          },
+          {
+            "id": "fc593f21-f14b-4b85-8cf4-67e9a8d6fdbd",
+            "type": "filter",
+            "operator": "not_contains",
+            "property": "Project",
+            "value": "循环",
+            "conditions": []
+          },
+          {
+            "id": "6835df84-7694-4ded-9a96-c6399598db99",
+            "type": "filter",
+            "operator": "not_contains",
+            "property": "Project",
+            "value": "生活",
+            "conditions": []
+          }
+        ]
+      },
+      "newPageLocation": {
+        "location": "待办"
+      },
+      "newPageNameFormat": "{{date: YYMMDD}} ",
+      "showTitle": false,
+      "groupBy": "",
+      "groupStates": {
+        "sort": "nameAsc",
+        "format": "none",
+        "statics": [],
+        "orders": [],
+        "hiddens": [],
+        "collapseds": []
+      },
+      "colorfulGroups": true,
+      "title": "进展图",
+      "sort": {
+        "orders": [
+          {
+            "id": "aabcef74-613f-4291-980d-f25b92a11e79",
+            "property": "startDate",
+            "direction": "desc",
+            "disabled": false
+          }
+        ]
+      },
+      "icon": "InspectionPanel"
+    },
+    {
+      "id": "db4da0bf-edca-458b-987f-5a02e9189cda",
+      "type": "chart",
+      "titleAlign": "left",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2026-01-18T03:09:44.552Z",
+      "updateAt": "2026-01-31T00:51:24.683Z",
+      "chartType": "bar",
+      "filter": {
+        "id": "30775ff2-8b31-4112-8ada-2267dbe4f40a",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "734f2e0a-294f-4271-a992-03cfa55d9817",
+            "type": "filter",
+            "operator": "equals",
+            "property": "status",
+            "value": "DONE",
+            "conditions": []
+          },
+          {
+            "id": "c887e8b2-e69d-4654-81ed-01529aa94dc8",
+            "type": "group",
+            "operator": "or",
+            "conditions": [
+              {
+                "id": "1898b82a-0459-405d-ad82-9f90fcb97e4e",
+                "type": "filter",
+                "operator": "equals",
+                "property": "${file.parent}",
+                "value": "待办",
+                "conditions": []
+              },
+              {
+                "id": "fce3b41c-fb92-4aca-90a0-d9f9b8f16033",
+                "type": "filter",
+                "operator": "equals",
+                "property": "${file.parent}",
+                "value": "03_输出_每日日记/每周",
+                "conditions": []
+              },
+              {
+                "id": "b4234477-6784-47b9-a6fa-26e255ba8f16",
+                "type": "filter",
+                "operator": "equals",
+                "property": "${file.parent}",
+                "value": "03_输出_每日日记/每月",
+                "conditions": []
+              }
+            ]
+          },
+          {
+            "id": "3b5b35a8-3614-4399-886d-f9c2a8d73846",
+            "type": "filter",
+            "operator": "has_value",
+            "property": "endDate",
+            "value": null,
+            "conditions": []
+          }
+        ]
+      },
+      "labelFormat": "$timeFormat",
+      "series": [
+        {
+          "id": "a006b6ea-e85d-4ff2-9956-4b7244210c82",
+          "name": "$file_count",
+          "precision": 2
+        }
+      ],
+      "sortField": "xAxisValue",
+      "sortOrder": "asc",
+      "maxHeight": 500,
+      "chartColorSet": "B",
+      "chartLabelPosition": "hidden",
+      "enableMarkLine": false,
+      "markLineValue": 20,
+      "showDataValue": true,
+      "valueScaleStartFromZero": true,
+      "smoothLine": false,
+      "fillArea": false,
+      "options": {},
+      "categoryProperty": "endDate",
+      "categoryFormatPattern": "kkkk-'W'WW",
+      "title": "每周处理待办数",
+      "labelRotation": 0
+    },
+    {
+      "id": "4afc6b93-183e-474f-8681-fafe7be05d12",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "图表",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-01-18T03:16:23.237Z",
+      "updateAt": "2026-01-31T00:52:10.674Z",
+      "components": [
+        {
+          "componentId": "fc58d0ea-7ba2-4ac2-ba03-6653e7ea6eba"
+        },
+        {
+          "componentId": "ccfc1011-f31f-4597-96ba-3df03e5d5c83"
+        },
+        {
+          "componentId": "d261c98a-434c-4d3d-b3e6-2ecb6a7739ac"
+        },
+        {
+          "componentId": "db4da0bf-edca-458b-987f-5a02e9189cda"
+        }
+      ],
+      "layoutType": "column",
+      "locked": false,
+      "layoutOptions": {},
+      "title": "图表"
+    },
+    {
+      "id": "fc58d0ea-7ba2-4ac2-ba03-6653e7ea6eba",
+      "type": "chart",
+      "titleAlign": "left",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2026-01-18T03:09:44.552Z",
+      "updateAt": "2026-01-31T00:52:17.993Z",
+      "chartType": "bar",
+      "filter": {
+        "id": "30775ff2-8b31-4112-8ada-2267dbe4f40a",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "c887e8b2-e69d-4654-81ed-01529aa94dc8",
+            "type": "group",
+            "operator": "or",
+            "conditions": [
+              {
+                "id": "1898b82a-0459-405d-ad82-9f90fcb97e4e",
+                "type": "filter",
+                "operator": "equals",
+                "property": "${file.parent}",
+                "value": "待办",
+                "conditions": []
+              },
+              {
+                "id": "fce3b41c-fb92-4aca-90a0-d9f9b8f16033",
+                "type": "filter",
+                "operator": "equals",
+                "property": "${file.parent}",
+                "value": "03_输出_每日日记/每周",
+                "conditions": []
+              },
+              {
+                "id": "b4234477-6784-47b9-a6fa-26e255ba8f16",
+                "type": "filter",
+                "operator": "equals",
+                "property": "${file.parent}",
+                "value": "03_输出_每日日记/每月",
+                "conditions": []
+              }
+            ]
+          },
+          {
+            "id": "a80dfaa5-67a5-4567-96fd-875aa3844206",
+            "type": "filter",
+            "operator": "time_after",
+            "property": "${file.ctime}",
+            "value": {
+              "type": "$startOfMonth",
+              "unit": "day",
+              "direction": "before",
+              "value": ""
+            },
+            "conditions": []
+          }
+        ]
+      },
+      "labelFormat": "$timeFormat",
+      "series": [
+        {
+          "id": "a006b6ea-e85d-4ff2-9956-4b7244210c82",
+          "name": "$file_count",
+          "precision": 2
+        }
+      ],
+      "sortField": "xAxisValue",
+      "sortOrder": "asc",
+      "maxHeight": 500,
+      "chartColorSet": "default",
+      "chartLabelPosition": "hidden",
+      "enableMarkLine": false,
+      "markLineValue": 20,
+      "showDataValue": true,
+      "valueScaleStartFromZero": true,
+      "smoothLine": false,
+      "fillArea": false,
+      "options": {},
+      "categoryProperty": "${file.ctime}",
+      "categoryFormatPattern": "yyyy-MM",
+      "title": "每月新增待办数",
+      "labelRotation": 0
+    },
+    {
+      "id": "f7c9f674-d532-48f2-9f20-3342a0b520f7",
+      "type": "dynamicDataView",
+      "titleAlign": "center",
+      "tabTitle": "已排期",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showShadow": false,
+      "createAt": "2024-05-13T08:13:00.687Z",
+      "updateAt": "2026-01-24T23:12:31.050Z",
+      "viewType": "calendar",
+      "properties": [
+        {
+          "id": "__componentsTitleProperty_0x7c00",
+          "name": "文件名",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "0f2eec00-40e9-4415-9e75-c8d198a24c32",
+          "name": "Project",
+          "isShow": true,
+          "type": "text",
+          "options": {},
+          "alias": "问题类型"
+        },
+        {
+          "id": "65b8c47d-e74a-4c12-a89c-dafff84c6fc5",
+          "name": "PlannedDate",
+          "isShow": false,
+          "type": "date",
+          "options": {
+            "formatType": "datetime",
+            "format": "yyyy-MM-dd'T'HH:mm"
+          },
+          "alias": "计划日期"
+        },
+        {
+          "id": "b4130aa5-63b8-463b-a8db-6197a6958cd5",
+          "name": "startDate",
+          "isShow": true,
+          "type": "datetime",
+          "options": {
+            "formatType": "datetime",
+            "format": "yyyy-MM-dd'T'HH:mm"
+          },
+          "alias": "开始时间"
+        },
+        {
+          "id": "8e195a96-8a11-4dc9-9bda-49b880568f4b",
+          "name": "endDate",
+          "isShow": true,
+          "type": "datetime",
+          "options": {},
+          "alias": "结束时间"
+        },
+        {
+          "id": "7bca8d9a-b440-4490-bc6c-664bb26ac63b",
+          "name": "status",
+          "isShow": true,
+          "type": "select",
+          "options": {},
+          "alias": "状态"
+        }
+      ],
+      "templates": [
+        {
+          "id": "7c6d9b95-6944-4e13-8dc1-a2166d74fa0b",
+          "path": "00_template/T-待办模版.md",
+          "name": "T-待办模版.md",
+          "type": "normal"
+        }
+      ],
+      "groups": [],
+      "viewOptions": {
+        "openPageIn": "modal",
+        "openPageAfterCreate": false,
+        "itemSize": "components--page-card-medium",
+        "showPropertyName": true,
+        "showAllProperties": true,
+        "items": [],
+        "cover": {
+          "type": "pageFirstImage",
+          "value": "",
+          "fit": "contains",
+          "layout": "components--page-card-cover-landscape"
+        },
+        "headColumnWidth": "266",
+        "headColumnStatisticType": "count",
+        "pinFiltersToMenuBar": true,
+        "dateProperty": "PlannedDate",
+        "calendarViewType": "week",
+        "cardColorFrom": "property",
+        "cardColorProperty": "${file.basename}",
+        "hideHeaderMenu": true
+      },
+      "filter": {
+        "id": "bc9afa86-0c6d-4468-8401-583c2f7074d6",
+        "type": "group",
+        "operator": "and",
+        "conditions": []
+      },
+      "newPageLocation": {
+        "location": "待办"
+      },
+      "newPageNameFormat": "{{date: YYMMDD}} ",
+      "showTitle": false,
+      "groupBy": "",
+      "groupStates": {
+        "sort": "nameAsc",
+        "format": "none",
+        "statics": [],
+        "orders": [],
+        "hiddens": [],
+        "collapseds": []
+      },
+      "colorfulGroups": true,
+      "title": "已排期",
+      "sort": {
+        "orders": [
+          {
+            "id": "a0659d73-ef54-4131-9d76-0279d799b870",
+            "property": "PlannedDate",
+            "direction": "asc",
+            "disabled": false
+          }
+        ]
+      },
+      "defaultTemplate": "7c6d9b95-6944-4e13-8dc1-a2166d74fa0b"
+    },
+    {
+      "id": "28916c82-9034-4673-8a8a-915a6fefe264",
+      "type": "dynamicDataView",
+      "titleAlign": "center",
+      "tabTitle": "进度",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showShadow": false,
+      "createAt": "2024-05-13T08:13:00.687Z",
+      "updateAt": "2026-02-26T03:35:31.983Z",
+      "viewType": "kanban",
+      "properties": [
+        {
+          "id": "__componentsTitleProperty_0x7c00",
+          "name": "文件名",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "cf00430c-c25e-4fbe-a7fe-2b94ea61a8e9",
+          "name": "Project",
+          "isShow": true,
+          "type": "text",
+          "options": {}
+        },
+        {
+          "id": "b6535b6a-e826-44f4-998c-ad803cf58405",
+          "name": "sub_Project",
+          "isShow": true,
+          "type": "text",
+          "options": {}
+        }
+      ],
+      "templates": [
+        {
+          "id": "7c6d9b95-6944-4e13-8dc1-a2166d74fa0b",
+          "path": "00_template/T-待办模版.md",
+          "name": "T-待办模版.md",
+          "type": "normal"
+        }
+      ],
+      "groups": [],
+      "viewOptions": {
+        "openPageIn": "modal",
+        "openPageAfterCreate": false,
+        "itemSize": "components--page-card-medium",
+        "showPropertyName": true,
+        "showAllProperties": true,
+        "items": [],
+        "cover": {
+          "type": "none",
+          "value": "",
+          "fit": "contains",
+          "layout": "components--page-card-cover-portrait",
+          "position": "top",
+          "source": "property"
+        },
+        "headColumnWidth": "266",
+        "headColumnStatisticType": "count",
+        "pinFiltersToMenuBar": true,
+        "hideHeaderMenu": false
+      },
+      "filter": {
+        "id": "bc9afa86-0c6d-4468-8401-583c2f7074d6",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "75cf6053-82c9-4c1f-a37e-eaedfedf7460",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.parent}",
+            "value": "待办",
+            "conditions": []
+          },
+          {
+            "id": "c6f2471e-5573-459f-ab87-5af544ff4b48",
+            "type": "group",
+            "operator": "and",
+            "conditions": [
+              {
+                "id": "c32b8d33-915b-4610-add2-2ce149b65363",
+                "type": "filter",
+                "operator": "not_equals",
+                "property": "Project",
+                "value": "循环",
+                "conditions": []
+              },
+              {
+                "id": "f88bbf46-5dc0-41f6-8229-f2785c8e5c2a",
+                "type": "filter",
+                "operator": "not_equals",
+                "property": "Project",
+                "value": "生活",
+                "conditions": []
+              }
+            ]
+          }
+        ]
+      },
+      "newPageLocation": {
+        "location": "待办"
+      },
+      "newPageNameFormat": "{{date: YYMMDD}} ",
+      "showTitle": false,
+      "groupBy": "status",
+      "groupStates": {
+        "sort": "manual",
+        "format": "none",
+        "statics": [],
+        "orders": [
+          "__$uncategorizedGroup",
+          "TODO",
+          "DOING",
+          "DONE"
+        ],
+        "hiddens": [
+          "__$uncategorizedGroup"
+        ],
+        "collapseds": [
+          "DONE"
+        ]
+      },
+      "colorfulGroups": true,
+      "title": "进度",
+      "sort": {
+        "orders": [
+          {
+            "id": "9b856b80-3a49-42db-bd1a-e2d1c010c78c",
+            "property": "Project",
+            "direction": "desc",
+            "disabled": false
+          }
+        ]
+      },
+      "defaultTemplate": "7c6d9b95-6944-4e13-8dc1-a2166d74fa0b",
+      "icon": "HousePlug"
+    },
+    {
+      "id": "9fda651d-3fcb-460c-96e7-654b12ee333b",
+      "type": "dynamicDataView",
+      "titleAlign": "center",
+      "tabTitle": "新增待办",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showShadow": false,
+      "createAt": "2024-05-13T08:13:00.687Z",
+      "updateAt": "2026-02-22T01:35:35.626Z",
+      "viewType": "table",
+      "properties": [
+        {
+          "id": "__componentsTitleProperty_0x7c00",
+          "name": "文件名",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "152"
+          }
+        },
+        {
+          "id": "a5a7a58e-7efb-4a5c-aa4f-2af8961ea763",
+          "name": "${file.ctime}",
+          "isShow": true,
+          "type": "datetime",
+          "options": {
+            "formatType": "datetime",
+            "format": "yyyy-MM-dd",
+            "width": "138"
+          },
+          "alias": "创建日期"
+        },
+        {
+          "id": "afbb2fdd-242e-41b3-980d-7da56e1b7f73",
+          "name": "开始",
+          "isShow": true,
+          "type": "button",
+          "options": {
+            "action": {
+              "type": "updateProperty",
+              "properties": [
+                {
+                  "id": "7d824545-fa87-4166-a77d-e4e8b4c749bc",
+                  "name": "status",
+                  "type": "string",
+                  "value": "DOING",
+                  "valueSource": "constant",
+                  "modifier": "replaceValue"
+                },
+                {
+                  "id": "77169e6e-9d97-4579-9901-0b06d8d662e3",
+                  "name": "startDate",
+                  "type": "datetime",
+                  "value": "$now",
+                  "valueSource": "constant",
+                  "modifier": "replaceValue"
+                }
+              ]
+            },
+            "width": "91"
+          }
+        },
+        {
+          "id": "d9048058-9893-4c75-89b7-0af1574151a9",
+          "name": "结束",
+          "isShow": true,
+          "type": "button",
+          "options": {
+            "action": {
+              "type": "updateProperty",
+              "properties": [
+                {
+                  "id": "72570ed7-8144-46b1-b7de-dff80eb25e37",
+                  "name": "status",
+                  "type": "string",
+                  "value": "DONE",
+                  "valueSource": "constant",
+                  "modifier": "replaceValue"
+                },
+                {
+                  "id": "8b901f48-f8b2-4543-a1fc-927ca2f17253",
+                  "name": "endDate",
+                  "type": "datetime",
+                  "value": "$now",
+                  "valueSource": "constant",
+                  "modifier": "replaceValue"
+                }
+              ]
+            },
+            "width": "85"
+          }
+        },
+        {
+          "id": "ac3e86ca-1943-4757-b2c7-1fe2901f0fbd",
+          "name": "status",
+          "isShow": true,
+          "type": "select",
+          "options": {
+            "width": "100"
+          }
+        },
+        {
+          "id": "ca5af196-498c-4488-ac05-80e0829afa6c",
+          "name": "Project",
+          "isShow": true,
+          "type": "select",
+          "options": {
+            "width": "163"
+          },
+          "alias": "所属项目/目标 "
+        },
+        {
+          "id": "ecf089e2-9070-49d7-b171-205c60049196",
+          "name": "startDate",
+          "isShow": true,
+          "type": "datetime",
+          "options": {
+            "width": "131"
+          },
+          "alias": "开始日期"
+        },
+        {
+          "id": "0fd6b4c9-6587-4043-9f6a-7ac726ca4e26",
+          "name": "urgent",
+          "isShow": true,
+          "type": "checkbox",
+          "options": {
+            "width": "122"
+          },
+          "alias": "是否紧急"
+        },
+        {
+          "id": "f1e460db-fc4c-4dc2-9a33-a0aa052a3cde",
+          "name": "important",
+          "isShow": true,
+          "type": "checkbox",
+          "options": {
+            "width": "128"
+          },
+          "alias": "是否重要"
+        },
+        {
+          "id": "c96ea1bf-e0e4-4ab0-adb4-cae0c8d0c2c9",
+          "name": "priority",
+          "isShow": true,
+          "type": "text",
+          "options": {
+            "width": "109"
+          },
+          "alias": "优先级"
+        },
+        {
+          "id": "86cb31bb-6424-49a9-8105-31f8d1cc94f9",
+          "name": "${file.words}",
+          "isShow": true,
+          "type": "text",
+          "options": {
+            "width": "125"
+          }
+        },
+        {
+          "id": "979555eb-e8fb-4d3a-ab7d-b764dd1af4ab",
+          "name": "Next Steps",
+          "isShow": true,
+          "type": "text",
+          "options": {
+            "width": "106",
+            "pinned": null
+          },
+          "alias": "下一步",
+          "wrap": true
+        },
+        {
+          "id": "6f2a2e80-1159-4ffe-8483-1005efd00488",
+          "name": "PlannedDate",
+          "isShow": true,
+          "type": "datetime",
+          "options": {
+            "formatType": "datetime",
+            "width": "178",
+            "format": "yyyy-MM-dd'T'HH:mm"
+          },
+          "alias": "计划日期"
+        },
+        {
+          "id": "946a168b-576d-4f04-bd16-d8e6198a4d64",
+          "name": "Estimated Hours",
+          "isShow": true,
+          "type": "number",
+          "options": {
+            "width": "145"
+          },
+          "alias": "预估时间 (h)"
+        }
+      ],
+      "templates": [
+        {
+          "id": "7c6d9b95-6944-4e13-8dc1-a2166d74fa0b",
+          "path": "00_template/T-待办模版.md",
+          "name": "T-待办模版.md",
+          "type": "normal"
+        }
+      ],
+      "groups": [],
+      "viewOptions": {
+        "openPageIn": "split",
+        "openPageAfterCreate": false,
+        "itemSize": "components--page-card-medium",
+        "showPropertyName": false,
+        "showAllProperties": false,
+        "items": [],
+        "cover": {
+          "type": "pageFirstImage",
+          "value": "",
+          "fit": "contains",
+          "layout": "components--page-card-cover-landscape"
+        },
+        "headColumnWidth": "266",
+        "headColumnStatisticType": "count",
+        "pinFiltersToMenuBar": true,
+        "rowHeight": 32,
+        "showGrid": true,
+        "hideHeaderMenu": false
+      },
+      "filter": {
+        "id": "bc9afa86-0c6d-4468-8401-583c2f7074d6",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "75cf6053-82c9-4c1f-a37e-eaedfedf7460",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.parent}",
+            "value": "待办",
+            "conditions": []
+          },
+          {
+            "id": "12fb9e0a-7a2a-4535-9c10-5348ce2653b4",
+            "type": "filter",
+            "operator": "no_value",
+            "property": "Project",
+            "value": null,
+            "conditions": []
+          },
+          {
+            "id": "bf342e2f-89ae-49c2-8847-11fa3d207b9d",
+            "type": "filter",
+            "operator": "time_after",
+            "property": "${file.ctime}",
+            "value": {
+              "type": "$startOfYear",
+              "unit": "day",
+              "direction": "before",
+              "value": ""
+            },
+            "conditions": []
+          },
+          {
+            "id": "fe03026c-b4ba-4ca5-b9d3-fb9d44c44ab8",
+            "type": "filter",
+            "operator": "not_contains",
+            "property": "status",
+            "value": "DONE",
+            "conditions": []
+          }
+        ]
+      },
+      "newPageLocation": {
+        "location": "待办"
+      },
+      "newPageNameFormat": "{{date: YYMMDD}} ",
+      "showTitle": false,
+      "groupBy": "",
+      "groupStates": {
+        "sort": "nameAsc",
+        "format": "none",
+        "statics": [],
+        "orders": [],
+        "hiddens": [],
+        "collapseds": []
+      },
+      "colorfulGroups": true,
+      "title": "新增待办",
+      "sort": {
+        "orders": [
+          {
+            "id": "dfdfb0d7-490f-4837-9c55-9a1a52fe96ab",
+            "property": "priority",
+            "direction": "asc",
+            "disabled": false
+          },
+          {
+            "id": "2773a90f-e12e-4ea7-aea6-1cfedd9dd754",
+            "property": "Project",
+            "direction": "asc",
+            "disabled": false
+          }
+        ]
+      },
+      "defaultTemplate": "7c6d9b95-6944-4e13-8dc1-a2166d74fa0b",
+      "loadLimitPerPage": "10"
+    },
+    {
+      "id": "062f8c41-ac11-4f49-98b9-10908ab044a5",
+      "type": "dataview",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-01-17T23:17:56.738Z",
+      "updateAt": "2026-01-23T00:18:24.595Z",
+      "query": "\n// ========== 配置部分（只需修改此处）==========\nconst folderPath = \"03_待加工_灵感问题\";\nconst startDate = `{{startDate}}`;  // 例如：\"2026-01-01\"\nconst endDate = `{{endDate}}`;    // 例如：\"2026-12-31\"\n// ==========================================\n\n// 获取文件并处理\nconst files = app.vault.getMarkdownFiles().filter(f => f.path.includes(folderPath));\nconst allResults = [];\n\nfor (const file of files) {\n    try {\n        const content = await app.vault.read(file);\n        const lines = content.split(\"\\n\");\n        const fileResults = {};\n        let currentH1 = \"\";\n        \n        for (let i = 0; i < lines.length; i++) {\n            const line = lines[i];\n            \n            if (line.startsWith(\"# \")) {\n                currentH1 = line.replace(\"# \", \"\").trim();\n                if (!fileResults[currentH1]) {\n                    fileResults[currentH1] = [];\n                }\n            }\n            else if ((line.includes(\"- [x]\") || line.includes(\"- [X]\")) && currentH1) {\n                const taskText = line.trim();\n                let completionDate = \"\";\n                \n                const datePatterns = [\n                    /✅\\s*(\\d{4}-\\d{2}-\\d{2})/,\n                    /@done\\((\\d{4}-\\d{2}-\\d{2})\\)/,\n                    /@completed\\((\\d{4}-\\d{2}-\\d{2})\\)/,\n                    /📅\\s*(\\d{4}-\\d{2}-\\d{2})/,\n                    /\\[(\\d{4}-\\d{2}-\\d{2})\\]/,\n                    /\\b(\\d{4}-\\d{2}-\\d{2})\\b/,\n                ];\n                \n                for (const pattern of datePatterns) {\n                    const match = taskText.match(pattern);\n                    if (match) {\n                        completionDate = match[1];\n                        break;\n                    }\n                }\n                \n                if (!completionDate && i + 1 < lines.length) {\n                    const nextLine = lines[i + 1].trim();\n                    const dateMatch = nextLine.match(/\\b(\\d{4}-\\d{2}-\\d{2})\\b/);\n                    if (dateMatch && !nextLine.includes(\"- [\")) {\n                        completionDate = dateMatch[1];\n                    }\n                }\n                \n                let shouldInclude = true;\n                if ((startDate || endDate) && completionDate) {\n                    const taskDate = completionDate;\n                    if (startDate && taskDate < startDate) shouldInclude = false;\n                    if (endDate && taskDate > endDate) shouldInclude = false;\n                }\n                \n                if (shouldInclude) {\n                    fileResults[currentH1].push({\n                        task: taskText,\n                        date: completionDate || \"无日期\",\n                        lineNumber: i + 1,\n                        filePath: file.path\n                    });\n                }\n            }\n        }\n        \n        for (const [title, tasks] of Object.entries(fileResults)) {\n            if (tasks && tasks.length > 0) {\n                allResults.push({\n                    文件: file.name.replace(\".md\", \"\"),\n                    文件路径: file.path,\n                    一级标题: title,\n                    已完成待办: tasks,\n                    任务数量: tasks.length\n                });\n            }\n        }\n    } catch (error) {\n        console.error(`处理文件 ${file.name} 时出错:`, error);\n    }\n}\n\n// ========== 复制功能 ==========\n\n// 创建复制按钮\nconst copyButton = document.createElement('button');\ncopyButton.textContent = '📋 复制为 Markdown';\ncopyButton.style.cssText = 'margin: 10px 0; padding: 8px 16px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;';\n\n// 添加点击事件\ncopyButton.onclick = async function() {\n    try {\n        // 生成 Markdown 内容\n        let markdown = `# 已完成待办统计\\n\\n`;\n        markdown += `**生成时间：** ${new Date().toLocaleString('zh-CN')}\\n`;\n        markdown += `**筛选日期：** ${startDate} 至 ${endDate}\\n\\n`;\n        \n        // 按文件分组\n        const groupedByFile = {};\n        allResults.forEach(item => {\n            if (!groupedByFile[item.文件]) groupedByFile[item.文件] = [];\n            groupedByFile[item.文件].push(item);\n        });\n        \n        // 添加文件内容\n        for (const [fileName, items] of Object.entries(groupedByFile)) {\n            markdown += `## 📄 ${fileName}\\n\\n`;\n            \n            items.forEach(item => {\n                markdown += `### ${item.一级标题}\\n`;\n                \n                if (item.已完成待办 && Array.isArray(item.已完成待办)) {\n                    item.已完成待办.forEach(task => {\n                        let taskContent = task.task || \"\";\n                        if (taskContent) {\n                            taskContent = taskContent\n                                .replace(/✅\\s*\\d{4}-\\d{2}-\\d{2}/g, '✅')\n                                .replace(/\\d{4}-\\d{2}-\\d{2}/g, '')\n                                .trim();\n                        }\n                        \n                        const dateStr = task.date !== \"无日期\" ? ` (${task.date})` : \"\";\n                        markdown += `- ${taskContent}${dateStr}\\n`;\n                    });\n                }\n                markdown += \"\\n\";\n            });\n        }\n        \n        // 添加统计信息\n        const totalTasks = allResults.reduce((sum, item) => sum + (item.任务数量 || 0), 0);\n        markdown += `## 📊 统计概览\\n\\n`;\n        markdown += `- 总文件数：${Object.keys(groupedByFile).length} 个\\n`;\n        markdown += `- 总已完成待办数：${totalTasks} 个\\n\\n`;\n        \n        // 添加最近完成的任务\n        markdown += `## ⏱️ 最近完成的任务\\n\\n`;\n        \n        let recentTasks = [];\n        allResults.forEach(item => {\n            if (item.已完成待办 && Array.isArray(item.已完成待办)) {\n                item.已完成待办.forEach(task => {\n                    if (task.date && task.date !== \"无日期\") {\n                        recentTasks.push({\n                            文件: item.文件,\n                            标题: item.一级标题,\n                            任务: task.task,\n                            日期: task.date,\n                            行号: task.lineNumber\n                        });\n                    }\n                });\n            }\n        });\n        \n        recentTasks.sort((a, b) => b.日期.localeCompare(a.日期));\n        recentTasks = recentTasks.slice(0, 30); // 限制为30个\n        \n        if (recentTasks.length > 0) {\n            markdown += `| 完成日期 | 文件 | 标题 | 任务内容 | 行号 |\\n`;\n            markdown += `|----------|------|------|----------|------|\\n`;\n            \n            recentTasks.forEach(task => {\n                let taskContent = task.任务 || \"\";\n                if (taskContent) {\n                    taskContent = taskContent\n                        .replace(/✅\\s*\\d{4}-\\d{2}-\\d{2}/g, '✅')\n                        .replace(/\\d{4}-\\d{2}-\\d{2}/g, '')\n                        .trim();\n                }\n                \n                if (taskContent.length > 50) {\n                    taskContent = taskContent.substring(0, 50) + \"...\";\n                }\n                \n                markdown += `| ${task.日期} | ${task.文件} | ${task.标题 || \"无标题\"} | ${taskContent} | 行 ${task.行号} |\\n`;\n            });\n        } else {\n            markdown += `没有找到有日期的任务\\n`;\n        }\n        \n        markdown += `\\n---\\n`;\n        markdown += `*注：此报告由 DataviewJS 自动生成*\\n`;\n        \n        // 复制到剪贴板\n        await navigator.clipboard.writeText(markdown);\n        \n        // 显示成功消息\n        copyButton.textContent = '✅ 已复制到剪贴板';\n        copyButton.style.background = '#45a049';\n        \n        // 2秒后恢复按钮\n        setTimeout(() => {\n            copyButton.textContent = '📋 复制为 Markdown';\n            copyButton.style.background = '#4CAF50';\n        }, 2000);\n        \n    } catch (error) {\n        console.error('复制失败:', error);\n        copyButton.textContent = '❌ 复制失败';\n        copyButton.style.background = '#f44336';\n        \n        setTimeout(() => {\n            copyButton.textContent = '📋 复制为 Markdown';\n            copyButton.style.background = '#4CAF50';\n        }, 2000);\n    }\n};\n\n// 插入按钮到页面\nconst container = dv.container;\ncontainer.insertBefore(copyButton, container.firstChild);\n\n// ========== 显示结果 ==========\n\n// 按文件分组显示\nconst groupedByFile = {};\nallResults.forEach(item => {\n    if (!groupedByFile[item.文件]) groupedByFile[item.文件] = [];\n    groupedByFile[item.文件].push(item);\n});\n\nfor (const [fileName, items] of Object.entries(groupedByFile)) {\n    dv.header(3, `📄 ${fileName}`);\n    \n    const tableData = [];\n    items.forEach(item => {\n        if (item.已完成待办 && Array.isArray(item.已完成待办)) {\n            item.已完成待办.forEach(taskInfo => {\n                let dateDisplay = taskInfo.date || \"无日期\";\n                if (taskInfo.date && taskInfo.date !== \"无日期\") {\n                    try {\n                        const dateObj = new Date(taskInfo.date);\n                        const formattedDate = dateObj.toLocaleDateString('zh-CN', {\n                            year: 'numeric', month: 'short', day: 'numeric'\n                        });\n                        dateDisplay = `${taskInfo.date}<br><small>(${formattedDate})</small>`;\n                    } catch (e) {\n                        dateDisplay = taskInfo.date;\n                    }\n                }\n                \n                let taskContent = taskInfo.task || \"\";\n                if (taskContent) {\n                    taskContent = taskContent\n                        .replace(/✅\\s*\\d{4}-\\d{2}-\\d{2}/g, '✅')\n                        .replace(/\\d{4}-\\d{2}-\\d{2}/g, '')\n                        .trim();\n                }\n                \n                tableData.push([\n                    item.一级标题 || \"无标题\",\n                    taskContent,\n                    dateDisplay,\n                    `行 ${taskInfo.lineNumber || \"未知\"}`\n                ]);\n            });\n        }\n    });\n    \n    if (tableData.length > 0) {\n        dv.table([\"一级标题\", \"任务内容\", \"完成日期\", \"行号\"], tableData);\n    } else {\n        dv.paragraph(\"没有符合条件的任务\");\n    }\n}\n\n// ========== 统计信息 ==========\ndv.header(2, \"📊 统计概览\");\nconst totalTasks = allResults.reduce((sum, item) => sum + (item.任务数量 || 0), 0);\nconst filesWithTasks = Object.keys(groupedByFile).length;\ndv.paragraph(`**总文件数：** ${filesWithTasks} 个`);\ndv.paragraph(`**总已完成待办数：** ${totalTasks} 个`);\n\n// 日期分布统计\nconst dateStats = {};\nlet tasksWithDate = 0;\nallResults.forEach(item => {\n    if (item.已完成待办 && Array.isArray(item.已完成待办)) {\n        item.已完成待办.forEach(task => {\n            const date = task.date || \"无日期\";\n            if (date !== \"无日期\") tasksWithDate++;\n            dateStats[date] = (dateStats[date] || 0) + 1;\n        });\n    }\n});\nconst tasksWithoutDate = totalTasks - tasksWithDate;\n\nif (totalTasks > 0) {\n    dv.paragraph(`**有日期任务：** ${tasksWithDate} 个`);\n    dv.paragraph(`**无日期任务：** ${tasksWithoutDate} 个`);\n}\n\n// 显示日期分布\nif (Object.keys(dateStats).length > 0) {\n    dv.header(2, \"📅 完成日期分布\");\n    const dateTable = Object.entries(dateStats)\n        .sort((a, b) => {\n            if (a[0] === \"无日期\") return 1;\n            if (b[0] === \"无日期\") return -1;\n            return b[0].localeCompare(a[0]);\n        })\n        .map(([date, count]) => {\n            let dateDisplay = date;\n            if (date !== \"无日期\") {\n                try {\n                    const dateObj = new Date(date);\n                    const weekdays = [\"日\", \"一\", \"二\", \"三\", \"四\", \"五\", \"六\"];\n                    const weekday = weekdays[dateObj.getDay()];\n                    dateDisplay = `${date} (周${weekday})`;\n                } catch (e) {}\n            }\n            return [dateDisplay, count];\n        });\n\n    dv.table([\"完成日期\", \"任务数量\"], dateTable);\n}\n\n// ========== 最近任务 ==========\nif (totalTasks > 0) {\n    dv.header(2, \"⏱️ 最近完成的任务\");\n    \n    let recentTasks = [];\n    allResults.forEach(item => {\n        if (item.已完成待办 && Array.isArray(item.已完成待办)) {\n            item.已完成待办.forEach(task => {\n                if (task.date && task.date !== \"无日期\") {\n                    recentTasks.push({\n                        文件: item.文件,\n                        标题: item.一级标题,\n                        任务: task.task,\n                        日期: task.date,\n                        行号: task.lineNumber\n                    });\n                }\n            });\n        }\n    });\n    \n    recentTasks.sort((a, b) => b.日期.localeCompare(a.日期));\n    recentTasks = recentTasks.slice(0, 30);\n    \n    if (recentTasks.length > 0) {\n        const recentTable = recentTasks.map(task => {\n            let taskContent = task.任务 || \"\";\n            if (taskContent.length > 40) {\n                taskContent = taskContent.substring(0, 40) + \"...\";\n            }\n            \n            return [\n                task.日期,\n                task.文件 || \"未知\",\n                task.标题 || \"无标题\",\n                taskContent,\n                `行 ${task.行号 || \"未知\"}`\n            ];\n        });\n        \n        dv.table([\"完成日期\", \"文件\", \"标题\", \"任务内容\", \"行号\"], recentTable);\n    } else {\n        dv.paragraph(\"没有找到有日期的任务\");\n    }\n}",
+      "queryType": "dataviewjs",
+      "maxHeight": 1000,
+      "dynamicParamComponents": [
+        {
+          "id": "bee81493-91a7-4d33-a38e-c6a6da39dc1e",
+          "type": "text",
+          "name": "startDate",
+          "defaultValue": "2026-01-",
+          "placeholder": "",
+          "fromProperty": "",
+          "label": "开始日期"
+        },
+        {
+          "id": "48998589-04c0-4aed-9418-245db035d921",
+          "type": "text",
+          "name": "endDate",
+          "defaultValue": "2026-01-31",
+          "placeholder": "",
+          "fromProperty": "",
+          "label": "结束日期"
+        }
+      ],
+      "title": "待办汇总"
+    },
+    {
+      "id": "e3405350-6673-41e4-88d9-6fd9921a7812",
+      "type": "dynamicDataView",
+      "titleAlign": "center",
+      "tabTitle": "重要不紧急",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showShadow": false,
+      "createAt": "2024-05-13T08:13:00.687Z",
+      "updateAt": "2026-02-26T01:51:44.996Z",
+      "viewType": "table",
+      "properties": [
+        {
+          "id": "__componentsTitleProperty_0x7c00",
+          "name": "文件名",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "173"
+          }
+        },
+        {
+          "id": "a5a7a58e-7efb-4a5c-aa4f-2af8961ea763",
+          "name": "${file.ctime}",
+          "isShow": true,
+          "type": "datetime",
+          "options": {
+            "formatType": "datetime",
+            "format": "yyyy-MM-dd",
+            "width": "138"
+          },
+          "alias": "创建日期"
+        },
+        {
+          "id": "fe0744bc-5668-4dab-b783-dd12f9d0badc",
+          "name": "${file.mtime}",
+          "isShow": true,
+          "type": "datetime",
+          "options": {
+            "width": "178"
+          }
+        },
+        {
+          "id": "afbb2fdd-242e-41b3-980d-7da56e1b7f73",
+          "name": "开始",
+          "isShow": true,
+          "type": "button",
+          "options": {
+            "action": {
+              "type": "updateProperty",
+              "properties": [
+                {
+                  "id": "7d824545-fa87-4166-a77d-e4e8b4c749bc",
+                  "name": "status",
+                  "type": "string",
+                  "value": "DOING",
+                  "valueSource": "constant",
+                  "modifier": "replaceValue"
+                },
+                {
+                  "id": "77169e6e-9d97-4579-9901-0b06d8d662e3",
+                  "name": "startDate",
+                  "type": "datetime",
+                  "value": "$now",
+                  "valueSource": "constant",
+                  "modifier": "replaceValue"
+                }
+              ]
+            },
+            "width": "91"
+          }
+        },
+        {
+          "id": "d9048058-9893-4c75-89b7-0af1574151a9",
+          "name": "结束",
+          "isShow": true,
+          "type": "button",
+          "options": {
+            "action": {
+              "type": "updateProperty",
+              "properties": [
+                {
+                  "id": "72570ed7-8144-46b1-b7de-dff80eb25e37",
+                  "name": "status",
+                  "type": "string",
+                  "value": "DONE",
+                  "valueSource": "constant",
+                  "modifier": "replaceValue"
+                },
+                {
+                  "id": "8b901f48-f8b2-4543-a1fc-927ca2f17253",
+                  "name": "endDate",
+                  "type": "datetime",
+                  "value": "$now",
+                  "valueSource": "constant",
+                  "modifier": "replaceValue"
+                }
+              ]
+            },
+            "width": "85"
+          }
+        },
+        {
+          "id": "ac3e86ca-1943-4757-b2c7-1fe2901f0fbd",
+          "name": "status",
+          "isShow": true,
+          "type": "select",
+          "options": {
+            "width": "100"
+          }
+        },
+        {
+          "id": "ca5af196-498c-4488-ac05-80e0829afa6c",
+          "name": "Project",
+          "isShow": true,
+          "type": "select",
+          "options": {
+            "width": "118"
+          },
+          "alias": "所属项目/目标 "
+        },
+        {
+          "id": "ecf089e2-9070-49d7-b171-205c60049196",
+          "name": "startDate",
+          "isShow": true,
+          "type": "datetime",
+          "options": {
+            "width": "111"
+          },
+          "alias": "开始日期"
+        },
+        {
+          "id": "0fd6b4c9-6587-4043-9f6a-7ac726ca4e26",
+          "name": "imp_urg",
+          "isShow": true,
+          "type": "select",
+          "options": {
+            "width": "122"
+          },
+          "alias": "是否紧急"
+        },
+        {
+          "id": "f1e460db-fc4c-4dc2-9a33-a0aa052a3cde",
+          "name": "sub_Project",
+          "isShow": true,
+          "type": "select",
+          "options": {
+            "width": "128"
+          },
+          "alias": "子项目"
+        },
+        {
+          "id": "5021b016-716c-4341-9fec-dfe3d4bcb034",
+          "name": "${file.words}",
+          "isShow": true,
+          "type": "text",
+          "options": {
+            "width": "127"
+          }
+        },
+        {
+          "id": "979555eb-e8fb-4d3a-ab7d-b764dd1af4ab",
+          "name": "Next Steps",
+          "isShow": true,
+          "type": "text",
+          "options": {
+            "width": "139",
+            "pinned": null
+          },
+          "alias": "下一步",
+          "wrap": true
+        },
+        {
+          "id": "6f2a2e80-1159-4ffe-8483-1005efd00488",
+          "name": "PlannedDate",
+          "isShow": true,
+          "type": "datetime",
+          "options": {
+            "formatType": "datetime",
+            "width": "164",
+            "format": "yyyy-MM-dd'T'HH:mm"
+          },
+          "alias": "计划日期"
+        },
+        {
+          "id": "2f794822-b736-4aa6-8fd6-50623c506491",
+          "name": "Cause Analysis",
+          "isShow": true,
+          "type": "text",
+          "options": {
+            "width": "161"
+          },
+          "alias": "偏差原因分析"
+        },
+        {
+          "id": "946a168b-576d-4f04-bd16-d8e6198a4d64",
+          "name": "Estimated Hours",
+          "isShow": true,
+          "type": "number",
+          "options": {
+            "width": "145"
+          },
+          "alias": "预估时间 (h)"
+        }
+      ],
+      "templates": [
+        {
+          "id": "7c6d9b95-6944-4e13-8dc1-a2166d74fa0b",
+          "path": "00_template/T-待办模版.md",
+          "name": "T-待办模版.md",
+          "type": "normal"
+        }
+      ],
+      "groups": [],
+      "viewOptions": {
+        "openPageIn": "split",
+        "openPageAfterCreate": false,
+        "itemSize": "components--page-card-medium",
+        "showPropertyName": false,
+        "showAllProperties": false,
+        "items": [],
+        "cover": {
+          "type": "pageFirstImage",
+          "value": "",
+          "fit": "contains",
+          "layout": "components--page-card-cover-landscape"
+        },
+        "headColumnWidth": "266",
+        "headColumnStatisticType": "count",
+        "pinFiltersToMenuBar": true,
+        "rowHeight": 32,
+        "showGrid": true,
+        "hideHeaderMenu": false
+      },
+      "filter": {
+        "id": "bc9afa86-0c6d-4468-8401-583c2f7074d6",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "75cf6053-82c9-4c1f-a37e-eaedfedf7460",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.parent}",
+            "value": "待办",
+            "conditions": []
+          },
+          {
+            "id": "f2ccfe0e-e148-4ad6-9898-5c6a0edcf0a4",
+            "type": "filter",
+            "operator": "not_contains",
+            "property": "status",
+            "value": "DONE",
+            "conditions": []
+          }
+        ]
+      },
+      "newPageLocation": {
+        "location": "待办"
+      },
+      "newPageNameFormat": "{{date: YYMMDD}} ",
+      "showTitle": false,
+      "groupBy": "",
+      "groupStates": {
+        "sort": "nameAsc",
+        "format": "none",
+        "statics": [],
+        "orders": [],
+        "hiddens": [],
+        "collapseds": []
+      },
+      "colorfulGroups": true,
+      "title": "重要不紧急",
+      "sort": {
+        "orders": [
+          {
+            "id": "21813962-764e-43dc-b9b1-e30a0806f248",
+            "property": "${file.words}",
+            "direction": "desc",
+            "disabled": false
+          }
+        ]
+      },
+      "defaultTemplate": "7c6d9b95-6944-4e13-8dc1-a2166d74fa0b",
+      "loadLimitPerPage": "10"
+    },
+    {
+      "id": "d261c98a-434c-4d3d-b3e6-2ecb6a7739ac",
+      "type": "chart",
+      "titleAlign": "left",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2026-01-18T03:09:44.552Z",
+      "updateAt": "2026-01-31T00:51:49.327Z",
+      "chartType": "bar",
+      "filter": {
+        "id": "30775ff2-8b31-4112-8ada-2267dbe4f40a",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "734f2e0a-294f-4271-a992-03cfa55d9817",
+            "type": "filter",
+            "operator": "equals",
+            "property": "status",
+            "value": "DONE",
+            "conditions": []
+          },
+          {
+            "id": "c887e8b2-e69d-4654-81ed-01529aa94dc8",
+            "type": "group",
+            "operator": "or",
+            "conditions": [
+              {
+                "id": "1898b82a-0459-405d-ad82-9f90fcb97e4e",
+                "type": "filter",
+                "operator": "equals",
+                "property": "${file.parent}",
+                "value": "待办",
+                "conditions": []
+              },
+              {
+                "id": "fce3b41c-fb92-4aca-90a0-d9f9b8f16033",
+                "type": "filter",
+                "operator": "equals",
+                "property": "${file.parent}",
+                "value": "03_输出_每日日记/每周",
+                "conditions": []
+              },
+              {
+                "id": "b4234477-6784-47b9-a6fa-26e255ba8f16",
+                "type": "filter",
+                "operator": "equals",
+                "property": "${file.parent}",
+                "value": "03_输出_每日日记/每月",
+                "conditions": []
+              }
+            ]
+          },
+          {
+            "id": "3b5b35a8-3614-4399-886d-f9c2a8d73846",
+            "type": "filter",
+            "operator": "has_value",
+            "property": "endDate",
+            "value": null,
+            "conditions": []
+          }
+        ]
+      },
+      "labelFormat": "$timeFormat",
+      "series": [
+        {
+          "id": "a006b6ea-e85d-4ff2-9956-4b7244210c82",
+          "name": "$file_count",
+          "precision": 2
+        }
+      ],
+      "sortField": "xAxisValue",
+      "sortOrder": "asc",
+      "maxHeight": 500,
+      "chartColorSet": "8478fb7b-d47a-4109-a8c6-ed8c5ec49906",
+      "chartLabelPosition": "hidden",
+      "enableMarkLine": false,
+      "markLineValue": 20,
+      "showDataValue": true,
+      "valueScaleStartFromZero": true,
+      "smoothLine": false,
+      "fillArea": false,
+      "options": {},
+      "categoryProperty": "endDate",
+      "categoryFormatPattern": "yyyy-MM",
+      "title": "每月处理待办数",
+      "labelRotation": 0,
+      "customizeColorSets": [
+        {
+          "id": "8478fb7b-d47a-4109-a8c6-ed8c5ec49906",
+          "colors": [
+            "#f77c25"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "d51bbc87-21f9-438f-b34a-75aa995e9582",
+      "type": "dynamicDataView",
+      "titleAlign": "center",
+      "tabTitle": "重要紧急度",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showShadow": false,
+      "createAt": "2024-05-13T08:13:00.687Z",
+      "updateAt": "2026-02-25T02:14:55.689Z",
+      "viewType": "table",
+      "properties": [
+        {
+          "id": "__componentsTitleProperty_0x7c00",
+          "name": "文件名",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "cf00430c-c25e-4fbe-a7fe-2b94ea61a8e9",
+          "name": "startDate",
+          "isShow": false,
+          "type": "datetime",
+          "options": {}
+        },
+        {
+          "id": "a6f91727-1910-49b0-8636-7291bf7812e4",
+          "name": "Next Steps",
+          "isShow": true,
+          "type": "text",
+          "options": {},
+          "alias": "下一步"
+        },
+        {
+          "id": "ccbf2f4e-61c1-4408-b19c-c8d2cc531909",
+          "name": "priority",
+          "isShow": true,
+          "type": "text",
+          "options": {},
+          "alias": "优先级"
+        },
+        {
+          "id": "ccfa573c-0ecc-40f5-bcb4-fa89ec9e7913",
+          "name": "Project",
+          "isShow": true,
+          "type": "text",
+          "options": {}
+        },
+        {
+          "id": "b051b79e-f49b-40d9-9b0e-4f6770d4fa63",
+          "name": "sub_Project",
+          "isShow": true,
+          "type": "text",
+          "options": {}
+        },
+        {
+          "id": "fcd98aef-44c6-4d23-8140-be7f508b5513",
+          "name": "imp_urg",
+          "isShow": true,
+          "type": "text",
+          "options": {}
+        }
+      ],
+      "templates": [
+        {
+          "id": "7c6d9b95-6944-4e13-8dc1-a2166d74fa0b",
+          "path": "00_template/T-待办模版.md",
+          "name": "T-待办模版.md",
+          "type": "normal"
+        }
+      ],
+      "groups": [
+        {
+          "id": "重要不紧急",
+          "name": "重要不紧急",
+          "items": [
+            "待办/纸质梳理.md",
+            "待办/职业规划，到底干什么？.md",
+            "待办/新的一年开始，一切都可以从头开始，年计划，月计划，周计划.md",
+            "待办/是否值得.md",
+            "待办/规划.md"
+          ]
+        },
+        {
+          "id": "重要紧急",
+          "name": "重要紧急",
+          "items": [
+            "待办/分-门市.md",
+            "待办/周复盘模板增加PDCA模块.md",
+            "待办/周复盘的时间还是过长.md",
+            "待办/周复盘-复盘.md",
+            "待办/周复盘-安排待办.md",
+            "待办/阅读个人实践反应程序如何跑通.md",
+            "待办/识别我拖延的事情，在习惯追踪中进行解决.md",
+            "待办/什么时候和我爸谈.md",
+            "待办/明年亚马逊怎么处理，公司要怎么处理，是否拖着和我爸相似.md",
+            "待办/对回宁波，亚马逊的总结复盘1.md",
+            "待办/对回宁波，亚马逊的总结复盘 1.md",
+            "待办/病如何捋顺.md",
+            "待办/预估时间.md",
+            "待办/是否平常整理待办也是一个很耗时的事情.md",
+            "待办/青蛙处理原则.md",
+            "待办/分配待办.md",
+            "待办/待办流程高效化.md"
+          ]
+        },
+        {
+          "id": "不重要不紧急",
+          "name": "不重要不紧急",
+          "items": [
+            "待办/与理论相悖.md",
+            "待办/番茄工作.md",
+            "待办/能力先起来，不然如何实践.md",
+            "待办/番茄可以通过Obsidian属性追踪.md",
+            "待办/番茄的休息优先级评估和我的周评估相悖.md",
+            "待办/待办页面一，二，三的思想应该是每日安排，我觉得应该和gtd的思想是相悖的.md"
+          ]
+        }
+      ],
+      "viewOptions": {
+        "openPageIn": "modal",
+        "openPageAfterCreate": false,
+        "itemSize": "components--page-card-medium",
+        "showPropertyName": true,
+        "showAllProperties": true,
+        "items": [],
+        "cover": {
+          "type": "textContent",
+          "value": "",
+          "fit": "contains",
+          "layout": "components--page-card-cover-portrait",
+          "position": "top"
+        },
+        "headColumnWidth": "266",
+        "headColumnStatisticType": "count",
+        "pinFiltersToMenuBar": true
+      },
+      "filter": {
+        "id": "bc9afa86-0c6d-4468-8401-583c2f7074d6",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "75cf6053-82c9-4c1f-a37e-eaedfedf7460",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.parent}",
+            "value": "待办",
+            "conditions": []
+          },
+          {
+            "id": "a34a206d-4072-486b-9d86-daa7fc1c98aa",
+            "type": "filter",
+            "operator": "contains_any",
+            "property": "status",
+            "value": [
+              "TODO",
+              "DOING"
+            ],
+            "conditions": []
+          },
+          {
+            "id": "c6f2471e-5573-459f-ab87-5af544ff4b48",
+            "type": "group",
+            "operator": "and",
+            "conditions": [
+              {
+                "id": "c32b8d33-915b-4610-add2-2ce149b65363",
+                "type": "filter",
+                "operator": "not_equals",
+                "property": "Project",
+                "value": "循环",
+                "conditions": []
+              },
+              {
+                "id": "f88bbf46-5dc0-41f6-8229-f2785c8e5c2a",
+                "type": "filter",
+                "operator": "not_equals",
+                "property": "Project",
+                "value": "生活",
+                "conditions": []
+              }
+            ]
+          }
+        ]
+      },
+      "newPageLocation": {
+        "location": "待办"
+      },
+      "newPageNameFormat": "请填写标题",
+      "showTitle": false,
+      "groupBy": "imp_urg",
+      "groupStates": {
+        "sort": "manual",
+        "format": "none",
+        "statics": [],
+        "orders": [
+          "不重要不紧急",
+          "重要紧急",
+          "重要不紧急",
+          "__$uncategorizedGroup"
+        ],
+        "hiddens": [],
+        "collapseds": [
+          "不重要不紧急",
+          "重要不紧急",
+          "__$uncategorizedGroup",
+          "重要紧急"
+        ]
+      },
+      "colorfulGroups": true,
+      "title": "重要紧急度",
+      "sort": {
+        "orders": [
+          {
+            "id": "9b856b80-3a49-42db-bd1a-e2d1c010c78c",
+            "property": "Project",
+            "direction": "desc",
+            "disabled": false
+          }
+        ]
+      },
+      "defaultTemplate": "7c6d9b95-6944-4e13-8dc1-a2166d74fa0b",
+      "icon": "DraftingCompass"
+    },
+    {
+      "id": "c9e97c6c-2dd6-46e8-aa2c-a9e180f8042a",
+      "type": "markdown",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2026-01-29T13:05:35.840Z",
+      "updateAt": "2026-01-29T13:05:42.244Z",
+      "maxHeight": 300,
+      "contentAlign": "left",
+      "markdownsSource": "content",
+      "markdownValue": "这是我针对这件事情，灵感的记录，请帮我整理出来，让我把逻辑捋清楚，同时不要遗漏细节"
+    },
+    {
+      "id": "ccfc1011-f31f-4597-96ba-3df03e5d5c83",
+      "type": "chart",
+      "titleAlign": "left",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2026-01-18T03:09:44.552Z",
+      "updateAt": "2026-01-31T00:51:12.561Z",
+      "chartType": "bar",
+      "filter": {
+        "id": "30775ff2-8b31-4112-8ada-2267dbe4f40a",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "c887e8b2-e69d-4654-81ed-01529aa94dc8",
+            "type": "group",
+            "operator": "or",
+            "conditions": [
+              {
+                "id": "1898b82a-0459-405d-ad82-9f90fcb97e4e",
+                "type": "filter",
+                "operator": "equals",
+                "property": "${file.parent}",
+                "value": "待办",
+                "conditions": []
+              },
+              {
+                "id": "fce3b41c-fb92-4aca-90a0-d9f9b8f16033",
+                "type": "filter",
+                "operator": "equals",
+                "property": "${file.parent}",
+                "value": "03_输出_每日日记/每周",
+                "conditions": []
+              },
+              {
+                "id": "b4234477-6784-47b9-a6fa-26e255ba8f16",
+                "type": "filter",
+                "operator": "equals",
+                "property": "${file.parent}",
+                "value": "03_输出_每日日记/每月",
+                "conditions": []
+              }
+            ]
+          },
+          {
+            "id": "a80dfaa5-67a5-4567-96fd-875aa3844206",
+            "type": "filter",
+            "operator": "time_after",
+            "property": "${file.ctime}",
+            "value": {
+              "type": "$startOfMonth",
+              "unit": "day",
+              "direction": "before",
+              "value": ""
+            },
+            "conditions": []
+          }
+        ]
+      },
+      "labelFormat": "$timeFormat",
+      "series": [
+        {
+          "id": "a006b6ea-e85d-4ff2-9956-4b7244210c82",
+          "name": "$file_count",
+          "precision": 2
+        }
+      ],
+      "sortField": "xAxisValue",
+      "sortOrder": "asc",
+      "maxHeight": 500,
+      "chartColorSet": "default",
+      "chartLabelPosition": "hidden",
+      "enableMarkLine": false,
+      "markLineValue": 20,
+      "showDataValue": true,
+      "valueScaleStartFromZero": true,
+      "smoothLine": false,
+      "fillArea": false,
+      "options": {},
+      "categoryProperty": "${file.ctime}",
+      "categoryFormatPattern": "kkkk-'W'WW",
+      "title": "每周新增待办数",
+      "labelRotation": 0
+    },
+    {
+      "id": "52dc09fd-6e8b-4778-b046-b868487a3f2b",
+      "type": "dataview",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-02-25T01:13:24.905Z",
+      "updateAt": "2026-02-26T02:45:01.766Z",
+      "query": "\nconst folderPath = \"待办\";\n\n// 获取容器并添加类名\nconst container = dv.container;\ncontainer.classList.add('my-table-container');\n\n// 插入样式（增大行距，表头不换行）\nconst style = document.createElement('style');\nstyle.textContent = `\n    .my-table-container table {\n        border-collapse: separate;\n        border-spacing: 0;\n        width: 100%;\n    }\n    .my-table-container th,\n    .my-table-container td {\n        padding: 12px 15px !important;\n        line-height: 1.8 !important;\n        vertical-align: middle;\n    }\n    .my-table-container th {\n        white-space: nowrap !important;\n        font-weight: 600;\n    }\n    .my-table-container td {\n        white-space: normal !important;\n    }\n    .my-table-container td:last-child {\n        min-width: 200px;\n    }\n`;\ncontainer.appendChild(style);\n\n// 获取该文件夹下的所有页面\nconst pages = dv.pages(`\"${folderPath}\"`);\n\n// 用于存储每个 Project 对应的子项目集合 (自动去重)\nconst projectMap = new Map(); // Key: project, Value: Set of subProjects\nconst projectSet = new Set();\nconst subProjectSet = new Set();\n\nfor (let page of pages) {\n    let project = page.Project;\n    let subProject = page.sub_Project;\n\n    if (project && subProject) {\n        projectSet.add(project);\n        subProjectSet.add(subProject);\n        \n        if (!projectMap.has(project)) {\n            projectMap.set(project, new Set());\n        }\n        projectMap.get(project).add(subProject);\n    }\n}\n\n// 转换为数组并按项目名排序\nconst projectList = Array.from(projectMap.entries())\n    .map(([project, subSet]) => {\n        // 将子项目排序后连接\n        const subArray = Array.from(subSet).sort((a, b) => a.localeCompare(b));\n        return [project, subArray.join(\"、\")];\n    })\n    .sort((a, b) => a[0].localeCompare(b[0]));\n\n// 统计信息\ndv.paragraph(`📊 **统计**：唯一项目数 = ${projectSet.size}，唯一子项目数 = ${subProjectSet.size}，汇总后行数 = ${projectList.length}`);\n\n// 输出表格\ndv.table([\"Project\", \"Sub Projects\"], projectList);",
+      "queryType": "dataviewjs",
+      "maxHeight": 1000,
+      "dynamicParamComponents": [],
+      "title": "待办类型汇总"
+    },
+    {
+      "id": "04f54207-31a8-47f7-b3f8-8b20b8cfd863",
+      "type": "dynamicDataView",
+      "titleAlign": "center",
+      "tabTitle": "类型",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showShadow": false,
+      "createAt": "2024-05-13T08:13:00.687Z",
+      "updateAt": "2026-02-26T03:35:11.640Z",
+      "viewType": "table",
+      "properties": [
+        {
+          "id": "__componentsTitleProperty_0x7c00",
+          "name": "文件名",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "cf00430c-c25e-4fbe-a7fe-2b94ea61a8e9",
+          "name": "startDate",
+          "isShow": false,
+          "type": "datetime",
+          "options": {}
+        },
+        {
+          "id": "a6f91727-1910-49b0-8636-7291bf7812e4",
+          "name": "Next Steps",
+          "isShow": false,
+          "type": "text",
+          "options": {},
+          "alias": "下一步"
+        },
+        {
+          "id": "ccbf2f4e-61c1-4408-b19c-c8d2cc531909",
+          "name": "priority",
+          "isShow": false,
+          "type": "text",
+          "options": {},
+          "alias": "优先级"
+        },
+        {
+          "id": "da764506-bb58-4c43-a003-dd2245efeedc",
+          "name": "status",
+          "isShow": true,
+          "type": "text",
+          "options": {}
+        },
+        {
+          "id": "acfb5fd2-8372-4cdb-acdf-16e8cbe366eb",
+          "name": "sub_Project",
+          "isShow": true,
+          "type": "text",
+          "options": {}
+        },
+        {
+          "id": "9ff1a90a-3fd5-4325-ae8b-64fe81bf2127",
+          "name": "结束",
+          "isShow": true,
+          "type": "button",
+          "options": {
+            "action": {
+              "type": "updateProperty",
+              "properties": [
+                {
+                  "id": "d8643050-2bd5-492c-beb5-0067e138d3bd",
+                  "name": "status",
+                  "type": "string",
+                  "value": "DONE",
+                  "valueSource": "constant",
+                  "modifier": "replaceValue"
+                },
+                {
+                  "id": "e109051b-613f-49de-9bcc-d44c9ba37832",
+                  "name": "endDate",
+                  "type": "datetime",
+                  "value": "$now",
+                  "valueSource": "constant",
+                  "modifier": "replaceValue"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "templates": [
+        {
+          "id": "7c6d9b95-6944-4e13-8dc1-a2166d74fa0b",
+          "path": "00_template/T-待办模版.md",
+          "name": "T-待办模版.md",
+          "type": "normal"
+        }
+      ],
+      "groups": [
+        {
+          "id": "习惯",
+          "name": "习惯",
+          "items": [
+            "待办/模版.md",
+            "待办/AI指令模块学习.md",
+            "待办/AI.md",
+            "待办/之前读过的书应该不用再读一遍.md",
+            "待办/运动.md",
+            "待办/阅读流程优化.md",
+            "待办/阅读调整.md",
+            "待办/阅读-大纲整理.md",
+            "待办/习惯时长.md",
+            "待办/习惯平衡.md",
+            "待办/晚上的习惯是对我白天工作时长达标或者效率拉满的奖赏.md",
+            "待办/书.md",
+            "待办/结构化设计怎么迭代.md",
+            "待办/将习惯追踪表中的数据进行完善.md",
+            "待办/高效阅读.md",
+            "待办/播客下一阶段处理.md",
+            "待办/播客流程问题.md",
+            "待办/播客管理.md"
+          ]
+        },
+        {
+          "id": "其他",
+          "name": "其他",
+          "items": [
+            "待办/闭环.md",
+            "待办/将个人思考笔记单个笔记整合，复现问题解决思路和迭代流程.md"
+          ]
+        },
+        {
+          "id": "待办",
+          "name": "待办",
+          "items": [
+            "待办/AI指令模块学习.md",
+            "待办/问题处理.md",
+            "待办/复盘-待办.md",
+            "待办/待办类型2.md",
+            "待办/待办类型.md",
+            "待办/待办.md"
+          ]
+        },
+        {
+          "id": "头脑风暴",
+          "name": "头脑风暴",
+          "items": [
+            "待办/纸质梳理.md",
+            "待办/职业规划，到底干什么？.md",
+            "待办/永远泄气，比如领导力不竞选导师；亚马逊泄气；间歇性.md",
+            "待办/新的一年开始，一切都可以从头开始，年计划，月计划，周计划.md",
+            "待办/心态改变.md",
+            "待办/是否值得.md",
+            "待办/识别我拖延的事情，在习惯追踪中进行解决.md",
+            "待办/什么时候和我爸谈.md",
+            "待办/签合同的重要性.md",
+            "待办/培训机构.md",
+            "待办/女生是否不是天时地利人和就跨不过去.md",
+            "待办/明年亚马逊怎么处理，公司要怎么处理，是否拖着和我爸相似.md",
+            "待办/经历.md",
+            "待办/规划.md",
+            "待办/分-门市.md",
+            "待办/对回宁波，亚马逊的总结复盘1.md",
+            "待办/对回宁波，亚马逊的总结复盘 1.md",
+            "待办/挫折.md",
+            "待办/成功失败.md",
+            "待办/病如何捋顺.md"
+          ]
+        },
+        {
+          "id": "实践",
+          "name": "实践",
+          "items": [
+            "待办/番茄工作.md",
+            "待办/与理论相悖.md",
+            "待办/能力先起来，不然如何实践.md",
+            "待办/番茄可以通过Obsidian属性追踪.md",
+            "待办/番茄的休息优先级评估和我的周评估相悖.md",
+            "待办/待办页面一，二，三的思想应该是每日安排，我觉得应该和gtd的思想是相悖的.md"
+          ]
+        },
+        {
+          "id": "工作",
+          "name": "工作",
+          "items": [
+            "待办/状态影响.md",
+            "待办/优化.md",
+            "待办/意外事件.md",
+            "待办/晚上工作安排.md",
+            "待办/深度工作时长.md",
+            "待办/每周工作安排.md",
+            "待办/精力恢复.md",
+            "待办/解决问题方式.md",
+            "待办/工作时长.md",
+            "待办/工作安排.md"
+          ]
+        }
+      ],
+      "viewOptions": {
+        "openPageIn": "modal",
+        "openPageAfterCreate": false,
+        "itemSize": "components--page-card-small",
+        "showPropertyName": true,
+        "showAllProperties": true,
+        "items": [],
+        "cover": {
+          "type": "textContent",
+          "value": "",
+          "fit": "contains",
+          "layout": "components--page-card-cover-portrait",
+          "position": "top"
+        },
+        "headColumnWidth": "266",
+        "headColumnStatisticType": "count",
+        "pinFiltersToMenuBar": true
+      },
+      "filter": {
+        "id": "bc9afa86-0c6d-4468-8401-583c2f7074d6",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "75cf6053-82c9-4c1f-a37e-eaedfedf7460",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.parent}",
+            "value": "待办",
+            "conditions": []
+          },
+          {
+            "id": "c6f2471e-5573-459f-ab87-5af544ff4b48",
+            "type": "group",
+            "operator": "and",
+            "conditions": []
+          }
+        ]
+      },
+      "newPageLocation": {
+        "location": "待办"
+      },
+      "newPageNameFormat": "请填写标题",
+      "showTitle": false,
+      "groupBy": "Project",
+      "groupStates": {
+        "sort": "manual",
+        "format": "none",
+        "statics": [
+          "其他",
+          "笔记"
+        ],
+        "orders": [
+          "",
+          "__$uncategorizedGroup",
+          "闭环",
+          "待办",
+          "工作",
+          "设计",
+          "实践",
+          "习惯",
+          "头脑风暴",
+          "外部",
+          "周复盘",
+          "Obsidian"
+        ],
+        "hiddens": [],
+        "collapseds": [
+          "周复盘",
+          "外部",
+          "实践",
+          "Obsidian",
+          "待办",
+          "头脑风暴",
+          "工作",
+          "设计",
+          "其他",
+          "笔记",
+          "青蛙",
+          "习惯",
+          "__$uncategorizedGroup"
+        ]
+      },
+      "colorfulGroups": true,
+      "title": "类型-全部",
+      "sort": {
+        "orders": [
+          {
+            "id": "9b856b80-3a49-42db-bd1a-e2d1c010c78c",
+            "property": "sub_Project",
+            "direction": "desc",
+            "disabled": false
+          }
+        ]
+      },
+      "defaultTemplate": "7c6d9b95-6944-4e13-8dc1-a2166d74fa0b",
+      "icon": "DraftingCompass"
+    },
+    {
+      "id": "60ab5417-20bf-46f3-9c8e-d4f209b0bd76",
+      "type": "dataview",
+      "titleAlign": "center",
+      "tabTitle": "日记一级标题汇总",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-02-25T01:13:24.905Z",
+      "updateAt": "2026-02-26T02:43:32.199Z",
+      "query": "\n\n// 文件夹路径（修改为目标文件夹）\nconst folderPath = \"03_待加工_灵感问题\";\n\n// 读取文件夹下所有 Markdown 文件\nconst files = app.vault.getMarkdownFiles().filter(f => \n    f.path.startsWith(folderPath + \"/\") || f.path === folderPath\n);\n\n// 准备数据：每个文件的对象 { name, titles }\nlet filesData = [];\nfor (let file of files) {\n    const content = await app.vault.read(file);\n    const lines = content.split(\"\\n\");\n    const headingRegex = /^\\s*#\\s+(.+)/;\n    const titles = [];\n    for (let line of lines) {\n        const match = line.match(headingRegex);\n        if (match) titles.push(match[1].trim());\n    }\n    filesData.push({\n        name: file.name,\n        titles: titles\n    });\n}\n\n// 渲染函数：根据过滤关键词重新生成界面\nfunction render(filterText = \"\") {\n    // 清空容器，重新构建\n    const container = dv.container;\n    container.innerHTML = \"\";\n\n    // 给容器添加一个类，方便样式限定\n    container.classList.add('my-table-container');\n\n    // 创建输入框\n    const input = document.createElement(\"input\");\n    input.type = \"text\";\n    input.placeholder = \"输入文件名关键词过滤...\";\n    input.value = filterText;\n    input.style.width = \"100%\";\n    input.style.marginBottom = \"10px\";\n    input.style.padding = \"5px\";\n    container.appendChild(input);\n\n    // 根据过滤词筛选数据\n    const filtered = filesData.filter(f => \n        f.name.toLowerCase().includes(filterText.toLowerCase())\n    );\n\n    // 统计信息\n    const totalFiles = filtered.length;\n    const totalTitles = filtered.reduce((sum, f) => sum + f.titles.length, 0);\n    const stats = document.createElement(\"div\");\n    stats.textContent = `📁 文件数：${totalFiles}  |  📄 一级标题总数：${totalTitles}`;\n    stats.style.marginBottom = \"10px\";\n    stats.style.fontWeight = \"bold\";\n    container.appendChild(stats);\n\n    // 添加自定义样式，增大行距，表头不换行\n    const style = document.createElement('style');\n    style.textContent = `\n        .my-table-container table {\n            border-collapse: separate;\n            border-spacing: 0;\n            width: 100%;\n        }\n        .my-table-container th,\n        .my-table-container td {\n            padding: 12px 15px !important;\n            line-height: 1.8 !important;\n            vertical-align: middle;\n        }\n        .my-table-container th {\n            white-space: nowrap !important;\n            font-weight: 600;\n        }\n        .my-table-container td {\n            white-space: normal !important;\n        }\n        .my-table-container td:last-child {\n            min-width: 200px;\n        }\n    `;\n    container.appendChild(style);\n\n    // 准备表格数据\n    let tableData = [];\n    for (let f of filtered) {\n        const titlesStr = f.titles.join(\"、\") || \"（无一级标题）\";\n        tableData.push([f.name, f.titles.length, titlesStr]);\n    }\n\n    // 输出表格\n    dv.table([\"文件名\", \"一级标题数量\", \"一级标题列表\"], tableData);\n\n    // 输入框事件：实时过滤\n    input.addEventListener(\"input\", (e) => {\n        render(e.target.value);\n    });\n}\n\n// 初始渲染\nrender();",
+      "queryType": "dataviewjs",
+      "maxHeight": 1000,
+      "dynamicParamComponents": [],
+      "title": "日记一级标题汇总"
+    }
+  ],
+  "rootComponentId": "cb8bee17-a1df-4ae2-950a-5d487637c6c1",
+  "version": 3.1
+}

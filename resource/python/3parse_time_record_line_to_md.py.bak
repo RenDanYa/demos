@@ -1,0 +1,275 @@
+import re
+import tkinter as tk
+from tkinter import filedialog
+from pathlib import Path
+from datetime import datetime, timedelta
+
+def parse_time_record_line(line):
+    """解析时间记录行，提取时间范围和标签"""
+    line = line.strip()
+    if not line or not line.startswith('-'):
+        return None
+    
+    # 提取时间范围
+    time_match = re.search(r'(\d{2}:\d{2})-(\d{2}:\d{2})', line)
+    if not time_match:
+        return None
+    
+    start_time_str = time_match.group(1)
+    end_time_str = time_match.group(2)
+    
+    # 提取标签
+    tags = re.findall(r'#([^#\s]+)', line)
+    
+    return {
+        'line': line,
+        'start_time': start_time_str,
+        'end_time': end_time_str,
+        'tags': tags,
+        'original_line': line.lstrip('- ').strip()
+    }
+
+def calculate_duration(start_time_str, end_time_str):
+    """计算持续时间（小时）"""
+    try:
+        start_time = datetime.strptime(start_time_str, "%H:%M")
+        end_time = datetime.strptime(end_time_str, "%H:%M")
+        
+        # 处理跨天的情况
+        if end_time < start_time:
+            end_time += timedelta(days=1)
+        
+        duration = (end_time - start_time).total_seconds() / 3600
+        return round(duration, 2)
+    except:
+        return 0
+
+def get_time_period(hour):
+    """根据小时数确定时间段"""
+    if hour >= 6 and hour < 14:
+        return 'morning'  # 上午 (6:00-14:00)
+    elif hour >= 14 and hour < 17:
+        return 'afternoon'  # 下午 (14:00-17:00)
+    elif hour >= 17 and hour < 21:
+        return 'evening'  # 晚上 (17:00-21:00)
+    else:
+        return 'night'  # 深夜 (21:00以后及6:00前)
+
+def parse_md_file_for_time_stats(file_path):
+    """解析Markdown文件，提取时间统计信息"""
+    with open(file_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+    
+    # 解析frontmatter获取日期和星期几
+    frontmatter_match = re.search(r'---\n(.*?)\n---', content, re.DOTALL)
+    date_str = ""
+    day_of_week = ""
+    
+    if frontmatter_match:
+        frontmatter_content = frontmatter_match.group(1)
+        date_match = re.search(r'created:\s*(\d{4}-\d{2}-\d{2})', frontmatter_content)
+        if date_match:
+            date_str = date_match.group(1)
+            try:
+                date_obj = datetime.strptime(date_str, "%Y-%m-%d")
+                # 将星期数字转换为中文星期
+                weekdays = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+                day_of_week = weekdays[date_obj.weekday()]
+            except:
+                day_of_week = "未知"
+    
+    # 查找时间记录部分
+    time_section_pattern = r'## 📝 时间记录\s*\n(.*?)\n##'
+    time_section_match = re.search(time_section_pattern, content, re.DOTALL)
+    
+    # 初始化统计字典
+    stats = {
+        '日期': date_str,
+        '星期几': day_of_week,
+        'morning': 0,  # 上午
+        'afternoon': 0,  # 下午
+        'evening': 0,  # 晚上
+        'night': 0,  # 深夜
+        'total': 0,  # 总时长
+        'record_count': 0  # 记录条数
+    }
+    
+    if time_section_match:
+        time_section = time_section_match.group(1)
+        lines = time_section.strip().split('\n')
+        
+        for line in lines:
+            record = parse_time_record_line(line)
+            if not record:
+                continue
+            
+            # 排除休息和运动记录
+            tags_str = ' '.join(record['tags'])
+            if any(tag in tags_str for tag in ['时间记录/休息', '时间记录/运动', '时间记录/机动']):
+                continue
+            
+            # 计算持续时间
+            duration = calculate_duration(record['start_time'], record['end_time'])
+            if duration <= 0:
+                continue
+            
+            # 获取时间段
+            hour = int(record['start_time'].split(':')[0])
+            period = get_time_period(hour)
+            
+            # 更新统计
+            stats[period] += duration
+            stats['total'] += duration
+            stats['record_count'] += 1
+    
+    return stats
+
+def select_md_files():
+    """打开文件选择对话框，选择多个Markdown文件"""
+    root = tk.Tk()
+    root.withdraw()  # 隐藏主窗口
+    file_paths = filedialog.askopenfilenames(
+        title="选择Markdown文件",
+        filetypes=[("Markdown files", "*.md"), ("All files", "*.*")]
+    )
+    return list(file_paths)
+
+def generate_markdown_report(md_file_paths, output_file_path):
+    """生成Markdown格式的时间统计报告"""
+    all_stats = []
+    
+    for file_path in md_file_paths:
+        stats = parse_md_file_for_time_stats(file_path)
+        if stats['星期几'] and stats['total'] > 0:
+            all_stats.append(stats)
+        print(f"已处理文件: {Path(file_path).name}")
+    
+    if not all_stats:
+        print("没有找到有效的时间记录数据")
+        return
+    
+    # 按星期几分组统计
+    weekday_totals = {
+        '周一': {'morning': 0, 'afternoon': 0, 'evening': 0, 'night': 0, 'total': 0, 'count': 0},
+        '周二': {'morning': 0, 'afternoon': 0, 'evening': 0, 'night': 0, 'total': 0, 'count': 0},
+        '周三': {'morning': 0, 'afternoon': 0, 'evening': 0, 'night': 0, 'total': 0, 'count': 0},
+        '周四': {'morning': 0, 'afternoon': 0, 'evening': 0, 'night': 0, 'total': 0, 'count': 0},
+        '周五': {'morning': 0, 'afternoon': 0, 'evening': 0, 'night': 0, 'total': 0, 'count': 0},
+        '周六': {'morning': 0, 'afternoon': 0, 'evening': 0, 'night': 0, 'total': 0, 'count': 0},
+        '周日': {'morning': 0, 'afternoon': 0, 'evening': 0, 'night': 0, 'total': 0, 'count': 0}
+    }
+    
+    # 累加各时间段时长
+    for stats in all_stats:
+        weekday = stats['星期几']
+        if weekday in weekday_totals:
+            weekday_totals[weekday]['morning'] += stats['morning']
+            weekday_totals[weekday]['afternoon'] += stats['afternoon']
+            weekday_totals[weekday]['evening'] += stats['evening']
+            weekday_totals[weekday]['night'] += stats['night']
+            weekday_totals[weekday]['total'] += stats['total']
+            weekday_totals[weekday]['count'] += 1
+    
+    # 计算平均值（如果有多天数据）
+    for weekday in weekday_totals:
+        if weekday_totals[weekday]['count'] > 1:
+            count = weekday_totals[weekday]['count']
+            weekday_totals[weekday]['morning'] = round(weekday_totals[weekday]['morning'] / count, 2)
+            weekday_totals[weekday]['afternoon'] = round(weekday_totals[weekday]['afternoon'] / count, 2)
+            weekday_totals[weekday]['evening'] = round(weekday_totals[weekday]['evening'] / count, 2)
+            weekday_totals[weekday]['night'] = round(weekday_totals[weekday]['night'] / count, 2)
+            weekday_totals[weekday]['total'] = round(weekday_totals[weekday]['total'] / count, 2)
+    
+    # 构建Markdown内容
+    markdown_content = "# 工作时间统计报告\n\n"
+    markdown_content += f"统计日期范围: {all_stats[0]['日期']} 到 {all_stats[-1]['日期']}\n"
+    markdown_content += f"总计文件数: {len(all_stats)} 个\n\n"
+    
+    # 上午工作时长
+    markdown_content += "- 上午工作时长\n"
+    for weekday in ['周一', '周二', '周三', '周四', '周五', '周六', '周日']:
+        if weekday_totals[weekday]['morning'] > 0:
+            count_text = f" ({weekday_totals[weekday]['count']}天)" if weekday_totals[weekday]['count'] > 1 else ""
+            markdown_content += f"\t- {weekday}{count_text}：{weekday_totals[weekday]['morning']:.2f}\n"
+    
+    # 下午工作时长
+    markdown_content += "- 下午工作时长\n"
+    for weekday in ['周一', '周二', '周三', '周四', '周五', '周六', '周日']:
+        if weekday_totals[weekday]['afternoon'] > 0:
+            count_text = f" ({weekday_totals[weekday]['count']}天)" if weekday_totals[weekday]['count'] > 1 else ""
+            markdown_content += f"\t- {weekday}{count_text}：{weekday_totals[weekday]['afternoon']:.2f}\n"
+    
+    # 晚上工作时长
+    markdown_content += "- 晚上工作时长\n"
+    for weekday in ['周一', '周二', '周三', '周四', '周五', '周六', '周日']:
+        if weekday_totals[weekday]['evening'] > 0:
+            count_text = f" ({weekday_totals[weekday]['count']}天)" if weekday_totals[weekday]['count'] > 1 else ""
+            markdown_content += f"\t- {weekday}{count_text}：{weekday_totals[weekday]['evening']:.2f}\n"
+    
+    # 深夜工作时长
+    markdown_content += "- 深夜工作时长\n"
+    for weekday in ['周一', '周二', '周三', '周四', '周五', '周六', '周日']:
+        if weekday_totals[weekday]['night'] > 0:
+            count_text = f" ({weekday_totals[weekday]['count']}天)" if weekday_totals[weekday]['count'] > 1 else ""
+            markdown_content += f"\t- {weekday}{count_text}：{weekday_totals[weekday]['night']:.2f}\n"
+    
+    # 总工作时长（新增）
+    markdown_content += "- 总工作时长\n"
+    for weekday in ['周一', '周二', '周三', '周四', '周五', '周六', '周日']:
+        if weekday_totals[weekday]['total'] > 0:
+            count_text = f" ({weekday_totals[weekday]['count']}天)" if weekday_totals[weekday]['count'] > 1 else ""
+            markdown_content += f"\t- {weekday}{count_text}：{weekday_totals[weekday]['total']:.2f}\n"
+    
+    # 添加汇总统计
+    markdown_content += "\n## 汇总统计\n"
+    
+    # 计算各时间段总计
+    total_morning = sum(stats['morning'] for stats in all_stats)
+    total_afternoon = sum(stats['afternoon'] for stats in all_stats)
+    total_evening = sum(stats['evening'] for stats in all_stats)
+    total_night = sum(stats['night'] for stats in all_stats)
+    total_all = sum(stats['total'] for stats in all_stats)
+    
+    # 计算平均值
+    avg_morning = total_morning / len(all_stats) if len(all_stats) > 0 else 0
+    avg_afternoon = total_afternoon / len(all_stats) if len(all_stats) > 0 else 0
+    avg_evening = total_evening / len(all_stats) if len(all_stats) > 0 else 0
+    avg_night = total_night / len(all_stats) if len(all_stats) > 0 else 0
+    avg_total = total_all / len(all_stats) if len(all_stats) > 0 else 0
+    
+    markdown_content += f"- 上午工作总时长：{total_morning:.2f}小时 (平均{avg_morning:.2f}小时/天)\n"
+    markdown_content += f"- 下午工作总时长：{total_afternoon:.2f}小时 (平均{avg_afternoon:.2f}小时/天)\n"
+    markdown_content += f"- 晚上工作总时长：{total_evening:.2f}小时 (平均{avg_evening:.2f}小时/天)\n"
+    markdown_content += f"- 深夜工作总时长：{total_night:.2f}小时 (平均{avg_night:.2f}小时/天)\n"
+    markdown_content += f"- 工作总时长：{total_all:.2f}小时 (平均{avg_total:.2f}小时/天)\n"
+    
+    # 写入Markdown文件
+    with open(output_file_path, 'w', encoding='utf-8') as f:
+        f.write(markdown_content)
+    
+    print(f"\nMarkdown报告已生成：{output_file_path}")
+    print(f"共处理 {len(all_stats)} 个文件")
+    
+    # 在控制台也显示结果
+    print("\n生成的Markdown内容预览:")
+    print("=" * 50)
+    print(markdown_content)
+    print("=" * 50)
+
+def main():
+    """主函数"""
+    # 选择多个Markdown文件
+    md_file_paths = select_md_files()
+    
+    if not md_file_paths:
+        print("未选择任何文件")
+        return
+    
+    # 设置输出文件路径
+    output_file_path = "工作时间统计.md"
+    
+    # 生成Markdown报告
+    generate_markdown_report(md_file_paths, output_file_path)
+
+if __name__ == "__main__":
+    main()

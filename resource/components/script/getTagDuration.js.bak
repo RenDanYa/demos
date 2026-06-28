@@ -1,0 +1,242 @@
+async function getTagDuration(targetTag, options = {}) {
+  const { currentFile } = this;
+  const file = currentFile;
+  
+  // 单文件模式：直接计算当前文件的标签时长
+  if (!options.period) {
+    return await getSingleFileTagDuration(file, targetTag);
+  }
+  
+  // 多文件模式：根据时间范围统计
+  return await getMultiFileTagDuration(targetTag, options);
+}
+
+// 单文件统计
+async function getSingleFileTagDuration(file, targetTag) {
+  const fileContent = await app.vault.cachedRead(file);
+  const fileContentLines = fileContent.split("\n");
+
+  const timeRecordStart = fileContentLines.findIndex(line => line.includes('## 📝 时间记录'));
+  if (timeRecordStart === -1) {
+    return "未找到时间记录部分";
+  }
+
+  let totalMinutes = 0;
+
+  for (let i = timeRecordStart + 1; i < fileContentLines.length; i++) {
+    const line = fileContentLines[i].trim();
+    
+    if (line.startsWith('## ') && i > timeRecordStart + 1) {
+      break;
+    }
+
+    const timeMatch = line.match(/(\d{2}:\d{2}) - (\d{2}:\d{2}) (.+?) #(.+)/);
+    if (timeMatch) {
+      const startTime = timeMatch[1];
+      const endTime = timeMatch[2];
+      const tags = timeMatch[4].split('/');
+
+      const start = new Date(`2000-01-01 ${startTime}`);
+      const end = new Date(`2000-01-01 ${endTime}`);
+      const duration = (end - start) / (1000 * 60);
+
+      if (tags.includes(targetTag)) {
+        totalMinutes += duration;
+      }
+    }
+  }
+
+  return formatDuration(totalMinutes);
+}
+
+// 多文件统计
+async function getMultiFileTagDuration(targetTag, options) {
+  const { period = 'week', limit = 7 } = options;
+  
+  // 获取所有日记文件
+  const diaryFiles = app.vault.getMarkdownFiles().filter(file => {
+    return file.path.includes('03_输出_每日日记') && /^\d{4}-\d{2}-\d{2}\.md$/.test(file.name);
+  });
+
+  // 按日期排序
+  diaryFiles.sort((a, b) => b.name.localeCompare(a.name));
+  
+  let selectedFiles = [];
+  
+  if (period === 'week') {
+    // 获取最近几周的文件
+    selectedFiles = getRecentWeeksFiles(diaryFiles, limit);
+  } else if (period === 'day') {
+    // 获取最近几天的文件
+    selectedFiles = diaryFiles.slice(0, limit);
+  }
+  
+  // 统计每个文件的标签时长
+  let totalMinutes = 0;
+  let fileCount = 0;
+  
+  for (const file of selectedFiles) {
+    const fileContent = await app.vault.cachedRead(file);
+    const minutes = calculateTagMinutes(fileContent, targetTag);
+    
+    if (minutes > 0) {
+      totalMinutes += minutes;
+      fileCount++;
+    }
+  }
+  
+  // 计算平均值
+  if (fileCount === 0) {
+    return `在选定的${period === 'week' ? '周' : '天'}中没有找到 "${targetTag}" 标签的记录`;
+  }
+  
+  const averageMinutes = totalMinutes / fileCount;
+  
+  return {
+    total: formatDuration(totalMinutes),
+    average: formatDuration(averageMinutes),
+    days: fileCount,
+    period: period === 'week' ? `${limit}周` : `${limit}天`
+  };
+}
+
+// 获取最近几周的文件
+function getRecentWeeksFiles(files, weekCount) {
+  const weeks = new Map();
+  
+  files.forEach(file => {
+    const dateMatch = file.name.match(/^(\d{4})-(\d{2})-(\d{2})\.md$/);
+    if (dateMatch) {
+      const year = parseInt(dateMatch[1]);
+      const month = parseInt(dateMatch[2]);
+      const day = parseInt(dateMatch[3]);
+      const date = new Date(year, month - 1, day);
+      
+      // 获取周数 (ISO周)
+      const weekNumber = getISOWeek(date);
+      const weekKey = `${year}-W${weekNumber.toString().padStart(2, '0')}`;
+      
+      if (!weeks.has(weekKey)) {
+        weeks.set(weekKey, []);
+      }
+      weeks.get(weekKey).push(file);
+    }
+  });
+  
+  // 取最近的weekCount周
+  const recentWeeks = Array.from(weeks.keys())
+    .sort()
+    .reverse()
+    .slice(0, weekCount);
+  
+  return recentWeeks.flatMap(weekKey => weeks.get(weekKey));
+}
+
+// 获取ISO周数
+function getISOWeek(date) {
+  const target = new Date(date.valueOf());
+  const dayNr = (date.getDay() + 6) % 7;
+  target.setDate(target.getDate() - dayNr + 3);
+  const firstThursday = target.valueOf();
+  target.setMonth(0, 1);
+  if (target.getDay() !== 4) {
+    target.setMonth(0, 1 + ((4 - target.getDay()) + 7) % 7);
+  }
+  return 1 + Math.ceil((firstThursday - target) / 604800000);
+}
+
+// 从文件内容计算标签时长（分钟）
+function calculateTagMinutes(fileContent, targetTag) {
+  const fileContentLines = fileContent.split("\n");
+  const timeRecordStart = fileContentLines.findIndex(line => line.includes('## 📝 时间记录'));
+  
+  if (timeRecordStart === -1) return 0;
+  
+  let totalMinutes = 0;
+
+  for (let i = timeRecordStart + 1; i < fileContentLines.length; i++) {
+    const line = fileContentLines[i].trim();
+    
+    if (line.startsWith('## ') && i > timeRecordStart + 1) {
+      break;
+    }
+
+    const timeMatch = line.match(/(\d{2}:\d{2}) - (\d{2}:\d{2}) (.+?) #(.+)/);
+    if (timeMatch) {
+      const startTime = timeMatch[1];
+      const endTime = timeMatch[2];
+      const tags = timeMatch[4].split('/');
+
+      const start = new Date(`2000-01-01 ${startTime}`);
+      const end = new Date(`2000-01-01 ${endTime}`);
+      const duration = (end - start) / (1000 * 60);
+
+      if (tags.includes(targetTag)) {
+        totalMinutes += duration;
+      }
+    }
+  }
+
+  return totalMinutes;
+}
+
+// 格式化时长
+function formatDuration(minutes) {
+  const hours = Math.floor(minutes / 60);
+  const mins = Math.round(minutes % 60);
+  
+  if (hours > 0) {
+    return mins > 0 ? `${hours}小时${mins}分钟` : `${hours}小时`;
+  } else {
+    return `${mins}分钟`;
+  }
+}
+
+// 获取统计报告
+async function getTagStats(targetTag, options = {}) {
+  const stats = await getMultiFileTagDuration(targetTag, options);
+  
+  if (typeof stats === 'string') {
+    return stats;
+  }
+  
+  return `
+<div class="tag-stats">
+  <h4>"${targetTag}" 标签统计 (${stats.period})</h4>
+  <ul>
+    <li>总时长: <strong>${stats.total}</strong></li>
+    <li>日均时长: <strong>${stats.average}</strong></li>
+    <li>有效天数: <strong>${stats.days}天</strong></li>
+  </ul>
+</div>
+  `.trim();
+}
+
+exports.default = {
+  name: "getTagDuration",
+  description: `获取标签时长统计，支持单文件和周期平均统计
+
+使用方法：
+\`\`\`js
+// 获取当前文件的单个标签时长
+getTagDuration('工作')
+\`\`\`
+
+\`\`\`js
+// 获取最近7天的平均工作时长
+getTagDuration('工作', { period: 'day', limit: 7 })
+\`\`\`
+
+\`\`\`js
+// 获取最近4周的平均休息时长
+getTagDuration('休息', { period: 'week', limit: 4 })
+\`\`\`
+
+\`\`\`js
+// 获取详细的统计报告
+getTagStats('工作', { period: 'week', limit: 4 })
+\`\`\`
+  `,
+  entry: getTagDuration,
+  getTagStats: getTagStats
+};

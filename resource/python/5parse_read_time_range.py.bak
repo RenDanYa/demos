@@ -1,0 +1,125 @@
+import re
+import tkinter as tk
+from tkinter import filedialog, messagebox
+from collections import defaultdict
+from datetime import datetime
+
+def parse_time_range(time_str):
+    """将时间字符串（如'06:54-07:50'）转换为分钟数"""
+    try:
+        start_str, end_str = time_str.split('-')
+        start = datetime.strptime(start_str.strip(), '%H:%M')
+        end = datetime.strptime(end_str.strip(), '%H:%M')
+        
+        # 处理跨天的情况（结束时间小于开始时间）
+        if end < start:
+            end = end.replace(day=end.day + 1)
+        
+        duration = (end - start).total_seconds() / 60  # 分钟数
+        return duration
+    except Exception as e:
+        print(f"时间解析错误: {time_str}, 错误: {e}")
+        return 0
+
+def process_md_file(file_path):
+    """处理单个md文件，返回阅读记录的字典"""
+    reading_records = defaultdict(float)  # 存储阅读记录和累计时间
+    
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        # 找到时间记录部分
+        time_record_match = re.search(r'## 📝 时间记录\s*\n(.*?)(?=\n## |\n---|\Z)', content, re.DOTALL)
+        
+        if time_record_match:
+            time_records = time_record_match.group(1).strip().split('\n')
+            
+            for record in time_records:
+                # 查找包含阅读标签的行
+                if '#时间记录/阅读' in record:
+                    # 提取时间范围和活动内容
+                    time_match = re.search(r'(\d{1,2}:\d{2})-(\d{1,2}:\d{2})', record)
+                    if time_match:
+                        time_range = time_match.group(0)
+                        
+                        # 提取活动内容（去除时间范围和标签）
+                        activity = record.replace(time_range, '').strip()
+                        # 去除#时间记录/阅读标签
+                        activity = re.sub(r'#时间记录/阅读.*$', '', activity).strip()
+                        # 如果还有#开头的其他标签也去除
+                        activity = re.sub(r'#.*$', '', activity).strip()
+                        
+                        # 计算持续时间（分钟）
+                        duration = parse_time_range(time_range)
+                        
+                        if activity:
+                            reading_records[activity] += duration
+                    
+    except Exception as e:
+        print(f"处理文件 {file_path} 时出错: {e}")
+    
+    return reading_records
+
+def select_and_process_files():
+    """选择文件并处理"""
+    # 创建Tkinter根窗口（不显示）
+    root = tk.Tk()
+    root.withdraw()
+    
+    # 打开文件选择对话框
+    file_paths = filedialog.askopenfilenames(
+        title="选择Markdown文件",
+        filetypes=[("Markdown文件", "*.md"), ("所有文件", "*.*")]
+    )
+    
+    if not file_paths:
+        print("未选择文件")
+        return
+    
+    # 汇总所有文件的阅读记录
+    all_reading_records = defaultdict(float)
+    
+    for file_path in file_paths:
+        print(f"处理文件: {file_path}")
+        file_records = process_md_file(file_path)
+        
+        # 合并记录
+        for activity, duration in file_records.items():
+            all_reading_records[activity] += duration
+    
+    # 转换分钟为小时，并格式化输出
+    if all_reading_records:
+        result_text = "阅读记录统计:\n"
+        result_text += "-" * 50 + "\n"
+        
+        # 按持续时间降序排序
+        sorted_records = sorted(all_reading_records.items(), 
+                              key=lambda x: x[1], 
+                              reverse=True)
+        
+        total_hours = 0
+        for activity, duration_minutes in sorted_records:
+            duration_hours = duration_minutes / 60
+            total_hours += duration_hours
+            result_text += f"{activity}: {duration_hours:.2f} 小时\n"
+        
+        result_text += "-" * 50 + "\n"
+        result_text += f"总阅读时间: {total_hours:.2f} 小时\n"
+        result_text += f"统计文件数: {len(file_paths)}"
+        
+        # 显示结果
+        print(result_text)
+        
+        # 可选：将结果保存到文件
+        with open('reading_statistics.md', 'w', encoding='utf-8') as f:
+            f.write(result_text)
+        print("结果已保存到 reading_statistics.txt")
+        
+        # 在消息框中显示结果
+        messagebox.showinfo("阅读统计结果", result_text)
+    else:
+        messagebox.showinfo("结果", "未找到阅读记录")
+
+if __name__ == "__main__":
+    select_and_process_files()

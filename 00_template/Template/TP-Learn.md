@@ -1,0 +1,1 @@
+<% await tp.file.move("03_输出_每日日记/"+tp.file.title) %>

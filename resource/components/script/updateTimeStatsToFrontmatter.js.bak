@@ -1,0 +1,233 @@
+async function updateTimeStatsToFrontmatter() {
+  const { currentFile } = this;
+  const file = currentFile;
+  const fileContent = await app.vault.cachedRead(file);
+  const fileContentLines = fileContent.split("\n");
+
+  // 找到时间记录部分
+  const timeRecordStart = fileContentLines.findIndex(line => line.includes('## 📝 时间记录'));
+  if (timeRecordStart === -1) {
+    return "未找到时间记录部分";
+  }
+
+  // 存储各标签时长（分钟）
+  const tagDurations = {};
+  const topLevelTags = {}; // 只统计一级标签
+
+  // 解析时间记录
+  for (let i = timeRecordStart + 1; i < fileContentLines.length; i++) {
+    const line = fileContentLines[i].trim();
+    
+    // 如果遇到下一个章节标题，停止解析
+    if (line.startsWith('## ') && i > timeRecordStart + 1) {
+      break;
+    }
+
+    const timeMatch = line.match(/(\d{2}:\d{2}) - (\d{2}:\d{2}) (.+?) #(.+)/);
+    if (timeMatch) {
+      const startTime = timeMatch[1];
+      const endTime = timeMatch[2];
+      const tags = timeMatch[4].split('/').filter(tag => tag.trim() !== '时间记录');
+
+      // 计算时长（分钟）
+      const start = new Date(`2000-01-01 ${startTime}`);
+      const end = new Date(`2000-01-01 ${endTime}`);
+      const duration = (end - start) / (1000 * 60);
+
+      // 为每个标签累加时长
+      tags.forEach(tag => {
+        if (!tagDurations[tag]) {
+          tagDurations[tag] = 0;
+        }
+        tagDurations[tag] += duration;
+      });
+
+      // 只统计一级标签（第一个标签）
+      if (tags.length > 0) {
+        const topTag = tags[0];
+        if (!topLevelTags[topTag]) {
+          topLevelTags[topTag] = 0;
+        }
+        topLevelTags[topTag] += duration;
+      }
+    }
+  }
+
+  // 读取现有frontmatter
+  const cache = app.metadataCache.getFileCache(file);
+  const frontmatter = cache?.frontmatter || {};
+  
+  // 创建新的frontmatter行
+  const newFrontmatterLines = [];
+  let inFrontmatter = false;
+  let frontmatterEndLine = 0;
+
+  // 找到frontmatter的开始和结束位置
+  for (let i = 0; i < fileContentLines.length; i++) {
+    const line = fileContentLines[i];
+    
+    if (line === '---') {
+      if (!inFrontmatter) {
+        inFrontmatter = true;
+        newFrontmatterLines.push(line);
+      } else {
+        frontmatterEndLine = i;
+        break;
+      }
+    } else if (inFrontmatter) {
+      newFrontmatterLines.push(line);
+    }
+  }
+
+  // 更新或添加时间统计属性
+  const updatedFrontmatterLines = [];
+  const timeStatsAdded = new Set();
+  
+  for (const line of newFrontmatterLines) {
+    if (line === '---') {
+      updatedFrontmatterLines.push(line);
+      continue;
+    }
+    
+    const match = line.match(/^(\w+):\s*(.*)$/);
+    if (match) {
+      const key = match[1];
+      // 检查是否是我们要更新的属性
+      if (key in topLevelTags || key === 'work_time') {
+        // 更新现有属性
+        const duration = topLevelTags[key] || tagDurations[key] || 0;
+        const hours = Math.floor(duration / 60);
+        const minutes = Math.round(duration % 60);
+        updatedFrontmatterLines.push(`${key}: ${hours}:${minutes.toString().padStart(2, '0')}`);
+        timeStatsAdded.add(key);
+      } else {
+        // 保留其他属性
+        updatedFrontmatterLines.push(line);
+      }
+    } else {
+      updatedFrontmatterLines.push(line);
+    }
+  }
+
+  // 添加缺失的时间统计属性
+  for (const [tag, duration] of Object.entries(topLevelTags)) {
+    if (!timeStatsAdded.has(tag)) {
+      const hours = Math.floor(duration / 60);
+      const minutes = Math.round(duration % 60);
+      // 在frontmatter结束前添加新属性
+      updatedFrontmatterLines.splice(updatedFrontmatterLines.length - 1, 0, 
+        `${tag}: ${hours}:${minutes.toString().padStart(2, '0')}`);
+    }
+  }
+
+  // 特别处理work_time（如果存在）
+  if (tagDurations['工作'] && !timeStatsAdded.has('work_time')) {
+    const duration = tagDurations['工作'];
+    const hours = Math.floor(duration / 60);
+    const minutes = Math.round(duration % 60);
+    updatedFrontmatterLines.splice(updatedFrontmatterLines.length - 1, 0, 
+      `work_time: ${hours}:${minutes.toString().padStart(2, '0')}`);
+  }
+
+  // 重建文件内容
+  const newFileContent = [
+    ...updatedFrontmatterLines,
+    ...fileContentLines.slice(frontmatterEndLine + 1)
+  ].join('\n');
+
+  // 保存文件
+  await app.vault.modify(file, newFileContent);
+
+  // 返回统计结果
+  const result = Object.entries(topLevelTags)
+    .map(([tag, minutes]) => {
+      const hours = Math.floor(minutes / 60);
+      const mins = Math.round(minutes % 60);
+      return `${tag}: ${hours}小时${mins}分钟`;
+    })
+    .join('\n');
+
+  return `已更新frontmatter时间统计:\n${result}`;
+}
+
+// 仅显示统计结果而不修改文件
+async function showTimeStats() {
+  const { currentFile } = this;
+  const file = currentFile;
+  const fileContent = await app.vault.cachedRead(file);
+  const fileContentLines = fileContent.split("\n");
+
+  const timeRecordStart = fileContentLines.findIndex(line => line.includes('## 📝 时间记录'));
+  if (timeRecordStart === -1) {
+    return "未找到时间记录部分";
+  }
+
+  const tagDurations = {};
+  const topLevelTags = {};
+
+  for (let i = timeRecordStart + 1; i < fileContentLines.length; i++) {
+    const line = fileContentLines[i].trim();
+    
+    if (line.startsWith('## ') && i > timeRecordStart + 1) {
+      break;
+    }
+
+    const timeMatch = line.match(/(\d{2}:\d{2}) - (\d{2}:\d{2}) (.+?) #(.+)/);
+    if (timeMatch) {
+      const startTime = timeMatch[1];
+      const endTime = timeMatch[2];
+      const tags = timeMatch[4].split('/').filter(tag => tag.trim() !== '时间记录');
+
+      const start = new Date(`2000-01-01 ${startTime}`);
+      const end = new Date(`2000-01-01 ${endTime}`);
+      const duration = (end - start) / (1000 * 60);
+
+      tags.forEach(tag => {
+        if (!tagDurations[tag]) {
+          tagDurations[tag] = 0;
+        }
+        tagDurations[tag] += duration;
+      });
+
+      if (tags.length > 0) {
+        const topTag = tags[0];
+        if (!topLevelTags[topTag]) {
+          topLevelTags[topTag] = 0;
+        }
+        topLevelTags[topTag] += duration;
+      }
+    }
+  }
+
+  // 创建表格显示结果
+  const tableData = Object.entries(topLevelTags)
+    .sort((a, b) => b[1] - a[1])
+    .map(([tag, minutes]) => {
+      const hours = Math.floor(minutes / 60);
+      const mins = Math.round(minutes % 60);
+      return [tag, `${hours}小时${mins}分钟`, `${Math.round(minutes)}分钟`];
+    });
+
+  dv.table(["标签", "总时长", "分钟数"], tableData);
+  
+  return `点击按钮更新到frontmatter: <button onclick="(() => { const fn = app.plugins.plugins['your-plugin-name'].exports.updateTimeStatsToFrontmatter; fn && fn(); })()">更新属性</button>`;
+}
+
+exports.default = {
+  name: "updateTimeStatsToFrontmatter",
+  description: `读取时间记录并更新到文件frontmatter属性中
+
+使用方法：
+\`\`\`js
+// 显示统计结果并提供更新按钮
+showTimeStats()
+\`\`\`
+
+\`\`\`js
+// 直接更新frontmatter属性
+updateTimeStatsToFrontmatter()
+\`\`\`
+  `,
+  entry: updateTimeStatsToFrontmatter,
+  showTimeStats: showTimeStats
+};

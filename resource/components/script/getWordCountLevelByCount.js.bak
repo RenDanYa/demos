@@ -1,0 +1,110 @@
+async function getPageCountLevel(fieldName) {
+  const { currentFile } = this;
+  const file = currentFile;
+  const cache = app.metadataCache.getFileCache(file);
+  const fileContent = await app.vault.cachedRead(file);
+  
+  // 提取指定字段的数值
+  let pageCount = 0;
+  
+  if (fieldName === 'totalPage') {
+    const totalPageMatch = fileContent.match(/^totalPage:\s*(\d+)/m);
+    pageCount = totalPageMatch ? parseInt(totalPageMatch[1]) : 0;
+  } else {
+    // 如果不是预设字段，尝试直接解析数字
+    const numberMatch = fileContent.match(new RegExp(`^${fieldName}:\\s*(\\d+)`, 'm'));
+    pageCount = numberMatch ? parseInt(numberMatch[1]) : 0;
+  }
+  
+  // 根据页数判断档位
+  return getPageCountLevelByCount(pageCount);
+}
+
+function getPageCountLevelByCount(pageCount) {
+  if (pageCount < 200) {
+    return "200以下";
+  } else if (pageCount >= 200 && pageCount < 300) {
+    return "200-300";
+  } else if (pageCount >= 300 && pageCount < 400) {
+    return "300-400";
+  } else if (pageCount >= 400 && pageCount < 500) {
+    return "400-500";
+  } else {
+    return "500以上";
+  }
+}
+
+// 获取所有数字字段的统计
+async function getAllNumberFieldsLevel() {
+  const { currentFile } = this;
+  const file = currentFile;
+  const fileContent = await app.vault.cachedRead(file);
+  
+  const numberFields = ['totalPage', 'score', 'price']; // 你可以根据需要添加其他数字字段
+  const results = {};
+  
+  for (const field of numberFields) {
+    let value = 0;
+    
+    // 提取字段数值
+    const match = fileContent.match(new RegExp(`^${field}:\\s*(\\d+)`, 'm'));
+    if (match) {
+      value = parseInt(match[1]);
+    }
+    
+    // 根据字段类型判断档位
+    if (field === 'totalPage') {
+      results[field] = getPageCountLevelByCount(value);
+    } else if (field === 'score') {
+      // 评分可能有不同的档位规则
+      results[field] = getScoreLevel(value);
+    } else if (field === 'price') {
+      // 价格可能有不同的档位规则
+      results[field] = getPriceLevel(value);
+    }
+  }
+  
+  return results;
+}
+
+// 评分档位判断（示例）
+function getScoreLevel(score) {
+  if (score >= 9) return "9分以上";
+  else if (score >= 8) return "8-9分";
+  else if (score >= 7) return "7-8分";
+  else return "7分以下";
+}
+
+// 价格档位判断（示例）
+function getPriceLevel(price) {
+  if (price < 30) return "30元以下";
+  else if (price < 50) return "30-50元";
+  else if (price < 80) return "50-80元";
+  else return "80元以上";
+}
+
+exports.default = {
+  name: "getPageCountLevel",
+  description: `获取页数字段的档位
+
+页数档位：
+- 200以下
+- 200-300
+- 300-400
+- 400-500
+- 500以上
+
+使用方法：
+\`\`\`js
+// 获取页数档位
+getPageCountLevel('totalPage')
+\`\`\`
+
+\`\`\`js
+// 获取所有数字字段的档位
+getAllNumberFieldsLevel()
+\`\`\`
+  `,
+  entry: getPageCountLevel,
+  getAllNumberFieldsLevel: getAllNumberFieldsLevel
+};

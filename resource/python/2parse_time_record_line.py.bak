@@ -1,0 +1,290 @@
+import re
+import pandas as pd
+import tkinter as tk
+from tkinter import filedialog
+from pathlib import Path
+from datetime import datetime, timedelta
+import calendar
+
+def parse_time_record_line(line):
+    """解析时间记录行，提取时间范围和标签"""
+    line = line.strip()
+    if not line or not line.startswith('-'):
+        return None
+    
+    # 提取时间范围
+    time_match = re.search(r'(\d{2}:\d{2})-(\d{2}:\d{2})', line)
+    if not time_match:
+        return None
+    
+    start_time_str = time_match.group(1)
+    end_time_str = time_match.group(2)
+    
+    # 提取标签
+    tags = re.findall(r'#([^#\s]+)', line)
+    
+    return {
+        'line': line,
+        'start_time': start_time_str,
+        'end_time': end_time_str,
+        'tags': tags,
+        'original_line': line.lstrip('- ').strip()
+    }
+
+def calculate_duration(start_time_str, end_time_str):
+    """计算持续时间（小时）"""
+    try:
+        start_time = datetime.strptime(start_time_str, "%H:%M")
+        end_time = datetime.strptime(end_time_str, "%H:%M")
+        
+        # 处理跨天的情况
+        if end_time < start_time:
+            end_time += timedelta(days=1)
+        
+        duration = (end_time - start_time).total_seconds() / 3600
+        return round(duration, 2)
+    except:
+        return 0
+
+def get_time_period(hour):
+    """根据小时数确定时间段"""
+    if hour >= 6 and hour < 14:
+        return 'morning'  # 上午 (6:00-14:00)
+    elif hour >= 14 and hour < 17:
+        return 'afternoon'  # 下午 (14:00-17:00)
+    elif hour >= 17 and hour < 21:
+        return 'evening'  # 晚上 (17:00-21:00)
+    else:
+        return 'night'  # 深夜 (21:00以后及6:00前)
+
+def extract_emoji_from_mood(mood_html):
+    """从mood HTML中提取表情符号"""
+    if not mood_html:
+        return ""
+    
+    # 使用正则表达式提取span标签内的内容
+    emoji_match = re.search(r'<span[^>]*>([^<]+)</span>', mood_html)
+    if emoji_match:
+        return emoji_match.group(1).strip()
+    
+    # 如果没有匹配到span标签，尝试直接提取表情符号
+    emoji_match = re.search(r'[\u2600-\u27ff\U0001f300-\U0001f9ff]+', mood_html)
+    if emoji_match:
+        return emoji_match.group(0)
+    
+    return ""
+
+def parse_frontmatter_work_content(frontmatter_content):
+    """解析frontmatter中的work_content字段"""
+    if not frontmatter_content:
+        return ""
+    
+    # 查找work_content字段
+    work_content_match = re.search(r'work_content:(.*?)(?=\n\w+:|$)', frontmatter_content, re.DOTALL)
+    
+    if not work_content_match:
+        return ""
+    
+    work_content_text = work_content_match.group(1).strip()
+    
+    # 提取列表项（以"- "开头的行）
+    lines = work_content_text.split('\n')
+    work_content_items = []
+    
+    for line in lines:
+        line = line.strip()
+        if line.startswith('-'):
+            # 移除开头的"- "，并清理空白
+            item = line[1:].strip()
+            if item:
+                work_content_items.append(item)
+        elif line and not line.startswith('#'):  # 如果不是列表项也不是注释
+            work_content_items.append(line)
+    
+    # 用分号连接所有项目
+    return '; '.join(work_content_items)
+
+def parse_md_file_for_time_stats(file_path):
+    """解析Markdown文件，提取时间统计信息"""
+    with open(file_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+    
+    # 解析frontmatter获取日期和其他信息
+    frontmatter_match = re.search(r'---\n(.*?)\n---', content, re.DOTALL)
+    date_str = ""
+    day_of_week = ""
+    sleep_time = 0
+    mood_emoji = ""
+    work_content = ""
+    
+    if frontmatter_match:
+        frontmatter_content = frontmatter_match.group(1)
+        
+        # 提取日期
+        date_match = re.search(r'created:\s*(\d{4}-\d{2}-\d{2})', frontmatter_content)
+        if date_match:
+            date_str = date_match.group(1)
+            try:
+                date_obj = datetime.strptime(date_str, "%Y-%m-%d")
+                # 将星期数字转换为中文星期
+                weekdays = ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"]
+                day_of_week = weekdays[date_obj.weekday()]
+            except:
+                day_of_week = "未知"
+        
+        # 提取睡眠时间
+        sleep_match = re.search(r'sleep_time:\s*([\d\.]+)', frontmatter_content)
+        if sleep_match:
+            try:
+                sleep_time = float(sleep_match.group(1))
+            except:
+                sleep_time = 0
+        
+        # 提取心情表情符号
+        mood_match = re.search(r'mood:\s*(.*?)(?=\n\w+:|$)', frontmatter_content, re.DOTALL)
+        if mood_match:
+            mood_html = mood_match.group(1).strip()
+            mood_emoji = extract_emoji_from_mood(mood_html)
+        
+        # 提取work_content
+        work_content = parse_frontmatter_work_content(frontmatter_content)
+    
+    # 查找时间记录部分
+    time_section_pattern = r'## 📝 时间记录\s*\n(.*?)\n##'
+    time_section_match = re.search(time_section_pattern, content, re.DOTALL)
+    
+    # 初始化统计字典
+    stats = {
+        '日期': date_str,
+        '星期几': day_of_week,
+        '睡眠时长': round(sleep_time, 2),
+        '心情': mood_emoji,
+        '工作内容': work_content,  # 新增work_content字段
+        'morning': 0,  # 上午
+        'afternoon': 0,  # 下午
+        'evening': 0,  # 晚上
+        'night': 0,  # 深夜
+        'night_latest': 0,  # 最晚的深夜工作时间（小时）
+        'total': 0,  # 总时长
+        'record_count': 0  # 记录条数
+    }
+    
+    if time_section_match:
+        time_section = time_section_match.group(1)
+        lines = time_section.strip().split('\n')
+        
+        for line in lines:
+            record = parse_time_record_line(line)
+            if not record:
+                continue
+            
+            # 排除休息和运动记录
+            tags_str = ' '.join(record['tags'])
+            if any(tag in tags_str for tag in ['时间记录/休息', '时间记录/运动', '时间记录/机动']):
+                continue
+            
+            # 计算持续时间
+            duration = calculate_duration(record['start_time'], record['end_time'])
+            if duration <= 0:
+                continue
+            
+            # 获取时间段
+            hour = int(record['start_time'].split(':')[0])
+            period = get_time_period(hour)
+            
+            # 更新统计
+            stats[period] += duration
+            stats['total'] += duration
+            stats['record_count'] += 1
+            
+            # 如果是深夜时段，记录最晚时间
+            if period == 'night':
+                end_hour = int(record['end_time'].split(':')[0])
+                end_minute = int(record['end_time'].split(':')[1])
+                end_time_in_hours = end_hour + end_minute/60
+                # 处理跨天情况
+                if end_hour < 6:
+                    end_time_in_hours += 24
+                stats['night_latest'] = max(stats['night_latest'], end_time_in_hours)
+    
+    return stats
+
+def select_md_files():
+    """打开文件选择对话框，选择多个Markdown文件"""
+    root = tk.Tk()
+    root.withdraw()  # 隐藏主窗口
+    file_paths = filedialog.askopenfilenames(
+        title="选择Markdown文件",
+        filetypes=[("Markdown files", "*.md"), ("All files", "*.*")]
+    )
+    return list(file_paths)
+
+def generate_excel_report(md_file_paths, excel_file_path):
+    """生成Excel时间统计报告"""
+    all_stats = []
+    
+    for file_path in md_file_paths:
+        stats = parse_md_file_for_time_stats(file_path)
+        if stats['星期几'] and stats['total'] > 0:
+            all_stats.append(stats)
+        print(f"已处理文件: {Path(file_path).name}")
+    
+    if not all_stats:
+        print("没有找到有效的时间记录数据")
+        return
+    
+    # 转换为DataFrame
+    df = pd.DataFrame(all_stats)
+    
+    # 按星期几和日期排序
+    weekdays_order = ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"]
+    df['星期几'] = pd.Categorical(df['星期几'], categories=weekdays_order, ordered=True)
+    df = df.sort_values(['日期', '星期几'])
+    
+    # 重新排列列并重命名
+    result_df = pd.DataFrame()
+    result_df['星期几'] = df['星期几']
+    result_df['日期'] = df['日期']
+    result_df['睡眠时长'] = df['睡眠时长'].round(2)
+    result_df['心情'] = df['心情']
+    result_df['工作内容'] = df['工作内容']  # 新增工作内容列
+    result_df['上午工作时长'] = df['morning'].round(2)
+    result_df['下午工作时长'] = df['afternoon'].round(2)
+    result_df['上午+下午工作时长'] = (df['morning'] + df['afternoon']).round(2)  # 新增列
+    result_df['晚上工作时长'] = df['evening'].round(2)
+    result_df['深夜工作时长'] = df['night'].round(2)
+    result_df['晚上+深夜工作时长'] = (df['evening'] + df['night']).round(2)
+    result_df['深夜工作到'] = df['night_latest'].apply(lambda x: f"{x:.2f}" if x > 0 else "")
+    result_df['总工作时长'] = df['total'].round(2)
+    
+    # 重新排列列顺序
+    result_df = result_df[['星期几', '日期', '睡眠时长', '心情', '工作内容',
+                          '上午工作时长', '下午工作时长', '上午+下午工作时长',
+                          '晚上工作时长', '深夜工作时长', '晚上+深夜工作时长', 
+                          '深夜工作到', '总工作时长']]
+    
+    # 保存到Excel
+    result_df.to_excel(excel_file_path, index=False)
+    
+    print(f"\nExcel报告已生成：{excel_file_path}")
+    print(f"共处理 {len(all_stats)} 个文件")
+    print("\n报告预览:")
+    print(result_df.to_string(index=False))
+
+def main():
+    """主函数"""
+    # 选择多个Markdown文件
+    md_file_paths = select_md_files()
+    
+    if not md_file_paths:
+        print("未选择任何文件")
+        return
+    
+    # 设置Excel文件路径
+    excel_file_path = "工作时间统计.xlsx"
+    
+    # 生成Excel报告
+    generate_excel_report(md_file_paths, excel_file_path)
+
+if __name__ == "__main__":
+    main()

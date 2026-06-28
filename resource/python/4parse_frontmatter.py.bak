@@ -1,0 +1,235 @@
+import tkinter as tk
+from tkinter import filedialog
+import re
+import os
+from collections import defaultdict
+from datetime import datetime
+
+def parse_frontmatter(file_path):
+    """解析 Markdown 文件的 frontmatter 部分"""
+    with open(file_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+    
+    # 提取 frontmatter（两个 --- 之间的内容）
+    pattern = r'^---\n(.*?)\n---'
+    match = re.search(pattern, content, re.DOTALL)
+    if not match:
+        return None
+    
+    frontmatter = match.group(1)
+    data = {}
+    
+    # 解析 frontmatter 中的键值对
+    for line in frontmatter.strip().split('\n'):
+        if ': ' in line:
+            key, value = line.split(': ', 1)
+            data[key.strip()] = value.strip()
+    
+    # 提取 mood 属性中的 emoji
+    if 'mood' in data:
+        mood_content = data['mood']
+        # 使用正则表达式提取 span 标签内的内容
+        mood_match = re.search(r'<span[^>]*>([^<]+)</span>', mood_content)
+        if mood_match:
+            data['mood_emoji'] = mood_match.group(1)
+        else:
+            data['mood_emoji'] = '❓'  # 如果没有找到，使用问号代替
+    
+    return data
+
+def classify_total_time(total_time_str):
+    """根据 total_time 值分类"""
+    try:
+        total_time = float(total_time_str)
+    except ValueError:
+        return None
+    
+    if total_time > 12:
+        return ">12"
+    elif 10 < total_time <= 12:
+        return "10-12"
+    elif 8 < total_time <= 10:
+        return "8-10"
+    else:
+        return "<=8"
+
+def select_files():
+    """选择多个文件"""
+    root = tk.Tk()
+    root.withdraw()  # 隐藏主窗口
+    
+    files = filedialog.askopenfilenames(
+        title="选择 Markdown 文件",
+        filetypes=[("Markdown files", "*.md"), ("All files", "*.*")]
+    )
+    
+    return list(files)
+
+def generate_report(categories, file_data):
+    """生成统计报告"""
+    # 获取当前时间
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+    report = f"""# 总时间统计报告
+**生成时间：** {current_time}
+**分析文件数：** {len(file_data)}
+
+## 统计概览
+"""
+    
+    total_categories = [
+        ("总时间 > 12", ">12"),
+        ("10 < 总时间 ≤ 12", "10-12"),
+        ("8 < 总时间 ≤ 10", "8-10"),
+        ("总时间 ≤ 8", "<=8")
+    ]
+    
+    total_days = sum(len(categories[cat_key]) for _, cat_key in total_categories)
+    
+    for category_name, category_key in total_categories:
+        dates = categories[category_key]
+        count = len(dates)
+        percentage = (count / total_days * 100) if total_days > 0 else 0
+        
+        report += f"- {category_name}：{count} 天 ({percentage:.1f}%)\n"
+    
+    report += f"\n**总天数：** {total_days}\n\n"
+    
+    # 详细分类
+    for category_name, category_key in total_categories:
+        dates = categories[category_key]
+        count = len(dates)
+        
+        report += f"## {category_name}\n"
+        report += f"**天数：** {count}\n"
+        
+        if dates:
+            report += "**日期详情：**\n"
+            # 按日期排序
+            for date in sorted(dates):
+                # 获取该日期对应的文件信息
+                file_info_list = [data for data in file_data 
+                                if data['date'] == date and data['category'] == category_key]
+                
+                for file_info in file_info_list:
+                    report += f"- **{date}** (总时间: {file_info['total_time']} 小时"
+                    
+                    # 如果文件中有work_time信息，也展示
+                    work_time = file_info.get('work_time', 'N/A')
+                    if work_time != 'N/A':
+                        report += f" | 工作时间: {work_time} 小时"
+                    
+                    # 如果有mood_emoji信息，也展示
+                    mood_emoji = file_info.get('mood_emoji', '')
+                    if mood_emoji:
+                        report += f" | 心情: {mood_emoji}"
+                    
+                    # 如果有文件名信息，也显示
+                    file_name = file_info.get('file_name', '')
+                    if file_name:
+                        report += f" | 文件: {file_name}"
+                    
+                    report += ")\n"
+        else:
+            report += "**日期：** 无\n"
+        
+        report += "\n"
+    
+    return report
+
+def save_report_to_current_dir(report, filename="total_time_statistics.md"):
+    """将报告保存到当前文件夹"""
+    current_dir = os.getcwd()
+    file_path = os.path.join(current_dir, filename)
+    
+    # 如果文件已存在，添加时间戳
+    if os.path.exists(file_path):
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename_without_ext = os.path.splitext(filename)[0]
+        ext = os.path.splitext(filename)[1]
+        new_filename = f"{filename_without_ext}_{timestamp}{ext}"
+        file_path = os.path.join(current_dir, new_filename)
+    
+    try:
+        with open(file_path, 'w', encoding='utf-8') as f:
+            f.write(report)
+        return file_path
+    except Exception as e:
+        print(f"保存文件时出错: {e}")
+        return None
+
+def main():
+    """主函数"""
+    print("请选择要分析的 Markdown 文件...")
+    files = select_files()
+    
+    if not files:
+        print("未选择文件")
+        return
+    
+    print(f"已选择 {len(files)} 个文件")
+    
+    # 分类存储
+    categories = defaultdict(list)
+    file_data = []  # 存储每个文件的详细信息
+    
+    for file_path in files:
+        data = parse_frontmatter(file_path)
+        if not data:
+            print(f"跳过无法解析的文件: {os.path.basename(file_path)}")
+            continue
+        
+        total_time_str = data.get('total_time')
+        created_date = data.get('created')
+        
+        if not total_time_str or not created_date:
+            print(f"跳过缺少必要数据的文件: {os.path.basename(file_path)}")
+            continue
+        
+        category = classify_total_time(total_time_str)
+        if category is None:
+            print(f"跳过无效的总时间数据: {os.path.basename(file_path)}")
+            continue
+        
+        # 添加到分类
+        categories[category].append(created_date)
+        
+        # 存储文件详细信息
+        file_info = {
+            'date': created_date,
+            'total_time': total_time_str,
+            'category': category,
+            'file_name': os.path.basename(file_path)
+        }
+        
+        # 如果文件中有work_time信息，也保存
+        if 'work_time' in data:
+            file_info['work_time'] = data['work_time']
+        
+        # 如果有mood_emoji信息，也保存
+        if 'mood_emoji' in data:
+            file_info['mood_emoji'] = data['mood_emoji']
+        
+        file_data.append(file_info)
+    
+    # 去重每个分类中的日期
+    for category in categories:
+        categories[category] = list(set(categories[category]))
+    
+    # 生成报告
+    report = generate_report(categories, file_data)
+    
+    # 保存报告到当前文件夹
+    saved_file = save_report_to_current_dir(report)
+    
+    if saved_file:
+        print(f"报告已保存到: {saved_file}")
+        print("\n报告内容预览:")
+        print("=" * 50)
+        print(report[:500] + "..." if len(report) > 500 else report)
+        print("=" * 50)
+    else:
+        print("保存报告失败")
+
+if __name__ == "__main__":
+    main()

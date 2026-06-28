@@ -1,0 +1,258 @@
+import re
+import pandas as pd
+import tkinter as tk
+from tkinter import filedialog
+from pathlib import Path
+
+def parse_md_file(file_path):
+    """解析单个 Markdown 文件，提取所需字段和时间记录"""
+    with open(file_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+    
+    # 找到 frontmatter 部分（两个 --- 之间的内容）
+    frontmatter_match = re.search(r'---\n(.*?)\n---', content, re.DOTALL)
+    frontmatter_fields = {}
+    
+    if frontmatter_match:
+        frontmatter_content = frontmatter_match.group(1)
+        
+        # 使用更精确的正则表达式解析 frontmatter
+        field_pattern = r'^(\w+):\s*(.+?)\s*$'
+        
+        for line in frontmatter_content.split('\n'):
+            if ':' in line and not line.strip().startswith('#'):
+                match = re.match(field_pattern, line)
+                if match:
+                    key = match.group(1)
+                    value = match.group(2).strip()
+                    
+                    # 处理可能的多行值
+                    if value.startswith('-'):  # 对于列表值，我们只取第一项或者跳过
+                        # 如果是 tags 字段，跳过列表项
+                        if key == 'tags':
+                            continue
+                        # 对于其他列表，尝试提取第一个非空值
+                        list_items = [item.strip().lstrip('-').strip() for item in frontmatter_content.split('\n') if item.strip().startswith('-')]
+                        if list_items:
+                            frontmatter_fields[key] = list_items[0]
+                    
+                    frontmatter_fields[key] = value
+    
+    # 提取 mood 中的 emoji
+    mood_value = frontmatter_fields.get('mood', '')
+    if mood_value:
+        # 使用正则表达式查找 emoji
+        # emoji 通常在 <span>标签中，格式为：<span ...>🥳</span>
+        emoji_match = re.search(r'<span[^>]*>([^<]+)</span>', mood_value)
+        if emoji_match:
+            frontmatter_fields['mood_emoji'] = emoji_match.group(1)
+        else:
+            # 如果没有 span 标签，直接查找 emoji 字符
+            # emoji 通常是 🥳😊😄 等 Unicode 字符
+            emoji_match = re.search(r'[\U0001F300-\U0001F9FF]', mood_value)
+            if emoji_match:
+                frontmatter_fields['mood_emoji'] = emoji_match.group()
+            else:
+                frontmatter_fields['mood_emoji'] = ''
+    else:
+        frontmatter_fields['mood_emoji'] = ''
+    
+    # 解析时间记录部分
+    time_section_pattern = r'## 📝 时间记录\s*\n(.*?)\n##'
+    time_section = re.search(time_section_pattern, content, re.DOTALL)
+    
+    # 初始化时间段字典
+    time_periods = {
+        '播客时间段': [],
+        '放松时间段': [],
+        '运动时间段': [],
+        '阅读时间段': []
+    }
+    
+    # 标签映射
+    tag_mapping = {
+        '#时间记录/播客': '播客时间段',
+        '#时间记录/放松模式': '放松时间段', 
+        '#时间记录/运动': '运动时间段',
+        '#时间记录/阅读': '阅读时间段'
+    }
+    
+    if time_section:
+        time_lines = time_section.group(1).strip().split('\n')
+        for line in time_lines:
+            if '-' in line and '#' in line:
+                # 提取完整的时间段字符串
+                time_range_match = re.search(r'(\d{2}:\d{2}-\d{2}:\d{2})', line)
+                if time_range_match:
+                    time_period = time_range_match.group(1)
+                    
+                    # 查找所有标签
+                    tags = re.findall(r'#([^#\s]+)', line)
+                    
+                    # 将时间段添加到对应的标签
+                    for tag in tags:
+                        full_tag = f"#{tag}"
+                        if full_tag in tag_mapping:
+                            time_periods[tag_mapping[full_tag]].append(time_period)
+    
+    # 将时间段列表转换为字符串（用分号分隔）
+    for key in time_periods:
+        if time_periods[key]:
+            time_periods[key] = ';'.join(time_periods[key])
+        else:
+            time_periods[key] = ''
+    
+    return frontmatter_fields, time_periods
+
+def safe_float(value, default=0):
+    """安全地将值转换为浮点数"""
+    try:
+        # 移除可能的单位字符
+        value = str(value).strip()
+        # 如果有冒号，只取冒号前的部分
+        if ':' in value:
+            value = value.split(':')[0]
+        return float(value)
+    except (ValueError, TypeError):
+        return default
+
+def select_md_files():
+    """打开文件选择对话框，选择多个 Markdown 文件"""
+    root = tk.Tk()
+    root.withdraw()  # 隐藏主窗口
+    file_paths = filedialog.askopenfilenames(
+        title="选择 Markdown 文件",
+        filetypes=[("Markdown files", "*.md"), ("All files", "*.*")]
+    )
+    return list(file_paths)
+
+def update_excel(md_file_paths, excel_file_path):
+    """更新 Excel 文件"""
+    all_data = []
+    
+    for md_file_path in md_file_paths:
+        # 解析 Markdown 文件
+        frontmatter, time_periods = parse_md_file(md_file_path)
+        
+        # 使用安全转换函数提取字段
+        date = frontmatter.get('created', '')
+        
+        # 按照指定顺序准备数据行
+        new_row = {
+            '日期': date,
+            '心情': frontmatter.get('mood_emoji', ''),  # 新增心情列
+            '运动时间': safe_float(frontmatter.get('sport_time', 0)),
+            '体重': safe_float(frontmatter.get('weight', 0)),
+            '运动时间段': time_periods['运动时间段'],
+            '打字速度': safe_float(frontmatter.get('typing_speed', 0)),
+            '播客时间': safe_float(frontmatter.get('podcast_time', 0)),
+            '播客时间段': time_periods['播客时间段'],
+            '放松时间': safe_float(frontmatter.get('relax_time', 0)),
+            '放松时间段': time_periods['放松时间段'],
+            '阅读时间': safe_float(frontmatter.get('read_time', 0)),
+            '阅读时间段': time_periods['阅读时间段']
+        }
+        
+        all_data.append(new_row)
+        print(f"已处理文件: {Path(md_file_path).name}")
+    
+    if not all_data:
+        print("未选择任何文件")
+        return
+    
+    # 按照指定顺序的列名列表（新增了心情列）
+    column_order = [
+        '日期',
+        '心情',  # 新增心情列
+        '运动时间',
+        '体重',
+        '运动时间段',
+        '打字速度',
+        '播客时间',
+        '播客时间段',
+        '放松时间',
+        '放松时间段',
+        '阅读时间',
+        '阅读时间段'
+    ]
+    
+    # 创建 DataFrame，并按照指定顺序排列列
+    df_new = pd.DataFrame(all_data)[column_order]
+    
+    # 读取或创建 Excel 文件
+    excel_path = Path(excel_file_path)
+    if excel_path.exists():
+        try:
+            df_existing = pd.read_excel(excel_file_path)
+            # 重命名旧版英文列名为中文（如果存在）
+            column_mapping = {
+                'sport_time': '运动时间',
+                'weight': '体重',
+                'typing_speed': '打字速度',
+                'podcast_time': '播客时间',
+                'relax_time': '放松时间',
+                'read_time': '阅读时间'
+            }
+            df_existing = df_existing.rename(columns=column_mapping)
+            
+            # 确保现有数据也按照指定顺序排列
+            # 添加缺失的列（用空值填充）
+            for col in column_order:
+                if col not in df_existing.columns:
+                    df_existing[col] = ''
+            # 只保留指定顺序的列，并重新排列
+            df_existing = df_existing[column_order]
+            
+        except Exception as e:
+            print(f"读取现有 Excel 文件失败: {e}，将创建新文件")
+            df_existing = pd.DataFrame(columns=column_order)
+    else:
+        df_existing = pd.DataFrame(columns=column_order)
+    
+    if not df_existing.empty:
+        # 合并数据：更新已存在的日期，添加新日期
+        df_combined = pd.concat([df_existing, df_new])
+        
+        # 按日期去重，保留最后出现的数据（即新数据）
+        df_combined = df_combined.drop_duplicates(subset=['日期'], keep='last')
+        
+        # 按日期排序（确保日期是字符串格式）
+        if not df_combined.empty and '日期' in df_combined.columns:
+            # 尝试转换为日期格式进行排序
+            try:
+                df_combined['日期排序'] = pd.to_datetime(df_combined['日期'], errors='coerce')
+                df_combined = df_combined.sort_values('日期排序')
+                df_combined = df_combined.drop('日期排序', axis=1)
+            except:
+                df_combined = df_combined.sort_values('日期')
+        
+        # 确保列的顺序正确
+        df_combined = df_combined[column_order]
+    else:
+        df_combined = df_new
+    
+    # 保存 Excel 文件
+    df_combined.to_excel(excel_file_path, index=False)
+    
+    print(f"\nExcel 文件已更新：{excel_file_path}")
+    print(f"共处理 {len(all_data)} 个文件")
+    print("\n最新数据预览:")
+    print(df_combined.tail())
+
+def main():
+    """主函数"""
+    # 选择多个 Markdown 文件
+    md_file_paths = select_md_files()
+    
+    if not md_file_paths:
+        print("未选择任何文件")
+        return
+    
+    # 设置 Excel 文件路径
+    excel_file_path = "时间记录统计.xlsx"
+    
+    # 更新 Excel
+    update_excel(md_file_paths, excel_file_path)
+
+if __name__ == "__main__":
+    main()
