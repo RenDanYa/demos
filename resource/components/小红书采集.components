@@ -62,8 +62,8 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-06-28T13:25:42.041Z",
-      "viewType": "list",
+      "updateAt": "2026-06-28T14:16:09.562Z",
+      "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
         {
@@ -108,6 +108,24 @@
             "width": "100"
           },
           "alias": "标记已看"
+        },
+        {
+          "id": "331849ba-8cd7-444b-affa-25253a353b5c",
+          "name": "todos",
+          "isShow": true,
+          "type": "taskList",
+          "options": {
+            "showTaskList": true,
+            "showAllTasks": true,
+            "hideTaskFields": true,
+            "timeRecordStyle": "none",
+            "insertPosition": {
+              "position": "BottomUnderHeading",
+              "headingLine": "## 待办"
+            },
+            "formula": "",
+            "width": "785"
+          }
         }
       ],
       "templates": [],
@@ -589,7 +607,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-06-28T13:32:59.874Z",
+      "updateAt": "2026-06-28T14:14:28.601Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
