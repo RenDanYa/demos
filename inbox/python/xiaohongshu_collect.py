@@ -329,8 +329,19 @@ def download_media_urls(media_list, output_dir, note_id):
         "Referer": "https://www.xiaohongshu.com/",
     }
 
+    # 去重: note-full 可能返回重复 URL
+    seen_urls = set()
+    unique_media = []
+    for item in media_list:
+        murl = item.get("url", "")
+        if murl and murl not in seen_urls:
+            seen_urls.add(murl)
+            unique_media.append(item)
+    if len(unique_media) < len(media_list):
+        log(f"  media 去重: {len(media_list)} -> {len(unique_media)}")
+
     rel_files = []
-    for i, item in enumerate(media_list, 1):
+    for i, item in enumerate(unique_media, 1):
         murl = item.get("url", "")
         mtype = item.get("type", "image")
         if not murl:
@@ -352,9 +363,37 @@ def download_media_urls(media_list, output_dir, note_id):
                 with open(filepath, "wb") as f:
                     f.write(resp.read())
             rel_files.append(filename)
-            log(f"  下载 {mtype} {i}/{len(media_list)}: {filename} OK")
+            log(f"  下载 {mtype} {i}/{len(unique_media)}: {filename} OK")
         except Exception as e:
-            log(f"  下载 {mtype} {i}/{len(media_list)} 失败: {e}")
+            log(f"  下载 {mtype} {i}/{len(unique_media)} 失败: {e}")
+
+    # 内容级去重: 不同 URL 可能返回相同图片, 按哈希删重
+    import hashlib
+    hash_map = {}  # hash -> first filename
+    dupes = []
+    for fname in list(rel_files):
+        fpath = output_dir / fname
+        if not fpath.exists():
+            continue
+        file_hash = hashlib.md5(fpath.read_bytes()).hexdigest()
+        if file_hash in hash_map:
+            log(f"  重复图片 (同 {hash_map[file_hash]}): {fname}")
+            fpath.unlink()
+            dupes.append(fname)
+        else:
+            hash_map[file_hash] = fname
+    for d in dupes:
+        rel_files.remove(d)
+
+    # 重编号: 去重后序号保持连续
+    if dupes:
+        kept = sorted([f for f in rel_files])
+        for new_i, old_name in enumerate(kept, 1):
+            new_name = f"{note_id}_{new_i}{Path(old_name).suffix}"
+            if old_name != new_name:
+                (output_dir / old_name).rename(output_dir / new_name)
+        rel_files = [f"{note_id}_{new_i}{Path(f).suffix}" for new_i, f in enumerate(kept, 1)]
+        log(f"  去重后: {len(rel_files)} 张")
 
     return rel_files
 

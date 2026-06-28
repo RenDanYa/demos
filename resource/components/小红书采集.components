@@ -62,8 +62,8 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-06-28T14:16:09.562Z",
-      "viewType": "table",
+      "updateAt": "2026-06-28T14:27:46.153Z",
+      "viewType": "list",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
         {
@@ -87,37 +87,14 @@
           }
         },
         {
-          "id": "1b2c3d4e-5f6a-4b7c-9d0e-1f2a3b4c5d6f",
-          "name": "按钮",
-          "isShow": true,
-          "type": "button",
-          "options": {
-            "action": {
-              "type": "updateProperty",
-              "properties": [
-                {
-                  "id": "2c3d4e5f-6a7b-4c8d-0e1f-2a3b4c5d6e70",
-                  "name": "status",
-                  "type": "string",
-                  "value": "已看完",
-                  "valueSource": "constant",
-                  "modifier": "replaceValue"
-                }
-              ]
-            },
-            "width": "100"
-          },
-          "alias": "标记已看"
-        },
-        {
           "id": "331849ba-8cd7-444b-affa-25253a353b5c",
           "name": "todos",
-          "isShow": true,
+          "isShow": false,
           "type": "taskList",
           "options": {
             "showTaskList": true,
             "showAllTasks": true,
-            "hideTaskFields": true,
+            "hideTaskFields": false,
             "timeRecordStyle": "none",
             "insertPosition": {
               "position": "BottomUnderHeading",
@@ -147,9 +124,9 @@
         },
         "pinFiltersToMenuBar": false,
         "hideHeaderMenu": false,
-        "showGrid": false,
+        "showGrid": true,
         "heightType": "fixed",
-        "heightValue": 500,
+        "heightValue": 100,
         "rowHeight": 32,
         "displaySequenceNumber": true
       },
@@ -607,7 +584,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-06-28T14:14:28.601Z",
+      "updateAt": "2026-06-28T14:27:57.447Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -704,7 +681,9 @@
         "format": "none",
         "statics": [],
         "orders": [],
-        "hiddens": [],
+        "hiddens": [
+          "__$uncategorizedGroup"
+        ],
         "collapseds": [
           "__$uncategorizedGroup"
         ]
