@@ -583,7 +583,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-06-28T07:00:27.379Z",
+      "updateAt": "2026-06-28T10:44:26.139Z",
       "viewType": "gallary",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -714,7 +714,9 @@
         "collapseds": [
           "__$uncategorizedGroup",
           "05_long_project/小红书",
-          "05_long_project/小红书/obsidian"
+          "05_long_project/小红书/obsidian",
+          "05_long_project/小红书/单篇采集",
+          "05_long_project/小红书/AI问答"
         ]
       },
       "filter": {

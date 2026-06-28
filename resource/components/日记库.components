@@ -3770,7 +3770,7 @@
       "showBorder": false,
       "showShadow": false,
       "createAt": "2024-05-13T07:29:05.317Z",
-      "updateAt": "2026-06-12T12:21:37.956Z",
+      "updateAt": "2026-06-28T11:38:58.792Z",
       "viewType": "gallary",
       "properties": [
         {
@@ -3893,7 +3893,8 @@
           "02执行力",
           "04思考力",
           "06规划力",
-          "09决策力"
+          "09决策力",
+          "11自识力"
         ],
         "hiddens": [
           "__$uncategorizedGroup",
