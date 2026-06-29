@@ -387,7 +387,13 @@ def download_media_urls(media_list, output_dir, note_id):
 
     # 重编号: 去重后序号保持连续
     if dupes:
-        kept = sorted([f for f in rel_files])
+        def _img_idx(fname):
+            stem = Path(fname).stem
+            try:
+                return int(stem.rsplit("_", 1)[-1])
+            except ValueError:
+                return 0
+        kept = sorted([f for f in rel_files], key=_img_idx)
         for new_i, old_name in enumerate(kept, 1):
             new_name = f"{note_id}_{new_i}{Path(old_name).suffix}"
             if old_name != new_name:
