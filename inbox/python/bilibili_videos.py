@@ -30,6 +30,8 @@ from xiaohongshu_collect import (  # noqa: E402
 OUTPUT_DIR = OUTPUT_ROOT.parent / "B站关注"
 CACHE_FILE = OUTPUT_DIR / "following_cache.json"
 MD_FILE = OUTPUT_DIR / "关注视频.md"
+WEEKLY_MD_FILE = OUTPUT_DIR / "本周视频.md"
+MONTHLY_MD_FILE = OUTPUT_DIR / "本月视频.md"
 TIMEOUT_VIDEOS = 30
 
 
@@ -95,43 +97,88 @@ def fmt_num(n):
     return str(n)
 
 
-def build_markdown(users, videos_per_user=3):
-    """生成视频汇总 markdown: 每博主一个 callout"""
-    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+def collect_all_videos(users, videos_per_user=3):
+    """收集所有博主的视频数据
 
-    lines = [
-        "---",
-        "tags: [B站, 关注视频]",
-        f"更新时间: {now}",
-        f"博主数: {len(users)}",
-        f"视频条数: {videos_per_user}",
-        "---",
-        "",
-        "# B站关注视频",
-        "",
-        f"> **最近更新**: {now} | **共 {len(users)} 位博主** | **每人近 {videos_per_user} 条视频**",
-        "",
-    ]
+    Args:
+        users: list[{mid, name, ...}] 关注列表
+        videos_per_user: int 每个博主拉取的视频数
 
+    Returns:
+        list[{user_name, videos}] 每个博主的视频数据列表
+        int: 成功拉取的博主数
+        int: 失败的博主数
+    """
+    all_videos = []
     ok_count = 0
     fail_count = 0
 
     for i, u in enumerate(users, 1):
         mid = u.get("mid") or ""
         name = (u.get("name") or "").strip()
-        sign = (u.get("sign") or "").replace("\n", " ").replace("\r", " ").strip()
-        fans = u.get("fans") or ""
 
         log(f"[{i}/{len(users)}] {name} (mid={mid})")
 
-        # callout 头 (只保留标题, 不显示签名/认证/UID)
-        lines.append(f"> [!note] {i}. {name}")
-        lines.append(">")
-
-        # 拉视频
+        # 拉取视频
         videos = fetch_user_videos(mid, limit=videos_per_user) if mid else []
+
         if videos:
             ok_count += 1
+            all_videos.append({
+                "user_name": name,
+                "videos": videos
+            })
+        else:
+            fail_count += 1
+            all_videos.append({
+                "user_name": name,
+                "videos": []
+            })
+
+        # 风控间隔
+        if i < len(users):
+            time.sleep(random.uniform(1, 2))
+
+    return all_videos, ok_count, fail_count
+
+
+def build_markdown(all_videos, videos_per_user=3, ok_count=0, fail_count=0):
+    """生成视频汇总 markdown: 每博主一个 callout
+
+    Args:
+        all_videos: list[{user_name, videos}] 已收集的视频数据
+        videos_per_user: int 每个博主拉取的视频数 (用于显示)
+        ok_count: int 成功拉取的博主数
+        fail_count: int 失败的博主数
+
+    Returns:
+        str markdown 内容
+    """
+    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    lines = [
+        "---",
+        "tags: [B站, 关注视频]",
+        f"更新时间: {now}",
+        f"博主数: {len(all_videos)}",
+        f"视频条数: {videos_per_user}",
+        "---",
+        "",
+        "# B站关注视频",
+        "",
+        f"> **最近更新**: {now} | **共 {len(all_videos)} 位博主** | **每人近 {videos_per_user} 条视频**",
+        "",
+    ]
+
+    for i, entry in enumerate(all_videos, 1):
+        user_name = entry.get("user_name", "")
+        videos = entry.get("videos", [])
+
+        # callout 头
+        lines.append(f"> [!note] {i}. {user_name}")
+        lines.append(">")
+
+        if videos:
             for v in videos:
                 v_title = (v.get("title") or "").replace("|", "\\|").strip()
                 v_plays = fmt_num(v.get("plays", 0))
@@ -141,16 +188,106 @@ def build_markdown(users, videos_per_user=3):
                 link_text = f"{v_date} {v_title}".strip() if v_date else v_title
                 lines.append(f"> - [{link_text}]({v_url}) | 播放 {v_plays}")
         else:
-            fail_count += 1
             lines.append("> _暂无视频数据_")
         lines.append("")
 
-        # 风控间隔
-        if i < len(users):
-            time.sleep(random.uniform(1, 2))
-
     lines.append("---")
     lines.append(f"> 数据来源: opencli bilibili user-videos | 采集时间: {now} | 成功 {ok_count} / 失败 {fail_count}")
+    return "\n".join(lines) + "\n"
+
+
+def parse_video_date(date_str):
+    """解析视频日期字符串, 返回 datetime 对象"""
+    if not date_str:
+        return None
+    try:
+        # 支持 YYYY-MM-DD 格式
+        return datetime.strptime(date_str, "%Y-%m-%d")
+    except ValueError:
+        return None
+
+
+def filter_videos_by_days(all_videos, days):
+    """筛选指定天数内的视频
+
+    Args:
+        all_videos: list[{user_name, videos}] 每个博主的视频列表
+        days: int 天数阈值 (7=本周, 30=本月)
+
+    Returns:
+        list[{user_name, videos}] 筛选后的视频列表 (仅包含有符合时间视频的博主)
+    """
+    now = datetime.now()
+    threshold = now - __import__('datetime').timedelta(days=days)
+
+    filtered = []
+    for entry in all_videos:
+        user_name = entry.get("user_name", "")
+        videos = entry.get("videos", [])
+        time_matched = []
+
+        for v in videos:
+            v_date = parse_video_date(v.get("date", ""))
+            if v_date and v_date >= threshold:
+                time_matched.append(v)
+
+        if time_matched:
+            filtered.append({
+                "user_name": user_name,
+                "videos": time_matched
+            })
+
+    return filtered
+
+
+def build_time_based_markdown(filtered_videos, time_label, time_range):
+    """生成按时间筛选的视频 markdown
+
+    Args:
+        filtered_videos: list[{user_name, videos}] 筛选后的视频数据
+        time_label: str 时间标签 (如 "本周", "本月")
+        time_range: str 时间范围描述 (如 "7天内", "30天内")
+
+    Returns:
+        str markdown 内容
+    """
+    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    total_videos = sum(len(e.get("videos", [])) for e in filtered_videos)
+    total_users = len(filtered_videos)
+
+    lines = [
+        "---",
+        f"tags: [B站, {time_label}视频]",
+        f"更新时间: {now}",
+        f"博主数: {total_users}",
+        f"视频条数: {total_videos}",
+        "---",
+        "",
+        f"# B站关注博主{time_label}视频",
+        "",
+        f"> **最近更新**: {now} | **共 {total_users} 位博主有{time_range}新视频** | **{total_videos} 条视频**",
+        "",
+    ]
+
+    for i, entry in enumerate(filtered_videos, 1):
+        user_name = entry.get("user_name", "")
+        videos = entry.get("videos", [])
+
+        lines.append(f"> [!note] {i}. {user_name}")
+        lines.append(">")
+
+        for v in videos:
+            v_title = (v.get("title") or "").replace("|", "\\|").strip()
+            v_plays = fmt_num(v.get("plays", 0))
+            v_date = v.get("date") or ""
+            v_url = v.get("url") or ""
+            link_text = f"{v_date} {v_title}".strip() if v_date else v_title
+            lines.append(f"> - [{link_text}]({v_url}) | 播放 {v_plays}")
+
+        lines.append("")
+
+    lines.append("---")
+    lines.append(f"> 数据来源: opencli bilibili user-videos | 采集时间: {now} | 筛选: {time_range}")
     return "\n".join(lines) + "\n"
 
 
@@ -158,7 +295,7 @@ def main():
     log("=" * 60)
     log("B站关注视频采集 启动")
     log(f"OPENCLI_CMD: {OPENCLI_CMD}")
-    log(f"输出文件: {MD_FILE}")
+    log(f"输出文件: {MD_FILE}, {WEEKLY_MD_FILE}, {MONTHLY_MD_FILE}")
     log("=" * 60)
 
     # 参数
@@ -192,10 +329,32 @@ def main():
 
     log(f"关注博主数: {len(users)}, 开始拉取视频...")
 
-    # 2. 生成 markdown
-    md_content = build_markdown(users, videos_per_user)
+    # 2. 收集所有视频数据
+    all_videos, ok_count, fail_count = collect_all_videos(users, videos_per_user)
+
+    # 3. 生成关注视频.md
+    md_content = build_markdown(all_videos, videos_per_user, ok_count, fail_count)
     MD_FILE.write_text(md_content, encoding="utf-8")
     log(f"已保存: {MD_FILE}")
+
+    # 4. 生成本周视频.md (7天内)
+    weekly_videos = filter_videos_by_days(all_videos, 7)
+    if weekly_videos:
+        weekly_md = build_time_based_markdown(weekly_videos, "本周", "7天内")
+        WEEKLY_MD_FILE.write_text(weekly_md, encoding="utf-8")
+        log(f"已保存: {WEEKLY_MD_FILE} ({len(weekly_videos)} 位博主有本周新视频)")
+    else:
+        log("本周无新视频, 跳过生成")
+
+    # 5. 生成本月视频.md (30天内)
+    monthly_videos = filter_videos_by_days(all_videos, 30)
+    if monthly_videos:
+        monthly_md = build_time_based_markdown(monthly_videos, "本月", "30天内")
+        MONTHLY_MD_FILE.write_text(monthly_md, encoding="utf-8")
+        log(f"已保存: {MONTHLY_MD_FILE} ({len(monthly_videos)} 位博主有本月新视频)")
+    else:
+        log("本月无新视频, 跳过生成")
+
     log("完成")
     return 0
 
