@@ -241,7 +241,7 @@ def filter_videos_by_days(all_videos, days):
 
 
 def build_time_based_markdown(filtered_videos, time_label, time_range):
-    """生成按时间筛选的视频 markdown
+    """生成按时间筛选的视频 markdown (表格格式)
 
     Args:
         filtered_videos: list[{user_name, videos}] 筛选后的视频数据
@@ -267,25 +267,26 @@ def build_time_based_markdown(filtered_videos, time_label, time_range):
         "",
         f"> **最近更新**: {now} | **共 {total_users} 位博主有{time_range}新视频** | **{total_videos} 条视频**",
         "",
+        "| # | 博主 | 视频标题 | 发布日期 | 播放 |",
+        "|---|------|----------|----------|------|",
     ]
 
-    for i, entry in enumerate(filtered_videos, 1):
+    row_num = 1
+    for entry in filtered_videos:
         user_name = entry.get("user_name", "")
         videos = entry.get("videos", [])
-
-        lines.append(f"> [!note] {i}. {user_name}")
-        lines.append(">")
 
         for v in videos:
             v_title = (v.get("title") or "").replace("|", "\\|").strip()
             v_plays = fmt_num(v.get("plays", 0))
             v_date = v.get("date") or ""
             v_url = v.get("url") or ""
-            link_text = f"{v_date} {v_title}".strip() if v_date else v_title
-            lines.append(f"> - [{link_text}]({v_url}) | 播放 {v_plays}")
+            # 标题作为链接
+            link_title = f"[{v_title}]({v_url})"
+            lines.append(f"| {row_num} | {user_name} | {link_title} | {v_date} | {v_plays} |")
+            row_num += 1
 
-        lines.append("")
-
+    lines.append("")
     lines.append("---")
     lines.append(f"> 数据来源: opencli bilibili user-videos | 采集时间: {now} | 筛选: {time_range}")
     return "\n".join(lines) + "\n"
