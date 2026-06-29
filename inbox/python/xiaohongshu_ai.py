@@ -29,7 +29,7 @@ from xiaohongshu_collect import (  # noqa: E402
 )
 
 # ============ 配置 ============
-AI_OUTPUT_ROOT = OUTPUT_ROOT / "AI问答"
+AI_OUTPUT_ROOT = OUTPUT_ROOT  # 直接放在 小红书 根目录, 不建子文件夹
 TIMEOUT_AI = 60  # search-ai 默认 --timeout 20, 加上页面加载冗余
 
 
@@ -98,6 +98,7 @@ def build_markdown(query, sections):
         "tags: [小红书, 点点AI, AI问答]",
         f'title: "AI问答 - {safe_title}"',
         f"query: {json.dumps(query, ensure_ascii=False)}",
+        'source: "AI问答"',
         f"createTime: {datetime.now().isoformat(timespec='seconds')}",
         "status: 已采集",
         "---",

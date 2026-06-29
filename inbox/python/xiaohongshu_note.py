@@ -18,6 +18,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 from xiaohongshu_collect import (  # noqa: E402
     OPENCLI_CMD,
     OUTPUT_ROOT,
+    IMAGES_ROOT,
     TIMEOUT_NOTE,
     log,
     run_opencli,
@@ -29,8 +30,8 @@ from xiaohongshu_collect import (  # noqa: E402
     show_input_dialog,
 )
 
-# 单篇笔记输出到独立子目录, 便于管理
-NOTE_OUTPUT_ROOT = OUTPUT_ROOT / "单篇采集"
+# 单篇笔记直接输出到 小红书 根目录, 不建子文件夹
+NOTE_OUTPUT_ROOT = OUTPUT_ROOT
 TIMEOUT_SINGLE = 90  # note + download, 给足时间
 
 
@@ -106,7 +107,7 @@ def main():
 
     # 3. 下载图片 (优先用 note-full 返回的 media URL 直接下载, 回退 download 命令)
     NOTE_OUTPUT_ROOT.mkdir(parents=True, exist_ok=True)
-    images_dir = NOTE_OUTPUT_ROOT / "images" / note_id
+    images_dir = IMAGES_ROOT / note_id
     media_list = note_data.get("_media", [])
 
     log("下载图片中...")
@@ -123,8 +124,8 @@ def main():
         log(f"下载图片: {len(img_files)} 张 (download 命令)")
 
     # 4. 生成 markdown (复用 build_markdown, 含评论)
-    # 签名: build_markdown(keyword, note_data, comments, image_files, images_rel_dir, url, note_id, published_at="")
-    images_rel_dir = f"images/{note_id}"
+    # images_rel_dir 使用 vault 相对路径 (用于 wikilink)
+    images_rel_dir = f"附件/{note_id}"
     # 统一图片文件名 (download_media_urls 返回相对路径, 提取文件名)
     image_files_names = []
     if images_dir.exists():
@@ -141,6 +142,7 @@ def main():
         url,
         note_id,
         published_at,
+        source_type="单篇采集",
     )
 
     # 5. 保存

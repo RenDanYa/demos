@@ -64,6 +64,7 @@ except ImportError:
 # ============ 配置 ============
 OBSIDIAN_ROOT = Path("d:/obsidian/demo")
 OUTPUT_ROOT = OBSIDIAN_ROOT / "05_long_project" / "小红书"
+IMAGES_ROOT = OBSIDIAN_ROOT / "inbox" / "附件"
 LOG_FILE = OUTPUT_ROOT / "_运行日志.md"
 SCRIPT_DIR = Path(__file__).parent
 
@@ -439,7 +440,7 @@ def download_images(url, output_dir, media_list=None):
     return rel_files
 
 
-def build_markdown(keyword, note_data, comments, image_files, images_rel_dir, url, note_id, published_at=""):
+def build_markdown(keyword, note_data, comments, image_files, images_rel_dir, url, note_id, published_at="", source_type="多篇采集"):
     """生成 markdown 内容 (含 frontmatter)"""
     title = note_data.get("title", "无标题") or "无标题"
     author = note_data.get("author", "") or ""
@@ -474,6 +475,8 @@ def build_markdown(keyword, note_data, comments, image_files, images_rel_dir, ur
     else:
         lines.append("tags: []")
     lines.append(f'title: "{title.replace(chr(34), chr(39))}"')
+    lines.append(f'query: "{keyword}"')
+    lines.append(f'source: "{source_type}"')
     lines.append(f"likes: {likes_num}")
     if published:
         lines.append(f'publishedAt: "{published}"')
@@ -507,7 +510,7 @@ def build_markdown(keyword, note_data, comments, image_files, images_rel_dir, ur
         lines.append("## 图片")
         lines.append("")
         for img in image_files:
-            lines.append(f"![|400]({images_rel_dir}/{img})")
+            lines.append(f"![[{images_rel_dir}/{img}|400]]")
         lines.append("")
 
     # 评论 (只保留前 5 条, 放在末尾)
@@ -535,19 +538,16 @@ def build_markdown(keyword, note_data, comments, image_files, images_rel_dir, ur
 
 
 def write_markdown(keyword, md_content, note_id, title=""):
-    """写入 markdown 文件, 返回路径. 文件名优先用 title"""
-    kw_dir = OUTPUT_ROOT / sanitize_filename(keyword)
-    kw_dir.mkdir(parents=True, exist_ok=True)
-    # 文件名: title 优先, 回退到 note_id
+    """写入 markdown 文件, 返回路径. 文件名优先用 title, 直接放在 OUTPUT_ROOT 下"""
     name_base = sanitize_filename(title) if title else note_id
     if not name_base:
         name_base = note_id
     filename = f"{name_base}.md"
-    md_path = kw_dir / filename
+    md_path = OUTPUT_ROOT / filename
     # 若同名已存在, 加 note_id 后缀避免覆盖
     if md_path.exists():
         filename = f"{name_base}_{note_id}.md"
-        md_path = kw_dir / filename
+        md_path = OUTPUT_ROOT / filename
     md_path.write_text(md_content, encoding="utf-8")
     return md_path
 
@@ -620,7 +620,6 @@ def collect(keyword, limit):
 
     results = []
     consecutive_fails = 0
-    images_root_name = sanitize_filename(keyword)
     total = len(search_results)
 
     for i, item in enumerate(search_results, 1):
@@ -650,9 +649,9 @@ def collect(keyword, limit):
                     raise RuntimeError("note-full 返回空")
 
                 note_id = extract_note_id(url)
-                images_dir = OUTPUT_ROOT / images_root_name / "images" / note_id
-                # 相对于 markdown 文件所在目录 (OUTPUT_ROOT/{keyword}/) 的路径
-                images_rel_dir = f"images/{note_id}"
+                images_dir = IMAGES_ROOT / note_id
+                # 相对于 vault 根目录的路径 (用于 wikilink)
+                images_rel_dir = f"附件/{note_id}"
                 image_files = download_images(url, images_dir, media_list=note_data.get("_media", []))
 
                 # 优先用 note-full 返回的 publishedAt, 回退到 search 结果
@@ -661,6 +660,7 @@ def collect(keyword, limit):
                     keyword, note_data, comments, image_files,
                     images_rel_dir, url, note_id,
                     published_at=published_at,
+                    source_type="多篇采集",
                 )
                 md_title = note_data.get("title", "") or title
                 md_path = write_markdown(keyword, md_content, note_id, title=md_title)
