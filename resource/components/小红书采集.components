@@ -584,7 +584,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-06-29T00:35:41.613Z",
+      "updateAt": "2026-06-29T00:54:48.586Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -685,8 +685,7 @@
           "__$uncategorizedGroup"
         ],
         "collapseds": [
-          "__$uncategorizedGroup",
-          "05_long_project/小红书/婚前多久试婚纱"
+          "__$uncategorizedGroup"
         ]
       },
       "filter": {
