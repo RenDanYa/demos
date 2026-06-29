@@ -17,6 +17,9 @@
         },
         {
           "componentId": "57a14d3c-8d84-42bf-9ef6-62234c9daa51"
+        },
+        {
+          "componentId": "fd980de6-efc4-408d-9999-a693ccb74bc6"
         }
       ],
       "layoutType": "tab",
@@ -62,7 +65,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-06-29T04:16:18.521Z",
+      "updateAt": "2026-06-29T09:21:25.927Z",
       "viewType": "list",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -103,6 +106,13 @@
             "formula": "",
             "width": "785"
           }
+        },
+        {
+          "id": "6e873530-9435-4c11-bff7-17be3e0d1f07",
+          "name": "待办",
+          "isShow": true,
+          "type": "taskList",
+          "options": {}
         }
       ],
       "templates": [],
@@ -193,7 +203,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-06-29T04:16:57.796Z",
+      "updateAt": "2026-06-29T09:20:47.016Z",
       "viewType": "gallary",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -258,6 +268,13 @@
           "wrap": false,
           "options": {},
           "alias": "发布时间"
+        },
+        {
+          "id": "c59e8652-d6b7-4600-8d07-10c6e8510b50",
+          "name": "待办",
+          "isShow": true,
+          "type": "taskList",
+          "options": {}
         }
       ],
       "templates": [],
@@ -602,7 +619,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-06-29T04:43:56.151Z",
+      "updateAt": "2026-06-29T09:21:51.741Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -623,7 +640,7 @@
           "isShow": true,
           "wrap": false,
           "options": {
-            "width": "121"
+            "width": "86"
           }
         },
         {
@@ -633,7 +650,7 @@
           "isShow": true,
           "wrap": false,
           "options": {
-            "width": "368"
+            "width": "134"
           }
         },
         {
@@ -673,6 +690,13 @@
           "name": "todo_generated",
           "isShow": true,
           "type": "text",
+          "options": {}
+        },
+        {
+          "id": "5bb4ba4b-5e2b-47a3-b9ad-9aa9e5f98a30",
+          "name": "待办",
+          "isShow": true,
+          "type": "taskList",
           "options": {}
         }
       ],
@@ -758,6 +782,107 @@
       },
       "groupBy": "query",
       "icon": "PlugZap"
+    },
+    {
+      "id": "fd980de6-efc4-408d-9999-a693ccb74bc6",
+      "type": "dynamicDataView",
+      "titleAlign": "center",
+      "tabTitle": "待办",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-06-29T09:17:51.889Z",
+      "updateAt": "2026-06-29T09:22:18.774Z",
+      "viewType": "table",
+      "newPageNameFormat": "{{date:YYYYMMDDHHmmss}} ",
+      "properties": [
+        {
+          "id": "__componentsTitleProperty_0x7c00",
+          "name": "文件名",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "114"
+          }
+        },
+        {
+          "id": "d6ec1314-50d5-41e8-8e1c-1c2df06fc234",
+          "name": "tags",
+          "type": "multiSelect",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "width": "166"
+          }
+        },
+        {
+          "id": "52ede8e2-0aee-4653-a707-cfa3fc623231",
+          "name": "${file.mtime}",
+          "type": "datetime",
+          "isShow": true,
+          "wrap": false,
+          "options": {
+            "formatType": "datetime",
+            "width": "266",
+            "format": "yyyy-MM-dd'T'HH:mm"
+          }
+        },
+        {
+          "id": "36a072a5-9fbb-43bb-a446-e48b13918c62",
+          "name": "待办",
+          "isShow": true,
+          "type": "taskList",
+          "options": {
+            "showTaskList": true,
+            "showAllTasks": false,
+            "hideTaskFields": false,
+            "timeRecordStyle": "none",
+            "insertPosition": {
+              "position": "BottomOfNote",
+              "headingLine": ""
+            },
+            "width": "767"
+          }
+        }
+      ],
+      "templates": [],
+      "groups": [],
+      "colorfulGroups": false,
+      "viewOptions": {
+        "openPageIn": "tab",
+        "openPageAfterCreate": true,
+        "items": [],
+        "pinFiltersToMenuBar": false,
+        "hideHeaderMenu": false,
+        "showGrid": false,
+        "heightType": "auto",
+        "heightValue": 600
+      },
+      "groupStates": {
+        "sort": "nameAsc",
+        "statics": [],
+        "orders": [],
+        "hiddens": [],
+        "collapseds": []
+      },
+      "filter": {
+        "id": "4e16eaf4-f6a0-4d55-9bc3-b7e16ed7d382",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "93915a8a-8adf-4c41-b6b5-48bf2abfe59f",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.parent}",
+            "value": "05_long_project/小红书/待办",
+            "conditions": []
+          }
+        ]
+      },
+      "title": "待办"
     }
   ],
   "rootComponentId": "7a1b2c3d-4e5f-4a6b-8c9d-0e1f2a3b4c5d",
