@@ -62,7 +62,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-06-28T14:27:46.153Z",
+      "updateAt": "2026-06-29T04:16:18.521Z",
       "viewType": "list",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -148,7 +148,7 @@
             "type": "filter",
             "operator": "equals",
             "property": "${file.parent}",
-            "value": "05_long_project/小红书/AI问答",
+            "value": "05_long_project/小红书",
             "conditions": []
           },
           {
@@ -157,6 +157,14 @@
             "operator": "equals",
             "property": "${file.extension}",
             "value": "md",
+            "conditions": []
+          },
+          {
+            "id": "57763776-1fd0-4922-b954-cb4ca5b99f5f",
+            "type": "filter",
+            "operator": "equals",
+            "property": "source",
+            "value": "AI问答",
             "conditions": []
           }
         ]
@@ -185,7 +193,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-06-28T13:25:53.854Z",
+      "updateAt": "2026-06-29T04:16:57.796Z",
       "viewType": "gallary",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -295,7 +303,7 @@
             "type": "filter",
             "operator": "equals",
             "property": "${file.parent}",
-            "value": "05_long_project/小红书/单篇采集",
+            "value": "05_long_project/小红书",
             "conditions": []
           },
           {
@@ -304,6 +312,14 @@
             "operator": "equals",
             "property": "${file.extension}",
             "value": "md",
+            "conditions": []
+          },
+          {
+            "id": "04e4075f-9d8b-4f93-bb5a-aec44abe8a99",
+            "type": "filter",
+            "operator": "equals",
+            "property": "source",
+            "value": "单篇采集",
             "conditions": []
           }
         ]
@@ -586,7 +602,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-06-29T02:19:31.234Z",
+      "updateAt": "2026-06-29T04:43:56.151Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -651,6 +667,13 @@
           "wrap": false,
           "options": {},
           "alias": "发布时间"
+        },
+        {
+          "id": "42e84a7d-7a46-4b83-a409-fb1b25c9ce0b",
+          "name": "todo_generated",
+          "isShow": true,
+          "type": "text",
+          "options": {}
         }
       ],
       "templates": [],
@@ -688,7 +711,7 @@
         ],
         "collapseds": [
           "__$uncategorizedGroup",
-          "05_long_project/小红书/婚前多久试婚纱"
+          "婚前多久试婚纱"
         ]
       },
       "filter": {
@@ -713,27 +736,11 @@
             "conditions": []
           },
           {
-            "id": "0954c5c1-9f3c-410a-99bf-72f9fa8a554c",
+            "id": "156b24ba-d09c-4cfd-b148-aaf1bc7a12b2",
             "type": "filter",
-            "operator": "not_equals",
-            "property": "${file.parent}",
-            "value": "05_long_project/小红书/单篇采集",
-            "conditions": []
-          },
-          {
-            "id": "8f0a0b72-22d6-4c7b-aa49-17f4ea8c47b5",
-            "type": "filter",
-            "operator": "not_equals",
-            "property": "${file.parent}",
-            "value": "05_long_project/小红书/AI问答",
-            "conditions": []
-          },
-          {
-            "id": "73080ff1-df78-41ec-9608-a3bb2e8d45a2",
-            "type": "filter",
-            "operator": "not_equals",
-            "property": "${file.parent}",
-            "value": "05_long_project/小红书",
+            "operator": "equals",
+            "property": "source",
+            "value": "多篇采集",
             "conditions": []
           }
         ]
@@ -749,7 +756,7 @@
           }
         ]
       },
-      "groupBy": "${file.parent}",
+      "groupBy": "query",
       "icon": "PlugZap"
     }
   ],
