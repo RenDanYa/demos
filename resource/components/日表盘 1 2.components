@@ -295,7 +295,7 @@
       "showTitle": true,
       "showShadow": true,
       "createAt": "2025-11-01T06:33:19.812Z",
-      "updateAt": "2026-02-09T00:41:10.937Z",
+      "updateAt": "2026-06-30T01:16:45.632Z",
       "components": [
         {
           "componentId": "8aa0508f-fe2d-44d4-926f-c7ca2ac0e9e9"
@@ -311,6 +311,9 @@
         },
         {
           "componentId": "41d8607a-e4d4-463a-a9ed-b3ed48c789a2"
+        },
+        {
+          "componentId": "513e7e2e-8b19-4caf-aec6-8b68d48239d5"
         },
         {
           "componentId": "232ed43b-8bab-4531-b4ce-6305090cf8c4"
@@ -15306,7 +15309,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-02-01T03:41:07.256Z",
-      "updateAt": "2026-02-09T00:48:13.139Z",
+      "updateAt": "2026-06-30T01:15:20.413Z",
       "chartType": "line",
       "filter": {
         "id": "ed36f0de-f84d-4e4b-896f-87d67de2065b",
@@ -15385,7 +15388,8 @@
           "id": "354e8357-3cfb-4399-a4d7-e6f8c52d9b47",
           "colors": [
             "#eb144c",
-            "#00ffb8"
+            "#00ffb8",
+            "#fcb900"
           ]
         }
       ],
@@ -15401,7 +15405,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-02-01T03:45:28.268Z",
-      "updateAt": "2026-02-01T04:52:57.036Z",
+      "updateAt": "2026-06-30T01:11:03.595Z",
       "components": [
         {
           "componentId": "2c62f13f-4cb5-47bc-8343-b8f5234eed43"
@@ -16494,6 +16498,103 @@
       ],
       "labelRotation": 0,
       "title": "每周机动时长"
+    },
+    {
+      "id": "20c8cdc6-830d-42a2-bd89-9196143ee6cf",
+      "type": "chart",
+      "titleAlign": "left",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-02-01T03:41:07.256Z",
+      "updateAt": "2026-06-30T01:17:25.290Z",
+      "chartType": "line",
+      "filter": {
+        "id": "ed36f0de-f84d-4e4b-896f-87d67de2065b",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "15fa6780-6f70-4061-be90-230206bde50b",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.parent}",
+            "value": "03_输出_每日日记",
+            "conditions": []
+          },
+          {
+            "id": "a87695cc-e8a6-4188-bc9e-7ad4b3f47568",
+            "type": "filter",
+            "operator": "time_after_or_equal",
+            "property": "created",
+            "value": {
+              "type": "$specifiedDateTime",
+              "unit": "day",
+              "direction": "before",
+              "value": "2025-10-01T01:41"
+            },
+            "conditions": []
+          }
+        ]
+      },
+      "labelFormat": "$timeFormat",
+      "series": [
+        {
+          "id": "c9038505-08b1-42ce-af14-3997b509684f",
+          "name": "$file_count",
+          "precision": 2,
+          "aggregation": "$sum"
+        }
+      ],
+      "sortField": "xAxisValue",
+      "sortOrder": "asc",
+      "maxHeight": 380,
+      "chartColorSet": "C",
+      "chartLabelPosition": "hidden",
+      "enableMarkLine": false,
+      "markLineValue": 20,
+      "showDataValue": true,
+      "valueScaleStartFromZero": true,
+      "smoothLine": false,
+      "fillArea": false,
+      "options": {},
+      "categoryProperty": "created",
+      "categoryFormatPattern": "yyyy-MM",
+      "labelRotation": 0,
+      "title": "每月在线数",
+      "components": [],
+      "customizeColorSets": [
+        {
+          "id": "fb437721-549f-45a8-861b-ef9a3a6691e1",
+          "colors": [
+            "#fcb900",
+            "#8ed1fc"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "513e7e2e-8b19-4caf-aec6-8b68d48239d5",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "在线数",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-02-01T03:45:28.268Z",
+      "updateAt": "2026-06-30T01:16:52.830Z",
+      "components": [
+        {
+          "componentId": "20c8cdc6-830d-42a2-bd89-9196143ee6cf"
+        }
+      ],
+      "layoutType": "column",
+      "locked": false,
+      "layoutOptions": {},
+      "title": "在线数"
     }
   ],
   "rootComponentId": "e692810e-55d9-4b4d-8fe8-40826d71917b",
