@@ -65,7 +65,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-06-29T09:21:25.927Z",
+      "updateAt": "2026-07-16T09:21:38.418Z",
       "viewType": "list",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -112,6 +112,34 @@
           "name": "待办",
           "isShow": true,
           "type": "taskList",
+          "options": {}
+        },
+        {
+          "id": "c9190dbf-c4e8-42ea-a251-2b956946eaeb",
+          "name": "按钮",
+          "isShow": true,
+          "type": "button",
+          "options": {
+            "action": {
+              "type": "updateProperty",
+              "properties": [
+                {
+                  "id": "0fc6f57d-480e-4b47-841e-3085501c68a3",
+                  "name": "status",
+                  "type": "string",
+                  "value": "已看完",
+                  "valueSource": "constant",
+                  "modifier": "replaceValue"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "b4657d54-931c-4292-8be3-493a985f439b",
+          "name": "status",
+          "isShow": true,
+          "type": "text",
           "options": {}
         }
       ],
@@ -626,7 +654,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-16T08:02:25.297Z",
+      "updateAt": "2026-07-16T09:21:18.615Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -682,6 +710,13 @@
             "width": "100"
           },
           "alias": "标记已看"
+        },
+        {
+          "id": "c6266542-67e8-462e-b65c-2c1999d8ec5a",
+          "name": "status",
+          "isShow": true,
+          "type": "text",
+          "options": {}
         },
         {
           "id": "e0f56add-b332-4e17-8e91-36545a0130f8",
