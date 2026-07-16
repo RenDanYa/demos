@@ -203,7 +203,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-06-29T09:20:47.016Z",
+      "updateAt": "2026-07-16T08:15:00.858Z",
       "viewType": "gallary",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -274,6 +274,13 @@
           "name": "待办",
           "isShow": true,
           "type": "taskList",
+          "options": {}
+        },
+        {
+          "id": "64d760de-164b-4382-8b25-b1a023207f65",
+          "name": "todo_generated",
+          "isShow": true,
+          "type": "text",
           "options": {}
         }
       ],
@@ -619,7 +626,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-16T07:25:16.249Z",
+      "updateAt": "2026-07-16T08:02:25.297Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -640,7 +647,7 @@
           "isShow": true,
           "wrap": false,
           "options": {
-            "width": "86"
+            "width": "226"
           }
         },
         {
