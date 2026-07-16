@@ -619,7 +619,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-06-29T09:21:51.741Z",
+      "updateAt": "2026-07-16T07:25:16.249Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -734,8 +734,7 @@
           "__$uncategorizedGroup"
         ],
         "collapseds": [
-          "__$uncategorizedGroup",
-          "婚前多久试婚纱"
+          "__$uncategorizedGroup"
         ]
       },
       "filter": {
