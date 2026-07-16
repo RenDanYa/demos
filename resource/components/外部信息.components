@@ -231,7 +231,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-16T08:15:00.858Z",
+      "updateAt": "2026-07-16T12:57:27.060Z",
       "viewType": "gallary",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -307,6 +307,13 @@
         {
           "id": "64d760de-164b-4382-8b25-b1a023207f65",
           "name": "todo_generated",
+          "isShow": true,
+          "type": "text",
+          "options": {}
+        },
+        {
+          "id": "231a9ff9-a4db-4d1a-9853-bc0ba7de11b7",
+          "name": "status",
           "isShow": true,
           "type": "text",
           "options": {}
@@ -388,7 +395,8 @@
         ]
       },
       "groupBy": "",
-      "icon": "Star"
+      "icon": "Star",
+      "loadLimitPerPage": "25"
     },
     {
       "id": "ai-btn-button-0002-0000-000000000002",
@@ -654,7 +662,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-16T09:21:18.615Z",
+      "updateAt": "2026-07-16T12:45:54.794Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
