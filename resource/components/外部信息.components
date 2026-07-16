@@ -662,7 +662,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-16T12:45:54.794Z",
+      "updateAt": "2026-07-16T23:09:25.234Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -784,7 +784,9 @@
           "__$uncategorizedGroup"
         ],
         "collapseds": [
-          "__$uncategorizedGroup"
+          "__$uncategorizedGroup",
+          "婚纱照预算",
+          "拍的婚纱照哪里要用"
         ]
       },
       "filter": {
