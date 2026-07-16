@@ -662,7 +662,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-16T23:09:25.234Z",
+      "updateAt": "2026-07-16T23:38:56.967Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -768,7 +768,7 @@
           "position": "left",
           "sourceValue": "imageUrl"
         },
-        "pinFiltersToMenuBar": false,
+        "pinFiltersToMenuBar": true,
         "hideHeaderMenu": false,
         "showGrid": false,
         "heightType": "fixed",
@@ -785,7 +785,6 @@
         ],
         "collapseds": [
           "__$uncategorizedGroup",
-          "婚纱照预算",
           "拍的婚纱照哪里要用"
         ]
       },
@@ -816,6 +815,14 @@
             "operator": "equals",
             "property": "source",
             "value": "多篇采集",
+            "conditions": []
+          },
+          {
+            "id": "7ae25a21-f42a-41e7-831e-ae0a9fe22884",
+            "type": "filter",
+            "operator": "equals",
+            "property": "status",
+            "value": "已采集",
             "conditions": []
           }
         ]
