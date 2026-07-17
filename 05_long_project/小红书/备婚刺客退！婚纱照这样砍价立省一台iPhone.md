@@ -1,14 +1,24 @@
 ---
-tags: ["上海婚纱照", "武汉婚纱照", "西安婚纱照", "大理婚纱照", "婚纱照避雷", "婚礼不踩雷", "婚纱照攻略", "婚礼踩的坑", "婚礼经验分享", "备婚"]
-title: "备婚刺客退！婚纱照这样砍价立省一台iPhone"
-query: "备婚刺客退！婚纱照这样砍价立省一台iPhone"
-source: "单篇采集"
+tags:
+  - 上海婚纱照
+  - 武汉婚纱照
+  - 西安婚纱照
+  - 大理婚纱照
+  - 婚纱照避雷
+  - 婚礼不踩雷
+  - 婚纱照攻略
+  - 婚礼踩的坑
+  - 婚礼经验分享
+  - 备婚
+title: 备婚刺客退！婚纱照这样砍价立省一台iPhone
+query: 备婚刺客退！婚纱照这样砍价立省一台iPhone
+source: 单篇采集
 likes: 2
-publishedAt: "2025-10-22"
-url: "https://www.xiaohongshu.com/explore/68f8a9b90000000005013a65?xsec_token=ABfWcmaHQpV8H0dENQZv8dG27yafw15ajH0Z871RH3_yE=&xsec_source=pc_search&source=web_explore_feed"
-imageUrl: "附件/68f8a9b90000000005013a65/68f8a9b90000000005013a65_1.jpg"
+publishedAt: 2025-10-22
+url: https://www.xiaohongshu.com/explore/68f8a9b90000000005013a65?xsec_token=ABfWcmaHQpV8H0dENQZv8dG27yafw15ajH0Z871RH3_yE=&xsec_source=pc_search&source=web_explore_feed
+imageUrl: 附件/68f8a9b90000000005013a65/68f8a9b90000000005013a65_1.jpg
 createTime: 2026-07-16T21:00:26
-status: 已采集
+status: 已看完
 todo_generated: 2026-07-17 09:23:58
 ---
 
@@ -52,7 +62,7 @@ todo_generated: 2026-07-17 09:23:58
 
 ### 砍价前准备
 
-- [ ] 多看几家婚纱店，第二天再回访，用竞品套餐压价
+- [ ] 多看几家婚纱店，第二天再回访，用竞品套餐压价(可能会给你降价升套餐)
 - [ ] 提前看客片、未精修原片和可选婚纱款式
 - [ ] 实地查看化妆品、化妆间等硬件条件
 - [ ] 到店保持淡定，不要表现出非常喜欢

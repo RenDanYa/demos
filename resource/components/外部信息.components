@@ -685,7 +685,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-17T01:03:55.789Z",
+      "updateAt": "2026-07-17T01:59:20.266Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -1217,7 +1217,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-17T01:01:52.428Z",
+      "updateAt": "2026-07-17T01:56:33.544Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -1272,7 +1272,16 @@
           "name": "待办",
           "isShow": true,
           "type": "taskList",
-          "options": {}
+          "options": {
+            "showTaskList": false,
+            "showAllTasks": false,
+            "hideTaskFields": false,
+            "timeRecordStyle": "none",
+            "insertPosition": {
+              "position": "BottomOfNote",
+              "headingLine": ""
+            }
+          }
         }
       ],
       "templates": [],
