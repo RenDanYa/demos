@@ -126,12 +126,17 @@ def main():
     # 4. 生成 markdown (复用 build_markdown, 含评论)
     # images_rel_dir 使用 vault 相对路径 (用于 wikilink)
     images_rel_dir = f"附件/{note_id}"
-    # 统一图片文件名 (download_media_urls 返回相对路径, 提取文件名)
-    image_files_names = []
-    if images_dir.exists():
+    # 使用下载函数返回的有序文件列表 (已按笔记显示顺序排列, 避免目录重读导致顺序错乱)
+    from pathlib import Path as _P
+    if img_files:
+        image_files_names = [_P(f).name for f in img_files]
+    elif images_dir.exists():
+        # 回退: 仅当下载函数未返回文件列表时, 从目录读取
         image_files_names = sorted([f.name for f in images_dir.rglob("*.jpg")] +
                                    [f.name for f in images_dir.rglob("*.png")] +
                                    [f.name for f in images_dir.rglob("*.mp4")])
+    else:
+        image_files_names = []
     published_at = note_data.get("publishedAt", "")
     md_content = build_markdown(
         note_data.get("title", note_id),

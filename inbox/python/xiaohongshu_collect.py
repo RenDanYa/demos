@@ -18,6 +18,14 @@ from datetime import datetime
 from pathlib import Path
 from urllib.parse import urlparse, parse_qs
 
+
+def _natural_sort_key(path):
+    """自然排序键: 确保文件名中的数字按数值排序 (2.jpg < 10.jpg)"""
+    stem = Path(path).stem
+    parts = re.split(r'(\d+)', stem)
+    return [int(p) if p.isdigit() else p for p in parts]
+
+
 # 解析 opencli 调用方式
 # Windows 下 .cmd 文件经 cmd.exe 调用会因 URL 中的 & 触发命令分隔,
 # 因此直接用 node 调用 main.js 入口绕过 cmd.exe
@@ -434,7 +442,10 @@ def download_images(url, output_dir, media_list=None):
         log(f"  download 失败: {err}")
     # 递归收集所有图片/视频文件 (opencli 会在 output_dir 下创建 {note_id}/ 子目录)
     exts = {".jpg", ".jpeg", ".png", ".webp", ".gif", ".mp4", ".mov"}
-    all_files = sorted(p for p in output_dir.rglob("*") if p.is_file() and p.suffix.lower() in exts)
+    all_files = sorted(
+        (p for p in output_dir.rglob("*") if p.is_file() and p.suffix.lower() in exts),
+        key=_natural_sort_key,
+    )
     rel_files = [str(p.relative_to(output_dir)).replace("\\", "/") for p in all_files]
     log(f"  download: files={len(rel_files)} ok={ok} dir={output_dir.name}")
     return rel_files

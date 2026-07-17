@@ -490,22 +490,13 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T10:37:12.400Z",
-      "updateAt": "2026-07-17T01:00:44.897Z",
+      "updateAt": "2026-07-17T03:40:18.903Z",
       "components": [
         {
           "componentId": "1d88fc01-6e2c-4ff2-9c16-72cc40949fcc"
         },
         {
-          "componentId": "9c3d4e5f-6a7b-4c8d-0e1f-2a3b4c5d6e7f"
-        },
-        {
-          "componentId": "816c63ae-f518-4afb-ad4e-975c0e6219c5"
-        },
-        {
-          "componentId": "b3ca6d34-416f-4764-89c6-c4c3643ab09b"
-        },
-        {
-          "componentId": "787da771-996a-4295-86f3-c5e084028731"
+          "componentId": "848d5477-928b-41eb-b50d-29a64d8128dd"
         }
       ],
       "layoutType": "list",
@@ -995,7 +986,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-17T02:22:42.039Z",
+      "updateAt": "2026-07-17T03:42:13.032Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -1181,13 +1172,13 @@
       "id": "1d88fc01-6e2c-4ff2-9c16-72cc40949fcc",
       "type": "multi",
       "titleAlign": "center",
-      "tabTitle": "",
+      "tabTitle": "一键触发",
       "maxWidthRatio": -1,
       "showBorder": false,
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-07-17T00:59:43.323Z",
-      "updateAt": "2026-07-17T01:00:04.798Z",
+      "updateAt": "2026-07-17T03:40:43.591Z",
       "components": [
         {
           "componentId": "ai-btn-button-0002-0000-000000000002"
@@ -1204,7 +1195,8 @@
       ],
       "layoutType": "column",
       "locked": false,
-      "layoutOptions": {}
+      "layoutOptions": {},
+      "title": "一键触发"
     },
     {
       "id": "e8f46ef0-627a-4a20-82a6-6cd4fe64f18c",
@@ -1360,6 +1352,92 @@
       },
       "groupBy": "",
       "icon": "NavigationOff"
+    },
+    {
+      "id": "848d5477-928b-41eb-b50d-29a64d8128dd",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "预览",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-07-17T03:40:47.214Z",
+      "updateAt": "2026-07-17T03:41:31.755Z",
+      "components": [
+        {
+          "componentId": "9c3d4e5f-6a7b-4c8d-0e1f-2a3b4c5d6e7f",
+          "layout": {
+            "mobile": {
+              "x": 0,
+              "y": 0,
+              "w": 4,
+              "h": 4
+            },
+            "laptop": {
+              "x": 0,
+              "y": 0,
+              "w": 4,
+              "h": 4
+            }
+          }
+        },
+        {
+          "componentId": "b3ca6d34-416f-4764-89c6-c4c3643ab09b",
+          "layout": {
+            "mobile": {
+              "x": 0,
+              "y": 0,
+              "w": 4,
+              "h": 4
+            },
+            "laptop": {
+              "x": 0,
+              "y": 4,
+              "w": 4,
+              "h": 4
+            }
+          }
+        },
+        {
+          "componentId": "787da771-996a-4295-86f3-c5e084028731",
+          "layout": {
+            "mobile": {
+              "x": 0,
+              "y": 0,
+              "w": 4,
+              "h": 4
+            },
+            "laptop": {
+              "x": 0,
+              "y": 8,
+              "w": 4,
+              "h": 4
+            }
+          }
+        },
+        {
+          "componentId": "816c63ae-f518-4afb-ad4e-975c0e6219c5",
+          "layout": {
+            "mobile": {
+              "x": 0,
+              "y": 0,
+              "w": 4,
+              "h": 4
+            },
+            "laptop": {
+              "x": 0,
+              "y": 12,
+              "w": 4,
+              "h": 4
+            }
+          }
+        }
+      ],
+      "layoutType": "list",
+      "locked": false,
+      "layoutOptions": {},
+      "title": "预览"
     }
   ],
   "rootComponentId": "7a1b2c3d-4e5f-4a6b-8c9d-0e1f2a3b4c5d",
