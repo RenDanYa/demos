@@ -16,6 +16,9 @@
           "componentId": "2d393d0a-3527-4486-8317-4a7bdb1cd8b7"
         },
         {
+          "componentId": "e8f46ef0-627a-4a20-82a6-6cd4fe64f18c"
+        },
+        {
           "componentId": "57a14d3c-8d84-42bf-9ef6-62234c9daa51"
         },
         {
@@ -503,9 +506,6 @@
         },
         {
           "componentId": "787da771-996a-4295-86f3-c5e084028731"
-        },
-        {
-          "componentId": "e8f46ef0-627a-4a20-82a6-6cd4fe64f18c"
         }
       ],
       "layoutType": "list",
@@ -685,7 +685,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-17T01:59:20.266Z",
+      "updateAt": "2026-07-17T02:36:42.959Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -800,8 +800,7 @@
           "__$uncategorizedGroup"
         ],
         "collapseds": [
-          "__$uncategorizedGroup",
-          "拍的婚纱照哪里要用"
+          "__$uncategorizedGroup"
         ]
       },
       "filter": {
@@ -996,7 +995,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-17T01:35:40.441Z",
+      "updateAt": "2026-07-17T02:22:42.039Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -1075,7 +1074,7 @@
           "isShow": true,
           "type": "taskList",
           "options": {
-            "showTaskList": true,
+            "showTaskList": false,
             "showAllTasks": false,
             "hideTaskFields": false,
             "timeRecordStyle": "none",
