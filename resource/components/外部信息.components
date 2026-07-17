@@ -996,7 +996,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-17T01:11:04.419Z",
+      "updateAt": "2026-07-17T01:35:40.441Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -1074,7 +1074,16 @@
           "name": "待办",
           "isShow": true,
           "type": "taskList",
-          "options": {}
+          "options": {
+            "showTaskList": true,
+            "showAllTasks": false,
+            "hideTaskFields": false,
+            "timeRecordStyle": "none",
+            "insertPosition": {
+              "position": "BottomOfNote",
+              "headingLine": ""
+            }
+          }
         }
       ],
       "templates": [],
@@ -1113,8 +1122,7 @@
         "collapseds": [
           "__$uncategorizedGroup",
           "拍的婚纱照哪里要用",
-          "婚纱照预算",
-          "小徐不睡觉"
+          "婚纱照预算"
         ]
       },
       "filter": {
