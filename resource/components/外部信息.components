@@ -1184,10 +1184,13 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-07-17T00:59:43.323Z",
-      "updateAt": "2026-07-17T03:40:43.591Z",
+      "updateAt": "2026-07-19T07:30:13.349Z",
       "components": [
         {
           "componentId": "ai-btn-button-0002-0000-000000000002"
+        },
+        {
+          "componentId": "6b94394f-23c6-4003-8ac8-538a860bc302"
         },
         {
           "componentId": "single-btn-button-0002-0000-000000000020"
@@ -1889,6 +1892,34 @@
       "markdownsSource": "file",
       "markdownValue": "inbox/商品购买清单.md",
       "title": "商品购买内容"
+    },
+    {
+      "id": "6b94394f-23c6-4003-8ac8-538a860bc302",
+      "type": "button",
+      "titleAlign": "center",
+      "tabTitle": "问点点AI（多问题）",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2026-06-28T20:00:00.000Z",
+      "updateAt": "2026-07-19T07:31:07.448Z",
+      "text": "🎯 问点点AI（多问题）",
+      "buttonType": "common",
+      "clickActions": [
+        {
+          "type": "RunScript",
+          "id": "ai-runscript-id-0004-0000-000000000004",
+          "options": {
+            "expression": "runPython('D:/obsidian/demo/inbox/python/xiaohongshu_ai_batch.py', {timeout: 180000})"
+          }
+        }
+      ],
+      "checkActions": [],
+      "uncheckActions": [],
+      "isChecked": false,
+      "fullWidth": true,
+      "title": "问点点AI（多问题）"
     }
   ],
   "rootComponentId": "7a1b2c3d-4e5f-4a6b-8c9d-0e1f2a3b4c5d",
