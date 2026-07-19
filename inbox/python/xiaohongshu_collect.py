@@ -74,6 +74,7 @@ OBSIDIAN_ROOT = Path("d:/obsidian/demo")
 OUTPUT_ROOT = OBSIDIAN_ROOT / "05_long_project" / "小红书"
 IMAGES_ROOT = OBSIDIAN_ROOT / "inbox" / "附件"
 LOG_FILE = OUTPUT_ROOT / "_运行日志.md"
+LOG_DIR = OBSIDIAN_ROOT / "05_long_project" / "程序运行日志"  # 每次运行的独立日志目录
 SCRIPT_DIR = Path(__file__).parent
 
 # 防风控参数 (复用项目约定)
@@ -92,16 +93,42 @@ TIMEOUT_NOTE = 30
 TIMEOUT_COMMENTS = 30
 TIMEOUT_DOWNLOAD = 120
 
+# 每次脚本运行的独立日志文件 (延迟初始化, 第一次 log() 调用时创建)
+_RUN_LOG_FILE = None
+
+
+def _get_run_log_file():
+    """延迟创建当前脚本运行的日志文件
+
+    文件名: {脚本名}_{日期时间}.log
+    位置: LOG_DIR (d:\\obsidian\\demo\\05_long_project\\程序运行日志\\)
+    """
+    global _RUN_LOG_FILE
+    if _RUN_LOG_FILE is not None:
+        return _RUN_LOG_FILE
+    LOG_DIR.mkdir(parents=True, exist_ok=True)
+    script_name = Path(sys.argv[0]).stem if sys.argv and sys.argv[0] else "unknown"
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    _RUN_LOG_FILE = LOG_DIR / f"{script_name}_{timestamp}.log"
+    return _RUN_LOG_FILE
+
 
 def log(msg):
-    """统一日志输出 (utf-8 安全, 处理 Windows GBK 控制台)"""
+    """统一日志输出 (console + 文件, utf-8 安全, 处理 Windows GBK 控制台)"""
     line = f"[{datetime.now().strftime('%H:%M:%S')}] {msg}"
+    # Console
     try:
         print(line, flush=True)
     except UnicodeEncodeError:
         # Windows 控制台 GBK 无法编码 emoji 等, 替换为 ?
         safe = line.encode(sys.stdout.encoding or "utf-8", errors="replace").decode(sys.stdout.encoding or "utf-8", errors="replace")
         print(safe, flush=True)
+    # 文件日志 (追加, 不影响主流程)
+    try:
+        with open(_get_run_log_file(), "a", encoding="utf-8") as f:
+            f.write(line + "\n")
+    except Exception:
+        pass
 
 
 def show_input_dialog():
