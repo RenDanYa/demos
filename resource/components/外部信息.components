@@ -1481,13 +1481,16 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-07-17T00:59:43.323Z",
-      "updateAt": "2026-07-19T01:41:13.501Z",
+      "updateAt": "2026-07-19T02:35:39.027Z",
       "components": [
         {
           "componentId": "dd45582b-779f-40a2-8cd9-ed0afa4bbbfd"
         },
         {
           "componentId": "cc8c61ba-193d-4218-826f-3bf3469a71c8"
+        },
+        {
+          "componentId": "7e256997-7072-4e85-aa5a-75c80b59037c"
         }
       ],
       "layoutType": "column",
@@ -1670,10 +1673,13 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T10:37:12.400Z",
-      "updateAt": "2026-07-19T01:52:29.910Z",
+      "updateAt": "2026-07-19T02:42:05.043Z",
       "components": [
         {
           "componentId": "996e06af-a690-4f36-8140-30e253f67c8f"
+        },
+        {
+          "componentId": "f67c70ee-b389-4a40-b42a-67bcf9b1b428"
         },
         {
           "componentId": "86b14281-aca4-4481-8d17-db0490445701"
@@ -1837,6 +1843,51 @@
       "groupBy": "",
       "icon": "SlidersHorizontal",
       "components": []
+    },
+    {
+      "id": "7e256997-7072-4e85-aa5a-75c80b59037c",
+      "type": "button",
+      "titleAlign": "center",
+      "tabTitle": "搜索商品（批量）",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2026-06-28T20:00:00.000Z",
+      "updateAt": "2026-07-19T02:41:09.922Z",
+      "text": "🤖 搜索商品(批量)",
+      "buttonType": "common",
+      "clickActions": [
+        {
+          "type": "RunScript",
+          "id": "ai-runscript-id-0004-0000-000000000004",
+          "options": {
+            "expression": "runPython('D:/obsidian/demo/inbox/python/pdd_search_batch.py', {timeout: 180000})"
+          }
+        }
+      ],
+      "checkActions": [],
+      "uncheckActions": [],
+      "isChecked": false,
+      "fullWidth": true,
+      "title": "搜索商品（批量）",
+      "components": []
+    },
+    {
+      "id": "f67c70ee-b389-4a40-b42a-67bcf9b1b428",
+      "type": "markdown",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-07-19T02:41:44.805Z",
+      "updateAt": "2026-07-19T02:41:52.943Z",
+      "maxHeight": 300,
+      "contentAlign": "left",
+      "markdownsSource": "file",
+      "markdownValue": "inbox/商品购买清单.md"
     }
   ],
   "rootComponentId": "7a1b2c3d-4e5f-4a6b-8c9d-0e1f2a3b4c5d",
