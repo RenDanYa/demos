@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-"""拼多多商品搜索采集
+"""拼多多商品搜索 - 价格从低到高
 
-调用 opencli pdd search 命令, 把搜索结果(标题/价格/销量/图片)保存为 Obsidian Markdown。
-图片通过 CLI 的 --download 参数自动下载到 Obsidian 附件目录。
+调用 opencli pdd search --sort price_asc, 按价格升序返回商品。
+服务端排序 + 客户端二次排序 (CLI 内置兜底), 确保结果严格按价格升序。
 
 用法:
-    python pdd_search.py                          # 弹窗输入关键词 + 数量
-    python pdd_search.py "手机壳"                  # 默认采集 10 个
-    python pdd_search.py "手机壳" 5                # 指定数量
+    python pdd_search_cheap.py                          # 弹窗输入关键词 + 数量
+    python pdd_search_cheap.py "手机壳"                  # 默认采集 10 个
+    python pdd_search_cheap.py "手机壳" 5                # 指定数量
 """
 
 import json
@@ -53,8 +53,8 @@ def show_search_dialog():
     root.attributes("-topmost", True)
 
     kw = simpledialog.askstring(
-        "拼多多商品搜索",
-        "请输入搜索关键词:",
+        "拼多多低价搜索",
+        "请输入搜索关键词 (按价格升序):",
         initialvalue="手机壳",
         parent=root,
     )
@@ -78,20 +78,20 @@ def show_search_dialog():
     return kw, limit
 
 
-def search_products(query, limit, images_dir):
-    """调用 opencli pdd search, 下载图片到 images_dir
+def search_products_cheap(query, limit, images_dir):
+    """调用 opencli pdd search --sort price_asc, 下载图片到 images_dir
 
-    返回: [{rank, title, price, sales, image, url}, ...]
-    image 字段为本地文件路径 (下载成功) 或原始 URL (下载失败)
+    返回: [{rank, title, price, sales, image, url}, ...] (按价格升序)
     """
     args = [
         "pdd", "search", query,
         "--limit", str(limit),
+        "--sort", "price_asc",
         "--download",
         "--output", str(images_dir),
         "-f", "json",
     ]
-    log(f"调用 opencli pdd search (limit={limit}, 下载图片到 {images_dir.name}/)")
+    log(f"调用 opencli pdd search --sort price_asc (limit={limit})")
     ok, stdout, err = run_opencli(args, TIMEOUT_SEARCH)
     if not ok:
         log(f"pdd search 调用失败: {err}")
@@ -110,44 +110,39 @@ def search_products(query, limit, images_dir):
 
 
 def to_wikilink_path(local_path, obsidian_root):
-    """将本地图片路径转为 Obsidian wikilink 相对路径
-
-    例: D:\\obsidian\\demo\\inbox\\附件\\pdd_手机壳\\1_xxx.jpeg
-        -> 附件/pdd_手机壳/1_xxx.jpeg
-    """
+    """将本地图片路径转为 Obsidian wikilink 相对路径"""
     try:
         rel = Path(local_path).relative_to(obsidian_root)
         return str(rel).replace("\\", "/")
     except (ValueError, TypeError):
-        # 路径不在 obsidian_root 下, 或是 URL (下载失败时保留原始 URL)
         return str(local_path).replace("\\", "/")
 
 
 def build_markdown(query, products, images_dir):
-    """生成 Obsidian markdown (表格形式)
+    """生成 Obsidian markdown (表格形式, 价格升序)
 
     products: [{rank, title, price, sales, image, url}, ...]
-    images_dir: 图片下载目录 (Path)
     """
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     safe_title = re.sub(r"[\r\n]+", " ", query)[:50]
 
     lines = [
         "---",
-        "tags: [拼多多, 商品搜索]",
-        f'title: "拼多多搜索 - {safe_title}"',
+        "tags: [拼多多, 商品搜索, 低价排序]",
+        f'title: "拼多多低价搜索 - {safe_title}"',
         f"query: {json.dumps(query, ensure_ascii=False)}",
         'source: "拼多多搜索"',
         f"count: {len(products)}",
+        "sort: price_asc",
         f"createTime: {datetime.now().isoformat(timespec='seconds')}",
         "status: 已采集",
         "---",
         "",
-        f"# 拼多多搜索 - {query}",
+        f"# 拼多多低价搜索 - {query}",
         "",
-        f"> **关键词**: {query} | **数量**: {len(products)} | **时间**: {now}",
+        f"> **关键词**: {query} | **数量**: {len(products)} | **排序**: 价格升序 | **时间**: {now}",
         "",
-        "## 商品列表",
+        "## 商品列表 (价格从低到高)",
         "",
         "| # | 图片 | 商品 | 价格 | 销量 |",
         "|---|------|------|------|------|",
@@ -161,13 +156,11 @@ def build_markdown(query, products, images_dir):
         image = p.get("image", "")
         url = p.get("url", "")
 
-        # 商品名做成链接
         if url:
             product_cell = f"[{title}]({url})"
         else:
             product_cell = title
 
-        # 图片: 本地路径用 wikilink (表格内用 \| 转义管道符), URL 用 markdown 图片
         if image:
             if image.startswith("http"):
                 image_cell = f"![{title}]({image})"
@@ -188,12 +181,12 @@ def write_markdown(query, md_content):
     OUTPUT_ROOT.mkdir(parents=True, exist_ok=True)
 
     safe_name = sanitize_filename(query)[:60] or "untitled"
-    md_path = OUTPUT_ROOT / f"{safe_name}.md"
+    # 文件名加 _低价 后缀, 区分普通搜索
+    md_path = OUTPUT_ROOT / f"{safe_name}_低价.md"
 
-    # 同名文件已存在时, 加时间戳后缀避免覆盖
     if md_path.exists():
         ts = datetime.now().strftime("%H%M%S")
-        md_path = OUTPUT_ROOT / f"{safe_name}_{ts}.md"
+        md_path = OUTPUT_ROOT / f"{safe_name}_低价_{ts}.md"
 
     md_path.write_text(md_content, encoding="utf-8")
     return md_path
@@ -201,7 +194,7 @@ def write_markdown(query, md_content):
 
 def main():
     log("=" * 60)
-    log("拼多多商品搜索采集 启动")
+    log("拼多多低价搜索 (价格升序) 启动")
     log(f"OPENCLI_CMD: {OPENCLI_CMD}")
     log(f"输出目录: {OUTPUT_ROOT}")
     log("=" * 60)
@@ -226,20 +219,20 @@ def main():
     log(f"关键词: {query}")
     log(f"数量: {limit}")
 
-    # 2. 准备图片目录
+    # 2. 准备图片目录 (与普通搜索共用, 同关键词的图片可复用)
     images_dir_name = f"pdd_{sanitize_filename(query)[:30]}"
     images_dir = IMAGES_ROOT / images_dir_name
     images_dir.mkdir(parents=True, exist_ok=True)
 
-    # 3. 调用 opencli pdd search (含图片下载)
+    # 3. 调用 opencli pdd search --sort price_asc
     log("搜索中, 请稍候 (约 15-30 秒)...")
-    products = search_products(query, limit, images_dir)
+    products = search_products_cheap(query, limit, images_dir)
 
     if not products:
         log("未获取到商品, 退出")
         return 2
 
-    log(f"获取到 {len(products)} 个商品")
+    log(f"获取到 {len(products)} 个商品 (价格升序)")
 
     # 4. 生成 markdown
     md_content = build_markdown(query, products, images_dir)
