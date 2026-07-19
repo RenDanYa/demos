@@ -78,20 +78,33 @@ def show_search_dialog():
     return kw, limit
 
 
+def parse_price(price_str):
+    """从价格字符串中提取数值, 用于排序
+
+    例: '¥3.96' -> 3.96, '¥10' -> 10.0, '' -> float('inf')
+    """
+    if not price_str:
+        return float('inf')
+    m = re.search(r'[\d.]+', price_str)
+    try:
+        return float(m.group()) if m else float('inf')
+    except (ValueError, AttributeError):
+        return float('inf')
+
+
 def search_products_cheap(query, limit, images_dir):
-    """调用 opencli pdd search --sort price_asc, 下载图片到 images_dir
+    """调用 opencli pdd search (综合排序), 在 Python 中按价格升序重排
 
     返回: [{rank, title, price, sales, image, url}, ...] (按价格升序)
     """
     args = [
         "pdd", "search", query,
         "--limit", str(limit),
-        "--sort", "price_asc",
         "--download",
         "--output", str(images_dir),
         "-f", "json",
     ]
-    log(f"调用 opencli pdd search --sort price_asc (limit={limit})")
+    log(f"调用 opencli pdd search (limit={limit}, 综合排序)")
     ok, stdout, err = run_opencli(args, TIMEOUT_SEARCH)
     if not ok:
         log(f"pdd search 调用失败: {err}")
@@ -99,14 +112,21 @@ def search_products_cheap(query, limit, images_dir):
 
     try:
         data = json.loads(stdout)
-        if isinstance(data, list):
-            return data
-        log(f"意外的 JSON 结构: {type(data).__name__}")
-        return None
+        if not isinstance(data, list):
+            log(f"意外的 JSON 结构: {type(data).__name__}")
+            return None
     except json.JSONDecodeError as e:
         log(f"JSON 解析失败: {e}")
         log(f"原始 stdout 前 300 字符: {stdout[:300] if stdout else '(空)'}")
         return None
+
+    # 在 Python 中按价格升序排序 (CLI 返回的是综合排序)
+    data.sort(key=lambda p: parse_price(p.get("price", "")))
+    # 重新编号 rank
+    for i, p in enumerate(data, 1):
+        p["rank"] = i
+    log(f"已按价格升序重排 {len(data)} 个商品")
+    return data
 
 
 def to_wikilink_path(local_path, obsidian_root):
@@ -166,7 +186,7 @@ def build_markdown(query, products, images_dir):
                 image_cell = f"![{title}]({image})"
             else:
                 wiki_path = to_wikilink_path(image, OBSIDIAN_ROOT)
-                image_cell = f"![[{wiki_path}\\|120]]"
+                image_cell = f"![[{wiki_path}\\|300]]"
         else:
             image_cell = ""
 

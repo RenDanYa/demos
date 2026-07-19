@@ -1499,14 +1499,14 @@
       "id": "3ae040f8-6e77-42dc-af31-d9b5e84e782d",
       "type": "dynamicDataView",
       "titleAlign": "center",
-      "tabTitle": "明细",
+      "tabTitle": "拼多多商品采集（低价）",
       "maxWidthRatio": -1,
       "showBorder": false,
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-19T01:40:15.656Z",
-      "viewType": "table",
+      "updateAt": "2026-07-19T01:56:22.886Z",
+      "viewType": "gallary",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
         {
@@ -1515,23 +1515,19 @@
           "type": "text",
           "isShow": true,
           "wrap": false,
-          "options": {}
+          "options": {
+            "width": "173"
+          }
         },
         {
           "id": "277960f4-331d-49a5-ba53-e9d2a6f916ef",
           "name": "count",
           "type": "number",
-          "isShow": true,
+          "isShow": false,
           "wrap": false,
-          "options": {}
-        },
-        {
-          "id": "a79b016c-9461-4022-b0c8-d06965b36fad",
-          "name": "createTime",
-          "type": "datetime",
-          "isShow": true,
-          "wrap": false,
-          "options": {}
+          "options": {
+            "width": "100"
+          }
         },
         {
           "id": "481f2589-e04e-4362-a405-13fe81824800",
@@ -1539,7 +1535,7 @@
           "isShow": true,
           "type": "formula",
           "options": {
-            "formula": "extractHeadingContent('## 商品列表')",
+            "formula": "extractHeadingContent('## 商品列表 (价格从低到高)')",
             "renderType": "markdown",
             "width": "661"
           },
@@ -1558,7 +1554,7 @@
         "showAllProperties": false,
         "items": [],
         "cover": {
-          "type": "image",
+          "type": "none",
           "source": "property",
           "fit": "cover",
           "layout": "components--page-card-cover-landscape",
@@ -1600,10 +1596,18 @@
             "property": "${file.extension}",
             "value": "md",
             "conditions": []
+          },
+          {
+            "id": "21dacd44-28fe-4619-a510-d7661c9d5b4b",
+            "type": "filter",
+            "operator": "contains",
+            "property": "${file.basename}",
+            "value": "低价",
+            "conditions": []
           }
         ]
       },
-      "title": "拼多多商品采集",
+      "title": "拼多多商品采集（低价）",
       "sort": {
         "orders": [
           {
@@ -1628,8 +1632,11 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-07-17T03:40:47.214Z",
-      "updateAt": "2026-07-17T03:41:31.755Z",
+      "updateAt": "2026-07-19T01:54:13.253Z",
       "components": [
+        {
+          "componentId": "d7cdbfb2-613b-4f2a-87aa-bfcbed68ff92"
+        },
         {
           "componentId": "3ae040f8-6e77-42dc-af31-d9b5e84e782d",
           "layout": {
@@ -1648,7 +1655,7 @@
           }
         }
       ],
-      "layoutType": "list",
+      "layoutType": "column",
       "locked": false,
       "layoutOptions": {},
       "title": "预览"
@@ -1663,7 +1670,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T10:37:12.400Z",
-      "updateAt": "2026-07-19T01:09:03.023Z",
+      "updateAt": "2026-07-19T01:52:29.910Z",
       "components": [
         {
           "componentId": "996e06af-a690-4f36-8140-30e253f67c8f"
@@ -1704,6 +1711,131 @@
       "isChecked": false,
       "fullWidth": true,
       "title": "搜索商品（低价）",
+      "components": []
+    },
+    {
+      "id": "d7cdbfb2-613b-4f2a-87aa-bfcbed68ff92",
+      "type": "dynamicDataView",
+      "titleAlign": "center",
+      "tabTitle": "明细",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-06-28T19:30:00.000Z",
+      "updateAt": "2026-07-19T01:55:59.231Z",
+      "viewType": "gallary",
+      "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
+      "properties": [
+        {
+          "id": "__componentsTitleProperty_0x7c00",
+          "name": "文件名",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "277960f4-331d-49a5-ba53-e9d2a6f916ef",
+          "name": "count",
+          "type": "number",
+          "isShow": false,
+          "wrap": false,
+          "options": {
+            "width": "98"
+          }
+        },
+        {
+          "id": "481f2589-e04e-4362-a405-13fe81824800",
+          "name": "content",
+          "isShow": true,
+          "type": "formula",
+          "options": {
+            "formula": "extractHeadingContent('## 商品列表')",
+            "renderType": "markdown",
+            "width": "661"
+          },
+          "alias": "列表",
+          "wrap": true
+        }
+      ],
+      "templates": [],
+      "groups": [],
+      "colorfulGroups": true,
+      "viewOptions": {
+        "openPageIn": "modal",
+        "openPageAfterCreate": true,
+        "itemSize": "components--page-card-large",
+        "showPropertyName": true,
+        "showAllProperties": false,
+        "items": [],
+        "cover": {
+          "type": "none",
+          "source": "property",
+          "fit": "cover",
+          "layout": "components--page-card-cover-landscape",
+          "position": "left",
+          "sourceValue": "imageUrl"
+        },
+        "pinFiltersToMenuBar": true,
+        "hideHeaderMenu": false,
+        "showGrid": false,
+        "heightType": "fixed",
+        "heightValue": 500,
+        "rowHeight": 32
+      },
+      "groupStates": {
+        "sort": "nameAsc",
+        "format": "none",
+        "statics": [],
+        "orders": [],
+        "hiddens": [],
+        "collapseds": []
+      },
+      "filter": {
+        "id": "3d4e5f6a-7b8c-4c9d-1f2a-3b4c5d6e7f81",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "4e5f6a7b-8c9d-4d0e-2a3b-4c5d6e7f8092",
+            "type": "filter",
+            "operator": "contains",
+            "property": "${file.parent}",
+            "value": "05_long_project/拼多多",
+            "conditions": []
+          },
+          {
+            "id": "5f6a7b8c-9d0e-4e1f-3b4c-5d6e7f809103",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.extension}",
+            "value": "md",
+            "conditions": []
+          },
+          {
+            "id": "21dacd44-28fe-4619-a510-d7661c9d5b4b",
+            "type": "filter",
+            "operator": "not_contains",
+            "property": "${file.basename}",
+            "value": "低价",
+            "conditions": []
+          }
+        ]
+      },
+      "title": "拼多多商品采集",
+      "sort": {
+        "orders": [
+          {
+            "id": "7b8c9d0e-1f2a-4a3b-5d6e-7f8091021325",
+            "property": "${file.ctime}",
+            "direction": "desc",
+            "disabled": false
+          }
+        ]
+      },
+      "groupBy": "",
+      "icon": "SlidersHorizontal",
       "components": []
     }
   ],

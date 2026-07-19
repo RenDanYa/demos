@@ -173,7 +173,7 @@ def build_markdown(query, products, images_dir):
                 image_cell = f"![{title}]({image})"
             else:
                 wiki_path = to_wikilink_path(image, OBSIDIAN_ROOT)
-                image_cell = f"![[{wiki_path}\\|120]]"
+                image_cell = f"![[{wiki_path}\\|300]]"
         else:
             image_cell = ""
 
