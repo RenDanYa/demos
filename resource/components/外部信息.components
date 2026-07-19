@@ -19,6 +19,9 @@
           "componentId": "0ab9930c-71b9-4ea2-979a-7a1c39f5bd0f"
         },
         {
+          "componentId": "f67c70ee-b389-4a40-b42a-67bcf9b1b428"
+        },
+        {
           "componentId": "e8f46ef0-627a-4a20-82a6-6cd4fe64f18c"
         },
         {
@@ -1679,9 +1682,6 @@
           "componentId": "996e06af-a690-4f36-8140-30e253f67c8f"
         },
         {
-          "componentId": "f67c70ee-b389-4a40-b42a-67bcf9b1b428"
-        },
-        {
           "componentId": "86b14281-aca4-4481-8d17-db0490445701"
         }
       ],
@@ -1877,17 +1877,18 @@
       "id": "f67c70ee-b389-4a40-b42a-67bcf9b1b428",
       "type": "markdown",
       "titleAlign": "center",
-      "tabTitle": "",
+      "tabTitle": "商品购买内容",
       "maxWidthRatio": -1,
       "showBorder": false,
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-07-19T02:41:44.805Z",
-      "updateAt": "2026-07-19T02:41:52.943Z",
-      "maxHeight": 300,
+      "updateAt": "2026-07-19T06:46:44.207Z",
+      "maxHeight": 1000,
       "contentAlign": "left",
       "markdownsSource": "file",
-      "markdownValue": "inbox/商品购买清单.md"
+      "markdownValue": "inbox/商品购买清单.md",
+      "title": "商品购买内容"
     }
   ],
   "rootComponentId": "7a1b2c3d-4e5f-4a6b-8c9d-0e1f2a3b4c5d",
