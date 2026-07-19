@@ -1934,7 +1934,7 @@
       "showTitle": true,
       "showShadow": true,
       "createAt": "2026-06-28T20:00:00.000Z",
-      "updateAt": "2026-07-19T07:55:34.750Z",
+      "updateAt": "2026-07-19T08:17:53.170Z",
       "text": "🤖 搜索商品（批量）",
       "buttonType": "common",
       "clickActions": [
@@ -1942,7 +1942,7 @@
           "type": "RunScript",
           "id": "ai-runscript-id-0004-0000-000000000004",
           "options": {
-            "expression": "runPython('D:/obsidian/demo/inbox/python/pdd_search.py', {timeout: 180000})"
+            "expression": "runPython('D:/obsidian/demo/inbox/python/pdd_search_batch_default.py', {timeout: 180000})"
           }
         }
       ],
