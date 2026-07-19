@@ -1487,10 +1487,13 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-07-17T00:59:43.323Z",
-      "updateAt": "2026-07-19T02:35:39.027Z",
+      "updateAt": "2026-07-19T07:55:18.863Z",
       "components": [
         {
           "componentId": "dd45582b-779f-40a2-8cd9-ed0afa4bbbfd"
+        },
+        {
+          "componentId": "6b102a95-1b64-4cdf-9835-a74e6dbfac7a"
         },
         {
           "componentId": "cc8c61ba-193d-4218-826f-3bf3469a71c8"
@@ -1851,14 +1854,14 @@
       "id": "7e256997-7072-4e85-aa5a-75c80b59037c",
       "type": "button",
       "titleAlign": "center",
-      "tabTitle": "搜索商品（批量）",
+      "tabTitle": "搜索商品（低价批量）",
       "maxWidthRatio": -1,
       "showBorder": true,
       "showTitle": true,
       "showShadow": true,
       "createAt": "2026-06-28T20:00:00.000Z",
-      "updateAt": "2026-07-19T02:41:09.922Z",
-      "text": "🤖 搜索商品(批量)",
+      "updateAt": "2026-07-19T07:55:07.727Z",
+      "text": "🤖 搜索商品(低价批量)",
       "buttonType": "common",
       "clickActions": [
         {
@@ -1873,7 +1876,7 @@
       "uncheckActions": [],
       "isChecked": false,
       "fullWidth": true,
-      "title": "搜索商品（批量）",
+      "title": "搜索商品（低价批量）",
       "components": []
     },
     {
@@ -1920,6 +1923,35 @@
       "isChecked": false,
       "fullWidth": true,
       "title": "问点点AI（多问题）"
+    },
+    {
+      "id": "6b102a95-1b64-4cdf-9835-a74e6dbfac7a",
+      "type": "button",
+      "titleAlign": "center",
+      "tabTitle": "搜索商品（批量）",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2026-06-28T20:00:00.000Z",
+      "updateAt": "2026-07-19T07:55:34.750Z",
+      "text": "🤖 搜索商品（批量）",
+      "buttonType": "common",
+      "clickActions": [
+        {
+          "type": "RunScript",
+          "id": "ai-runscript-id-0004-0000-000000000004",
+          "options": {
+            "expression": "runPython('D:/obsidian/demo/inbox/python/pdd_search.py', {timeout: 180000})"
+          }
+        }
+      ],
+      "checkActions": [],
+      "uncheckActions": [],
+      "isChecked": false,
+      "fullWidth": true,
+      "title": "搜索商品（批量）",
+      "components": []
     }
   ],
   "rootComponentId": "7a1b2c3d-4e5f-4a6b-8c9d-0e1f2a3b4c5d",
