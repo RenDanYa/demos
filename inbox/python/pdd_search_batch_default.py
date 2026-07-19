@@ -14,10 +14,12 @@ pdd_search 的搜索逻辑 (综合排序), 生成多个 Obsidian Markdown 文件
     python pdd_search_batch_default.py "d:\\path\\to\\list.md" 5          # 每个商品搜 5 个结果
 """
 
+import json
 import random
 import re
 import sys
 import time
+from datetime import datetime
 from pathlib import Path
 
 # 复用 pdd_search 的搜索/生成逻辑 (综合排序)
@@ -43,6 +45,125 @@ INTERVAL_MAX = 10
 BATCH_SIZE = 5
 BATCH_REST_MIN = 20
 BATCH_REST_MAX = 40
+
+# ============ 防止系统睡眠 (Windows) ============
+# 长时间运行批处理时, Windows 电源策略会在空闲数分钟后让系统进入睡眠,
+# 导致 python 进程被挂起, 网络断开, opencli 子进程异常, 整个批处理静默中断。
+# 使用 SetThreadExecutionState 在运行期间阻止系统睡眠。
+try:
+    import ctypes
+    _ES_CONTINUOUS = 0x80000000
+    _ES_SYSTEM_REQUIRED = 0x00000001
+    _ES_DISPLAY_REQUIRED = 0x00000002
+    HAS_CTYPES = True
+except (ImportError, AttributeError):
+    HAS_CTYPES = False
+
+
+def prevent_sleep():
+    """阻止系统进入睡眠 (仅 Windows 生效)"""
+    if not HAS_CTYPES:
+        return False
+    try:
+        # ES_CONTINUOUS | ES_SYSTEM_REQUIRED: 保持系统运行
+        # 不加 ES_DISPLAY_REQUIRED, 允许屏幕关闭省电, 但不睡眠
+        ctypes.windll.kernel32.SetThreadExecutionState(
+            _ES_CONTINUOUS | _ES_SYSTEM_REQUIRED
+        )
+        return True
+    except Exception:
+        return False
+
+
+def allow_sleep():
+    """恢复系统默认睡眠策略"""
+    if not HAS_CTYPES:
+        return
+    try:
+        ctypes.windll.kernel32.SetThreadExecutionState(_ES_CONTINUOUS)
+    except Exception:
+        pass
+
+
+# ============ 断点续传 (进度文件) ============
+PROGRESS_FILE = OUTPUT_ROOT / "_pdd_batch_progress.json"
+
+
+def load_progress():
+    """加载进度文件, 返回 {keyword: {"status":..., "path":..., "count":..., "time":...}}"""
+    if not PROGRESS_FILE.exists():
+        return {}
+    try:
+        return json.loads(PROGRESS_FILE.read_text(encoding="utf-8"))
+    except Exception as e:
+        log(f"进度文件读取失败 (忽略, 从头开始): {e}")
+        return {}
+
+
+def save_progress(progress):
+    """保存进度文件 (原子写: 先写 .tmp 再 replace)"""
+    try:
+        OUTPUT_ROOT.mkdir(parents=True, exist_ok=True)
+        tmp = PROGRESS_FILE.with_suffix(".tmp")
+        tmp.write_text(
+            json.dumps(progress, ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
+        tmp.replace(PROGRESS_FILE)
+    except Exception as e:
+        log(f"进度文件保存失败 (不影响主流程): {e}")
+
+
+def find_existing_md(keyword):
+    """查找输出目录中该商品已生成的 md 文件 (基础名或带时间戳后缀)
+
+    write_markdown 命名规则: {safe_name}.md, 同名已存在时加 _HHMMSS 后缀。
+    返回 Path 或 None (空文件视为未完成)。
+    """
+    safe_name = sanitize_filename(keyword)[:60] or "untitled"
+    base = OUTPUT_ROOT / f"{safe_name}.md"
+    if base.exists() and base.stat().st_size > 0:
+        return base
+    for p in OUTPUT_ROOT.glob(f"{safe_name}_*.md"):
+        if p.stat().st_size > 0:
+            return p
+    return None
+
+
+def check_done(progress, keyword):
+    """检查某商品是否已完成, 返回 (done, info)
+
+    done=True 时 info 为 {"count":..., "path":...}:
+    - 优先用进度文件记录 (含商品数量)
+    - 进度文件无记录但输出目录已有 md 文件 -> 兜底返回 (count 未知记为 0)
+    """
+    info = progress.get(keyword)
+    if info and info.get("status") == "ok":
+        md_path = info.get("path")
+        if md_path and Path(md_path).exists():
+            return True, info
+    # 兜底: 输出目录已有 md 文件 (即使进度文件丢失/损坏)
+    existing = find_existing_md(keyword)
+    if existing:
+        return True, {"status": "ok", "count": 0, "path": str(existing), "note": "detected from existing md"}
+    return False, None
+
+
+# ============ 心跳 sleep ============
+def sleep_with_heartbeat(seconds, label="", heartbeat_interval=10):
+    """sleep 但每隔 heartbeat_interval 秒打印心跳, 避免日志长时间无输出看似卡住
+
+    用于批次休息 (20-40s) 等较长的等待。短间隔 (5-10s) 直接 sleep 不打印心跳。
+    """
+    if label:
+        log(f"  {label} ({seconds:.0f}s) ...")
+    elapsed = 0.0
+    while elapsed < seconds:
+        chunk = min(heartbeat_interval, seconds - elapsed)
+        time.sleep(chunk)
+        elapsed += chunk
+        if elapsed < seconds:
+            log(f"  ... 心跳 ({elapsed:.0f}/{seconds:.0f}s)")
 
 
 def parse_list_file(file_path):
@@ -116,6 +237,21 @@ def main():
     log("拼多多批量搜索 (综合排序) 启动")
     log("=" * 60)
 
+    # 0. 阻止系统睡眠 (防止空闲后 Windows 睡眠导致中断)
+    if prevent_sleep():
+        log("已阻止系统睡眠 (运行期间不会自动休眠, 结束后自动恢复)")
+    else:
+        log("警告: 无法阻止系统睡眠 (非 Windows 或无 ctypes), 请保持电脑唤醒")
+
+    try:
+        return _run_batch()
+    finally:
+        # 无论正常结束 / 异常 / Ctrl+C, 都恢复系统睡眠策略
+        allow_sleep()
+        log("已恢复系统睡眠策略")
+
+
+def _run_batch():
     # 1. 获取清单文件路径 + 每个商品数量
     list_file = DEFAULT_LIST_FILE
     limit = DEFAULT_LIMIT
@@ -139,29 +275,64 @@ def main():
         log(f"清单为空或无法解析: {list_file}")
         return 1
 
+    # 3. 加载进度 (断点续传)
+    progress = load_progress()
+    skipped = 0
+
     log(f"清单文件: {list_file}")
     log(f"共 {len(items)} 个商品, 每个搜索 {limit} 个结果")
     log(f"输出目录: {OUTPUT_ROOT}")
+    log(f"进度文件: {PROGRESS_FILE}")
+    # 断点续传检测: 进度文件 + 输出目录 md 文件双重判断
+    done_count = sum(1 for kw in items if check_done(progress, kw)[0])
+    if done_count:
+        log(f"断点续传: 检测到 {done_count} 个已完成, 将跳过")
     log("-" * 60)
 
-    # 3. 逐个搜索
+    # 4. 逐个搜索
     results = []
     total = len(items)
     start_time = time.time()
 
     for i, keyword in enumerate(items, 1):
+        # 断点续传: 跳过已完成 (进度文件 + md 文件兜底)
+        done, info = check_done(progress, keyword)
+        if done:
+            count_str = info.get("count", "?")
+            note = info.get("note", "")
+            tag = f" ({note})" if note else ""
+            log(f"[{i}/{total}] {keyword} - 已完成, 跳过 ({count_str} 个商品){tag}")
+            results.append({
+                "status": "ok",
+                "keyword": keyword,
+                "count": info.get("count", 0),
+                "path": info.get("path", ""),
+                "skipped": True,
+            })
+            skipped += 1
+            # 若仅靠 md 兜底判定 (进度文件无记录), 补登进度文件
+            if "note" in info:
+                progress[keyword] = {
+                    "status": "ok",
+                    "count": info.get("count", 0),
+                    "path": info.get("path", ""),
+                    "time": datetime.now().isoformat(timespec="seconds"),
+                    "note": "detected from existing md",
+                }
+                save_progress(progress)
+            continue
+
         log(f"[{i}/{total}] {keyword}")
 
-        # 间隔 (第 2 条起)
+        # 间隔 (第 2 条起): 短间隔直接 sleep, 无心跳
         if i > 1:
             wait = random.uniform(INTERVAL_MIN, INTERVAL_MAX)
             time.sleep(wait)
 
-        # 批次休息
+        # 批次休息: 较长等待, 用心跳 sleep
         if i > 1 and (i - 1) % BATCH_SIZE == 0:
             rest = random.uniform(BATCH_REST_MIN, BATCH_REST_MAX)
-            log(f"  已处理 {i-1}/{total}, 批次休息 {rest:.0f} 秒...")
-            time.sleep(rest)
+            sleep_with_heartbeat(rest, label=f"已处理 {i-1}/{total}, 批次休息")
 
         # 准备图片目录
         images_dir_name = f"pdd_{sanitize_filename(keyword)[:30]}"
@@ -185,17 +356,25 @@ def main():
                 "count": len(products),
                 "path": str(md_path),
             })
+            # 成功后立即保存进度 (断点续传关键)
+            progress[keyword] = {
+                "status": "ok",
+                "count": len(products),
+                "path": str(md_path),
+                "time": datetime.now().isoformat(timespec="seconds"),
+            }
+            save_progress(progress)
         except Exception as e:
             log(f"  异常: {e}")
             results.append({"status": "fail", "keyword": keyword, "error": str(e)})
 
-    # 4. 汇总
+    # 5. 汇总
     elapsed = time.time() - start_time
     ok_count = sum(1 for r in results if r["status"] == "ok")
     fail_count = len(results) - ok_count
 
     log("=" * 60)
-    log(f"批量搜索完成: 成功 {ok_count}/{total}, 失败 {fail_count}, 用时 {elapsed:.0f}s")
+    log(f"批量搜索完成: 成功 {ok_count}/{total}, 失败 {fail_count}, 跳过 {skipped}, 用时 {elapsed:.0f}s")
 
     if fail_count:
         log("失败列表:")
