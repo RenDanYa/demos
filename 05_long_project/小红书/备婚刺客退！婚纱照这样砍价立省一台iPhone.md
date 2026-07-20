@@ -11,7 +11,7 @@ tags:
   - 婚礼经验分享
   - 备婚
 title: 备婚刺客退！婚纱照这样砍价立省一台iPhone
-query: 备婚刺客退！婚纱照这样砍价立省一台iPhone
+query: 婚纱照预算
 source: 单篇采集
 likes: 2
 publishedAt: 2025-10-22
