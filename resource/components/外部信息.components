@@ -74,7 +74,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-17T01:11:43.861Z",
+      "updateAt": "2026-07-20T07:42:05.703Z",
       "viewType": "list",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -163,7 +163,7 @@
       "groups": [],
       "colorfulGroups": true,
       "viewOptions": {
-        "openPageIn": "modal",
+        "openPageIn": "split",
         "openPageAfterCreate": true,
         "itemSize": "components--page-card-medium",
         "showPropertyName": false,
@@ -255,7 +255,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-17T01:03:16.204Z",
+      "updateAt": "2026-07-20T07:42:00.032Z",
       "viewType": "gallary",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -347,7 +347,7 @@
       "groups": [],
       "colorfulGroups": true,
       "viewOptions": {
-        "openPageIn": "modal",
+        "openPageIn": "split",
         "openPageAfterCreate": true,
         "itemSize": "components--page-card-large",
         "showPropertyName": true,
@@ -682,7 +682,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-20T06:15:57.819Z",
+      "updateAt": "2026-07-20T07:42:20.224Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -767,7 +767,7 @@
       "groups": [],
       "colorfulGroups": true,
       "viewOptions": {
-        "openPageIn": "modal",
+        "openPageIn": "split",
         "openPageAfterCreate": true,
         "itemSize": "components--page-card-large",
         "showPropertyName": false,
@@ -798,9 +798,8 @@
         ],
         "collapseds": [
           "__$uncategorizedGroup",
-          "婚前多久试婚纱？",
-          "婚庆主要提供哪些服务？",
-          "婚前试婚纱攻略"
+          "婚前试婚纱攻略",
+          "婚前多久试婚纱？"
         ]
       },
       "filter": {
@@ -995,7 +994,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-17T03:42:13.032Z",
+      "updateAt": "2026-07-20T07:41:55.413Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -1089,7 +1088,7 @@
       "groups": [],
       "colorfulGroups": true,
       "viewOptions": {
-        "openPageIn": "modal",
+        "openPageIn": "split",
         "openPageAfterCreate": true,
         "itemSize": "components--page-card-large",
         "showPropertyName": false,
