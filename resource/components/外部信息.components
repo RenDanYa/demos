@@ -682,7 +682,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-20T14:54:37.486Z",
+      "updateAt": "2026-07-20T23:42:05.271Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -703,7 +703,7 @@
           "isShow": true,
           "wrap": false,
           "options": {
-            "width": "226"
+            "width": "120"
           }
         },
         {
@@ -761,7 +761,7 @@
           "isShow": true,
           "type": "taskList",
           "options": {
-            "showTaskList": true,
+            "showTaskList": false,
             "showAllTasks": false,
             "hideTaskFields": false,
             "timeRecordStyle": "none",
@@ -807,9 +807,7 @@
         ],
         "collapseds": [
           "__$uncategorizedGroup",
-          "异地租纱攻略怎么租",
-          "试纱一般需要多久",
-          "买婚鞋攻略"
+          "试纱一般需要多久"
         ]
       },
       "filter": {
