@@ -1,14 +1,20 @@
 ---
-tags: ["备婚", "婚礼预算", "备婚省钱攻略", "备婚攻略", "备婚清单", "婚礼前的准备"]
-title: "近期备婚日常｜婚礼预算更新ing"
-query: "婚庆主要提供哪些服务？"
-source: "多篇采集"
+tags:
+  - 备婚
+  - 婚礼预算
+  - 备婚省钱攻略
+  - 备婚攻略
+  - 备婚清单
+  - 婚礼前的准备
+title: 近期备婚日常｜婚礼预算更新ing
+query: 婚庆主要提供哪些服务？
+source: 多篇采集
 likes: 7
-publishedAt: "7天前 四川"
-url: "https://www.xiaohongshu.com/search_result/6a536068000000002200a74a?xsec_token=ABCY2dAzxIPvvQPJRSagIQlt2rgztYd0j2e30kC4pzCh0=&xsec_source="
-imageUrl: "附件/6a536068000000002200a74a/6a536068000000002200a74a_1.jpg"
+publishedAt: 7天前 四川
+url: https://www.xiaohongshu.com/search_result/6a536068000000002200a74a?xsec_token=ABCY2dAzxIPvvQPJRSagIQlt2rgztYd0j2e30kC4pzCh0=&xsec_source=
+imageUrl: 附件/6a536068000000002200a74a/6a536068000000002200a74a_1.jpg
 createTime: 2026-07-20T08:11:31
-status: 已采集
+status: 已看完
 todo_generated: 2026-07-20 08:35:00
 ---
 
@@ -38,7 +44,16 @@ todo_generated: 2026-07-20 08:35:00
 > 提取时间：2026-07-20 08:35:00
 > 本笔记待办已同步到 [[待办/婚庆待办]] 汇总索引
 
-### 婚礼预算更新
-- [ ] 重新核算婚礼香烟预算（酒店铺地毯后室内不能抽烟，可适当削减）
-- [ ] 确定婚宴桌上每人红包的金额标准
-- [ ] 逐项确认剩余未定项目的预算和时间安排
+### 婚礼购买
+
+**服饰类**：  
+- 西装礼服（衬衫、马甲、西裤、西服、皮鞋）：未列金额  
+- 婚纱礼服（出门纱、主纱、敬酒服）：未列金额  
+- 伴娘服：随礼服赠送  
+- 伴郎服：随礼服赠送  
+- 新衣服：未列金额  
+
+**其他**：  
+- 婚房布置（气球、拉花、喜字贴、对联等）：未列金额  
+- 红包（面额2、12、20、120、200元）：未列总价  
+- 伴手礼（伴郎）
