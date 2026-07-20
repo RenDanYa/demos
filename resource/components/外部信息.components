@@ -682,7 +682,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-20T07:42:20.224Z",
+      "updateAt": "2026-07-20T08:32:49.321Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -798,8 +798,7 @@
         ],
         "collapseds": [
           "__$uncategorizedGroup",
-          "婚前试婚纱攻略",
-          "婚前多久试婚纱？"
+          "婚庆主要提供哪些服务？"
         ]
       },
       "filter": {
