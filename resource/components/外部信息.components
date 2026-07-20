@@ -13,13 +13,13 @@
       "updateAt": "2026-07-19T01:08:58.808Z",
       "components": [
         {
+          "componentId": "2d401686-b6c2-4409-b553-87d0867586b2"
+        },
+        {
           "componentId": "2d393d0a-3527-4486-8317-4a7bdb1cd8b7"
         },
         {
           "componentId": "0ab9930c-71b9-4ea2-979a-7a1c39f5bd0f"
-        },
-        {
-          "componentId": "f67c70ee-b389-4a40-b42a-67bcf9b1b428"
         },
         {
           "componentId": "e8f46ef0-627a-4a20-82a6-6cd4fe64f18c"
@@ -1883,18 +1883,18 @@
       "id": "f67c70ee-b389-4a40-b42a-67bcf9b1b428",
       "type": "markdown",
       "titleAlign": "center",
-      "tabTitle": "商品购买内容",
+      "tabTitle": "拼多多购买清单",
       "maxWidthRatio": -1,
-      "showBorder": false,
+      "showBorder": true,
       "showTitle": true,
-      "showShadow": false,
+      "showShadow": true,
       "createAt": "2026-07-19T02:41:44.805Z",
-      "updateAt": "2026-07-19T06:46:44.207Z",
+      "updateAt": "2026-07-19T23:50:19.222Z",
       "maxHeight": 1000,
       "contentAlign": "left",
       "markdownsSource": "file",
       "markdownValue": "inbox/商品购买清单.md",
-      "title": "商品购买内容"
+      "title": "拼多多购买清单"
     },
     {
       "id": "6b94394f-23c6-4003-8ac8-538a860bc302",
@@ -1952,6 +1952,47 @@
       "fullWidth": true,
       "title": "搜索商品（批量）",
       "components": []
+    },
+    {
+      "id": "2d401686-b6c2-4409-b553-87d0867586b2",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "清单",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-07-19T23:48:05.339Z",
+      "updateAt": "2026-07-19T23:49:46.092Z",
+      "components": [
+        {
+          "componentId": "f67c70ee-b389-4a40-b42a-67bcf9b1b428"
+        },
+        {
+          "componentId": "c202464d-fb65-4484-bfb8-c0fb858bf29f"
+        }
+      ],
+      "layoutType": "column",
+      "locked": false,
+      "layoutOptions": {},
+      "title": "清单"
+    },
+    {
+      "id": "c202464d-fb65-4484-bfb8-c0fb858bf29f",
+      "type": "markdown",
+      "titleAlign": "center",
+      "tabTitle": "小红书问题清单",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2026-07-19T02:41:44.805Z",
+      "updateAt": "2026-07-19T23:49:16.750Z",
+      "maxHeight": 1000,
+      "contentAlign": "left",
+      "markdownsSource": "file",
+      "markdownValue": "inbox/问题清单.md",
+      "title": "小红书问题清单"
     }
   ],
   "rootComponentId": "7a1b2c3d-4e5f-4a6b-8c9d-0e1f2a3b4c5d",
