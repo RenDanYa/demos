@@ -682,7 +682,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-21T00:52:44.403Z",
+      "updateAt": "2026-07-21T01:51:22.672Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -693,7 +693,7 @@
           "isShow": true,
           "wrap": false,
           "options": {
-            "width": "189"
+            "width": "239"
           }
         },
         {
@@ -704,16 +704,6 @@
           "wrap": false,
           "options": {
             "width": "120"
-          }
-        },
-        {
-          "id": "f6a7b8c9-d0e1-4f2a-3b4c-5d6e7f809102",
-          "name": "url",
-          "type": "link",
-          "isShow": true,
-          "wrap": false,
-          "options": {
-            "width": "134"
           }
         },
         {
@@ -872,7 +862,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-29T09:17:51.889Z",
-      "updateAt": "2026-06-29T09:22:18.774Z",
+      "updateAt": "2026-07-21T01:39:20.133Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}} ",
       "properties": [
@@ -914,7 +904,7 @@
           "isShow": true,
           "type": "taskList",
           "options": {
-            "showTaskList": true,
+            "showTaskList": false,
             "showAllTasks": false,
             "hideTaskFields": false,
             "timeRecordStyle": "none",
