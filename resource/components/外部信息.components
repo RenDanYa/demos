@@ -1216,7 +1216,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-21T01:05:13.879Z",
+      "updateAt": "2026-07-21T02:24:51.639Z",
       "viewType": "kanban",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -1365,7 +1365,8 @@
           "试纱一般需要多久",
           "温馨提示",
           "异地租纱攻略怎么租",
-          "准备结婚的速看，可避雷99%的大坑"
+          "准备结婚的速看，可避雷99%的大坑",
+          "租赁婚纱预算"
         ]
       },
       "filter": {
