@@ -1216,7 +1216,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-21T02:32:34.243Z",
+      "updateAt": "2026-07-21T04:12:52.184Z",
       "viewType": "kanban",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -1234,7 +1234,7 @@
           "id": "c3d4e5f6-a7b8-4c9d-0e1f-2a3b4c5d6e7f",
           "name": "likes",
           "type": "number",
-          "isShow": true,
+          "isShow": false,
           "wrap": false,
           "options": {
             "width": "101"
@@ -1244,7 +1244,7 @@
           "id": "f6a7b8c9-d0e1-4f2a-3b4c-5d6e7f809102",
           "name": "url",
           "type": "link",
-          "isShow": true,
+          "isShow": false,
           "wrap": false,
           "options": {
             "width": "227"
@@ -1254,7 +1254,7 @@
           "id": "e0f56add-b332-4e17-8e91-36545a0130f8",
           "name": "publishedAt",
           "type": "datetime",
-          "isShow": true,
+          "isShow": false,
           "wrap": false,
           "options": {},
           "alias": "发布时间"
@@ -1262,7 +1262,7 @@
         {
           "id": "42e84a7d-7a46-4b83-a409-fb1b25c9ce0b",
           "name": "todo_generated",
-          "isShow": true,
+          "isShow": false,
           "type": "text",
           "options": {}
         },
@@ -1324,7 +1324,7 @@
           "source": "property",
           "fit": "cover",
           "layout": "components--page-card-cover-landscape",
-          "position": "left",
+          "position": "top",
           "sourceValue": "imageUrl"
         },
         "pinFiltersToMenuBar": true,
@@ -1348,26 +1348,26 @@
         "collapseds": [
           "拍婚纱照避雷经验分享",
           "__$uncategorizedGroup",
-          "婚前多久试婚纱？",
           "婚前试婚纱攻略",
           "小徐不睡觉",
           "婚庆主要提供哪些服务？",
           "📍拍婚纱照清单大公开！",
           "拍婚纱照攻略和注意事项",
           "婚纱照用途",
-          "女方陪嫁清单",
-          "婚纱照探店主要谈什么？",
-          "婚纱照预算",
           "拍的婚纱照哪里要用",
-          "婚纱照是怎么做到一张片都没加的",
           "备婚分享｜婚纱试穿租赁小经验",
-          "刚拍完婚纱照，真的没必要带太多东西！！！",
-          "买婚鞋攻略",
           "温馨提示",
           "异地租纱攻略怎么租",
           "准备结婚的速看，可避雷99%的大坑",
           "试纱一般需要多久",
-          "租赁婚纱预算"
+          "租赁婚纱预算",
+          "婚前多久试婚纱？",
+          "刚拍完婚纱照，真的没必要带太多东西！！！",
+          "婚纱照预算",
+          "买婚鞋攻略",
+          "女方陪嫁清单",
+          "婚纱照探店主要谈什么？",
+          "婚纱照是怎么做到一张片都没加的"
         ]
       },
       "filter": {
