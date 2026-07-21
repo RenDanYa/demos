@@ -682,7 +682,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-20T23:42:05.271Z",
+      "updateAt": "2026-07-21T00:52:44.403Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -806,8 +806,7 @@
           "__$uncategorizedGroup"
         ],
         "collapseds": [
-          "__$uncategorizedGroup",
-          "试纱一般需要多久"
+          "__$uncategorizedGroup"
         ]
       },
       "filter": {
