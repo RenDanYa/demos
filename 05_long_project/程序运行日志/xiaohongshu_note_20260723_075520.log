@@ -1,0 +1,7 @@
+[07:55:20] ============================================================
+[07:55:20] 小红书单篇笔记采集 启动
+[07:55:20] OPENCLI_CMD: ('node', 'd:\\voice\\opencli-main\\dist\\main.js')
+[07:55:20] 输出目录: d:\obsidian\demo\05_long_project\小红书
+[07:55:20] ============================================================
+[07:55:24] URL: https://www.xiaohongshu.com/ai_chat?conversationId=e4463016-6f37-42b2-a9fd-d837077042e5&keyword=%25E6%259C%2589%25E5%2593%25AA%25E4%25BA%259B%25E6%25AC%25BE%25E5%25BC%258F%25E5%2591%25A2%25EF%25BC%259F
+[07:55:24] 无法从 URL 提取 note_id: https://www.xiaohongshu.com/ai_chat?conversationId=e4463016-6f37-42b2-a9fd-d837077042e5&keyword=%25E6%259C%2589%25E5%2593%25AA%25E4%25BA%259B%25E6%25AC%25BE%25E5%25BC%258F%25E5%2591%25A2%25EF%25BC%259F

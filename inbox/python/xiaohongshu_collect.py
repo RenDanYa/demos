@@ -171,26 +171,51 @@ def show_input_dialog():
     return kw, limit
 
 
+def _kill_process_tree(pid):
+    """Windows 下杀掉整个进程树（包括 Chromium 等孙进程）"""
+    try:
+        subprocess.run(
+            ["taskkill", "/F", "/T", "/PID", str(pid)],
+            capture_output=True,
+            timeout=10,
+        )
+    except Exception:
+        pass
+
+
 def run_opencli(args, timeout):
-    """运行 opencli 命令, 返回 (success, stdout_dict_or_text, stderr)"""
+    """运行 opencli 命令, 返回 (success, stdout_dict_or_text, stderr)
+
+    使用 Popen + communicate(timeout) 替代 subprocess.run(timeout)，
+    超时后用 taskkill /F /T 杀整个进程树，避免 Chromium 孙进程卡住管道。
+    """
     cmd = list(OPENCLI_CMD) + args
     try:
         env = os.environ.copy()
         env["PYTHONIOENCODING"] = "utf-8"
-        result = subprocess.run(
+        proc = subprocess.Popen(
             cmd,
-            capture_output=True,
-            encoding="utf-8",
-            errors="replace",
-            timeout=timeout,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
             env=env,
             shell=False,
         )
-        if result.returncode != 0:
-            return False, None, result.stderr or f"exit code {result.returncode}"
-        return True, result.stdout, result.stderr
-    except subprocess.TimeoutExpired:
-        return False, None, "timeout"
+        try:
+            stdout, stderr = proc.communicate(timeout=timeout)
+        except subprocess.TimeoutExpired:
+            _kill_process_tree(proc.pid)
+            try:
+                proc.communicate(timeout=5)
+            except Exception:
+                pass
+            return False, None, "timeout"
+
+        stdout_text = stdout.decode("utf-8", errors="replace") if stdout else ""
+        stderr_text = stderr.decode("utf-8", errors="replace") if stderr else ""
+
+        if proc.returncode != 0:
+            return False, None, stderr_text or f"exit code {proc.returncode}"
+        return True, stdout_text, stderr_text
     except FileNotFoundError:
         return False, None, f"opencli not found: {OPENCLI_CMD}. 安装: npm install -g @jackwener/opencli"
     except Exception as e:
