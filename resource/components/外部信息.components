@@ -682,7 +682,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-24T04:57:07.574Z",
+      "updateAt": "2026-07-24T06:22:18.383Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -797,7 +797,6 @@
         ],
         "collapseds": [
           "__$uncategorizedGroup",
-          "如何找到跟妆",
           "异地怎么试妆"
         ]
       },
