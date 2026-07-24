@@ -682,7 +682,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-22T13:33:00.023Z",
+      "updateAt": "2026-07-24T00:08:51.747Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -796,8 +796,7 @@
           "__$uncategorizedGroup"
         ],
         "collapseds": [
-          "__$uncategorizedGroup",
-          "婚纱款式参考"
+          "__$uncategorizedGroup"
         ]
       },
       "filter": {

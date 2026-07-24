@@ -1,14 +1,24 @@
 ---
-tags: ["青田华侨", "青田婚纱", "青田备婚", "婚纱推荐", "穿婚纱原来这么好看", "缎纱结合婚纱", "缎面婚纱头纱", "上钻下缎婚纱", "缎面主婚纱", "青田试纱"]
-title: "缎面婚纱VS纱面婚纱‼️究竟选哪件⁉️纠结"
-query: "青田嫁日婚纱礼服馆"
-source: "博主采集"
+tags:
+  - 青田华侨
+  - 青田婚纱
+  - 青田备婚
+  - 婚纱推荐
+  - 穿婚纱原来这么好看
+  - 缎纱结合婚纱
+  - 缎面婚纱头纱
+  - 上钻下缎婚纱
+  - 缎面主婚纱
+  - 青田试纱
+title: 缎面婚纱VS纱面婚纱‼️究竟选哪件⁉️纠结
+query: 青田嫁日婚纱礼服馆
+source: 博主采集
 likes: 1
-publishedAt: "2025-12-23"
-url: "https://www.xiaohongshu.com/user/profile/67cad3c6000000000a03f880/694a51fc000000001b0244cb?xsec_token=AB2G5PEdiTJ5-ZgRmA0MezJr6Heq5gCnso4pix8_Eb4Fs%3D&xsec_source=pc_user"
-imageUrl: "附件/694a51fc000000001b0244cb/694a51fc000000001b0244cb_1.jpg"
+publishedAt: 2025-12-23
+url: https://www.xiaohongshu.com/user/profile/67cad3c6000000000a03f880/694a51fc000000001b0244cb?xsec_token=AB2G5PEdiTJ5-ZgRmA0MezJr6Heq5gCnso4pix8_Eb4Fs%3D&xsec_source=pc_user
+imageUrl: 附件/694a51fc000000001b0244cb/694a51fc000000001b0244cb_1.jpg
 createTime: 2026-07-22T17:23:14
-status: 已采集
+status: 已看完
 todo_generated: 2026-07-23 07:23:00
 note:
   - "[[04-婚纱材质分类]]"
