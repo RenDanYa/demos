@@ -1,14 +1,21 @@
 ---
-tags: ["新娘试妆", "新娘妆容", "试妆花絮", "新娘造型", "备婚", "备婚攻略"]
-title: "2天4家，我的极限新娘试妆小Tips👰🔥"
-query: "异地怎么试妆"
-source: "多篇采集"
+tags:
+- 新娘试妆
+- 新娘妆容
+- 试妆花絮
+- 新娘造型
+- 备婚
+- 备婚攻略
+title: 2天4家，我的极限新娘试妆小Tips👰🔥
+query: 异地怎么试妆
+source: 多篇采集
 likes: 1
-publishedAt: "编辑于 2025-09-27"
-url: "https://www.xiaohongshu.com/search_result/68d7db5d000000000e0311e4?xsec_token=ABELJXODGWxKeUlAcMdfCscl851_X8pHe8IZ-FkCCs9tU=&xsec_source="
-imageUrl: "附件/68d7db5d000000000e0311e4/68d7db5d000000000e0311e4_1.jpg"
-createTime: 2026-07-24T09:33:02
+publishedAt: 编辑于 2025-09-27
+url: https://www.xiaohongshu.com/search_result/68d7db5d000000000e0311e4?xsec_token=ABELJXODGWxKeUlAcMdfCscl851_X8pHe8IZ-FkCCs9tU=&xsec_source=
+imageUrl: 附件/68d7db5d000000000e0311e4/68d7db5d000000000e0311e4_1.jpg
+createTime: 2026-07-24 09:33:02
 status: 已采集
+todo_generated: '2026-07-24 11:52:42'
 ---
 
 # 2天4家，我的极限新娘试妆小Tips👰🔥
@@ -60,3 +67,22 @@ status: 已采集
    - _05-22山东_
 5. **momo** (0赞): 请问化妆师
    - _2025-11-07北京_
+## 待办
+
+> 提取时间：2026-07-24 11:52:42
+> 本笔记待办已同步到 [[待办/新娘跟妆]] 汇总索引
+
+### 试妆前准备
+
+- [ ] 确定婚礼风格（室内/草坪、婚纱大体量/小体量）
+- [ ] 提前收集喜欢的妆造灵感图，明确偏好的色调和风格
+- [ ] 规划试妆行程，一天最多安排两家，预留充足时间
+
+### 试妆当天
+
+- [ ] 随身携带眼唇卸妆液和卸妆湿巾
+- [ ] 试妆后回家敷舒缓补水面膜修复皮肤
+
+### 试妆后确认
+
+- [ ] 基本确定化妆师后，将每套婚纱、妆容和发型一起试一遍再敲定
