@@ -682,7 +682,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-24T08:37:14.738Z",
+      "updateAt": "2026-07-24T23:38:32.755Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -799,7 +799,8 @@
           "__$uncategorizedGroup",
           "异地怎么试妆",
           "婚纱酒店出嫁房需要租几天？",
-          "如何找到跟妆"
+          "如何找到跟妆",
+          "跟妆如何确定自己的妆造"
         ]
       },
       "filter": {

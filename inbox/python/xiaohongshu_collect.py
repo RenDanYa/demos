@@ -92,6 +92,9 @@ TIMEOUT_SEARCH = 60
 TIMEOUT_NOTE = 30
 TIMEOUT_COMMENTS = 30
 TIMEOUT_DOWNLOAD = 120
+# note-full 合并了 note + comments + media 提取 (page.goto + 3s wait + 3x1s 滚动),
+# 单独给更长的超时, 避免与单 note 命令共用 30s 而被误杀
+TIMEOUT_NOTE_FULL = 60
 
 # 每次脚本运行的独立日志文件 (延迟初始化, 第一次 log() 调用时创建)
 _RUN_LOG_FILE = None
@@ -323,7 +326,7 @@ def get_note_full(url):
     """
     ok, stdout, err = run_opencli(
         ["xiaohongshu", "note-full", url, "--comment-limit", "5", "-f", "json"],
-        max(TIMEOUT_NOTE, TIMEOUT_COMMENTS),
+        TIMEOUT_NOTE_FULL,
     )
     if not ok:
         log(f"  note-full 失败: {err}")
