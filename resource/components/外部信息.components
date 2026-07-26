@@ -682,7 +682,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-24T23:38:32.755Z",
+      "updateAt": "2026-07-26T02:45:59.700Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -797,10 +797,10 @@
         ],
         "collapseds": [
           "__$uncategorizedGroup",
-          "异地怎么试妆",
+          "跟妆如何确定自己的妆造",
           "婚纱酒店出嫁房需要租几天？",
-          "如何找到跟妆",
-          "跟妆如何确定自己的妆造"
+          "异地怎么试妆",
+          "如何找到跟妆"
         ]
       },
       "filter": {
@@ -1220,7 +1220,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-24T01:11:25.850Z",
+      "updateAt": "2026-07-26T02:44:42.997Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -1374,7 +1374,8 @@
           "拍的婚纱照哪里要用",
           "拍婚纱照避雷经验分享",
           "拍婚纱照攻略和注意事项",
-          "青田嫁日婚纱礼服馆"
+          "青田嫁日婚纱礼服馆",
+          "买婚鞋攻略"
         ]
       },
       "filter": {
