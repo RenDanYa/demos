@@ -1,14 +1,26 @@
 ---
-tags: ["婚礼造型", "主纱造型", "新娘造型", "备婚", "备婚日记", "婚礼妆造", "主纱盘发", "盘发造型", "鲜花造型", "新娘发型"]
-title: "J人异地备婚-婚礼造型种草（盘发篇）"
-query: "J人异地备婚-婚礼造型种草（盘发篇）"
-source: "单篇采集"
+tags:
+  - 婚礼造型
+  - 主纱造型
+  - 新娘造型
+  - 备婚
+  - 备婚日记
+  - 婚礼妆造
+  - 主纱盘发
+  - 盘发造型
+  - 鲜花造型
+  - 新娘发型
+title: J人异地备婚-婚礼造型种草（盘发篇）
+query: J人异地备婚-婚礼造型种草（盘发篇）
+source: 单篇采集
 likes: 2
-publishedAt: "04-13"
-url: "https://www.xiaohongshu.com/explore/69dcbb33000000001b002b61?xsec_token=ABwInEIqsgsic2yXBEW2w3ExdCOSLtMSApu_a8e1pUDro=&xsec_source=pc_search&source=web_explore_feed"
-imageUrl: "附件/69dcbb33000000001b002b61/69dcbb33000000001b002b61_1.jpg"
-createTime: 2026-07-25T09:08:27
+publishedAt: 04-13
+url: https://www.xiaohongshu.com/explore/69dcbb33000000001b002b61?xsec_token=ABwInEIqsgsic2yXBEW2w3ExdCOSLtMSApu_a8e1pUDro=&xsec_source=pc_search&source=web_explore_feed
+imageUrl: 附件/69dcbb33000000001b002b61/69dcbb33000000001b002b61_1.jpg
+createTime: 2026-07-25 09:08:27
 status: 已采集
+todo_generated: 2026-07-26 20:16:41
+note_generated: 2026-07-27 15:00:00
 ---
 
 # J人异地备婚-婚礼造型种草（盘发篇）
@@ -38,3 +50,21 @@ status: 已采集
    - _05-01重庆_
 2. **喵了个二哈** (0赞): ╮(￣⊿￣)╭
    - _07-02河南_
+## 待办
+
+> 提取时间：2026-07-26 20:16:41
+> 本笔记待办已同步到 [[待办/新娘跟妆]] 汇总索引
+
+### 盘发造型参考
+- [ ] 收藏喜欢的主纱盘发造型参考图（鲜花/法式/高盘/低盘/公主头）
+- [ ] 试妆时与化妆师确认盘发款式和头饰搭配
+
+## 笔记
+
+> 提取时间：2026-07-27 15:00:00
+> 本笔记内容已同步到 [[笔记/新娘跟妆]] 汇总索引
+
+### 盘发造型参考
+
+- 收藏喜欢的主纱盘发造型参考图（鲜花/法式/高盘/低盘/公主头）
+- 试妆时与化妆师确认盘发款式和头饰搭配
