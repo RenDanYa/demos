@@ -1,11 +1,11 @@
 ---
 tags:
-- 新娘试妆
-- 新娘妆容
-- 试妆花絮
-- 新娘造型
-- 备婚
-- 备婚攻略
+  - 新娘试妆
+  - 新娘妆容
+  - 试妆花絮
+  - 新娘造型
+  - 备婚
+  - 备婚攻略
 title: 2天4家，我的极限新娘试妆小Tips👰🔥
 query: 异地怎么试妆
 source: 多篇采集
@@ -14,8 +14,8 @@ publishedAt: 编辑于 2025-09-27
 url: https://www.xiaohongshu.com/search_result/68d7db5d000000000e0311e4?xsec_token=ABELJXODGWxKeUlAcMdfCscl851_X8pHe8IZ-FkCCs9tU=&xsec_source=
 imageUrl: 附件/68d7db5d000000000e0311e4/68d7db5d000000000e0311e4_1.jpg
 createTime: 2026-07-24 09:33:02
-status: 已采集
-todo_generated: '2026-07-24 11:52:42'
+status: 已看完
+todo_generated: 2026-07-24 11:52:42
 ---
 
 # 2天4家，我的极限新娘试妆小Tips👰🔥

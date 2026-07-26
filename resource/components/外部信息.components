@@ -10,7 +10,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-19T01:08:58.808Z",
+      "updateAt": "2026-07-26T12:08:16.523Z",
       "components": [
         {
           "componentId": "2d401686-b6c2-4409-b553-87d0867586b2"
@@ -682,7 +682,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-26T06:49:05.512Z",
+      "updateAt": "2026-07-26T12:01:41.854Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -798,9 +798,8 @@
         "collapseds": [
           "__$uncategorizedGroup",
           "婚纱酒店出嫁房需要租几天？",
-          "异地怎么试妆",
-          "如何找到跟妆",
-          "可以给跟妆提供的风格"
+          "可以给跟妆提供的风格",
+          "跟妆如何确定自己的妆造"
         ]
       },
       "filter": {
