@@ -10,7 +10,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-26T12:08:16.523Z",
+      "updateAt": "2026-07-27T23:10:07.490Z",
       "components": [
         {
           "componentId": "2d401686-b6c2-4409-b553-87d0867586b2"
@@ -20,6 +20,9 @@
         },
         {
           "componentId": "0ab9930c-71b9-4ea2-979a-7a1c39f5bd0f"
+        },
+        {
+          "componentId": "00daf986-5db8-45ab-a263-f4d5227ce161"
         },
         {
           "componentId": "e8f46ef0-627a-4a20-82a6-6cd4fe64f18c"
@@ -2074,6 +2077,314 @@
       "markdownsSource": "file",
       "markdownValue": "inbox/问题清单.md",
       "title": "小红书问题清单"
+    },
+    {
+      "id": "fc600967-603d-4310-bec7-9603619e7935",
+      "type": "button",
+      "titleAlign": "center",
+      "tabTitle": "搜索商品",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2026-06-28T20:00:00.000Z",
+      "updateAt": "2026-07-19T01:23:58.184Z",
+      "text": "🤖 搜索商品",
+      "buttonType": "common",
+      "clickActions": [
+        {
+          "type": "RunScript",
+          "id": "ai-runscript-id-0004-0000-000000000004",
+          "options": {
+            "expression": "runPython('D:/obsidian/demo/inbox/python/pdd_search.py', {timeout: 180000})"
+          }
+        }
+      ],
+      "checkActions": [],
+      "uncheckActions": [],
+      "isChecked": false,
+      "fullWidth": true,
+      "title": "搜索商品",
+      "components": []
+    },
+    {
+      "id": "729e07a7-d2cd-48c4-bc0a-eea0c1d49438",
+      "type": "button",
+      "titleAlign": "center",
+      "tabTitle": "搜索商品（批量）",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2026-06-28T20:00:00.000Z",
+      "updateAt": "2026-07-19T08:17:53.170Z",
+      "text": "🤖 搜索商品（批量）",
+      "buttonType": "common",
+      "clickActions": [
+        {
+          "type": "RunScript",
+          "id": "ai-runscript-id-0004-0000-000000000004",
+          "options": {
+            "expression": "runPython('D:/obsidian/demo/inbox/python/pdd_search_batch_default.py', {timeout: 180000})"
+          }
+        }
+      ],
+      "checkActions": [],
+      "uncheckActions": [],
+      "isChecked": false,
+      "fullWidth": true,
+      "title": "搜索商品（批量）",
+      "components": []
+    },
+    {
+      "id": "56a5c054-bf1f-4533-bd73-1c0536cbc8af",
+      "type": "button",
+      "titleAlign": "center",
+      "tabTitle": "搜索商品（低价）",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2026-06-28T20:00:00.000Z",
+      "updateAt": "2026-07-19T01:41:52.326Z",
+      "text": "🤖 搜索商品(低价)",
+      "buttonType": "common",
+      "clickActions": [
+        {
+          "type": "RunScript",
+          "id": "ai-runscript-id-0004-0000-000000000004",
+          "options": {
+            "expression": "runPython('D:/obsidian/demo/inbox/python/pdd_search_cheap.py', {timeout: 180000})"
+          }
+        }
+      ],
+      "checkActions": [],
+      "uncheckActions": [],
+      "isChecked": false,
+      "fullWidth": true,
+      "title": "搜索商品（低价）",
+      "components": []
+    },
+    {
+      "id": "45395bff-c72b-4ba8-92b8-c3f7413f8001",
+      "type": "button",
+      "titleAlign": "center",
+      "tabTitle": "搜索商品（低价批量）",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showTitle": true,
+      "showShadow": true,
+      "createAt": "2026-06-28T20:00:00.000Z",
+      "updateAt": "2026-07-19T07:55:07.727Z",
+      "text": "🤖 搜索商品(低价批量)",
+      "buttonType": "common",
+      "clickActions": [
+        {
+          "type": "RunScript",
+          "id": "ai-runscript-id-0004-0000-000000000004",
+          "options": {
+            "expression": "runPython('D:/obsidian/demo/inbox/python/pdd_search_batch.py', {timeout: 180000})"
+          }
+        }
+      ],
+      "checkActions": [],
+      "uncheckActions": [],
+      "isChecked": false,
+      "fullWidth": true,
+      "title": "搜索商品（低价批量）",
+      "components": []
+    },
+    {
+      "id": "b1ef47e8-3ea4-4869-8658-c40f9b69c82a",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "一键触发",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-07-17T00:59:43.323Z",
+      "updateAt": "2026-07-19T07:55:18.863Z",
+      "components": [
+        {
+          "componentId": "fc600967-603d-4310-bec7-9603619e7935"
+        },
+        {
+          "componentId": "729e07a7-d2cd-48c4-bc0a-eea0c1d49438"
+        },
+        {
+          "componentId": "56a5c054-bf1f-4533-bd73-1c0536cbc8af"
+        },
+        {
+          "componentId": "45395bff-c72b-4ba8-92b8-c3f7413f8001"
+        }
+      ],
+      "layoutType": "column",
+      "locked": false,
+      "layoutOptions": {},
+      "title": "一键触发"
+    },
+    {
+      "id": "66ab4287-04d8-48ff-913f-0c8e9e8d6254",
+      "type": "dynamicDataView",
+      "titleAlign": "center",
+      "tabTitle": "明细",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-06-28T19:30:00.000Z",
+      "updateAt": "2026-07-27T23:14:41.906Z",
+      "viewType": "gallary",
+      "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
+      "properties": [
+        {
+          "id": "__componentsTitleProperty_0x7c00",
+          "name": "文件名",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "277960f4-331d-49a5-ba53-e9d2a6f916ef",
+          "name": "count",
+          "type": "number",
+          "isShow": false,
+          "wrap": false,
+          "options": {
+            "width": "98"
+          }
+        },
+        {
+          "id": "481f2589-e04e-4362-a405-13fe81824800",
+          "name": "content",
+          "isShow": true,
+          "type": "formula",
+          "options": {
+            "formula": "extractHeadingContent('## 职位列表')",
+            "renderType": "markdown",
+            "width": "661"
+          },
+          "alias": "列表",
+          "wrap": true
+        }
+      ],
+      "templates": [],
+      "groups": [],
+      "colorfulGroups": true,
+      "viewOptions": {
+        "openPageIn": "split",
+        "openPageAfterCreate": true,
+        "itemSize": "components--page-card-large",
+        "showPropertyName": true,
+        "showAllProperties": false,
+        "items": [],
+        "cover": {
+          "type": "none",
+          "source": "property",
+          "fit": "cover",
+          "layout": "components--page-card-cover-landscape",
+          "position": "left",
+          "sourceValue": "imageUrl"
+        },
+        "pinFiltersToMenuBar": true,
+        "hideHeaderMenu": false,
+        "showGrid": false,
+        "heightType": "fixed",
+        "heightValue": 500,
+        "rowHeight": 32
+      },
+      "groupStates": {
+        "sort": "nameAsc",
+        "format": "none",
+        "statics": [],
+        "orders": [],
+        "hiddens": [],
+        "collapseds": []
+      },
+      "filter": {
+        "id": "3d4e5f6a-7b8c-4c9d-1f2a-3b4c5d6e7f81",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "4e5f6a7b-8c9d-4d0e-2a3b-4c5d6e7f8092",
+            "type": "filter",
+            "operator": "contains",
+            "property": "${file.parent}",
+            "value": "05_long_project/BOSS直聘",
+            "conditions": []
+          },
+          {
+            "id": "5f6a7b8c-9d0e-4e1f-3b4c-5d6e7f809103",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.extension}",
+            "value": "md",
+            "conditions": []
+          }
+        ]
+      },
+      "title": "Boss简历",
+      "sort": {
+        "orders": [
+          {
+            "id": "7b8c9d0e-1f2a-4a3b-5d6e-7f8091021325",
+            "property": "${file.ctime}",
+            "direction": "desc",
+            "disabled": false
+          }
+        ]
+      },
+      "groupBy": "",
+      "icon": "NotebookPen",
+      "components": []
+    },
+    {
+      "id": "5b36f901-dbdd-46ce-b0d1-1b5272595647",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "预览",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-07-17T03:40:47.214Z",
+      "updateAt": "2026-07-19T01:54:13.253Z",
+      "components": [
+        {
+          "componentId": "66ab4287-04d8-48ff-913f-0c8e9e8d6254"
+        }
+      ],
+      "layoutType": "column",
+      "locked": false,
+      "layoutOptions": {},
+      "title": "预览"
+    },
+    {
+      "id": "00daf986-5db8-45ab-a263-f4d5227ce161",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "Boss",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-06-28T10:37:12.400Z",
+      "updateAt": "2026-07-27T23:10:12.838Z",
+      "components": [
+        {
+          "componentId": "b1ef47e8-3ea4-4869-8658-c40f9b69c82a"
+        },
+        {
+          "componentId": "5b36f901-dbdd-46ce-b0d1-1b5272595647"
+        }
+      ],
+      "layoutType": "list",
+      "locked": false,
+      "layoutOptions": {},
+      "title": "Boss"
     }
   ],
   "rootComponentId": "7a1b2c3d-4e5f-4a6b-8c9d-0e1f2a3b4c5d",
