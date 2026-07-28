@@ -16,6 +16,7 @@ import re
 import sys
 import time
 import random
+import base64
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
@@ -27,8 +28,40 @@ DETAIL_INTERVAL_MAX = 12
 DETAIL_RETRY_MAX = 2
 DETAIL_RETRY_WAIT_MIN = 20
 DETAIL_RETRY_WAIT_MAX = 30
+# 连续失败后冷却 (秒)
+DETAIL_COOLDOWN_FAILS = 2
+DETAIL_COOLDOWN_WAIT_MIN = 60
+DETAIL_COOLDOWN_WAIT_MAX = 120
+# 批次暂停: 每 N 个职位暂停一次
+BATCH_SIZE = 5
+BATCH_PAUSE_MIN = 15
+BATCH_PAUSE_MAX = 25
 
 OUTPUT_ROOT = OBSIDIAN_ROOT / "05_long_project" / "BOSS直聘"
+
+
+def _sleep_with_heartbeat(seconds, label="暂停"):
+    """带心跳日志的 sleep: 每 10 秒输出一次心跳, 防止父进程误判卡死而杀掉脚本"""
+    elapsed = 0
+    total = int(seconds)
+    while elapsed < total:
+        chunk = min(10, total - elapsed)
+        time.sleep(chunk)
+        elapsed += chunk
+        if elapsed < total:
+            log(f"  {label}中... ({elapsed}/{total}秒)")
+
+
+def _decode_sid(stored):
+    """解码 securityId: 支持 b64: 前缀 (新格式) 和原始值 (旧格式兼容)"""
+    if not stored:
+        return ""
+    if stored.startswith("b64:"):
+        try:
+            return base64.b64decode(stored[4:]).decode("utf-8")
+        except Exception:
+            return stored  # 解码失败, 返回原始值
+    return stored
 
 
 def parse_frontmatter_status(md_content):
@@ -95,7 +128,7 @@ def parse_table_jobs(md_content):
         index = int(m.group(1))
         name = m.group(2)
         url = m.group(3)
-        security_id = m.group(4) or ""  # 可能为None
+        security_id = _decode_sid(m.group(4)) if m.group(4) else ""
         jobs.append((index, name, url, security_id))
     return jobs
 
@@ -113,7 +146,7 @@ def parse_existing_details(md_content):
 
 def get_job_detail(security_id):
     """调用 opencli boss detail 获取单个职位详情"""
-    args = ["boss", "detail", security_id, "-f", "json"]
+    args = ["boss", "detail", "-f", "json", "--", security_id]
     ok, stdout, err = run_opencli(args, 60)
     if not ok:
         return None
@@ -252,6 +285,26 @@ def scan_and_resume_all():
     return 0
 
 
+def _append_detail_to_file(file_path, index, name, detail):
+    """将单个职位详情追加到 Markdown 文件 (增量写入)
+
+    每次成功获取详情后立即调用, 确保脚本被杀时已获取的详情不丢失。
+    """
+    md_content = file_path.read_text(encoding="utf-8")
+
+    # 确保有 "## 职位详情" 区段
+    if "## 职位详情" not in md_content:
+        md_content = md_content.rstrip() + "\n\n## 职位详情\n\n"
+
+    # 检查是否已存在
+    if f"### {index}. " in md_content:
+        return  # 已存在, 跳过
+
+    detail_md = build_detail_section(index, name, detail)
+    md_content = md_content.rstrip() + "\n\n" + detail_md + "\n"
+    file_path.write_text(md_content, encoding="utf-8")
+
+
 def resume_single_file(file_path, start_index=1):
     """处理单个文件的续传"""
     log("=" * 60)
@@ -277,10 +330,10 @@ def resume_single_file(file_path, start_index=1):
 
     log(f"需要补充 {len(missing_jobs)} 个详情: {[i for i, n, u, s in missing_jobs]}")
 
-    # 3. 逐个获取详情
+    # 3. 逐个获取详情 (每获取一个就立即写入文件, 防止脚本被杀时丢失)
     success_count = 0
     fail_count = 0
-    new_details = {}  # index -> detail
+    consecutive_fails = 0
 
     for idx, (i, name, url, sid) in enumerate(missing_jobs, 1):
         if not sid:
@@ -293,6 +346,19 @@ def resume_single_file(file_path, start_index=1):
         if idx > 1:
             wait = random.uniform(DETAIL_INTERVAL_MIN, DETAIL_INTERVAL_MAX)
             time.sleep(wait)
+
+        # 批次暂停: 每 N 个职位暂停一次
+        if idx > 1 and (idx - 1) % BATCH_SIZE == 0:
+            wait = random.uniform(BATCH_PAUSE_MIN, BATCH_PAUSE_MAX)
+            log(f"  已完成 {idx-1} 个, 批次暂停 {wait:.0f}秒...")
+            _sleep_with_heartbeat(wait, "批次暂停")
+
+        # 连续失败冷却: 达到阈值后长等待
+        if consecutive_fails >= DETAIL_COOLDOWN_FAILS:
+            wait = random.uniform(DETAIL_COOLDOWN_WAIT_MIN, DETAIL_COOLDOWN_WAIT_MAX)
+            log(f"  连续失败 {consecutive_fails} 次, 冷却 {wait:.0f}秒...")
+            _sleep_with_heartbeat(wait, "冷却")
+            consecutive_fails = 0
 
         # 重试逻辑
         got_detail = None
@@ -307,14 +373,17 @@ def resume_single_file(file_path, start_index=1):
             if attempt <= DETAIL_RETRY_MAX:
                 wait = random.uniform(DETAIL_RETRY_WAIT_MIN, DETAIL_RETRY_WAIT_MAX)
                 log(f"  [{idx}/{len(missing_jobs)}] 第{attempt}次失败, {wait:.0f}秒后重试...")
-                time.sleep(wait)
+                _sleep_with_heartbeat(wait, "重试等待")
 
         if got_detail:
-            new_details[i] = (name, got_detail)
+            # 增量写入: 立即保存到文件, 防止脚本被杀时丢失
+            _append_detail_to_file(file_path, i, name, got_detail)
             success_count += 1
-            log(f"  [{idx}/{len(missing_jobs)}] OK")
+            consecutive_fails = 0
+            log(f"  [{idx}/{len(missing_jobs)}] OK (已保存)")
         else:
             fail_count += 1
+            consecutive_fails += 1
             log(f"  [{idx}/{len(missing_jobs)}] 失败 (重试{DETAIL_RETRY_MAX}次仍失败)")
 
     log(f"详情获取完成: 成功 {success_count}/{len(missing_jobs)}, 失败 {fail_count}")
@@ -328,37 +397,12 @@ def resume_single_file(file_path, start_index=1):
         log("")
         log("建议：运行 boss_search.py 重新采集，而不是续传")
 
-    if not new_details:
-        log("未获取到新详情, 文件未更新")
-        return 0
-
-    # 4. 合并到文件
-    # 在"## 职位详情"区段追加新详情
-    detail_section_start = md_content.find("## 职位详情")
-    if detail_section_start == -1:
-        # 如果没有详情区段, 在文件末尾添加
-        new_content = md_content.rstrip() + "\n\n## 职位详情\n\n"
-    else:
-        new_content = md_content
-
-    # 追加新详情
-    for i in sorted(new_details.keys()):
-        name, detail = new_details[i]
-        detail_md = build_detail_section(i, name, detail)
-        # 检查是否已存在该详情
-        if f"### {i}. " in new_content:
-            log(f"  #{i} 详情已存在, 跳过")
-            continue
-        new_content = new_content.rstrip() + "\n\n" + detail_md + "\n"
-
-    # 写入文件
-    file_path.write_text(new_content, encoding="utf-8")
-
-    # 验证采集完整性并更新状态
-    is_complete, missing_after = check_collection_complete(new_content)
+    # 4. 验证采集完整性并更新状态
+    md_content = file_path.read_text(encoding="utf-8")
+    is_complete, missing_after = check_collection_complete(md_content)
     if is_complete:
-        new_content = update_frontmatter_status(new_content, "已采集")
-        file_path.write_text(new_content, encoding="utf-8")
+        md_content = update_frontmatter_status(md_content, "已采集")
+        file_path.write_text(md_content, encoding="utf-8")
         log(f"已更新 (已采集): {file_path}")
     else:
         log(f"已更新 (采集中): {file_path} - 仍缺失 {len(missing_after)} 个详情: {missing_after}")

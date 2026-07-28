@@ -18,6 +18,7 @@ import re
 import sys
 import time
 import random
+import base64
 from datetime import datetime
 from pathlib import Path
 
@@ -30,6 +31,25 @@ from xiaohongshu_collect import (  # noqa: E402
     run_opencli,
     sanitize_filename,
 )
+
+def _encode_sid(sid):
+    """Base64 编码 securityId, 避免 HTML 注释中出现 '--' 导致 Obsidian 渲染异常"""
+    if not sid:
+        return ""
+    return "b64:" + base64.b64encode(sid.encode("utf-8")).decode("ascii")
+
+
+def _decode_sid(stored):
+    """解码 securityId: 支持 b64: 前缀 (新格式) 和原始值 (旧格式兼容)"""
+    if not stored:
+        return ""
+    if stored.startswith("b64:"):
+        try:
+            return base64.b64decode(stored[4:]).decode("utf-8")
+        except Exception:
+            return stored  # 解码失败, 返回原始值
+    return stored
+
 
 # ============ 配置 ============
 OUTPUT_ROOT = OBSIDIAN_ROOT / "05_long_project" / "BOSS直聘"
@@ -49,11 +69,23 @@ DETAIL_COOLDOWN_WAIT_MIN = 60
 DETAIL_COOLDOWN_WAIT_MAX = 120
 # 批次暂停: 每 N 个职位暂停一次 (防止持续请求触发风控)
 BATCH_SIZE = 5
-BATCH_PAUSE_MIN = 45
-BATCH_PAUSE_MAX = 90
+BATCH_PAUSE_MIN = 15
+BATCH_PAUSE_MAX = 25
 
 # CLI 内部浏览器命令超时 (默认 60s 不够搜索, 提高到 120s)
 os.environ.setdefault("OPENCLI_BROWSER_COMMAND_TIMEOUT", "120")
+
+
+def _sleep_with_heartbeat(seconds, label="暂停"):
+    """带心跳日志的 sleep: 每 10 秒输出一次心跳, 防止父进程误判卡死而杀掉脚本"""
+    elapsed = 0
+    total = int(seconds)
+    while elapsed < total:
+        chunk = min(10, total - elapsed)
+        time.sleep(chunk)
+        elapsed += chunk
+        if elapsed < total:
+            log(f"  {label}中... ({elapsed}/{total}秒)")
 
 # 城市列表 (用于弹窗提示, 完整映射在 CLI 内部)
 CITY_OPTIONS = [
@@ -208,7 +240,7 @@ def get_job_detail(security_id):
         return None
 
     ok, stdout, err = run_opencli(
-        ["boss", "detail", security_id, "-f", "json"],
+        ["boss", "detail", "-f", "json", "--", security_id],
         TIMEOUT_DETAIL,
     )
     if not ok:
@@ -343,8 +375,8 @@ def build_markdown(query, city, jobs, details=None, experience="", degree="", st
         else:
             desc_cell = ""
 
-        # securityId 作为注释保存在表格中，续传时使用
-        sid_comment = f"<!-- sid:{sid} -->" if sid else ""
+        # securityId 作为注释保存在表格中 (base64 编码避免 '--' 破坏 HTML 注释), 续传时使用
+        sid_comment = f"<!-- sid:{_encode_sid(sid)} -->" if sid else ""
         lines.append(f"| {i} | {name_cell} | {salary} | {company} | {area} | {exp} | {deg} | {desc_cell} | {sid_comment}")
 
     lines.append("")
@@ -586,13 +618,13 @@ def main():
         if i > 1 and (i - 1) % BATCH_SIZE == 0:
             wait = random.uniform(BATCH_PAUSE_MIN, BATCH_PAUSE_MAX)
             log(f"  已完成 {i-1} 个, 批次暂停 {wait:.0f}秒...")
-            time.sleep(wait)
+            _sleep_with_heartbeat(wait, "批次暂停")
 
         # 连续失败冷却: 达到阈值后长等待
         if consecutive_fails >= DETAIL_COOLDOWN_FAILS:
             wait = random.uniform(DETAIL_COOLDOWN_WAIT_MIN, DETAIL_COOLDOWN_WAIT_MAX)
             log(f"  连续失败 {consecutive_fails} 次, 冷却 {wait:.0f}秒...")
-            time.sleep(wait)
+            _sleep_with_heartbeat(wait, "冷却")
             consecutive_fails = 0
 
         # 重试逻辑
@@ -609,7 +641,7 @@ def main():
             if attempt <= DETAIL_RETRY_MAX:
                 wait = random.uniform(DETAIL_RETRY_WAIT_MIN, DETAIL_RETRY_WAIT_MAX)
                 log(f"  [{i}/{len(jobs)}] 第{attempt}次失败, {wait:.0f}秒后重试...")
-                time.sleep(wait)
+                _sleep_with_heartbeat(wait, "重试等待")
 
         if got_detail:
             details[sid] = got_detail
