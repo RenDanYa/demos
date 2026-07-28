@@ -1,0 +1,16 @@
+[09:29:43] ============================================================
+[09:29:43] BOSS直聘职位搜索采集 启动
+[09:29:43] OPENCLI_CMD: ('node', 'd:\\voice\\opencli-main\\dist\\main.js')
+[09:29:43] 输出目录: d:\obsidian\demo\05_long_project\BOSS直聘
+[09:29:43] ============================================================
+[09:30:28] 关键词: 宁波刺猬在线科技
+[09:30:28] 城市: 宁波
+[09:30:28] 数量: 15
+[09:30:28] 经验: 不限
+[09:30:28] 学历: 不限
+[09:30:28] 搜索中, 请稍候 (约 15-30 秒)...
+[09:30:28] 调用 opencli boss search (城市=宁波, limit=15)
+[09:30:46] boss search 调用失败: 💥 Unexpected error: {"code":-32000,"message":"Execution context was destroyed."}
+  Run with --verbose for details, or report: https://github.com/jackwener/opencli/issues
+
+[09:30:46] 未获取到职位, 退出

@@ -2108,93 +2108,6 @@
       "components": []
     },
     {
-      "id": "729e07a7-d2cd-48c4-bc0a-eea0c1d49438",
-      "type": "button",
-      "titleAlign": "center",
-      "tabTitle": "搜索商品（批量）",
-      "maxWidthRatio": -1,
-      "showBorder": true,
-      "showTitle": true,
-      "showShadow": true,
-      "createAt": "2026-06-28T20:00:00.000Z",
-      "updateAt": "2026-07-19T08:17:53.170Z",
-      "text": "🤖 搜索商品（批量）",
-      "buttonType": "common",
-      "clickActions": [
-        {
-          "type": "RunScript",
-          "id": "ai-runscript-id-0004-0000-000000000004",
-          "options": {
-            "expression": "runPython('D:/obsidian/demo/inbox/python/pdd_search_batch_default.py', {timeout: 180000})"
-          }
-        }
-      ],
-      "checkActions": [],
-      "uncheckActions": [],
-      "isChecked": false,
-      "fullWidth": true,
-      "title": "搜索商品（批量）",
-      "components": []
-    },
-    {
-      "id": "56a5c054-bf1f-4533-bd73-1c0536cbc8af",
-      "type": "button",
-      "titleAlign": "center",
-      "tabTitle": "搜索商品（低价）",
-      "maxWidthRatio": -1,
-      "showBorder": true,
-      "showTitle": true,
-      "showShadow": true,
-      "createAt": "2026-06-28T20:00:00.000Z",
-      "updateAt": "2026-07-19T01:41:52.326Z",
-      "text": "🤖 搜索商品(低价)",
-      "buttonType": "common",
-      "clickActions": [
-        {
-          "type": "RunScript",
-          "id": "ai-runscript-id-0004-0000-000000000004",
-          "options": {
-            "expression": "runPython('D:/obsidian/demo/inbox/python/pdd_search_cheap.py', {timeout: 180000})"
-          }
-        }
-      ],
-      "checkActions": [],
-      "uncheckActions": [],
-      "isChecked": false,
-      "fullWidth": true,
-      "title": "搜索商品（低价）",
-      "components": []
-    },
-    {
-      "id": "45395bff-c72b-4ba8-92b8-c3f7413f8001",
-      "type": "button",
-      "titleAlign": "center",
-      "tabTitle": "搜索商品（低价批量）",
-      "maxWidthRatio": -1,
-      "showBorder": true,
-      "showTitle": true,
-      "showShadow": true,
-      "createAt": "2026-06-28T20:00:00.000Z",
-      "updateAt": "2026-07-19T07:55:07.727Z",
-      "text": "🤖 搜索商品(低价批量)",
-      "buttonType": "common",
-      "clickActions": [
-        {
-          "type": "RunScript",
-          "id": "ai-runscript-id-0004-0000-000000000004",
-          "options": {
-            "expression": "runPython('D:/obsidian/demo/inbox/python/pdd_search_batch.py', {timeout: 180000})"
-          }
-        }
-      ],
-      "checkActions": [],
-      "uncheckActions": [],
-      "isChecked": false,
-      "fullWidth": true,
-      "title": "搜索商品（低价批量）",
-      "components": []
-    },
-    {
       "id": "b1ef47e8-3ea4-4869-8658-c40f9b69c82a",
       "type": "multi",
       "titleAlign": "center",
@@ -2208,15 +2121,6 @@
       "components": [
         {
           "componentId": "fc600967-603d-4310-bec7-9603619e7935"
-        },
-        {
-          "componentId": "729e07a7-d2cd-48c4-bc0a-eea0c1d49438"
-        },
-        {
-          "componentId": "56a5c054-bf1f-4533-bd73-1c0536cbc8af"
-        },
-        {
-          "componentId": "45395bff-c72b-4ba8-92b8-c3f7413f8001"
         }
       ],
       "layoutType": "column",

@@ -282,7 +282,9 @@ def build_markdown(query, city, jobs, details=None, experience="", degree=""):
         sid = j.get("security_id", "")
         has_detail = bool(details and details.get(sid))
         if has_detail:
-            heading = f"{i}. {j.get('name', '')}"
+            # 标题中的 | 替换为 - (与详情标题保持一致)
+            safe_name = j.get("name", "").replace("|", "-")
+            heading = f"{i}. {safe_name}"
             desc_cell = f"[[#{heading}\\|查看描述]]"
         else:
             desc_cell = ""
@@ -323,7 +325,9 @@ def _fix_list_format(line):
 def _build_detail_section(index, job, detail):
     """生成单个职位详情的 markdown 行列表 (公司信息 + 职位描述, 放入 Callout)"""
     name = job.get("name", "无标题")
-    lines = [f"### {index}. {name}", ""]
+    # 标题中替换 | 为 - (避免 Obsidian wikilink 解析冲突)
+    safe_name = name.replace("|", "-")
+    lines = [f"### {index}. {safe_name}", ""]
 
     # Callout 内容行
     callout_lines = []
@@ -438,6 +442,17 @@ def main():
 
     log(f"获取到 {len(jobs)} 个职位")
 
+    # 2.5 过滤职位: 排除含"保洁"的职位
+    excluded_keywords = ["保洁"]
+    original_count = len(jobs)
+    jobs = [j for j in jobs if not any(kw in j.get("name", "") for kw in excluded_keywords)]
+    if len(jobs) < original_count:
+        log(f"已过滤 {original_count - len(jobs)} 个含排除关键词的职位 ({', '.join(excluded_keywords)})")
+
+    if not jobs:
+        log("过滤后无职位, 退出")
+        return 2
+
     # 3. 先写入仅含表格的 markdown (确保文件立即可用)
     details = {}
     md_path = get_md_path(query, city)
@@ -446,6 +461,11 @@ def main():
     log(f"已创建 (仅列表): {md_path}")
 
     # 4. 逐个调用 boss detail, 每获取一个就更新文件
+    if os.environ.get("SKIP_DETAIL") == "1":
+        log("SKIP_DETAIL=1, 跳过详情获取")
+        log(f"已保存: {md_path}")
+        log("完成")
+        return 0
     log(f"开始获取职位详情 ({len(jobs)} 个, 间隔 {DETAIL_INTERVAL_MIN}-{DETAIL_INTERVAL_MAX}秒, 重试{DETAIL_RETRY_MAX}次)...")
     fail_count = 0
     consecutive_fails = 0
