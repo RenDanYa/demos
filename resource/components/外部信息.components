@@ -2088,15 +2088,15 @@
       "showTitle": true,
       "showShadow": true,
       "createAt": "2026-06-28T20:00:00.000Z",
-      "updateAt": "2026-07-19T01:23:58.184Z",
-      "text": "🤖 搜索商品",
+      "updateAt": "2026-07-28T00:30:37.768Z",
+      "text": "🤖 搜索职位",
       "buttonType": "common",
       "clickActions": [
         {
           "type": "RunScript",
           "id": "ai-runscript-id-0004-0000-000000000004",
           "options": {
-            "expression": "runPython('D:/obsidian/demo/inbox/python/pdd_search.py', {timeout: 180000})"
+            "expression": "runPython('D:/obsidian/demo/inbox/python/boss_search.py', {timeout: 180000})"
           }
         }
       ],

@@ -5,7 +5,7 @@
 
 用法:
     python boss_search.py                          # 弹窗输入关键词 + 城市 + 数量
-    python boss_search.py "外贸"                    # 默认北京, 采集 15 个
+    python boss_search.py "外贸"                    # 默认宁波, 采集 15 个
     python boss_search.py "外贸" 上海               # 指定城市
     python boss_search.py "外贸" 上海 30            # 指定城市 + 数量
     python boss_search.py "外贸" 上海 30 1-3年 本科  # 指定经验 + 学历
@@ -81,11 +81,11 @@ def show_search_dialog():
     # 2. 城市
     city = simpledialog.askstring(
         "城市",
-        f"城市名 (如 北京/上海/杭州, 留空=北京):",
-        initialvalue="北京",
+        f"城市名 (如 宁波/上海/杭州, 留空=宁波):",
+        initialvalue="宁波",
         parent=root,
     )
-    city = (city or "北京").strip() or "北京"
+    city = (city or "宁波").strip() or "宁波"
 
     # 3. 数量
     limit_str = simpledialog.askstring(
@@ -102,20 +102,20 @@ def show_search_dialog():
     # 4. 经验 (可选)
     exp = simpledialog.askstring(
         "经验要求 (可选)",
-        f"经验: {'/'.join(EXPERIENCE_OPTIONS)}\n(留空=不限)",
-        initialvalue="",
+        f"经验: {'/'.join(EXPERIENCE_OPTIONS)}",
+        initialvalue="不限",
         parent=root,
     )
-    exp = (exp or "").strip()
+    exp = (exp or "不限").strip() or "不限"
 
     # 5. 学历 (可选)
     degree = simpledialog.askstring(
         "学历要求 (可选)",
-        f"学历: {'/'.join(DEGREE_OPTIONS)}\n(留空=不限)",
-        initialvalue="",
+        f"学历: {'/'.join(DEGREE_OPTIONS)}",
+        initialvalue="不限",
         parent=root,
     )
-    degree = (degree or "").strip()
+    degree = (degree or "不限").strip() or "不限"
 
     root.destroy()
     return kw, city, limit, exp, degree
@@ -388,14 +388,14 @@ def main():
 
     # 1. 获取搜索参数 (命令行参数优先, 无参数时弹窗)
     query = None
-    city = "北京"
+    city = "宁波"
     limit = 15
-    experience = ""
-    degree = ""
+    experience = "不限"
+    degree = "不限"
     if len(sys.argv) >= 2:
         query = sys.argv[1].strip()
         if len(sys.argv) >= 3:
-            city = sys.argv[2].strip() or "北京"
+            city = sys.argv[2].strip() or "宁波"
         if len(sys.argv) >= 4:
             try:
                 limit = max(1, min(100, int(sys.argv[3])))
