@@ -313,8 +313,8 @@ def build_markdown(query, city, jobs, details=None, experience="", degree="", st
         "",
         "## 职位列表",
         "",
-        "| # | 职位 | 薪资 | 公司 | 地区 | 经验 | 学历 | 职位描述 |",
-        "|---|------|------|------|------|------|------|------|",
+        "| # | 职位 | 薪资 | 公司 | 地区 | 经验 | 学历 | 职位描述 | securityId |",
+        "|---|------|------|------|------|------|------|------|------|",
     ]
 
     for i, j in enumerate(jobs, 1):
@@ -343,7 +343,9 @@ def build_markdown(query, city, jobs, details=None, experience="", degree="", st
         else:
             desc_cell = ""
 
-        lines.append(f"| {i} | {name_cell} | {salary} | {company} | {area} | {exp} | {deg} | {desc_cell} |")
+        # securityId 作为注释保存在表格中，续传时使用
+        sid_comment = f"<!-- sid:{sid} -->" if sid else ""
+        lines.append(f"| {i} | {name_cell} | {salary} | {company} | {area} | {exp} | {deg} | {desc_cell} | {sid_comment}")
 
     lines.append("")
 

@@ -85,16 +85,18 @@ def update_frontmatter_status(md_content, status):
 def parse_table_jobs(md_content):
     """从 Markdown 文件解析表格中的职位列表
 
-    返回: [(index, name, url), ...]
+    返回: [(index, name, url, security_id), ...]
     """
     jobs = []
-    # 匹配表格行: | 1 | [职位名](URL) | ... |
-    pattern = re.compile(r'^\| (\d+) \| \[([^\]]+)\]\(([^)]+)\) \|', re.MULTILINE)
+    # 匹配表格行: | 1 | [职位名](URL) | ... | <!-- sid:xxx --> |
+    # 或者旧格式: | 1 | [职位名](URL) | ... |
+    pattern = re.compile(r'^\| (\d+) \| \[([^\]]+)\]\(([^)]+)\) \|.*?(?:<!-- sid:([^>]+) -->)?\s*$', re.MULTILINE)
     for m in pattern.finditer(md_content):
         index = int(m.group(1))
         name = m.group(2)
         url = m.group(3)
-        jobs.append((index, name, url))
+        security_id = m.group(4) or ""  # 可能为None
+        jobs.append((index, name, url, security_id))
     return jobs
 
 def parse_existing_details(md_content):
@@ -108,17 +110,6 @@ def parse_existing_details(md_content):
     for m in pattern.finditer(md_content):
         existing.add(int(m.group(1)))
     return existing
-
-def extract_security_id(url):
-    """从 URL 提取 security_id
-
-    URL 格式: https://www.zhipin.com/job_detail/xxx.html
-    security_id = xxx
-    """
-    match = re.search(r'/job_detail/([^.]+)\.html', url)
-    if match:
-        return match.group(1)
-    return None
 
 def get_job_detail(security_id):
     """调用 opencli boss detail 获取单个职位详情"""
@@ -278,22 +269,22 @@ def resume_single_file(file_path, start_index=1):
     log(f"已获取 {len(existing_details)} 个详情: {sorted(existing_details)}")
 
     # 2. 找出缺失的详情
-    missing_jobs = [(i, n, u) for i, n, u in all_jobs if i >= start_index and i not in existing_details]
+    missing_jobs = [(i, n, u, s) for i, n, u, s in all_jobs if i >= start_index and i not in existing_details]
 
     if not missing_jobs:
         log("无需补充, 所有详情已完整")
         return 0
 
-    log(f"需要补充 {len(missing_jobs)} 个详情: {[i for i, n, u in missing_jobs]}")
+    log(f"需要补充 {len(missing_jobs)} 个详情: {[i for i, n, u, s in missing_jobs]}")
 
     # 3. 逐个获取详情
     success_count = 0
+    fail_count = 0
     new_details = {}  # index -> detail
 
-    for idx, (i, name, url) in enumerate(missing_jobs, 1):
-        sid = extract_security_id(url)
+    for idx, (i, name, url, sid) in enumerate(missing_jobs, 1):
         if not sid:
-            log(f"  [{idx}/{len(missing_jobs)}] #{i} - 无法提取 security_id, 跳过")
+            log(f"  [{idx}/{len(missing_jobs)}] #{i} - 无 securityId, 跳过")
             continue
 
         log(f"  [{idx}/{len(missing_jobs)}] #{i} {name[:30]} - 获取详情...")
@@ -323,9 +314,19 @@ def resume_single_file(file_path, start_index=1):
             success_count += 1
             log(f"  [{idx}/{len(missing_jobs)}] OK")
         else:
-            log(f"  [{idx}/{len(missing_jobs)}] 失败")
+            fail_count += 1
+            log(f"  [{idx}/{len(missing_jobs)}] 失败 (重试{DETAIL_RETRY_MAX}次仍失败)")
 
-    log(f"详情获取完成: 成功 {success_count}/{len(missing_jobs)}")
+    log(f"详情获取完成: 成功 {success_count}/{len(missing_jobs)}, 失败 {fail_count}")
+
+    if fail_count == len(missing_jobs):
+        log("")
+        log("⚠️  所有详情获取都失败！可能原因：")
+        log("  1. securityId 已过期（有时效性）")
+        log("  2. 需要重新搜索获取最新的 securityId")
+        log("  3. 浏览器cookie可能已过期")
+        log("")
+        log("建议：运行 boss_search.py 重新采集，而不是续传")
 
     if not new_details:
         log("未获取到新详情, 文件未更新")
