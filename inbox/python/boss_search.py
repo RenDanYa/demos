@@ -9,6 +9,7 @@
     python boss_search.py "外贸" 上海               # 指定城市
     python boss_search.py "外贸" 上海 30            # 指定城市 + 数量
     python boss_search.py "外贸" 上海 30 1-3年 本科  # 指定经验 + 学历
+    python boss_search.py "外贸" 上海 30 不限 不限 9  # 断点续传: 从第 9 个开始获取详情
 """
 
 import json
@@ -36,16 +37,20 @@ TIMEOUT_SEARCH = 150  # 搜索给足时间
 TIMEOUT_DETAIL = 60   # 单个职位详情超时
 
 # 防风控间隔 (秒): 详情请求之间随机等待
-DETAIL_INTERVAL_MIN = 5
-DETAIL_INTERVAL_MAX = 8
+DETAIL_INTERVAL_MIN = 8
+DETAIL_INTERVAL_MAX = 12
 # 失败后重试: 最多重试次数 + 重试前等待秒数
 DETAIL_RETRY_MAX = 2
-DETAIL_RETRY_WAIT_MIN = 10
-DETAIL_RETRY_WAIT_MAX = 15
+DETAIL_RETRY_WAIT_MIN = 20
+DETAIL_RETRY_WAIT_MAX = 30
 # 连续失败后冷却 (秒)
-DETAIL_COOLDOWN_FAILS = 3
-DETAIL_COOLDOWN_WAIT_MIN = 30
-DETAIL_COOLDOWN_WAIT_MAX = 60
+DETAIL_COOLDOWN_FAILS = 2
+DETAIL_COOLDOWN_WAIT_MIN = 60
+DETAIL_COOLDOWN_WAIT_MAX = 120
+# 批次暂停: 每 N 个职位暂停一次 (防止持续请求触发风控)
+BATCH_SIZE = 5
+BATCH_PAUSE_MIN = 45
+BATCH_PAUSE_MAX = 90
 
 # CLI 内部浏览器命令超时 (默认 60s 不够搜索, 提高到 120s)
 os.environ.setdefault("OPENCLI_BROWSER_COMMAND_TIMEOUT", "120")
@@ -223,7 +228,28 @@ def get_job_detail(security_id):
         return None
 
 
-def build_markdown(query, city, jobs, details=None, experience="", degree=""):
+def update_frontmatter_status(md_content, status):
+    """更新 Markdown 文件的 frontmatter 中的 status 字段"""
+    # 替换现有的 status 行
+    lines = md_content.split('\n')
+    updated = False
+    for i, line in enumerate(lines):
+        if line.startswith('status:'):
+            lines[i] = f'status: {status}'
+            updated = True
+            break
+    
+    # 如果没有 status 行，在 frontmatter 结束前添加
+    if not updated:
+        for i, line in enumerate(lines):
+            if line == '---' and i > 0:
+                lines.insert(i, f'status: {status}')
+                break
+    
+    return '\n'.join(lines)
+
+
+def build_markdown(query, city, jobs, details=None, experience="", degree="", status="采集中"):
     """生成 Obsidian markdown (汇总表格 + 职位详情)
 
     jobs: [{name, salary, company, area, experience, degree, skills, boss, security_id, url}, ...]
@@ -250,7 +276,7 @@ def build_markdown(query, city, jobs, details=None, experience="", degree=""):
         'source: "BOSS直聘"',
         f"count: {len(jobs)}",
         f"createTime: {datetime.now().isoformat(timespec='seconds')}",
-        "status: 已采集",
+        f"status: {status}",
         "---",
         "",
         f"# BOSS直聘搜索 - {query}",
@@ -404,6 +430,7 @@ def main():
     limit = 15
     experience = "不限"
     degree = "不限"
+    start_index = 1  # 从第几个开始获取详情 (断点续传)
     if len(sys.argv) >= 2:
         query = sys.argv[1].strip()
         if len(sys.argv) >= 3:
@@ -417,6 +444,19 @@ def main():
             experience = sys.argv[4].strip()
         if len(sys.argv) >= 6:
             degree = sys.argv[5].strip()
+        # 第 7 个参数: --start-index=N 或直接数字
+        if len(sys.argv) >= 7:
+            arg7 = sys.argv[6].strip()
+            if arg7.startswith("--start-index="):
+                try:
+                    start_index = max(1, int(arg7.split("=")[1]))
+                except (ValueError, IndexError):
+                    pass
+            else:
+                try:
+                    start_index = max(1, int(arg7))
+                except ValueError:
+                    pass
     else:
         query, city, limit, experience, degree = show_search_dialog()
 
@@ -453,12 +493,36 @@ def main():
         log("过滤后无职位, 退出")
         return 2
 
-    # 3. 先写入仅含表格的 markdown (确保文件立即可用)
+    # 3. 断点续传: 读取已有详情 (如果 start_index > 1)
     details = {}
     md_path = get_md_path(query, city)
-    md_content = build_markdown(query, city, jobs, details=details, experience=experience, degree=degree)
-    write_markdown(md_path, md_content)
-    log(f"已创建 (仅列表): {md_path}")
+
+    if start_index > 1 and md_path.exists():
+        # 尝试从已有文件解析已获取的详情
+        log(f"断点续传: 从第 {start_index} 个开始, 尝试读取已有详情...")
+        try:
+            import re
+            existing_content = md_path.read_text(encoding="utf-8")
+            # 从文件中提取已有的 security_id (通过表格中的链接匹配)
+            # 简单方案: 检查详情区段是否存在
+            detail_pattern = re.compile(r'^### (\d+)\. (.+)$', re.MULTILINE)
+            existing_details = detail_pattern.findall(existing_content)
+            if existing_details:
+                log(f"已有 {len(existing_details)} 个详情, 将跳过这些职位")
+        except Exception as e:
+            log(f"读取已有文件失败: {e}, 将从头开始")
+
+    # 写入初始文件 (如果不存在), 状态为"采集中"
+    if not md_path.exists() or start_index == 1:
+        md_content = build_markdown(query, city, jobs, details=details, experience=experience, degree=degree, status="采集中")
+        write_markdown(md_path, md_content)
+        log(f"已创建 (采集中): {md_path}")
+    else:
+        # 更新状态为"采集中"
+        existing_content = md_path.read_text(encoding="utf-8")
+        md_content = update_frontmatter_status(existing_content, "采集中")
+        write_markdown(md_path, md_content)
+        log(f"继续写入 (采集中): {md_path}")
 
     # 4. 逐个调用 boss detail, 每获取一个就更新文件
     if os.environ.get("SKIP_DETAIL") == "1":
@@ -467,9 +531,15 @@ def main():
         log("完成")
         return 0
     log(f"开始获取职位详情 ({len(jobs)} 个, 间隔 {DETAIL_INTERVAL_MIN}-{DETAIL_INTERVAL_MAX}秒, 重试{DETAIL_RETRY_MAX}次)...")
+    if start_index > 1:
+        log(f"断点续传: 从第 {start_index} 个开始")
     fail_count = 0
     consecutive_fails = 0
     for i, job in enumerate(jobs, 1):
+        # 断点续传: 跳过已获取的职位
+        if i < start_index:
+            continue
+
         sid = job.get("security_id", "")
         if not sid:
             log(f"  [{i}/{len(jobs)}] {job.get('name', '?')[:30]} - 无 security_id, 跳过")
@@ -480,6 +550,12 @@ def main():
         # 防风控: 第 2 条起随机等待
         if i > 1:
             wait = random.uniform(DETAIL_INTERVAL_MIN, DETAIL_INTERVAL_MAX)
+            time.sleep(wait)
+
+        # 批次暂停: 每 N 个职位暂停一次 (让浏览器会话"休息")
+        if i > 1 and (i - 1) % BATCH_SIZE == 0:
+            wait = random.uniform(BATCH_PAUSE_MIN, BATCH_PAUSE_MAX)
+            log(f"  已完成 {i-1} 个, 批次暂停 {wait:.0f}秒...")
             time.sleep(wait)
 
         # 连续失败冷却: 达到阈值后长等待
@@ -518,8 +594,13 @@ def main():
         md_content = build_markdown(query, city, jobs, details=details, experience=experience, degree=degree)
         write_markdown(md_path, md_content)
 
+    # 更新状态为"已采集"
+    md_content = md_path.read_text(encoding="utf-8")
+    md_content = update_frontmatter_status(md_content, "已采集")
+    write_markdown(md_path, md_content)
+
     log(f"详情获取完成: 成功 {len(details)}/{len(jobs)}, 失败 {fail_count}")
-    log(f"已保存: {md_path}")
+    log(f"已保存 (已采集): {md_path}")
     log("完成")
     return 0
 
