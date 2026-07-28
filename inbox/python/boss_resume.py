@@ -149,13 +149,18 @@ def get_job_detail(security_id):
     args = ["boss", "detail", "-f", "json", "--", security_id]
     ok, stdout, err = run_opencli(args, 60)
     if not ok:
+        log(f"  detail 调用失败: {(err or 'unknown')[:200]}")
         return None
     try:
         data = json.loads(stdout)
         if isinstance(data, dict):
             return data
+        if isinstance(data, list) and data:
+            return data[0]
+        log(f"  detail 意外 JSON: {type(data).__name__}")
         return None
-    except json.JSONDecodeError:
+    except json.JSONDecodeError as e:
+        log(f"  detail JSON 解析失败: {e}, stdout={stdout[:200] if stdout else '(空)'}")
         return None
 
 def build_detail_section(index, name, detail):
