@@ -36,8 +36,16 @@ TIMEOUT_SEARCH = 150  # 搜索给足时间
 TIMEOUT_DETAIL = 60   # 单个职位详情超时
 
 # 防风控间隔 (秒): 详情请求之间随机等待
-DETAIL_INTERVAL_MIN = 3
-DETAIL_INTERVAL_MAX = 5
+DETAIL_INTERVAL_MIN = 5
+DETAIL_INTERVAL_MAX = 8
+# 失败后重试: 最多重试次数 + 重试前等待秒数
+DETAIL_RETRY_MAX = 2
+DETAIL_RETRY_WAIT_MIN = 10
+DETAIL_RETRY_WAIT_MAX = 15
+# 连续失败后冷却 (秒)
+DETAIL_COOLDOWN_FAILS = 3
+DETAIL_COOLDOWN_WAIT_MIN = 30
+DETAIL_COOLDOWN_WAIT_MAX = 60
 
 # CLI 内部浏览器命令超时 (默认 60s 不够搜索, 提高到 120s)
 os.environ.setdefault("OPENCLI_BROWSER_COMMAND_TIMEOUT", "120")
@@ -361,20 +369,20 @@ def _clean_cell(val):
     return str(val).replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 
-def write_markdown(query, city, md_content):
-    """保存 markdown 文件, 返回路径"""
+def get_md_path(query, city):
+    """确定 markdown 文件路径 (文件名冲突时加时间戳)"""
     OUTPUT_ROOT.mkdir(parents=True, exist_ok=True)
-
     safe_name = sanitize_filename(query)[:60] or "untitled"
-    # 文件名含城市, 便于区分不同城市的搜索
     safe_city = sanitize_filename(city)[:20]
     md_path = OUTPUT_ROOT / f"{safe_name}_{safe_city}.md"
-
-    # 同名文件已存在时, 加时间戳后缀避免覆盖
     if md_path.exists():
         ts = datetime.now().strftime("%H%M%S")
         md_path = OUTPUT_ROOT / f"{safe_name}_{safe_city}_{ts}.md"
+    return md_path
 
+
+def write_markdown(md_path, md_content):
+    """写入 markdown 到指定路径 (覆盖)"""
     md_path.write_text(md_content, encoding="utf-8")
     return md_path
 
@@ -430,10 +438,17 @@ def main():
 
     log(f"获取到 {len(jobs)} 个职位")
 
-    # 3. 逐个调用 boss detail 获取职位详情
-    log(f"开始获取职位详情 ({len(jobs)} 个, 间隔 {DETAIL_INTERVAL_MIN}-{DETAIL_INTERVAL_MAX}秒)...")
+    # 3. 先写入仅含表格的 markdown (确保文件立即可用)
     details = {}
+    md_path = get_md_path(query, city)
+    md_content = build_markdown(query, city, jobs, details=details, experience=experience, degree=degree)
+    write_markdown(md_path, md_content)
+    log(f"已创建 (仅列表): {md_path}")
+
+    # 4. 逐个调用 boss detail, 每获取一个就更新文件
+    log(f"开始获取职位详情 ({len(jobs)} 个, 间隔 {DETAIL_INTERVAL_MIN}-{DETAIL_INTERVAL_MAX}秒, 重试{DETAIL_RETRY_MAX}次)...")
     fail_count = 0
+    consecutive_fails = 0
     for i, job in enumerate(jobs, 1):
         sid = job.get("security_id", "")
         if not sid:
@@ -447,19 +462,43 @@ def main():
             wait = random.uniform(DETAIL_INTERVAL_MIN, DETAIL_INTERVAL_MAX)
             time.sleep(wait)
 
-        detail = get_job_detail(sid)
-        if detail:
-            details[sid] = detail
+        # 连续失败冷却: 达到阈值后长等待
+        if consecutive_fails >= DETAIL_COOLDOWN_FAILS:
+            wait = random.uniform(DETAIL_COOLDOWN_WAIT_MIN, DETAIL_COOLDOWN_WAIT_MAX)
+            log(f"  连续失败 {consecutive_fails} 次, 冷却 {wait:.0f}秒...")
+            time.sleep(wait)
+            consecutive_fails = 0
+
+        # 重试逻辑
+        got_detail = None
+        for attempt in range(1, DETAIL_RETRY_MAX + 2):  # 1次初试 + N次重试
+            try:
+                got_detail = get_job_detail(sid)
+                if got_detail:
+                    break
+            except Exception as e:
+                log(f"  [{i}/{len(jobs)}] 第{attempt}次异常: {e}")
+                got_detail = None
+
+            if attempt <= DETAIL_RETRY_MAX:
+                wait = random.uniform(DETAIL_RETRY_WAIT_MIN, DETAIL_RETRY_WAIT_MAX)
+                log(f"  [{i}/{len(jobs)}] 第{attempt}次失败, {wait:.0f}秒后重试...")
+                time.sleep(wait)
+
+        if got_detail:
+            details[sid] = got_detail
             log(f"  [{i}/{len(jobs)}] OK")
+            consecutive_fails = 0
         else:
             fail_count += 1
-            log(f"  [{i}/{len(jobs)}] 失败")
+            consecutive_fails += 1
+            log(f"  [{i}/{len(jobs)}] 失败 (重试{DETAIL_RETRY_MAX}次仍失败)")
+
+        # 每次获取后立即更新文件 (覆盖同一文件, 中断也能保留已获取的详情)
+        md_content = build_markdown(query, city, jobs, details=details, experience=experience, degree=degree)
+        write_markdown(md_path, md_content)
 
     log(f"详情获取完成: 成功 {len(details)}/{len(jobs)}, 失败 {fail_count}")
-
-    # 4. 生成 markdown
-    md_content = build_markdown(query, city, jobs, details=details, experience=experience, degree=degree)
-    md_path = write_markdown(query, city, md_content)
     log(f"已保存: {md_path}")
     log("完成")
     return 0

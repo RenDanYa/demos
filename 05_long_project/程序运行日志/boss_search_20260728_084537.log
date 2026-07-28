@@ -1,0 +1,86 @@
+[08:45:37] ============================================================
+[08:45:37] BOSS直聘职位搜索采集 启动
+[08:45:37] OPENCLI_CMD: ('node', 'd:\\voice\\opencli-main\\dist\\main.js')
+[08:45:37] 输出目录: d:\obsidian\demo\05_long_project\BOSS直聘
+[08:45:37] ============================================================
+[08:45:48] 关键词: 三关六码头
+[08:45:48] 城市: 宁波
+[08:45:48] 数量: 15
+[08:45:48] 经验: 不限
+[08:45:48] 学历: 不限
+[08:45:48] 搜索中, 请稍候 (约 15-30 秒)...
+[08:45:48] 调用 opencli boss search (城市=宁波, limit=15)
+[08:46:00] 获取到 15 个职位
+[08:46:00] 已创建 (仅列表): d:\obsidian\demo\05_long_project\BOSS直聘\三关六码头_宁波.md
+[08:46:00] 开始获取职位详情 (15 个, 间隔 3-5秒)...
+[08:46:00]   [1/15] 店员/营业员 - 获取详情...
+[08:46:09]   [1/15] OK
+[08:46:09]   [2/15] 三关六码头店员|多样化岗位+全面培训 - 获取详情...
+[08:46:32]   [2/15] OK
+[08:46:32]   [3/15] 渠道礼品销售 - 获取详情...
+[08:46:55]   detail 调用失败: 💥 Unexpected error: Error: Network Error
+    at xhr.onerror (<anonymous>:13:36)
+  Run with --verbose for details, or report: https://github.com/jackwener/opencli/issues
+
+[08:46:55]   [3/15] 失败
+[08:46:55]   [4/15] 三关六码头招聘储备店长 - 获取详情...
+[08:47:03]   detail 调用失败: 💥 Unexpected error: Error: Network Error
+    at xhr.onerror (<anonymous>:13:36)
+  Run with --verbose for details, or report: https://github.com/jackwener/opencli/issues
+
+[08:47:03]   [4/15] 失败
+[08:47:03]   [5/15] 三关六码头镇海门店店长/店员 - 获取详情...
+[08:47:10]   [5/15] OK
+[08:47:10]   [6/15] 数据分析师 - 获取详情...
+[08:47:16]   detail 调用失败: 💥 Unexpected error: Error: Network Error
+    at xhr.onerror (<anonymous>:13:36)
+  Run with --verbose for details, or report: https://github.com/jackwener/opencli/issues
+
+[08:47:16]   [6/15] 失败
+[08:47:16]   [7/15] 市场督导 - 获取详情...
+[08:47:22]   detail 调用失败: 💥 Unexpected error: Error: Network Error
+    at xhr.onerror (<anonymous>:13:36)
+  Run with --verbose for details, or report: https://github.com/jackwener/opencli/issues
+
+[08:47:22]   [7/15] 失败
+[08:47:22]   [8/15] 招商总监 - 获取详情...
+[08:47:30]   detail 调用失败: 💥 Unexpected error: Error: Network Error
+    at xhr.onerror (<anonymous>:13:36)
+  Run with --verbose for details, or report: https://github.com/jackwener/opencli/issues
+
+[08:47:30]   [8/15] 失败
+[08:47:30]   [9/15] 营销设计师 - 获取详情...
+[08:47:37]   detail 调用失败: 💥 Unexpected error: Error: Network Error
+    at xhr.onerror (<anonymous>:13:36)
+  Run with --verbose for details, or report: https://github.com/jackwener/opencli/issues
+
+[08:47:37]   [9/15] 失败
+[08:47:37]   [10/15] 招聘专员 - 获取详情...
+[08:47:44]   [10/15] OK
+[08:47:44]   [11/15] 三关六码头招店长/店员/线上面试/全国就近 - 获取详情...
+[08:47:50]   detail 调用失败: 💥 Unexpected error: {"code":-32000,"message":"Execution context was destroyed."}
+  Run with --verbose for details, or report: https://github.com/jackwener/opencli/issues
+
+[08:47:50]   [11/15] 失败
+[08:47:50]   [12/15] 三关六码头面包店员 - 获取详情...
+[08:47:58]   detail 调用失败: 💥 Unexpected error: Error: Network Error
+    at xhr.onerror (<anonymous>:13:36)
+  Run with --verbose for details, or report: https://github.com/jackwener/opencli/issues
+
+[08:47:58]   [12/15] 失败
+[08:47:58]   [13/15] 拣货员 - 获取详情...
+[08:48:04]   detail 调用失败: 💥 Unexpected error: Error: Network Error
+    at xhr.onerror (<anonymous>:13:36)
+  Run with --verbose for details, or report: https://github.com/jackwener/opencli/issues
+
+[08:48:04]   [13/15] 失败
+[08:48:04]   [14/15] 电商短视频拍摄剪辑 - 获取详情...
+[08:48:11]   [14/15] OK
+[08:48:11]   [15/15] 财务管培生 - 获取详情...
+[08:48:17]   detail 调用失败: 💥 Unexpected error: {"code":-32000,"message":"Execution context was destroyed."}
+  Run with --verbose for details, or report: https://github.com/jackwener/opencli/issues
+
+[08:48:17]   [15/15] 失败
+[08:48:17] 详情获取完成: 成功 5/15, 失败 10
+[08:48:17] 已保存: d:\obsidian\demo\05_long_project\BOSS直聘\三关六码头_宁波.md
+[08:48:17] 完成
