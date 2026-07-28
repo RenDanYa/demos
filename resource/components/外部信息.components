@@ -699,7 +699,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-28T07:02:48.574Z",
+      "updateAt": "2026-07-28T08:14:33.562Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -775,7 +775,8 @@
             "insertPosition": {
               "position": "BottomOfNote",
               "headingLine": ""
-            }
+            },
+            "width": "135"
           }
         },
         {
@@ -783,7 +784,21 @@
           "name": "${file.backlinks}",
           "isShow": true,
           "type": "text",
-          "options": {}
+          "options": {
+            "width": "95"
+          }
+        },
+        {
+          "id": "d8cbb6d7-34f1-4a12-b377-d1f941ff1548",
+          "name": "正文",
+          "isShow": true,
+          "type": "formula",
+          "options": {
+            "formula": "section(\"正文\")",
+            "renderType": "markdown",
+            "width": "422"
+          },
+          "wrap": true
         }
       ],
       "templates": [],
@@ -824,7 +839,6 @@
           "婚纱酒店出嫁房需要租几天？",
           "可以给跟妆提供的风格",
           "跟妆如何确定自己的妆造",
-          "宁波求职",
           "求职渠道"
         ]
       },
@@ -1821,7 +1835,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-19T01:55:59.231Z",
+      "updateAt": "2026-07-28T08:12:02.052Z",
       "viewType": "gallary",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
