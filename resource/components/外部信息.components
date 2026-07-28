@@ -699,7 +699,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-26T23:08:54.184Z",
+      "updateAt": "2026-07-28T07:02:48.574Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -823,7 +823,9 @@
           "__$uncategorizedGroup",
           "婚纱酒店出嫁房需要租几天？",
           "可以给跟妆提供的风格",
-          "跟妆如何确定自己的妆造"
+          "跟妆如何确定自己的妆造",
+          "宁波求职",
+          "求职渠道"
         ]
       },
       "filter": {
