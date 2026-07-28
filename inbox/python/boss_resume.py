@@ -39,6 +39,33 @@ def parse_frontmatter_status(md_content):
     return None
 
 
+def check_collection_complete(md_content):
+    """检查采集是否完整
+
+    验证标准：
+    1. 表格中的每个职位都有对应的详情区段
+
+    返回: (is_complete, missing_indexes)
+    """
+    # 解析表格中的职位编号
+    table_jobs = set()
+    table_pattern = re.compile(r'^\| (\d+) \|', re.MULTILINE)
+    for m in table_pattern.finditer(md_content):
+        table_jobs.add(int(m.group(1)))
+
+    # 解析已有的详情编号
+    detail_jobs = set()
+    detail_pattern = re.compile(r'^### (\d+)\. ', re.MULTILINE)
+    for m in detail_pattern.finditer(md_content):
+        detail_jobs.add(int(m.group(1)))
+
+    # 检查是否所有表格职位都有详情
+    missing = table_jobs - detail_jobs
+    is_complete = len(missing) == 0
+
+    return is_complete, sorted(missing)
+
+
 def update_frontmatter_status(md_content, status):
     """更新 Markdown 文件的 frontmatter 中的 status 字段"""
     lines = md_content.split('\n')
@@ -323,10 +350,18 @@ def resume_single_file(file_path, start_index=1):
             continue
         new_content = new_content.rstrip() + "\n\n" + detail_md + "\n"
 
-    # 写入文件并更新状态为"已采集"
-    new_content = update_frontmatter_status(new_content, "已采集")
+    # 写入文件
     file_path.write_text(new_content, encoding="utf-8")
-    log(f"已更新 (已采集): {file_path}")
+
+    # 验证采集完整性并更新状态
+    is_complete, missing_after = check_collection_complete(new_content)
+    if is_complete:
+        new_content = update_frontmatter_status(new_content, "已采集")
+        file_path.write_text(new_content, encoding="utf-8")
+        log(f"已更新 (已采集): {file_path}")
+    else:
+        log(f"已更新 (采集中): {file_path} - 仍缺失 {len(missing_after)} 个详情: {missing_after}")
+
     log("完成")
     return 0
 

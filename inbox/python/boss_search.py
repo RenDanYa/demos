@@ -238,15 +238,43 @@ def update_frontmatter_status(md_content, status):
             lines[i] = f'status: {status}'
             updated = True
             break
-    
+
     # 如果没有 status 行，在 frontmatter 结束前添加
     if not updated:
         for i, line in enumerate(lines):
             if line == '---' and i > 0:
                 lines.insert(i, f'status: {status}')
                 break
-    
+
     return '\n'.join(lines)
+
+
+def check_collection_complete(md_content, expected_count):
+    """检查采集是否完整
+
+    验证标准：
+    1. 表格中有 expected_count 个职位
+    2. 每个职位都有对应的详情区段（### N. 标题）
+
+    返回: (is_complete, missing_indexes)
+    """
+    # 解析表格中的职位编号
+    table_jobs = set()
+    table_pattern = re.compile(r'^\| (\d+) \|', re.MULTILINE)
+    for m in table_pattern.finditer(md_content):
+        table_jobs.add(int(m.group(1)))
+
+    # 解析已有的详情编号
+    detail_jobs = set()
+    detail_pattern = re.compile(r'^### (\d+)\. ', re.MULTILINE)
+    for m in detail_pattern.finditer(md_content):
+        detail_jobs.add(int(m.group(1)))
+
+    # 检查是否所有表格职位都有详情
+    missing = table_jobs - detail_jobs
+    is_complete = len(missing) == 0 and len(table_jobs) >= expected_count
+
+    return is_complete, sorted(missing)
 
 
 def build_markdown(query, city, jobs, details=None, experience="", degree="", status="采集中"):
@@ -594,13 +622,20 @@ def main():
         md_content = build_markdown(query, city, jobs, details=details, experience=experience, degree=degree)
         write_markdown(md_path, md_content)
 
-    # 更新状态为"已采集"
+    # 验证采集完整性并更新状态
     md_content = md_path.read_text(encoding="utf-8")
-    md_content = update_frontmatter_status(md_content, "已采集")
-    write_markdown(md_path, md_content)
+    is_complete, missing_indexes = check_collection_complete(md_content, len(jobs))
 
-    log(f"详情获取完成: 成功 {len(details)}/{len(jobs)}, 失败 {fail_count}")
-    log(f"已保存 (已采集): {md_path}")
+    if is_complete:
+        md_content = update_frontmatter_status(md_content, "已采集")
+        write_markdown(md_path, md_content)
+        log(f"详情获取完成: 成功 {len(details)}/{len(jobs)}, 失败 {fail_count}")
+        log(f"已保存 (已采集): {md_path}")
+    else:
+        log(f"详情获取完成: 成功 {len(details)}/{len(jobs)}, 失败 {fail_count}")
+        log(f"缺失详情: {missing_indexes}")
+        log(f"已保存 (采集中): {md_path} - 需要补充 {len(missing_indexes)} 个详情")
+
     log("完成")
     return 0
 
