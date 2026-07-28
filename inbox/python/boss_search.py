@@ -270,12 +270,12 @@ def build_markdown(query, city, jobs, details=None, experience="", degree=""):
         else:
             name_cell = name
 
-        # 职位描述列: 锚点跳转到详情区段
+        # 职位描述列: Obsidian wikilink 跳转到详情区段 (管道符转义避免破坏表格)
         sid = j.get("security_id", "")
         has_detail = bool(details and details.get(sid))
         if has_detail:
-            anchor = _make_anchor(f"{i}. {j.get('name', '')}")
-            desc_cell = f"[查看描述](#{anchor})"
+            heading = f"{i}. {j.get('name', '')}"
+            desc_cell = f"[[#{heading}\\|查看描述]]"
         else:
             desc_cell = ""
 
@@ -299,18 +299,26 @@ def build_markdown(query, city, jobs, details=None, experience="", degree=""):
     return "\n".join(lines)
 
 
-def _make_anchor(text):
-    """将标题文本转为 markdown 锚点 (小写, 去特殊字符, 空格转连字符)"""
-    anchor = text.lower()
-    anchor = re.sub(r"[^\w\s\u4e00-\u9fff]", "", anchor)  # 保留字母数字下划线中文空格
-    anchor = re.sub(r"\s+", "-", anchor.strip())
-    return anchor
+def _fix_list_format(line):
+    """格式化描述行: 有序号转有序列表, 无序号非空行转无序列表"""
+    stripped = line.strip()
+    if not stripped:
+        return ""
+    # 有序号: 1.text / 1、text / 1. text / 1、 text → 1. text
+    m = re.match(r'^(\d+)[.、]\s*(\S.*)', stripped)
+    if m:
+        return f"{m.group(1)}. {m.group(2)}"
+    # 无序号: 添加无序列表前缀
+    return f"- {stripped}"
 
 
 def _build_detail_section(index, job, detail):
-    """生成单个职位详情的 markdown 行列表 (仅公司信息 + 职位描述)"""
+    """生成单个职位详情的 markdown 行列表 (公司信息 + 职位描述, 放入 Callout)"""
     name = job.get("name", "无标题")
-    lines = [f"### {index}. {name}"]
+    lines = [f"### {index}. {name}", ""]
+
+    # Callout 内容行
+    callout_lines = []
 
     # 公司信息 (含行业/规模/融资阶段)
     company = detail.get("company", "") or job.get("company", "")
@@ -327,15 +335,21 @@ def _build_detail_section(index, job, detail):
     if stage:
         company_parts.append(stage)
     if company_parts:
-        lines.append(f"**公司**: {' · '.join(company_parts)}")
+        callout_lines.append(f"**公司**: {' · '.join(company_parts)}")
 
     # 职位描述
     description = detail.get("description", "")
     if description:
-        lines.append("")
-        lines.append("**职位描述**:")
-        lines.append("")
-        lines.append(description)
+        callout_lines.append("")
+        callout_lines.append("**职位描述**:")
+        callout_lines.append("")
+        for desc_line in description.split("\n"):
+            callout_lines.append(_fix_list_format(desc_line))
+
+    # 用 Callout 包裹
+    lines.append("> [!info] 职位详情")
+    for cl in callout_lines:
+        lines.append(f"> {cl}" if cl else ">")
 
     return lines
 
