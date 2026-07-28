@@ -447,7 +447,7 @@ def _build_detail_section(index, job, detail):
             callout_lines.append(_fix_list_format(desc_line))
 
     # 用 Callout 包裹
-    lines.append("> [!info] 职位详情")
+    lines.append("> [!info]- 职位详情")
     for cl in callout_lines:
         lines.append(f"> {cl}" if cl else ">")
 

@@ -198,7 +198,7 @@ def build_detail_section(index, name, detail):
             else:
                 callout_lines.append(f"- {stripped}")
 
-    lines.append("> [!info] 职位详情")
+    lines.append("> [!info]- 职位详情")
     for cl in callout_lines:
         lines.append(f"> {cl}" if cl else ">")
 
