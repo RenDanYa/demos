@@ -699,7 +699,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-30T06:30:41.771Z",
+      "updateAt": "2026-07-30T07:22:58.158Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -838,8 +838,7 @@
           "__$uncategorizedGroup",
           "婚纱酒店出嫁房需要租几天？",
           "跟妆如何确定自己的妆造",
-          "可以给跟妆提供的风格",
-          "求职渠道"
+          "可以给跟妆提供的风格"
         ]
       },
       "filter": {
