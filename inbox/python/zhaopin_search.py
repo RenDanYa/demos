@@ -274,6 +274,34 @@ def _fix_list_format(line):
     return f"- {stripped}"
 
 
+def _split_description(text):
+    """将职位描述文本拆分为行列表
+
+    处理两种情况:
+    1. 正常换行的文本 — 直接按 \\n 分割
+    2. 无换行但含中文编号的段落 (如 "1、xxx2、xxx3、xxx") — 在编号前插入换行再分割
+    """
+    if not text:
+        return []
+
+    # 如果文本本身有换行, 直接分割
+    if "\n" in text:
+        lines = text.split("\n")
+    else:
+        # 无换行的连续文本: 在中文编号 (1、2、3… 等) 前插入换行
+        # 匹配: 非开头位置的 "数字+、" 或 "数字+."
+        split_text = re.sub(r'(?<=\S)(\d+)[、.](?=\S)', r'\n\1、', text)
+        lines = split_text.split("\n")
+
+    # 过滤空行并格式化
+    result = []
+    for line in lines:
+        formatted = _fix_list_format(line)
+        if formatted:
+            result.append(formatted)
+    return result
+
+
 def build_markdown(query, city, jobs, details=None, status="采集中"):
     """生成 Obsidian markdown (汇总表格 + 职位详情)
 
@@ -400,8 +428,7 @@ def _build_detail_section(job, detail):
         callout_lines.append("")
         callout_lines.append("**职位描述**:")
         callout_lines.append("")
-        for desc_line in description.split("\n"):
-            callout_lines.append(_fix_list_format(desc_line))
+        callout_lines.extend(_split_description(description))
 
     # 公司介绍
     company_intro = detail.get("company_intro", "")
@@ -409,8 +436,7 @@ def _build_detail_section(job, detail):
         callout_lines.append("")
         callout_lines.append("**公司介绍**:")
         callout_lines.append("")
-        for intro_line in company_intro.split("\n"):
-            callout_lines.append(_fix_list_format(intro_line))
+        callout_lines.extend(_split_description(company_intro))
 
     # 用 Callout 包裹
     lines.append("> [!info]- 职位详情")
