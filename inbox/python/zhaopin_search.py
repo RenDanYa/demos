@@ -265,14 +265,15 @@ def _clean_cell(val):
 
 
 def _fix_list_format(line):
-    """格式化描述行: 统一转为无序列表行 (去除行首序号)"""
+    """格式化描述行: 有序号转有序列表, 无序号非空行转无序列表"""
     stripped = line.strip()
     if not stripped:
         return ""
-    # 去除行首序号 (1. / 1、 等) 后统一加无序列表前缀
+    # 有序号: 1.text / 1、text → 1. text
     m = re.match(r'^(\d+)[.、]\s*(\S.*)', stripped)
     if m:
-        return f"- {m.group(2)}"
+        return f"{m.group(1)}. {m.group(2)}"
+    # 无序号: 添加无序列表前缀
     return f"- {stripped}"
 
 
