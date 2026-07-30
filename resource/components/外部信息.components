@@ -2156,7 +2156,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-27T23:14:41.906Z",
+      "updateAt": "2026-07-30T08:03:49.806Z",
       "viewType": "gallary",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -2166,6 +2166,13 @@
           "type": "text",
           "isShow": true,
           "wrap": false,
+          "options": {}
+        },
+        {
+          "id": "8eadaa4c-ee4d-4503-9863-4a286cc8a895",
+          "name": "${file.parent}",
+          "isShow": true,
+          "type": "text",
           "options": {}
         },
         {
@@ -2231,20 +2238,43 @@
         "operator": "and",
         "conditions": [
           {
-            "id": "4e5f6a7b-8c9d-4d0e-2a3b-4c5d6e7f8092",
-            "type": "filter",
-            "operator": "contains",
-            "property": "${file.parent}",
-            "value": "05_long_project/BOSS直聘",
-            "conditions": []
-          },
-          {
             "id": "5f6a7b8c-9d0e-4e1f-3b4c-5d6e7f809103",
             "type": "filter",
             "operator": "equals",
             "property": "${file.extension}",
             "value": "md",
             "conditions": []
+          },
+          {
+            "id": "5a5dbe79-477c-40ff-b3f3-eabb31d05a60",
+            "type": "group",
+            "operator": "or",
+            "conditions": [
+              {
+                "id": "af725cdb-4c51-4777-a727-e394cec2c973",
+                "type": "filter",
+                "operator": "equals",
+                "property": "${file.parent}",
+                "value": "05_long_project/前程无忧",
+                "conditions": []
+              },
+              {
+                "id": "dc2dc0c8-29c9-4a62-9dba-6e02fe9cfad8",
+                "type": "filter",
+                "operator": "equals",
+                "property": "${file.parent}",
+                "value": "05_long_project/BOSS直聘",
+                "conditions": []
+              },
+              {
+                "id": "bb9c4197-bb37-4e3c-8056-5c25be07aaf5",
+                "type": "filter",
+                "operator": "equals",
+                "property": "${file.parent}",
+                "value": "05_long_project/BOSS直聘",
+                "conditions": []
+              }
+            ]
           }
         ]
       },
@@ -2288,13 +2318,13 @@
       "id": "00daf986-5db8-45ab-a263-f4d5227ce161",
       "type": "multi",
       "titleAlign": "center",
-      "tabTitle": "Boss",
+      "tabTitle": "简历",
       "maxWidthRatio": -1,
       "showBorder": false,
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T10:37:12.400Z",
-      "updateAt": "2026-07-27T23:10:12.838Z",
+      "updateAt": "2026-07-30T08:03:10.439Z",
       "components": [
         {
           "componentId": "b1ef47e8-3ea4-4869-8658-c40f9b69c82a"
@@ -2306,7 +2336,7 @@
       "layoutType": "list",
       "locked": false,
       "layoutOptions": {},
-      "title": "Boss"
+      "title": "简历"
     },
     {
       "id": "6126f602-1201-4ae0-b133-a847e13e837f",
