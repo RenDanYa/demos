@@ -654,9 +654,6 @@
       "updateAt": "2026-06-28T13:31:46.001Z",
       "components": [
         {
-          "componentId": "01b4cd00-1f06-49c0-9d8f-96b7abc27293"
-        },
-        {
           "componentId": "b2c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e"
         }
       ],
@@ -677,9 +674,6 @@
       "createAt": "2026-06-28T11:52:41.177Z",
       "updateAt": "2026-06-28T12:07:11.949Z",
       "components": [
-        {
-          "componentId": "010dfa44-78e2-45c8-b8ef-5ff11c59b791"
-        },
         {
           "componentId": "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d"
         }
@@ -2353,13 +2347,13 @@
       "id": "728c922e-724f-4264-a082-992f37786046",
       "type": "multi",
       "titleAlign": "center",
-      "tabTitle": "",
+      "tabTitle": "程序按钮",
       "maxWidthRatio": -1,
       "showBorder": false,
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-07-30T08:41:32.057Z",
-      "updateAt": "2026-07-30T08:41:32.057Z",
+      "updateAt": "2026-07-30T08:43:14.248Z",
       "components": [
         {
           "componentId": "1d88fc01-6e2c-4ff2-9c16-72cc40949fcc"
@@ -2369,11 +2363,39 @@
         },
         {
           "componentId": "b1ef47e8-3ea4-4869-8658-c40f9b69c82a"
+        },
+        {
+          "componentId": "efc7e942-0ce8-4793-8a9e-146f0ea547dc"
         }
       ],
-      "layoutType": "tab",
+      "layoutType": "list",
       "locked": false,
-      "layoutOptions": {}
+      "layoutOptions": {},
+      "title": "程序按钮"
+    },
+    {
+      "id": "efc7e942-0ce8-4793-8a9e-146f0ea547dc",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "一键触发",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-07-17T00:59:43.323Z",
+      "updateAt": "2026-07-28T01:55:04.782Z",
+      "components": [
+        {
+          "componentId": "010dfa44-78e2-45c8-b8ef-5ff11c59b791"
+        },
+        {
+          "componentId": "01b4cd00-1f06-49c0-9d8f-96b7abc27293"
+        }
+      ],
+      "layoutType": "column",
+      "locked": false,
+      "layoutOptions": {},
+      "title": "一键触发"
     }
   ],
   "rootComponentId": "7a1b2c3d-4e5f-4a6b-8c9d-0e1f2a3b4c5d",

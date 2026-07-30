@@ -265,13 +265,14 @@ def _clean_cell(val):
 
 
 def _fix_list_format(line):
-    """格式化描述行: 有序号转有序列表, 无序号非空行转无序列表"""
+    """格式化描述行: 统一转为无序列表行 (去除行首序号)"""
     stripped = line.strip()
     if not stripped:
         return ""
+    # 去除行首序号 (1. / 1、 等) 后统一加无序列表前缀
     m = re.match(r'^(\d+)[.、]\s*(\S.*)', stripped)
     if m:
-        return f"{m.group(1)}. {m.group(2)}"
+        return f"- {m.group(2)}"
     return f"- {stripped}"
 
 
@@ -403,31 +404,31 @@ def _build_detail_section(job, detail):
     if company_desc:
         company_parts.append(company_desc)
     if company_parts:
-        callout_lines.append(f"**公司**: {' · '.join(company_parts)}")
+        callout_lines.append(f"- **公司**: {' · '.join(company_parts)}")
 
     # 薪资 + 福利
     salary = detail.get("salary", "")
     welfare = detail.get("welfare", "")
     if salary:
-        callout_lines.append(f"**薪资**: {salary}")
+        callout_lines.append(f"- **薪资**: {salary}")
     if welfare:
-        callout_lines.append(f"**福利**: {welfare}")
+        callout_lines.append(f"- **福利**: {welfare}")
 
     # 工作地址
     address = detail.get("address", "")
     if address:
-        callout_lines.append(f"**地址**: {address}")
+        callout_lines.append(f"- **地址**: {address}")
 
     # 技能要求
     skills = detail.get("skills", "")
     if skills:
-        callout_lines.append(f"**技能**: {skills}")
+        callout_lines.append(f"- **技能**: {skills}")
 
     # 职位描述
     description = detail.get("description", "")
     if description:
         callout_lines.append("")
-        callout_lines.append("**职位描述**:")
+        callout_lines.append("- **职位描述**:")
         callout_lines.append("")
         callout_lines.extend(_split_description(description))
 
@@ -435,7 +436,7 @@ def _build_detail_section(job, detail):
     company_intro = detail.get("company_intro", "")
     if company_intro:
         callout_lines.append("")
-        callout_lines.append("**公司介绍**:")
+        callout_lines.append("- **公司介绍**:")
         callout_lines.append("")
         callout_lines.extend(_split_description(company_intro))
 

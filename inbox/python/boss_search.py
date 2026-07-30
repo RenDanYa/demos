@@ -399,15 +399,14 @@ def build_markdown(query, city, jobs, details=None, experience="", degree="", st
 
 
 def _fix_list_format(line):
-    """格式化描述行: 有序号转有序列表, 无序号非空行转无序列表"""
+    """格式化描述行: 统一转为无序列表行 (去除行首序号)"""
     stripped = line.strip()
     if not stripped:
         return ""
-    # 有序号: 1.text / 1、text / 1. text / 1、 text → 1. text
+    # 去除行首序号 (1. / 1、 等) 后统一加无序列表前缀
     m = re.match(r'^(\d+)[.、]\s*(\S.*)', stripped)
     if m:
-        return f"{m.group(1)}. {m.group(2)}"
-    # 无序号: 添加无序列表前缀
+        return f"- {m.group(2)}"
     return f"- {stripped}"
 
 
@@ -436,13 +435,13 @@ def _build_detail_section(index, job, detail):
     if stage:
         company_parts.append(stage)
     if company_parts:
-        callout_lines.append(f"**公司**: {' · '.join(company_parts)}")
+        callout_lines.append(f"- **公司**: {' · '.join(company_parts)}")
 
     # 职位描述
     description = detail.get("description", "")
     if description:
         callout_lines.append("")
-        callout_lines.append("**职位描述**:")
+        callout_lines.append("- **职位描述**:")
         callout_lines.append("")
         for desc_line in description.split("\n"):
             callout_lines.append(_fix_list_format(desc_line))
