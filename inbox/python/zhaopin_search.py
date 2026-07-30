@@ -32,7 +32,8 @@ from xiaohongshu_collect import (  # noqa: E402
 
 
 # ============ 配置 ============
-OUTPUT_ROOT = OBSIDIAN_ROOT / "05_long_project" / "智联招聘"
+SOURCE = "智联招聘"
+OUTPUT_ROOT = OBSIDIAN_ROOT / "05_long_project" / "招聘"
 TIMEOUT_SEARCH = 150  # 搜索给足时间
 TIMEOUT_DETAIL = 60   # 单个职位详情超时
 
@@ -447,14 +448,15 @@ def _build_detail_section(job, detail):
 
 
 def get_md_path(query, city):
-    """确定 markdown 文件路径 (文件名冲突时加时间戳)"""
+    """确定 markdown 文件路径 (文件名含来源前缀, 冲突时加时间戳)"""
     OUTPUT_ROOT.mkdir(parents=True, exist_ok=True)
+    safe_source = sanitize_filename(SOURCE)[:20]
     safe_name = sanitize_filename(query)[:60] or "untitled"
     safe_city = sanitize_filename(city)[:20]
-    md_path = OUTPUT_ROOT / f"{safe_name}_{safe_city}.md"
+    md_path = OUTPUT_ROOT / f"{safe_source}_{safe_name}_{safe_city}.md"
     if md_path.exists():
         ts = datetime.now().strftime("%H%M%S")
-        md_path = OUTPUT_ROOT / f"{safe_name}_{safe_city}_{ts}.md"
+        md_path = OUTPUT_ROOT / f"{safe_source}_{safe_name}_{safe_city}_{ts}.md"
     return md_path
 
 

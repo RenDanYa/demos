@@ -32,6 +32,9 @@
         },
         {
           "componentId": "fd980de6-efc4-408d-9999-a693ccb74bc6"
+        },
+        {
+          "componentId": "728c922e-724f-4264-a082-992f37786046"
         }
       ],
       "layoutType": "tab",
@@ -516,9 +519,6 @@
       "updateAt": "2026-07-17T03:40:18.903Z",
       "components": [
         {
-          "componentId": "1d88fc01-6e2c-4ff2-9c16-72cc40949fcc"
-        },
-        {
           "componentId": "848d5477-928b-41eb-b50d-29a64d8128dd"
         }
       ],
@@ -699,7 +699,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-30T07:22:58.158Z",
+      "updateAt": "2026-07-30T08:38:59.638Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -838,7 +838,8 @@
           "__$uncategorizedGroup",
           "婚纱酒店出嫁房需要租几天？",
           "跟妆如何确定自己的妆造",
-          "可以给跟妆提供的风格"
+          "可以给跟妆提供的风格",
+          "求职渠道"
         ]
       },
       "filter": {
@@ -1258,7 +1259,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-26T02:44:42.997Z",
+      "updateAt": "2026-07-30T08:39:28.122Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -1388,32 +1389,35 @@
           "📍拍婚纱照清单大公开！"
         ],
         "collapseds": [
-          "__$uncategorizedGroup",
-          "小徐不睡觉",
-          "📍拍婚纱照清单大公开！",
-          "婚纱照用途",
-          "温馨提示",
-          "异地租纱攻略怎么租",
-          "准备结婚的速看，可避雷99%的大坑",
-          "试纱一般需要多久",
-          "租赁婚纱预算",
-          "婚纱有哪些款式呢？",
+          "伴娘伴手礼价格多少合适",
+          "伴娘伴手礼一般放几样",
+          "伴娘伴手礼一般放哪些东西",
           "备婚分享｜婚纱试穿租赁小经验",
           "刚拍完婚纱照，真的没必要带太多东西！！！",
           "婚前多久试婚纱？",
           "婚前试婚纱攻略",
           "婚庆主要提供哪些服务？",
           "婚纱款式参考",
+          "婚纱有哪些款式呢？",
           "婚纱照是怎么做到一张片都没加的",
           "婚纱照探店主要谈什么？",
           "婚纱照预算",
           "婚纱主纱按领口和材质区别",
+          "买婚鞋攻略",
           "女方陪嫁清单",
           "拍的婚纱照哪里要用",
           "拍婚纱照避雷经验分享",
           "拍婚纱照攻略和注意事项",
           "青田嫁日婚纱礼服馆",
-          "买婚鞋攻略"
+          "如何找到跟妆",
+          "试纱一般需要多久",
+          "温馨提示",
+          "小徐不睡觉",
+          "异地怎么试妆",
+          "异地租纱攻略怎么租",
+          "准备结婚的速看，可避雷99%的大坑",
+          "租赁婚纱预算",
+          "__$uncategorizedGroup"
         ]
       },
       "filter": {
@@ -1784,9 +1788,6 @@
       "updateAt": "2026-07-19T02:42:05.043Z",
       "components": [
         {
-          "componentId": "996e06af-a690-4f36-8140-30e253f67c8f"
-        },
-        {
           "componentId": "86b14281-aca4-4481-8d17-db0490445701"
         }
       ],
@@ -2156,7 +2157,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-30T08:03:49.806Z",
+      "updateAt": "2026-07-30T08:29:15.034Z",
       "viewType": "gallary",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -2170,7 +2171,7 @@
         },
         {
           "id": "8eadaa4c-ee4d-4503-9863-4a286cc8a895",
-          "name": "${file.parent}",
+          "name": "source",
           "isShow": true,
           "type": "text",
           "options": {}
@@ -2255,23 +2256,7 @@
                 "type": "filter",
                 "operator": "equals",
                 "property": "${file.parent}",
-                "value": "05_long_project/前程无忧",
-                "conditions": []
-              },
-              {
-                "id": "dc2dc0c8-29c9-4a62-9dba-6e02fe9cfad8",
-                "type": "filter",
-                "operator": "equals",
-                "property": "${file.parent}",
-                "value": "05_long_project/BOSS直聘",
-                "conditions": []
-              },
-              {
-                "id": "bb9c4197-bb37-4e3c-8056-5c25be07aaf5",
-                "type": "filter",
-                "operator": "equals",
-                "property": "${file.parent}",
-                "value": "05_long_project/BOSS直聘",
+                "value": "05_long_project/招聘",
                 "conditions": []
               }
             ]
@@ -2327,9 +2312,6 @@
       "updateAt": "2026-07-30T08:03:10.439Z",
       "components": [
         {
-          "componentId": "b1ef47e8-3ea4-4869-8658-c40f9b69c82a"
-        },
-        {
           "componentId": "5b36f901-dbdd-46ce-b0d1-1b5272595647"
         }
       ],
@@ -2366,6 +2348,32 @@
       "fullWidth": true,
       "title": "搜索职位（续）",
       "components": []
+    },
+    {
+      "id": "728c922e-724f-4264-a082-992f37786046",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-07-30T08:41:32.057Z",
+      "updateAt": "2026-07-30T08:41:32.057Z",
+      "components": [
+        {
+          "componentId": "1d88fc01-6e2c-4ff2-9c16-72cc40949fcc"
+        },
+        {
+          "componentId": "996e06af-a690-4f36-8140-30e253f67c8f"
+        },
+        {
+          "componentId": "b1ef47e8-3ea4-4869-8658-c40f9b69c82a"
+        }
+      ],
+      "layoutType": "tab",
+      "locked": false,
+      "layoutOptions": {}
     }
   ],
   "rootComponentId": "7a1b2c3d-4e5f-4a6b-8c9d-0e1f2a3b4c5d",
