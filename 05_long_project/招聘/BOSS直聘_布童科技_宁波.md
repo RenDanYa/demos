@@ -18,19 +18,19 @@ requirements_generated: 2026-07-28 12:57:47
 
 > 勾选 = 是否符合要求（在阅读视图点击方框即可打勾）
 
-- [ ] **1. [项目经理](https://www.zhipin.com/job_detail/01c75c067943e3cd1HR72Ni_EltU.html)** · `11-22K` · 布童科技 · 宁波·鄞州区·下应 · 经验:经验不限 · 学历:学历不限 · [[#1. 项目经理\|查看描述]]
-- [ ] **2. [Android](https://www.zhipin.com/job_detail/7753eae6d79fe59903V73d-0FltX.html)** · `10-11K` · 布童科技 · 宁波·鄞州区·天童北路 · 经验:1-3年 · 学历:本科 · [[#2. Android\|查看描述]]
-- [ ] **3. [HRBP(制造行业）](https://www.zhipin.com/job_detail/8209aa591b0731d20nF60tW1FVVR.html)** · `18-27K` · 布童科技 · 宁波 · 经验:5-10年 · 学历:本科 · [[#3. HRBP(制造行业）\|查看描述]]
-- [ ] **4. [商务BD（抖音）](https://www.zhipin.com/job_detail/8f22e7002d1b0ee10nF80tu4F1NZ.html)** · `6-9K` · 布童科技 · 宁波·鄞州区·天童北路 · 经验:1-3年 · 学历:大专 · [[#4. 商务BD（抖音）\|查看描述]]
+- [-] **1. [项目经理](https://www.zhipin.com/job_detail/01c75c067943e3cd1HR72Ni_EltU.html)** · `11-22K` · 布童科技 · 宁波·鄞州区·下应 · 经验:经验不限 · 学历:学历不限 · [[#1. 项目经理\|查看描述]] ❌ 2026-07-31
+- [-] **2. [Android](https://www.zhipin.com/job_detail/7753eae6d79fe59903V73d-0FltX.html)** · `10-11K` · 布童科技 · 宁波·鄞州区·天童北路 · 经验:1-3年 · 学历:本科 · [[#2. Android\|查看描述]] ❌ 2026-07-31
+- [-] **3. [HRBP(制造行业）](https://www.zhipin.com/job_detail/8209aa591b0731d20nF60tW1FVVR.html)** · `18-27K` · 布童科技 · 宁波 · 经验:5-10年 · 学历:本科 · [[#3. HRBP(制造行业）\|查看描述]] ❌ 2026-07-31
+- [-] **4. [商务BD（抖音）](https://www.zhipin.com/job_detail/8f22e7002d1b0ee10nF80tu4F1NZ.html)** · `6-9K` · 布童科技 · 宁波·鄞州区·天童北路 · 经验:1-3年 · 学历:大专 · [[#4. 商务BD（抖音）\|查看描述]] ❌ 2026-07-31
 - [ ] **5. [注塑工](https://www.zhipin.com/job_detail/474c9cb06fed4a620nZ93Nu8GFRZ.html)** · `6-8K` · 布童科技 · 宁波·奉化区·锦屏 · 经验:经验不限 · 学历:学历不限 · [[#5. 注塑工\|查看描述]]
 - [ ] **6. [婴童用品结构设计师](https://www.zhipin.com/job_detail/10fd6285ca8d09b90nR43ty_ElpZ.html)** · `7-12K` · 布童科技 · 宁波·鄞州区·下应 · 经验:1-3年 · 学历:大专 · [[#6. 婴童用品结构设计师\|查看描述]]
 - [ ] **7. [信息流广告投放专员](https://www.zhipin.com/job_detail/996216d0d0278c801Hd839u5FVtW.html)** · `6-10K` · 布童科技 · 宁波·鄞州区·天童北路 · 经验:1-3年 · 学历:大专 · [[#7. 信息流广告投放专员\|查看描述]]
 - [ ] **8. [创意策划](https://www.zhipin.com/job_detail/f0fa4b35e2e117310nV_096_GVRV.html)** · `8-13K` · 布童科技 · 宁波·鄞州区·天童北路 · 经验:3-5年 · 学历:本科 · [[#8. 创意策划\|查看描述]]
 - [ ] **9. [电子工程师（小家电&3C方向）](https://www.zhipin.com/job_detail/5626f181e76271900nJ609i0EFdR.html)** · `15-23K` · 布童科技 · 宁波 · 经验:3-5年 · 学历:本科 · [[#9. 电子工程师（小家电&3C方向）\|查看描述]]
-- [ ] **10. [PE工程师](https://www.zhipin.com/job_detail/f0d5ab6b3a3fb33803190ti7GFRT.html)** · `11-16K` · 布童科技 · 宁波·奉化区·锦屏 · 经验:5-10年 · 学历:大专 · [[#10. PE工程师\|查看描述]]
+- [-] **10. [PE工程师](https://www.zhipin.com/job_detail/f0d5ab6b3a3fb33803190ti7GFRT.html)** · `11-16K` · 布童科技 · 宁波·奉化区·锦屏 · 经验:5-10年 · 学历:大专 · [[#10. PE工程师\|查看描述]] ❌ 2026-07-31
 - [ ] **11. [舆情公关专员(J10052)](https://www.zhipin.com/job_detail/fefc86c26df704491HR90t21GFtR.html)** · `8-10K` · 布童科技 · 宁波·鄞州区·天童北路 · 经验:经验不限 · 学历:学历不限 · [[#11. 舆情公关专员(J10052)\|查看描述]]
-- [ ] **12. [微信/社群运营](https://www.zhipin.com/job_detail/15935a01f3fd9e8f0nV429S4GVNS.html)** · `12-18K` · 布童科技 · 宁波·鄞州区·天童北路 · 经验:3-5年 · 学历:本科 · [[#12. 微信/社群运营\|查看描述]]
-- [ ] **13. [注塑班长](https://www.zhipin.com/job_detail/24c102f5b8746b5d0nZ82tu9FldU.html)** · `10-15K` · 布童科技 · 宁波·奉化区·锦屏 · 经验:5-10年 · 学历:大专 · [[#13. 注塑班长\|查看描述]]
+- [-] **12. [微信/社群运营](https://www.zhipin.com/job_detail/15935a01f3fd9e8f0nV429S4GVNS.html)** · `12-18K` · 布童科技 · 宁波·鄞州区·天童北路 · 经验:3-5年 · 学历:本科 · [[#12. 微信/社群运营\|查看描述]] ❌ 2026-07-31
+- [-] **13. [注塑班长](https://www.zhipin.com/job_detail/24c102f5b8746b5d0nZ82tu9FldU.html)** · `10-15K` · 布童科技 · 宁波·奉化区·锦屏 · 经验:5-10年 · 学历:大专 · [[#13. 注塑班长\|查看描述]] ❌ 2026-07-31
 - [ ] **14. [媒介PR](https://www.zhipin.com/job_detail/5d6a51995537405d1XR60tW6FFFZ.html)** · `6-11K` · 布童科技 · 宁波·鄞州区·天童北路 · 经验:经验不限 · 学历:学历不限 · [[#14. 媒介PR\|查看描述]]
 - [ ] **15. [仓储组长](https://www.zhipin.com/job_detail/a276ab75374b270e0nF43928ElFT.html)** · `8-11K` · 布童科技 · 宁波·奉化区·锦屏 · 经验:3-5年 · 学历:大专 · [[#15. 仓储组长\|查看描述]]
 
