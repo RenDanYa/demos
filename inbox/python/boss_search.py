@@ -589,9 +589,12 @@ def main():
         log(f"继续写入 (采集中): {md_path}")
 
     # 4. 逐个调用 boss detail, 每获取一个就更新文件
-    if os.environ.get("SKIP_DETAIL") == "1":
-        log("SKIP_DETAIL=1, 跳过详情获取")
-        log(f"已保存: {md_path}")
+    # 暂时取消详情获取, 只保留表格; 恢复时将条件改回 os.environ.get("SKIP_DETAIL") == "1"
+    if os.environ.get("SKIP_DETAIL", "1") != "0":
+        md_content = update_frontmatter_status(md_path.read_text(encoding="utf-8"), "已采集")
+        write_markdown(md_path, md_content)
+        log("跳过详情获取 (已暂时取消), 只保留表格; 设置 SKIP_DETAIL=0 可恢复详情获取")
+        log(f"已保存 (已采集): {md_path}")
         log("完成")
         return 0
     log(f"开始获取职位详情 ({len(jobs)} 个, 间隔 {DETAIL_INTERVAL_MIN}-{DETAIL_INTERVAL_MAX}秒, 重试{DETAIL_RETRY_MAX}次)...")

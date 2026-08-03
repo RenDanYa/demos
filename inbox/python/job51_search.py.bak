@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
-"""智联招聘职位搜索采集
+"""前程无忧职位搜索采集
 
-调用 opencli zhaopin search/detail 命令, 把搜索结果(职位/薪资/公司/地区/经验/学历等)保存为 Obsidian Markdown。
+调用 opencli job51 search/detail 命令, 把搜索结果(职位/薪资/公司/地区/经验/学历等)保存为 Obsidian Markdown。
 
 用法:
-    python zhaopin_search.py                          # 弹窗输入关键词 + 城市 + 数量
-    python zhaopin_search.py "外贸"                    # 默认宁波, 采集 20 个
-    python zhaopin_search.py "外贸" 上海               # 指定城市
-    python zhaopin_search.py "外贸" 上海 30            # 指定城市 + 数量
-    python zhaopin_search.py "外贸" 上海 30 5          # 断点续传: 从第 5 个开始获取详情
+    python job51_search.py                          # 弹窗输入关键词 + 城市 + 数量
+    python job51_search.py "外贸"                    # 默认宁波, 采集 20 个
+    python job51_search.py "外贸" 上海               # 指定城市
+    python job51_search.py "外贸" 上海 30            # 指定城市 + 数量
+    python job51_search.py "外贸" 上海 30 5          # 断点续传: 从第 5 个开始获取详情
 """
 
 import json
@@ -32,7 +32,7 @@ from xiaohongshu_collect import (  # noqa: E402
 
 
 # ============ 配置 ============
-SOURCE = "智联招聘"
+SOURCE = "前程无忧"
 OUTPUT_ROOT = OBSIDIAN_ROOT / "05_long_project" / "招聘"
 TIMEOUT_SEARCH = 150  # 搜索给足时间
 TIMEOUT_DETAIL = 60   # 单个职位详情超时
@@ -56,7 +56,9 @@ BATCH_PAUSE_MAX = 25
 # 智联招聘城市列表 (用于弹窗提示, 完整映射在 CLI 内部)
 CITY_OPTIONS = [
     "全国", "北京", "上海", "广州", "深圳", "杭州", "成都", "南京",
-    "武汉", "西安", "苏州", "厦门", "宁波",
+    "武汉", "西安", "苏州", "宁波", "长沙", "天津", "重庆", "郑州",
+    "东莞", "青岛", "合肥", "佛山", "大连", "厦门", "无锡", "济南",
+    "福州", "沈阳", "哈尔滨", "长春", "昆明", "贵阳", "南宁", "太原",
 ]
 
 # CLI 内部浏览器命令超时
@@ -89,7 +91,7 @@ def show_search_dialog():
 
     # 1. 关键词
     kw = simpledialog.askstring(
-        "智联招聘搜索",
+        "前程无忧搜索",
         "请输入搜索关键词:",
         initialvalue="外贸",
         parent=root,
@@ -140,34 +142,37 @@ def _parse_cli_args():
 
 
 def _extract_job_id(url):
-    """从智联招聘 URL 中提取职位 ID
+    """从前程无忧 URL 中提取职位 ID
 
-    如 http://www.zhaopin.com/jobdetail/CC363256114J00174549604.htm?... → CC363256114J00174549604
+    如 https://jobs.51job.com/ningbo/171658977.html → 171658977
     """
     if not url:
         return ""
-    m = re.search(r'/jobdetail/([A-Za-z0-9]+)', url)
+    m = re.search(r'/(\d+)\.html', url)
     if m:
         return m.group(1)
+    # 尝试匹配纯数字 ID
+    if re.match(r'^\d+$', url.strip()):
+        return url.strip()
     return url
 
 
 def search_jobs(query, city, limit):
-    """调用 opencli zhaopin search
+    """调用 opencli job51 search
 
     返回: [{rank, title, salary, company, location, experience, education, tags, url}, ...]
     """
     args = [
-        "zhaopin", "search", query,
+        "job51", "search", query,
         "--city", city,
         "--limit", str(limit),
         "-f", "json",
     ]
 
-    log(f"调用 opencli zhaopin search (城市={city}, limit={limit})")
+    log(f"调用 opencli job51 search (城市={city}, limit={limit})")
     ok, stdout, err = run_opencli(args, TIMEOUT_SEARCH)
     if not ok:
-        log(f"zhaopin search 调用失败: {err}")
+        log(f"job51 search 调用失败: {err}")
         return None
 
     try:
@@ -182,10 +187,11 @@ def search_jobs(query, city, limit):
         return None
 
 
-def get_job_detail(job_url):
-    """调用 opencli zhaopin detail 获取单个职位详情
+def get_job_detail(job_url, city=""):
+    """调用 opencli job51 detail 获取单个职位详情
 
     job_url: 职位详情页 URL 或职位 ID
+    city: 城市名称 (当仅传入职位 ID 时需要)
     返回: dict 或 None
     """
     if not job_url:
@@ -194,10 +200,12 @@ def get_job_detail(job_url):
     # 提取职位 ID (避免 URL 中的查询参数干扰 CLI 解析)
     job_id = _extract_job_id(job_url) or job_url
 
-    ok, stdout, err = run_opencli(
-        ["zhaopin", "detail", "-f", "json", "--", job_id],
-        TIMEOUT_DETAIL,
-    )
+    args = ["job51", "detail", "-f", "json", "--", job_id]
+    # 如果是纯 ID (非完整 URL), 传 --city 参数帮助构建详情页 URL
+    if city and not job_url.startswith("http"):
+        args.extend(["--city", city])
+
+    ok, stdout, err = run_opencli(args, TIMEOUT_DETAIL)
     if not ok:
         log(f"  detail 调用失败: {err}")
         return None
@@ -287,16 +295,13 @@ def _split_description(text):
     if not text:
         return []
 
-    # 如果文本本身有换行, 直接分割
     if "\n" in text:
         lines = text.split("\n")
     else:
-        # 无换行的连续文本: 在中文编号 (1、2、3… 等) 前插入换行
-        # 匹配: 非开头位置的 "数字+、" 或 "数字+."
+        # 无换行的连续文本: 在中文编号前插入换行
         split_text = re.sub(r'(?<=\S)(\d+)[、.](?=\S)', r'\n\1、', text)
         lines = split_text.split("\n")
 
-    # 过滤空行并格式化
     result = []
     for line in lines:
         formatted = _fix_list_format(line)
@@ -317,17 +322,17 @@ def build_markdown(query, city, jobs, details=None, status="采集中"):
 
     lines = [
         "---",
-        "tags: [智联招聘, 职位搜索]",
-        f'title: "智联招聘搜索 - {safe_title}"',
+        "tags: [前程无忧, 职位搜索]",
+        f'title: "前程无忧搜索 - {safe_title}"',
         f'query: {json.dumps(query, ensure_ascii=False)}',
         f'city: "{city}"',
-        'source: "智联招聘"',
+        'source: "前程无忧"',
         f"count: {len(jobs)}",
         f"createTime: {datetime.now().isoformat(timespec='seconds')}",
         f"status: {status}",
         "---",
         "",
-        f"# 智联招聘搜索 - {query}",
+        f"# 前程无忧搜索 - {query}",
         "",
         f"> **关键词**: {query} | **城市**: {city} | **数量**: {len(jobs)} | **时间**: {now}",
         "",
@@ -396,14 +401,20 @@ def _build_detail_section(job, detail):
     # Callout 内容行
     callout_lines = []
 
-    # 公司信息 (含行业/规模/融资阶段)
+    # 公司信息 (含性质/规模/行业)
     company = detail.get("company", "") or job.get("company", "")
-    company_desc = detail.get("company_desc", "")
+    company_type = detail.get("company_type", "")
+    company_size = detail.get("company_size", "")
+    company_industry = detail.get("company_industry", "")
     company_parts = []
     if company:
         company_parts.append(company)
-    if company_desc:
-        company_parts.append(company_desc)
+    if company_type:
+        company_parts.append(company_type)
+    if company_size:
+        company_parts.append(company_size)
+    if company_industry:
+        company_parts.append(company_industry)
     if company_parts:
         callout_lines.append(f"- **公司**: {' · '.join(company_parts)}")
 
@@ -420,10 +431,22 @@ def _build_detail_section(job, detail):
     if address:
         callout_lines.append(f"- **地址**: {address}")
 
-    # 技能要求
-    skills = detail.get("skills", "")
-    if skills:
-        callout_lines.append(f"- **技能**: {skills}")
+    # 职能类别 + 关键字
+    function_type = detail.get("function_type", "")
+    keywords = detail.get("keywords", "")
+    if function_type:
+        callout_lines.append(f"- **职能**: {function_type}")
+    if keywords:
+        callout_lines.append(f"- **关键字**: {keywords}")
+
+    # 招聘官
+    hr_name = detail.get("hr_name", "")
+    hr_title = detail.get("hr_title", "")
+    if hr_name:
+        hr_info = hr_name
+        if hr_title:
+            hr_info += f" · {hr_title}"
+        callout_lines.append(f"- **招聘官**: {hr_info}")
 
     # 职位描述
     description = detail.get("description", "")
@@ -470,7 +493,7 @@ def write_markdown(md_path, md_content):
 
 def main():
     log("=" * 60)
-    log("智联招聘职位搜索采集 启动")
+    log("前程无忧职位搜索采集 启动")
     log(f"OPENCLI_CMD: {OPENCLI_CMD}")
     log(f"输出目录: {OUTPUT_ROOT}")
     log("=" * 60)
@@ -513,7 +536,7 @@ def main():
     log(f"城市: {city}")
     log(f"数量: {limit}")
 
-    # 2. 调用 opencli zhaopin search
+    # 2. 调用 opencli job51 search
     log("搜索中, 请稍候 (约 15-30 秒)...")
     jobs = search_jobs(query, city, limit)
 
@@ -549,13 +572,10 @@ def main():
         write_markdown(md_path, md_content)
         log(f"继续写入 (采集中): {md_path}")
 
-    # 4. 逐个调用 zhaopin detail, 每获取一个就更新文件
-    # 暂时取消详情获取, 只保留表格; 恢复时将条件改回 os.environ.get("SKIP_DETAIL") == "1"
-    if os.environ.get("SKIP_DETAIL", "1") != "0":
-        md_content = update_frontmatter_status(md_path.read_text(encoding="utf-8"), "已采集")
-        write_markdown(md_path, md_content)
-        log("跳过详情获取 (已暂时取消), 只保留表格; 设置 SKIP_DETAIL=0 可恢复详情获取")
-        log(f"已保存 (已采集): {md_path}")
+    # 4. 逐个调用 job51 detail, 每获取一个就更新文件
+    if os.environ.get("SKIP_DETAIL") == "1":
+        log("SKIP_DETAIL=1, 跳过详情获取")
+        log(f"已保存: {md_path}")
         log("完成")
         return 0
     log(f"开始获取职位详情 ({len(jobs)} 个, 间隔 {DETAIL_INTERVAL_MIN}-{DETAIL_INTERVAL_MAX}秒, 重试{DETAIL_RETRY_MAX}次)...")
@@ -598,7 +618,7 @@ def main():
         got_detail = None
         for attempt in range(1, DETAIL_RETRY_MAX + 2):  # 1次初试 + N次重试
             try:
-                got_detail = get_job_detail(url)
+                got_detail = get_job_detail(url, city=city)
                 if got_detail:
                     break
             except Exception as e:
