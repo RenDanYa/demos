@@ -2151,8 +2151,8 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-30T08:29:15.034Z",
-      "viewType": "gallary",
+      "updateAt": "2026-08-03T09:09:11.200Z",
+      "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
         {
@@ -2183,7 +2183,7 @@
         {
           "id": "481f2589-e04e-4362-a405-13fe81824800",
           "name": "content",
-          "isShow": true,
+          "isShow": false,
           "type": "formula",
           "options": {
             "formula": "extractHeadingContent('## 职位列表')",
@@ -2224,8 +2224,15 @@
         "format": "none",
         "statics": [],
         "orders": [],
-        "hiddens": [],
-        "collapseds": []
+        "hiddens": [
+          "__$uncategorizedGroup"
+        ],
+        "collapseds": [
+          "__$uncategorizedGroup",
+          "BOSS直聘",
+          "智联招聘",
+          "前程无忧"
+        ]
       },
       "filter": {
         "id": "3d4e5f6a-7b8c-4c9d-1f2a-3b4c5d6e7f81",
@@ -2268,7 +2275,7 @@
           }
         ]
       },
-      "groupBy": "",
+      "groupBy": "source",
       "icon": "NotebookPen",
       "components": []
     },
