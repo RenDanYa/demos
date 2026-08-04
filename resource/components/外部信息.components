@@ -2151,7 +2151,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-08-03T23:39:16.893Z",
+      "updateAt": "2026-08-04T02:58:02.682Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -2229,8 +2229,8 @@
         ],
         "collapseds": [
           "__$uncategorizedGroup",
-          "BOSS直聘",
-          "智联招聘"
+          "智联招聘",
+          "BOSS直聘"
         ]
       },
       "filter": {
