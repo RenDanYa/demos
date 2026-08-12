@@ -210,54 +210,7 @@ def build_markdown(number, limit, items):
             f"{pubdate} | {play} | {like} | {coin} | {desc_short} |"
         )
 
-    # 详情区: 每个视频一个 callout, 含简介 + 扩展统计
-    has_detail = any(item.get("desc") or item.get("danmaku") or item.get("favorite")
-                     or item.get("reply") or item.get("share") for item in items)
-    if has_detail:
-        lines.append("")
-        lines.append("## 视频详情")
-        lines.append("")
-        for item in items:
-            rank = item.get("rank", "")
-            title_text = (item.get("title") or "").replace("|", "\\|").replace("\n", " ")
-            url = item.get("url") or ""
-            author = item.get("author") or ""
-            tname = item.get("tname") or ""
-            pubdate = item.get("pubdate") or ""
-            duration = item.get("duration") or ""
-            desc = (item.get("desc") or "").replace("\n", " ").strip()
-            danmaku = fmt_num(item.get("danmaku", 0))
-            reply = fmt_num(item.get("reply", 0))
-            favorite = fmt_num(item.get("favorite", 0))
-            share = fmt_num(item.get("share", 0))
-
-            # callout 标题: # 栓标题 (UP主 · 分区 · 时长)
-            callout_title = f"#{rank} {title_text}"
-            if author:
-                callout_title += f" · {author}"
-            if tname:
-                callout_title += f" · {tname}"
-            if duration:
-                callout_title += f" · {duration}"
-            lines.append(f"> [!info] {callout_title}")
-            lines.append(">")
-            if url:
-                lines.append(f"> 链接: {url}")
-                lines.append(">")
-            meta_parts = []
-            if pubdate:
-                meta_parts.append(f"发布 {pubdate}")
-            meta_parts.append(f"弹幕 {danmaku}")
-            meta_parts.append(f"回复 {reply}")
-            meta_parts.append(f"收藏 {favorite}")
-            meta_parts.append(f"分享 {share}")
-            lines.append("> " + " | ".join(meta_parts))
-            if desc:
-                lines.append(">")
-                # 简介按 80 字符折行, 避免 callout 单行过长
-                lines.append(f"> {desc}")
-            lines.append("")
-
+    lines.append("")
     lines.append("---")
     lines.append(f"> 数据来源: opencli bilibili weekly | 采集时间: {now}")
     return "\n".join(lines) + "\n"
