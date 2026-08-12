@@ -3,7 +3,7 @@ tags: [B站, 每周必看, 分区]
 title: "B站每周必看 - 极客DIY"
 partition: "极客DIY"
 createTime: 2026-08-12T21:11:57
-updateTime: 2026-08-12T21:26:10
+updateTime: 2026-08-12T21:29:23
 status: 持续追加
 ---
 
@@ -20,6 +20,11 @@ status: 持续追加
 | 2026 | 1 | 3 | 357 | [为了横扫游戏厅，我做了个作弊篮球！](https://www.bilibili.com/video/BV12nkNBaEx4) | 黑人黑科技 | 6:21 | 2026-01-16 | 2479.5万 | 9.5万 | 6479 |
 | 2026 | 1 | 1 | 355 | [自制哨戒激光炮？钛合金级爆闪亮度！远程监看守护外卖！](https://www.bilibili.com/video/BV1S2ijBQEjt) | 苏打baka | 4:30 | 2026-01-04 | 278.7万 | 11.6万 | 1.7万 |
 | 2025 | 12 | 52 | 354 | [【何同学】我们做了台魔法钢琴…](https://www.bilibili.com/video/BV1d1vUBUE54) | 老师好我叫何同学 | 14:12 | 2026-01-01 | 2494.4万 | 174.4万 | 109.2万 |
+| 2025 | 11 | 46 | 348 | [《拼刀模拟器》](https://www.bilibili.com/video/BV1KuyFBpERr) | 马鹿blyat | 1:30 | 2025-11-21 | 565.0万 | 24.4万 | 1.9万 |
+| 2025 | 10 | 41 | 343 | [自制导弹WIFI？打击覆盖范围全家！让网速原地起飞！](https://www.bilibili.com/video/BV11w4Nz6EP8) | 苏打baka | 5:33 | 2025-10-12 | 181.0万 | 8.0万 | 1.7万 |
+| 2025 | 9 | 39 | 341 | [我造了个会飞的客厅...](https://www.bilibili.com/video/BV1uunbzaECv) | 神奇阿宇Ayu | 13:05 | 2025-09-26 | 985.1万 | 53.0万 | 33.3万 |
+| 2025 | 8 | 34 | 336 | [《飞机模拟器》](https://www.bilibili.com/video/BV1D2e1z7EqP) | 马鹿blyat | 1:19 | 2025-08-28 | 557.8万 | 37.6万 | 4.4万 |
+| 2025 | 8 | 31 | 333 | [我把Switch放大十倍，做成了智能猫窝](https://www.bilibili.com/video/BV1vMhHzLELM) | 小郑还挺忙 | 3:20 | 2025-08-01 | 374.5万 | 7.5万 | 6816 |
 | 2025 | 7 | 28 | 330 | [【何同学】为了不用倒垃圾，我们做了这个...](https://www.bilibili.com/video/BV1JDMQzUEwy) | 老师好我叫何同学 | 5:14 | 2025-07-12 | 2394.8万 | 83.4万 | 24.2万 |
 | 2025 | 6 | 26 | 328 | [眼力对决！6个UP主因猜价彻底疯狂?【谁是猜价王2】](https://www.bilibili.com/video/BV1ee3WzqEJZ) | -LKs- | 30:52 | 2025-07-02 | 425.5万 | 18.3万 | 6.5万 |
 | 2025 | 6 | 26 | 328 | [电脑烧开水！浸没式天价散热？在家体验数据中心级液冷！](https://www.bilibili.com/video/BV1bkgSzPERX) | 苏打baka | 8:19 | 2025-07-01 | 281.9万 | 13.7万 | 5.1万 |
