@@ -19,6 +19,7 @@
 """
 
 import json
+import re
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -36,6 +37,75 @@ from xiaohongshu_collect import (  # noqa: E402
 OUTPUT_ROOT = OBSIDIAN_ROOT / "05_long_project" / "B站" / "每周必看"
 # COOKIE 策略需启动浏览器, 调用 series/list + series/one 两个接口
 TIMEOUT_WEEKLY = 60
+
+
+def parse_episode_info(name):
+    """从 series/list 的 name 字段解析年/月/周/日期范围
+
+    name 格式示例: "2026第385期 07.31 - 08.06"
+    返回: dict {year, month, week, date_start, date_end} 或 None
+    """
+    if not name:
+        return None
+    # 匹配: 年份 + 期数 + 日期范围 (MM.DD - MM.DD)
+    m = re.match(r"^(\d{4})第(\d+)期\s+(\d{2})\.(\d{2})\s*-\s*(\d{2})\.(\d{2})", name.strip())
+    if not m:
+        return None
+    year = int(m.group(1))
+    start_month = int(m.group(3))
+    start_day = int(m.group(4))
+    end_month = int(m.group(5))
+    end_day = int(m.group(6))
+    # 构造日期对象 (用 year 作为年份, 跨年时可能不准但足够)
+    try:
+        date_start = datetime(year, start_month, start_day)
+        date_end = datetime(year, end_month, end_day)
+    except ValueError:
+        return None
+    # 计算是该年第几周 (ISO 周, 从周一开始)
+    iso_week = date_start.isocalendar()[1]
+    return {
+        "year": year,
+        "month": start_month,
+        "week": iso_week,
+        "date_start": date_start.strftime("%Y-%m-%d"),
+        "date_end": date_end.strftime("%Y-%m-%d"),
+    }
+
+
+def fetch_episode_name(number):
+    """调用 series/list 公开 API 获取指定期数的 name 字段
+
+    number 为空时返回最新一期的 name。
+    返回: str (如 "2026第385期 07.31 - 08.06") 或 ""
+    """
+    import requests
+    try:
+        r = requests.get(
+            "https://api.bilibili.com/x/web-interface/popular/series/list",
+            headers={
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+                "Referer": "https://www.bilibili.com/",
+            },
+            timeout=15,
+        )
+        data = r.json()
+        if data.get("code") != 0:
+            return ""
+        episodes = data.get("data", {}).get("list", []) or []
+        if not episodes:
+            return ""
+        if not number:
+            # 最新一期 (list 已按 number 降序)
+            return episodes[0].get("name", "")
+        # 查找指定期数
+        for ep in episodes:
+            if str(ep.get("number", "")) == str(number):
+                return ep.get("name", "")
+        return ""
+    except Exception as e:
+        log(f"fetch_episode_name 失败: {str(e)[:80]}")
+        return ""
 
 
 def show_input_dialog():
@@ -148,24 +218,51 @@ def fmt_num(n):
     return str(n)
 
 
-def build_markdown(number, limit, items):
+def build_markdown(number, limit, items, episode_name=""):
     """生成 markdown 内容
 
     items: [{rank, title, author, tname, pubdate, play, like, coin, desc,
              duration, danmaku, reply, favorite, share, url}, ...]
+    episode_name: series/list 返回的 name (如 "2026第385期 07.31 - 08.06"),
+                  用于解析 year/month/week 属性。空则不写入这三个属性。
 
-    布局: 主表格 (核心统计) + 详情 callout (简介 + 扩展统计)
+    布局: 主表格 (核心统计)
     """
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     # 实际期数从首条数据无法直接得到 (CLI 内部解析), 这里用参数显示
     number_label = f"第 {number} 期" if number else "最新一期"
     title = f"B站每周必看 - {number_label}"
 
+    # 解析期数信息 (年/月/周/日期范围)
+    ep_info = parse_episode_info(episode_name) if episode_name else None
+    # 期数: number 为空 (最新一期) 时, 若解析出 name 则从中提取实际期数
+    actual_number = number
+    if not number and episode_name:
+        m = re.search(r"第(\d+)期", episode_name)
+        if m:
+            actual_number = m.group(1)
+
     lines = [
         "---",
         "tags: [B站, 每周必看]",
         f'title: "{title}"',
-        f"number: {json.dumps(number, ensure_ascii=False)}",
+    ]
+    # 期数属性 (number 为空时尝试从 name 解析)
+    if actual_number:
+        try:
+            lines.append(f"number: {int(actual_number)}")
+        except ValueError:
+            lines.append(f"number: {json.dumps(actual_number, ensure_ascii=False)}")
+    else:
+        lines.append("number: ")
+    # 年/月/周 属性 (仅当解析成功时写入)
+    if ep_info:
+        lines.append(f"year: {ep_info['year']}")
+        lines.append(f"month: {ep_info['month']}")
+        lines.append(f"week: {ep_info['week']}")
+        lines.append(f"date_start: {ep_info['date_start']}")
+        lines.append(f"date_end: {ep_info['date_end']}")
+    lines.extend([
         f"limit: {limit}",
         f"count: {len(items)}",
         f"createTime: {datetime.now().isoformat(timespec='seconds')}",
@@ -174,9 +271,16 @@ def build_markdown(number, limit, items):
         "",
         f"# {title}",
         "",
-        f"> **采集时间**: {now} | **期数**: {number_label} | **数量**: {len(items)}",
-        "",
-    ]
+    ])
+
+    # 顶部信息行: 期数 + 日期范围 + 数量
+    info_parts = [f"**期数**: {number_label}"]
+    if ep_info:
+        info_parts.append(f"**日期**: {ep_info['date_start']} ~ {ep_info['date_end']}")
+        info_parts.append(f"**{ep_info['year']}年第{ep_info['week']}周**")
+    info_parts.append(f"**数量**: {len(items)}")
+    lines.append(f"> **采集时间**: {now} | " + " | ".join(info_parts))
+    lines.append("")
 
     if not items:
         lines.append("> [!warning] 未获取到每周必看数据")
@@ -219,12 +323,11 @@ def build_markdown(number, limit, items):
 def write_markdown(number, md_content):
     """保存 markdown, 返回路径
 
-    文件名: weekly_{期数或latest}_{日期}.md
+    文件名: weekly_{期数或latest}.md (同日重复调用覆盖刷新)
     """
     OUTPUT_ROOT.mkdir(parents=True, exist_ok=True)
     number_part = sanitize_filename(number) if number else "latest"
-    date_str = datetime.now().strftime("%Y%m%d")
-    filename = f"weekly_{number_part}_{date_str}.md"
+    filename = f"weekly_{number_part}.md"
     md_path = OUTPUT_ROOT / filename
     md_path.write_text(md_content, encoding="utf-8")
     return md_path
@@ -268,8 +371,14 @@ def main():
 
     log(f"获取到 {len(items)} 条结果")
 
-    # 4. 生成 markdown
-    md_content = build_markdown(number, limit, items)
+    # 4. 获取期数 name (用于解析 year/month/week)
+    log("获取期数信息 (series/list API)...")
+    episode_name = fetch_episode_name(number)
+    if episode_name:
+        log(f"期数名称: {episode_name}")
+
+    # 5. 生成 markdown
+    md_content = build_markdown(number, limit, items, episode_name=episode_name)
     md_path = write_markdown(number, md_content)
     log(f"已保存: {md_path}")
     log("完成")

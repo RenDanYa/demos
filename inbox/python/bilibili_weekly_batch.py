@@ -22,9 +22,8 @@ sys.path.insert(0, str(Path(__file__).parent))
 from xiaohongshu_collect import (  # noqa: E402
     OBSIDIAN_ROOT,
     log,
-    sanitize_filename,
 )
-from bilibili_weekly import call_weekly, write_markdown  # noqa: E402
+from bilibili_weekly import call_weekly  # noqa: E402
 
 # ============ 配置 ============
 SERIES_LIST_URL = "https://api.bilibili.com/x/web-interface/popular/series/list"
@@ -167,13 +166,36 @@ def main():
         episodes = episodes[-limit:]
         log(f"{year} 年共 {total_year} 期, 限制为最新 {limit} 期")
 
+    # 3.5 去重: 扫描分区笔记, 跳过已处理期数
+    force = "--force" in sys.argv
+    if force:
+        sys.argv = [a for a in sys.argv if a != "--force"]
+        log("⚠ --force 模式: 不跳过已处理期数, 重复追加")
+
+    if not force:
+        try:
+            from bilibili_weekly_by_partition import get_processed_episodes
+            processed = get_processed_episodes()
+            if processed:
+                before = len(episodes)
+                episodes = [ep for ep in episodes if ep.get("number") not in processed]
+                skipped = before - len(episodes)
+                if skipped > 0:
+                    log(f"跳过已处理期数: {skipped} 期 (扫描分区笔记检测到)")
+                    if not episodes:
+                        log("全部期数已处理, 无需重复, 退出")
+                        return 0
+        except Exception as e:
+            log(f"⚠ 去重检查失败 (继续全量): {str(e)[:80]}")
+
     total = len(episodes)
     log(f"待生成: {total} 期 (第 {episodes[0]['number']}-{episodes[-1]['number']} 期)")
     log(f"输出目录: {OUTPUT_ROOT}")
     log("预计耗时: 每期约 8-15 秒 (COOKIE 策略)")
     log("-" * 60)
 
-    # 4. 循环调用 weekly 并生成 markdown
+    # 4. 循环调用 weekly, 按分区追加到笔记
+    from bilibili_weekly_by_partition import process_episode_by_partition
     success_count = 0
     fail_count = 0
     start_time = time.time()
@@ -184,8 +206,8 @@ def main():
         name = ep.get("name", "")
         log(f"[{i}/{total}] 第 {number} 期: {subject} ({name})")
 
-        # 调用 weekly (limit 30, B站每期通常 30 条)
-        items = call_weekly(number, 30)
+        # 调用 weekly (limit 100, 取每期全部视频)
+        items = call_weekly(number, 100)
 
         if items is None:
             log(f"  失败, 跳过")
@@ -199,11 +221,9 @@ def main():
             fail_count += 1
             continue
 
-        # 生成 markdown (复用 bilibili_weekly 的函数)
-        from bilibili_weekly import build_markdown
-        md_content = build_markdown(number, 30, items)
-        md_path = write_markdown(number, md_content)
-        log(f"  成功: {len(items)} 条, 已保存 {md_path.name}")
+        # 按分区追加到笔记 (复用 by_partition 的核心逻辑)
+        partition_count = process_episode_by_partition(items, number, name)
+        log(f"  成功: {len(items)} 条 → {partition_count} 个分区")
         success_count += 1
 
         # 间隔避免风控
