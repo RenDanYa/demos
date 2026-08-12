@@ -1,6 +1,6 @@
 # Obsidian 数据采集工具集
 
-基于 [opencli](https://github.com/jackwener/opencli) 的 Obsidian 数据采集脚本集合，覆盖小红书、BOSS直聘、B站、拼多多四个平台。
+基于 [opencli](https://github.com/jackwener/opencli) 的 Obsidian 数据采集脚本集合，覆盖小红书、BOSS直聘、B站、拼多多、GitHub 五个平台。
 
 所有脚本输出到 `d:/obsidian/demo/05_long_project/` 下对应子目录，日志写入 `05_long_project/程序运行日志/`。
 
@@ -18,6 +18,11 @@
 | BOSS直聘 | `boss_fix_status.py` | 修复采集状态 |
 | B站 | `bilibili_following.py` | 关注列表采集 |
 | B站 | `bilibili_videos.py` | 关注博主视频采集 |
+| B站 | `bilibili_weekly.py` | 每周必看采集 |
+| B站 | `bilibili_weekly_batch.py` | 每周必看批量采集 |
+| B站 | `bilibili_weekly_by_partition.py` | 每周必看按分区归档 |
+| GitHub | `github_trending.py` | Trending 仓库采集 |
+| GitHub | `github_topic.py` | Topic 仓库采集 |
 | 拼多多 | `pdd_search.py` | 商品搜索（综合排序） |
 | 拼多多 | `pdd_search_cheap.py` | 商品搜索（价格升序） |
 | 拼多多 | `pdd_search_batch.py` | 批量低价搜索 |
@@ -53,7 +58,13 @@ d:/obsidian/demo/
 ├── 05_long_project/
 │   ├── 小红书/              # 小红书采集输出
 │   ├── BOSS直聘/            # BOSS直聘采集输出
-│   ├── B站关注/             # B站采集输出
+│   ├── B站关注/             # B站关注采集输出
+│   ├── B站/                 # B站每周必看采集输出
+│   │   ├── 每周必看/        # 单期笔记 (weekly_{期数}.md)
+│   │   │   └── 分区/        # 按分区归档 (人文历史.md 等)
+│   ├── GitHub/              # GitHub 采集输出
+│   │   ├── Trending/        # Trending 仓库
+│   │   └── Topic/           # Topic 仓库
 │   ├── 拼多多/              # 拼多多采集输出
 │   └── 程序运行日志/         # 每次运行的独立日志
 ```
@@ -253,6 +264,115 @@ python bilibili_videos.py --refresh                # 先刷新关注列表缓存
 
 ---
 
+## B站每周必看系列
+
+基于 opencli 的 `bilibili weekly` 命令，采集 B站"每周必看"榜单视频。
+
+### bilibili_weekly.py — 每周必看采集
+
+采集指定期数的每周必看视频列表，保存为 Obsidian Markdown 表格。
+
+```bash
+python bilibili_weekly.py                  # 弹窗输入 (期数/数量)
+python bilibili_weekly.py latest 50        # 最新一期, 取 50 条 (推荐)
+python bilibili_weekly.py 200              # 指定第 200 期
+python bilibili_weekly.py latest 10        # 最新一期, 取 10 条
+```
+
+输出到 `05_long_project/B站/每周必看/weekly_{期数}.md`，包含 frontmatter (含 year/month/week/number 等属性) 和视频表格。
+
+**关键特性**：
+- COOKIE 策略：weekly.ts 使用 `Strategy.COOKIE`，脚本调用时浏览器桥接约 8-15 秒
+- 数字格式化：中文化显示 `1234567 → 123.5万`，`100000000 → 1.0亿`
+- 标题带链接：标题列渲染为 `[标题](https://www.bilibili.com/video/BVxxx)` 可点击跳转
+- 期数解析：从 series/list API 的 name 字段解析年/月/周/日期范围
+
+### bilibili_weekly_batch.py — 每周必看批量采集
+
+按年份批量采集每周必看视频，支持断点续传和失败重试。
+
+```bash
+python bilibili_weekly_batch.py 2026           # 生成 2026 年全部期数 (失败的可重试)
+python bilibili_weekly_batch.py 2026 --limit 3  # 仅最新 3 期 (测试)
+python bilibili_weekly_batch.py 2026 --skip-failed  # 跳过所有已处理 (含失败)
+python bilibili_weekly_batch.py 2026 --force    # 强制全部重新追加 (含已成功)
+```
+
+**去重策略**（基于 `_processed.json` 日志）：
+
+| 参数 | 行为 |
+| ---- | ---- |
+| 默认 | 只跳过 success，失败的可重试 |
+| `--skip-failed` | 跳过所有已处理 (含失败) |
+| `--force` | 不跳过任何，全部重新追加 |
+
+**失败重试机制**：B站 API 空数据是间歇性的，失败的期数下次默认重试，避免永久丢失数据。
+
+### bilibili_weekly_by_partition.py — 每周必看按分区归档
+
+调用 weekly CLI 获取视频，按 tname (分区) 分类，将每期视频追加到对应分区笔记的表格中。
+
+```bash
+python bilibili_weekly_by_partition.py latest       # 最新一期 (推荐)
+python bilibili_weekly_by_partition.py 200           # 指定第 200 期
+python bilibili_weekly_by_partition.py 200 --force  # 强制重新追加
+```
+
+输出到 `05_long_project/B站/每周必看/分区/{分区名}.md`，每个分区一个文件，表格按期数倒序排列（最新在顶部）。
+
+**表格结构**：
+
+```
+| 年 | 月 | 周 | 期数 | 标题 | UP主 | 时长 | 发布 | 播放 | 点赞 | 投币 |
+```
+
+**处理日志**：`分区/_processed.json` 记录每期处理状态 (success/empty/error)，避免重复处理。
+
+---
+
+## GitHub 系列
+
+### github_trending.py — Trending 仓库采集
+
+调用 `opencli github trending` 命令，获取 GitHub Trending 仓库列表。
+
+```bash
+python github_trending.py                     # 弹窗: 语言/区间/数量
+python github_trending.py python              # 指定语言
+python github_trending.py python weekly 10    # 语言/区间/数量
+python github_trending.py "" weekly 30        # 留空=全语言
+python github_trending.py python daily 25 --no-translate  # 跳过翻译
+```
+
+输出到 `05_long_project/GitHub/Trending/trending_{语言}_{区间}_{日期}.md`。
+
+**关键特性**：
+- 策略：COOKIE (需浏览器桥接，单次约 10-30 秒)
+- 描述翻译：使用 `deep-translator` 包批量翻译为中文（技术术语保留）
+- 表格列：rank, repo, stars, stars_today, language, description, 中文翻译
+
+### github_topic.py — Topic 仓库采集
+
+调用 `opencli github topic` 命令，通过 GitHub Search API 获取指定 topic 下的 Top 仓库。
+
+```bash
+python github_topic.py                            # 弹窗输入
+python github_topic.py awesome                    # 默认排序
+python github_topic.py react --sort updated       # 按最近更新
+python github_topic.py rust --limit 10            # 限制数量
+python github_topic.py machine-learning --no-translate  # 跳过翻译
+```
+
+输出到 `05_long_project/GitHub/Topic/topic_{topic}_{sort}_{日期}.md`。
+
+**关键特性**：
+- 策略：public API (无浏览器，约 2 秒)
+- 排序：stars / forks / updated
+- 描述翻译：同 github_trending.py
+- 数字格式化：`12345 → 12.3k`，`1200000 → 1.2M`
+
+---
+
 ## 拼多多系列
 
 ### pdd_search.py — 商品搜索（综合排序）
@@ -317,6 +437,11 @@ xiaohongshu_collect.py  ← 核心基础模块
 ├── xiaohongshu_user.py
 ├── bilibili_following.py
 │   └── bilibili_videos.py (依赖 following_cache.json)
+├── bilibili_weekly.py
+│   ├── bilibili_weekly_batch.py
+│   └── bilibili_weekly_by_partition.py
+├── github_trending.py
+├── github_topic.py
 ├── pdd_search.py
 │   └── pdd_search_batch_default.py
 └── pdd_search_cheap.py
