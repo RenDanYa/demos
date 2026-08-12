@@ -1,0 +1,15 @@
+[17:50:28] ============================================================
+[17:50:28] GitHub Topic 采集 启动
+[17:50:28] OPENCLI_CMD: ('node', 'd:\\voice\\opencli-main\\dist\\main.js')
+[17:50:28] 输出目录: d:\obsidian\demo\05_long_project\GitHub\Topic
+[17:50:28] ============================================================
+[17:50:28] 参数: topic=react, sort=updated, limit=3, translate=True
+[17:50:28] 调用 github topic 中 (public API, 通常 1-3 秒)...
+[17:50:29] 获取到 3 条结果
+[17:50:29] 开始翻译描述列 (调用 deep-translator Google)...
+[17:50:30] 待翻译描述: 3 条, 分批调用 Google 翻译 (每批 20 条)...
+[17:50:30]   批次 1/1: 翻译 3 条...
+[17:50:36]   批次 1 完成: 3 条
+[17:50:36] 翻译完成: 成功 3/3, 失败 0
+[17:50:36] 已保存: d:\obsidian\demo\05_long_project\GitHub\Topic\topic_react_updated_20260812.md
+[17:50:36] 完成

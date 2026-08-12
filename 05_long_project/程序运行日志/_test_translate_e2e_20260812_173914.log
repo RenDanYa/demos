@@ -1,0 +1,26 @@
+[17:39:14] ==================================================
+[17:39:14] 端到端测试: 翻译 4 条真实描述 (1 条空描述跳过)
+[17:39:14] ==================================================
+[17:39:14] 待翻译描述: 4 条, 分批调用 Google 翻译 (每批 20 条)...
+[17:39:14]   批次 1/1: 翻译 4 条...
+[17:39:22]   批次 1 完成: 4 条
+[17:39:22] 翻译完成: 成功 4/4, 失败 0
+[17:39:22] 
+--- 翻译结果 ---
+[17:39:22] [1] binwiederhier/ntfy
+[17:39:22]     原: Send push notifications to your phone or desktop using PUT/POST
+[17:39:22]     译: 使用 PUT/POST 将推送通知发送到您的手机或桌面
+[17:39:22] [2] browser-use/browser-use
+[17:39:22]     原: Make AI agents that interact with the web
+[17:39:22]     译: 制作与网络交互的人工智能代理
+[17:39:22] [3] facebook/react
+[17:39:22]     原: The library for web and native user interfaces
+[17:39:22]     译: Web 和本机用户界面的库
+[17:39:22] [4] rust-lang/rust
+[17:39:22]     原: Empowering everyone to build reliable and efficient software
+[17:39:22]     译: 使每个人都能构建可靠、高效的软件
+[17:39:22] [5] test/empty-desc
+[17:39:22]     原: 
+[17:39:22]     译: 
+[17:39:22] 
+--- Markdown 预览 ---

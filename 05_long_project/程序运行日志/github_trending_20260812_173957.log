@@ -1,0 +1,15 @@
+[17:39:57] ============================================================
+[17:39:57] GitHub Trending 采集 启动
+[17:39:57] OPENCLI_CMD: ('node', 'd:\\voice\\opencli-main\\dist\\main.js')
+[17:39:57] 输出目录: d:\obsidian\demo\05_long_project\GitHub\Trending
+[17:39:57] ============================================================
+[17:40:01] 参数: language=python, since=daily, limit=25, translate=True
+[17:40:01] 调用 github trending 中, 请稍候 (约 10-30 秒, 需启动浏览器)...
+[17:40:13] 获取到 19 条结果
+[17:40:13] 开始翻译描述列 (调用 deep-translator Google)...
+[17:40:13] 待翻译描述: 18 条, 分批调用 Google 翻译 (每批 20 条)...
+[17:40:13]   批次 1/1: 翻译 18 条...
+[17:40:33]   批次 1 完成: 18 条
+[17:40:33] 翻译完成: 成功 18/18, 失败 0
+[17:40:33] 已保存: d:\obsidian\demo\05_long_project\GitHub\Trending\trending_python_daily_20260812.md
+[17:40:33] 完成

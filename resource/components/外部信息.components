@@ -10,7 +10,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-27T23:10:07.490Z",
+      "updateAt": "2026-08-12T09:43:20.038Z",
       "components": [
         {
           "componentId": "2d401686-b6c2-4409-b553-87d0867586b2"
@@ -29,6 +29,9 @@
         },
         {
           "componentId": "57a14d3c-8d84-42bf-9ef6-62234c9daa51"
+        },
+        {
+          "componentId": "255f2a6d-8222-40c3-afdf-bd6788bfcf2d"
         },
         {
           "componentId": "fd980de6-efc4-408d-9999-a693ccb74bc6"
@@ -2402,6 +2405,107 @@
       "locked": false,
       "layoutOptions": {},
       "title": "一键触发"
+    },
+    {
+      "id": "13a5bf67-9ad6-4cc3-b9e2-3ab9066a8d35",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "关注明细",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-06-28T11:52:41.177Z",
+      "updateAt": "2026-06-28T12:07:11.949Z",
+      "components": [
+        {
+          "componentId": "83b5312d-ca1c-42b3-8d94-c094e5fc3024"
+        }
+      ],
+      "layoutType": "list",
+      "locked": false,
+      "layoutOptions": {},
+      "title": "关注明细"
+    },
+    {
+      "id": "255f2a6d-8222-40c3-afdf-bd6788bfcf2d",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "github",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-06-28T21:00:00.000Z",
+      "updateAt": "2026-08-12T09:43:25.671Z",
+      "components": [
+        {
+          "componentId": "13a5bf67-9ad6-4cc3-b9e2-3ab9066a8d35"
+        }
+      ],
+      "layoutType": "column",
+      "locked": false,
+      "layoutOptions": {},
+      "title": "github"
+    },
+    {
+      "id": "83b5312d-ca1c-42b3-8d94-c094e5fc3024",
+      "type": "dynamicDataView",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": false,
+      "showTitle": true,
+      "showShadow": false,
+      "createAt": "2026-08-12T09:45:15.517Z",
+      "updateAt": "2026-08-12T09:45:41.194Z",
+      "viewType": "gallary",
+      "newPageNameFormat": "{{date:YYYYMMDDHHmmss}} ",
+      "properties": [
+        {
+          "id": "__componentsTitleProperty_0x7c00",
+          "name": "文件名",
+          "type": "text",
+          "isShow": true,
+          "wrap": false,
+          "options": {}
+        }
+      ],
+      "templates": [],
+      "groups": [],
+      "colorfulGroups": false,
+      "viewOptions": {
+        "openPageIn": "tab",
+        "openPageAfterCreate": true,
+        "items": [],
+        "pinFiltersToMenuBar": false,
+        "hideHeaderMenu": false,
+        "showGrid": false,
+        "heightType": "auto",
+        "heightValue": 600
+      },
+      "groupStates": {
+        "sort": "nameAsc",
+        "statics": [],
+        "orders": [],
+        "hiddens": [],
+        "collapseds": []
+      },
+      "filter": {
+        "id": "8a4b9999-6e65-4b41-933c-e8aa42794c2f",
+        "type": "group",
+        "operator": "and",
+        "conditions": [
+          {
+            "id": "8f5c5e83-e492-4853-b0fb-3f91c68c5aea",
+            "type": "filter",
+            "operator": "equals",
+            "property": "${file.parent}",
+            "value": "05_long_project/GitHub/Trending",
+            "conditions": []
+          }
+        ]
+      }
     }
   ],
   "rootComponentId": "7a1b2c3d-4e5f-4a6b-8c9d-0e1f2a3b4c5d",
