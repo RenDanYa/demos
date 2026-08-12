@@ -7,7 +7,8 @@
 对应 CLI: d:/voice/opencli-main/src/clis/bilibili/weekly.ts
 - 策略: COOKIE (需浏览器桥接, series/one 接口有风控 -352)
 - 参数: number (期数, 留空=最新一期), limit (默认 30)
-- 输出列: rank, title, author, play, like, coin, url
+- 输出列: rank, title, author, tname, pubdate, play, like, coin, desc,
+          duration, danmaku, reply, favorite, share, url
 
 用法:
     python bilibili_weekly.py                       # 弹窗输入 (期数/数量)
@@ -106,7 +107,8 @@ def parse_args():
 def call_weekly(number, limit):
     """调用 opencli bilibili weekly, 返回 list[dict] 或 None
 
-    返回字段: rank, title, author, play, like, coin, url
+    返回字段: rank, title, author, tname, pubdate, play, like, coin, desc,
+             duration, danmaku, reply, favorite, share, url
     """
     # number 为空时传空串, CLI 内部会调用 series/list 解析最新期数
     args = [
@@ -149,7 +151,10 @@ def fmt_num(n):
 def build_markdown(number, limit, items):
     """生成 markdown 内容
 
-    items: [{rank, title, author, play, like, coin, url}, ...]
+    items: [{rank, title, author, tname, pubdate, play, like, coin, desc,
+             duration, danmaku, reply, favorite, share, url}, ...]
+
+    布局: 主表格 (核心统计) + 详情 callout (简介 + 扩展统计)
     """
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     # 实际期数从首条数据无法直接得到 (CLI 内部解析), 这里用参数显示
@@ -179,22 +184,80 @@ def build_markdown(number, limit, items):
         lines.append("> 可能原因: 浏览器未登录 B站、cookie 过期、或风控触发 (-352)。")
         return "\n".join(lines) + "\n"
 
-    # 表格
-    lines.append("| # | 标题 | UP主 | 播放 | 点赞 | 投币 |")
-    lines.append("|---|------|------|------|------|------|")
+    # 主表格: 核心字段 (rank, 标题, UP主, 分区, 时长, 发布, 播放, 点赞, 投币, 描述)
+    lines.append("## 视频列表")
+    lines.append("")
+    lines.append("| # | 标题 | UP主 | 分区 | 时长 | 发布 | 播放 | 点赞 | 投币 | 描述 |")
+    lines.append("|---|------|------|------|------|------|------|------|------|------|")
     for item in items:
         rank = item.get("rank", "")
         title_text = (item.get("title") or "").replace("|", "\\|").replace("\n", " ")
         author = (item.get("author") or "").replace("|", "\\|")
+        tname = (item.get("tname") or "").replace("|", "\\|") or "-"
+        duration = item.get("duration") or ""
+        pubdate = item.get("pubdate") or ""
         play = fmt_num(item.get("play", 0))
         like = fmt_num(item.get("like", 0))
         coin = fmt_num(item.get("coin", 0))
         url = item.get("url") or ""
+        # 描述: 表格中截断到 40 字符, 完整内容在详情 callout
+        desc_raw = (item.get("desc") or "").replace("\n", " ").replace("|", "\\|").strip()
+        desc_short = (desc_raw[:40] + "…") if len(desc_raw) > 40 else desc_raw
         # 标题带视频链接
         title_link = f"[{title_text}]({url})" if url and title_text else title_text
-        lines.append(f"| {rank} | {title_link} | {author} | {play} | {like} | {coin} |")
+        lines.append(
+            f"| {rank} | {title_link} | {author} | {tname} | {duration} | "
+            f"{pubdate} | {play} | {like} | {coin} | {desc_short} |"
+        )
 
-    lines.append("")
+    # 详情区: 每个视频一个 callout, 含简介 + 扩展统计
+    has_detail = any(item.get("desc") or item.get("danmaku") or item.get("favorite")
+                     or item.get("reply") or item.get("share") for item in items)
+    if has_detail:
+        lines.append("")
+        lines.append("## 视频详情")
+        lines.append("")
+        for item in items:
+            rank = item.get("rank", "")
+            title_text = (item.get("title") or "").replace("|", "\\|").replace("\n", " ")
+            url = item.get("url") or ""
+            author = item.get("author") or ""
+            tname = item.get("tname") or ""
+            pubdate = item.get("pubdate") or ""
+            duration = item.get("duration") or ""
+            desc = (item.get("desc") or "").replace("\n", " ").strip()
+            danmaku = fmt_num(item.get("danmaku", 0))
+            reply = fmt_num(item.get("reply", 0))
+            favorite = fmt_num(item.get("favorite", 0))
+            share = fmt_num(item.get("share", 0))
+
+            # callout 标题: # 栓标题 (UP主 · 分区 · 时长)
+            callout_title = f"#{rank} {title_text}"
+            if author:
+                callout_title += f" · {author}"
+            if tname:
+                callout_title += f" · {tname}"
+            if duration:
+                callout_title += f" · {duration}"
+            lines.append(f"> [!info] {callout_title}")
+            lines.append(">")
+            if url:
+                lines.append(f"> 链接: {url}")
+                lines.append(">")
+            meta_parts = []
+            if pubdate:
+                meta_parts.append(f"发布 {pubdate}")
+            meta_parts.append(f"弹幕 {danmaku}")
+            meta_parts.append(f"回复 {reply}")
+            meta_parts.append(f"收藏 {favorite}")
+            meta_parts.append(f"分享 {share}")
+            lines.append("> " + " | ".join(meta_parts))
+            if desc:
+                lines.append(">")
+                # 简介按 80 字符折行, 避免 callout 单行过长
+                lines.append(f"> {desc}")
+            lines.append("")
+
     lines.append("---")
     lines.append(f"> 数据来源: opencli bilibili weekly | 采集时间: {now}")
     return "\n".join(lines) + "\n"
