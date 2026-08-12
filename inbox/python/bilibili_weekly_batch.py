@@ -6,8 +6,10 @@ bilibili_weekly.call_weekly 为每一期生成 markdown 文件。
 
 用法:
     python bilibili_weekly_batch.py                # 弹窗输入 (年份/数量限制)
-    python bilibili_weekly_batch.py 2026           # 生成 2026 年全部期数
+    python bilibili_weekly_batch.py 2026           # 生成 2026 年全部期数 (失败的可重试)
     python bilibili_weekly_batch.py 2026 --limit 3 # 仅最新 3 期 (测试)
+    python bilibili_weekly_batch.py 2026 --skip-failed  # 跳过所有已处理 (含失败)
+    python bilibili_weekly_batch.py 2026 --force   # 强制全部重新追加 (含已成功)
 """
 
 import json
@@ -146,6 +148,20 @@ def main():
 
     log(f"参数: year={year}, limit={limit or '全部'}")
 
+    # 1.5 显示已处理统计 (按状态)
+    try:
+        from bilibili_weekly_by_partition import get_episode_stats
+        stats = get_episode_stats()
+        total_p = len(stats["success"]) + len(stats["empty"]) + len(stats["error"])
+        if total_p > 0:
+            log(
+                f"已处理: {total_p} 期 "
+                f"(成功 {len(stats['success'])}, 空 {len(stats['empty'])}, "
+                f"错误 {len(stats['error'])})"
+            )
+    except Exception:
+        pass
+
     # 2. 获取期数列表
     log("调用 series/list API 获取期数列表...")
     series = fetch_series_list()
@@ -166,22 +182,28 @@ def main():
         episodes = episodes[-limit:]
         log(f"{year} 年共 {total_year} 期, 限制为最新 {limit} 期")
 
-    # 3.5 去重: 扫描分区笔记, 跳过已处理期数
+    # 3.5 去重 (按状态区分)
+    #    默认: 只跳过 success (失败的可重试)
+    #    --skip-failed: 跳过所有 (含 empty/error)
+    #    --force: 不跳过任何
     force = "--force" in sys.argv
-    if force:
-        sys.argv = [a for a in sys.argv if a != "--force"]
-        log("⚠ --force 模式: 不跳过已处理期数, 重复追加")
+    skip_failed = "--skip-failed" in sys.argv
+    for flag in ("--force", "--skip-failed"):
+        sys.argv = [a for a in sys.argv if a != flag]
 
-    if not force:
+    if force:
+        log("⚠ --force 模式: 不跳过任何期数, 全部重新追加")
+    else:
         try:
             from bilibili_weekly_by_partition import get_processed_episodes
-            processed = get_processed_episodes()
+            processed = get_processed_episodes(include_failed=skip_failed)
             if processed:
                 before = len(episodes)
                 episodes = [ep for ep in episodes if ep.get("number") not in processed]
                 skipped = before - len(episodes)
                 if skipped > 0:
-                    log(f"跳过已处理期数: {skipped} 期 (扫描分区笔记检测到)")
+                    mode = "所有已处理 (含失败)" if skip_failed else "已成功"
+                    log(f"跳过{mode}期数: {skipped} 期")
                     if not episodes:
                         log("全部期数已处理, 无需重复, 退出")
                         return 0
@@ -195,9 +217,13 @@ def main():
     log("-" * 60)
 
     # 4. 循环调用 weekly, 按分区追加到笔记
-    from bilibili_weekly_by_partition import process_episode_by_partition
+    from bilibili_weekly_by_partition import (
+        process_episode_by_partition,
+        record_failed,
+    )
     success_count = 0
-    fail_count = 0
+    empty_count = 0
+    error_count = 0
     start_time = time.time()
 
     for i, ep in enumerate(episodes, 1):
@@ -210,20 +236,27 @@ def main():
         items = call_weekly(number, 100)
 
         if items is None:
-            log(f"  失败, 跳过")
-            fail_count += 1
-            # 短暂等待避免连续失败
+            log(f"  失败, 跳过 [error]")
+            try:
+                record_failed(int(number), status="error", reason="weekly 调用失败")
+            except ValueError:
+                pass
+            error_count += 1
             time.sleep(2)
             continue
 
         if not items:
-            log(f"  空数据, 跳过")
-            fail_count += 1
+            log(f"  空数据, 跳过 [empty]")
+            try:
+                record_failed(int(number), status="empty", reason="API 返回空数组")
+            except ValueError:
+                pass
+            empty_count += 1
             continue
 
-        # 按分区追加到笔记 (复用 by_partition 的核心逻辑)
+        # 按分区追加到笔记 (内部自动记录 success)
         partition_count = process_episode_by_partition(items, number, name)
-        log(f"  成功: {len(items)} 条 → {partition_count} 个分区")
+        log(f"  成功: {len(items)} 条 → {partition_count} 个分区 [success]")
         success_count += 1
 
         # 间隔避免风控
@@ -232,9 +265,9 @@ def main():
 
     elapsed = time.time() - start_time
     log("-" * 60)
-    log(f"批量完成: 成功 {success_count}/{total}, 失败 {fail_count}")
+    log(f"批量完成: 成功 {success_count}, 空数据 {empty_count}, 错误 {error_count}")
     log(f"总耗时: {elapsed:.0f} 秒 ({elapsed/60:.1f} 分钟)")
-    return 0 if fail_count == 0 else 2
+    return 0 if (empty_count + error_count) == 0 else 2
 
 
 if __name__ == "__main__":
