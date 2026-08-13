@@ -38,12 +38,15 @@ def fix_content(content):
     lines = content.split("\n")
     new_lines = []
     fixed_count = 0
+    frontmatter_done = False
     in_frontmatter = False
 
     for i, line in enumerate(lines):
-        # 跳过 frontmatter 区域 (--- ... ---)
-        if line.strip() == "---":
+        # frontmatter 检测: 仅文件开头第一个 --- 到第二个 ---
+        if line.strip() == "---" and not frontmatter_done:
             in_frontmatter = not in_frontmatter
+            if not in_frontmatter:
+                frontmatter_done = True
             new_lines.append(line)
             continue
         if in_frontmatter:
