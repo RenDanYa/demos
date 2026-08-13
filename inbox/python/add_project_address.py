@@ -12,6 +12,7 @@
 用法:
     python add_project_address.py
 """
+import json
 import re
 import sys
 import time
@@ -52,19 +53,20 @@ def fetch_desc(bvid):
     """调用 opencli bilibili video 获取 desc
 
     返回: (desc, error)  desc 为 None 时表示失败
+    使用 JSON 格式以正确处理 desc 中的换行符
     """
-    args = ["bilibili", "video", bvid, "--format", "md"]
+    args = ["bilibili", "video", bvid, "--format", "json"]
     ok, stdout, err = run_opencli(args, TIMEOUT_VIDEO)
     if not ok:
         return None, err or "opencli call failed"
-    # 解析 markdown 表格: | bvid | title | ... | desc |
-    for line in stdout.split("\n"):
-        if line.startswith("| BV") or "| BV" in line[:5]:
-            fields = [f.strip() for f in line.split("|") if f.strip()]
-            # 字段顺序: bvid, title, author, plays, likes, coins, favorites, shares, date, desc
-            if len(fields) >= 10:
-                return fields[9], None
-    return None, "desc not found in table output"
+    try:
+        data = json.loads(stdout)
+        if isinstance(data, list) and len(data) > 0:
+            desc = data[0].get("desc", "") or ""
+            return (desc if desc else None), None
+        return None, "no data in json output"
+    except json.JSONDecodeError as e:
+        return None, f"json parse error: {e}"
 
 
 def format_desc(desc):
