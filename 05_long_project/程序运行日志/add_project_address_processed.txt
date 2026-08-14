@@ -190,3 +190,101 @@ d:\obsidian\视频\resource\IT咖啡馆-让openclaw再进化？搭配什么硬�
 d:\obsidian\视频\resource\IT咖啡馆-避坑指南，90%人容易忽略的上云隐患，5分钟带你搞懂出海上云.md
 d:\obsidian\视频\resource\IT咖啡馆-降成本还要提性能？实战测试将Java项目迁移至ARM架构CPU.md
 d:\obsidian\视频\resource\IT咖啡馆-马斯克硬刚OpenAI，开源 Grok-1：3140 亿为目前最大规模.md
+d:\obsidian\视频\resource\IT咖啡馆-21K star！网页一键变APP，帮你轻松构建多端应用.md
+d:\obsidian\视频\resource\IT咖啡馆-22K star的超强工具：Ollama，一条命令在本地跑 Llama2.md
+d:\obsidian\视频\resource\IT咖啡馆-22K star！小工具百宝箱，开发者值得收藏的“瑞士军刀”.md
+d:\obsidian\视频\resource\IT咖啡馆-22年磨一剑？！22年才发1.0版的开源项目，是什么样的.md
+d:\obsidian\视频\resource\IT咖啡馆-234K star 神作！自己动手实现热门技术：build-your-own-x.md
+d:\obsidian\视频\resource\IT咖啡馆-23k star!居家备份好帮手，开源自托管备份工具：immich.md
+d:\obsidian\视频\resource\IT咖啡馆-26K star! 跨平台的开源AirDrop 替品：LocalSend.md
+d:\obsidian\视频\resource\IT咖啡馆-26k star！Linux不熟悉，这个项目帮助你.md
+d:\obsidian\视频\resource\IT咖啡馆-274K star! 不知道哪找API这里全都整理好了.md
+d:\obsidian\视频\resource\IT咖啡馆-27K star！开源AI程序员，可独立完成95%的开发任务.md
+d:\obsidian\视频\resource\IT咖啡馆-27K star！这款开源可视利器帮你一眼看穿JSON.md
+d:\obsidian\视频\resource\IT咖啡馆-2万星！开源低代码平台帮你节省数百小时工作.md
+d:\obsidian\视频\resource\IT咖啡馆-11K star! 这款开源神器帮你省下XX音乐的会员费.md
+d:\obsidian\视频\resource\IT咖啡馆-2分钟老网站加装AI助手？用开源项目打通AI最后一公里，CopilotKit新手实操教程.md
+d:\obsidian\视频\resource\IT咖啡馆-11K star！免费部署私人 ChatGPT的项目：LobeChat.md
+d:\obsidian\视频\resource\IT咖啡馆-307K star！开发者必收藏，免费编程电子书大全.md
+d:\obsidian\视频\resource\IT咖啡馆-143K star！编程指南界的天花板：Project Based Learning.md
+d:\obsidian\视频\resource\IT咖啡馆-31K star！Screenshot to Code 将截图翻译成代码的黑科技！.md
+d:\obsidian\视频\resource\IT咖啡馆-15K star! 搭建个人PDF工具箱，和广告、泄密说拜拜.md
+d:\obsidian\视频\resource\IT咖啡馆-31K star！替换Postman ，开源优雅的API工具：Insomnia.md
+d:\obsidian\视频\resource\IT咖啡馆-17K star！开源免费的离线OCR工具.md
+d:\obsidian\视频\resource\IT咖啡馆-18.6K star！替换Trello Notion ，开源项目管理利器.md
+d:\obsidian\视频\resource\IT咖啡馆-1亿张照片怎么存？6分钟速通OSS，变身云专家.md
+d:\obsidian\视频\resource\IT咖啡馆-2024年有什么热点开源项目？一个视频带你速通2024年GitHub热点项目汇总.md
+d:\obsidian\视频\resource\IT咖啡馆-2024年有什么热点开源项目？一个视频带你速通2024年GitHub热点项目汇总_1.md
+d:\obsidian\视频\resource\IT咖啡馆-2025年，Agent对于打工人真的有用吗？实测OK Computer.md
+d:\obsidian\视频\resource\IT咖啡馆-21K star！网页一键变APP，帮你轻松构建多端应用.md
+d:\obsidian\视频\resource\IT咖啡馆-22K star的超强工具：Ollama，一条命令在本地跑 Llama2.md
+d:\obsidian\视频\resource\IT咖啡馆-22K star！小工具百宝箱，开发者值得收藏的“瑞士军刀”.md
+d:\obsidian\视频\resource\IT咖啡馆-22年磨一剑？！22年才发1.0版的开源项目，是什么样的.md
+d:\obsidian\视频\resource\IT咖啡馆-234K star 神作！自己动手实现热门技术：build-your-own-x.md
+d:\obsidian\视频\resource\IT咖啡馆-23k star!居家备份好帮手，开源自托管备份工具：immich.md
+d:\obsidian\视频\resource\IT咖啡馆-26K star! 跨平台的开源AirDrop 替品：LocalSend.md
+d:\obsidian\视频\resource\IT咖啡馆-26k star！Linux不熟悉，这个项目帮助你.md
+d:\obsidian\视频\resource\IT咖啡馆-274K star! 不知道哪找API这里全都整理好了.md
+d:\obsidian\视频\resource\IT咖啡馆-27K star！开源AI程序员，可独立完成95%的开发任务.md
+d:\obsidian\视频\resource\IT咖啡馆-27K star！这款开源可视利器帮你一眼看穿JSON.md
+d:\obsidian\视频\resource\IT咖啡馆-42K star!替掉item2，好看、好用的跨平台终端工具：Hyper.md
+d:\obsidian\视频\resource\IT咖啡馆-42K star！开源Notion 平替笔记推荐.md
+d:\obsidian\视频\resource\IT咖啡馆-44K star！2023最火的前端开源项目.md
+d:\obsidian\视频\resource\IT咖啡馆-47天破万星？国产开源工具正成为AI时代的趋势.md
+d:\obsidian\视频\resource\IT咖啡馆-500PB的史诗级云上迁移？！5分钟，带你复刻迷你版过程.md
+d:\obsidian\视频\resource\IT咖啡馆-53K star! 平替TeamViewer，试试这个开源神器.md
+d:\obsidian\视频\resource\IT咖啡馆-56K star！一键拥有跨平台 ChatGPT 应用：ChatGPT-Next-Web.md
+d:\obsidian\视频\resource\IT咖啡馆-57K star! strapi 开源无头CMS首选.md
+d:\obsidian\视频\resource\IT咖啡馆-57K star！hoppscotch 超好用的API开发工具.md
+d:\obsidian\视频\resource\IT咖啡馆-57K star！开源BI神器，比收费软件还好用的数据可视化工具.md
+d:\obsidian\视频\resource\IT咖啡馆-5分钟速通声音克隆！这可能是最简单的声音克隆部署教程.md
+d:\obsidian\视频\resource\IT咖啡馆-62K star！动画图解、一键运行，学习算法必备的项目.md
+d:\obsidian\视频\resource\IT咖啡馆-66K star！想画出高颜值的流程图，试试这个手绘风开源白板.md
+d:\obsidian\视频\resource\IT咖啡馆-68K star！24年替换Node.js的最佳选择：Bun.md
+d:\obsidian\视频\resource\IT咖啡馆-2万星！开源低代码平台帮你节省数百小时工作.md
+d:\obsidian\视频\resource\IT咖啡馆-6K star! 100%本地运行LLM的AI助手.md
+d:\obsidian\视频\resource\IT咖啡馆-2分钟老网站加装AI助手？用开源项目打通AI最后一公里，CopilotKit新手实操教程.md
+d:\obsidian\视频\resource\IT咖啡馆-75K star！让生产力起飞的开源 CSS 框架：tailwindcss.md
+d:\obsidian\视频\resource\IT咖啡馆-307K star！开发者必收藏，免费编程电子书大全.md
+d:\obsidian\视频\resource\IT咖啡馆-31K star！Screenshot to Code 将截图翻译成代码的黑科技！.md
+d:\obsidian\视频\resource\IT咖啡馆-31K star！替换Postman ，开源优雅的API工具：Insomnia.md
+d:\obsidian\视频\resource\IT咖啡馆-「Github一周热点118期」自托管AI工作空间、AI求职系统、Markdown知识库、MD规划SKILL以及大模型解禁工具.md
+d:\obsidian\视频\resource\IT咖啡馆-「Github一周热点119期」生产级Agent技能包、苹果容器工具、NVIDIA物理AI世界模型、开源客服平台和全球公开IPTV播放列表.md
+d:\obsidian\视频\resource\IT咖啡馆-「Github一周热点120期」Agent视频生产系统、用户名情报搜索工具、Agent联网冲浪工具、代码库记忆MCP和开源剪辑工具.md
+d:\obsidian\视频\resource\IT咖啡馆-「Github一周热点121期」DeepSeek推理加速框架、Google设计记忆规范、AI投研技能包、AI渗透测试和免费开发者资源清单.md
+d:\obsidian\视频\resource\IT咖啡馆-「Github一周热点122期」AI求职助手、Photoshop版GIMP、Agent省Token插件、本地会议助手和Office文档CLI.md
+d:\obsidian\视频\resource\IT咖啡馆-「Github一周热点123期」最强多说话人 ASR 模型、并行Agent工作台、DESIGNMD集、AI交易Agent和健身动作数据集.md
+d:\obsidian\视频\resource\IT咖啡馆-「Github一周热点124期」Kimi K3、AI网关、开源部署平台、反AI味设计Skill和人与Agent 协作工作台.md
+d:\obsidian\视频\resource\IT咖啡馆-「Github一周热点125期」从零实现技术合集、离线蓝牙聊天、阿里代码审查Agent、AI Agent开源书和把书变成Skill.md
+d:\obsidian\视频\resource\IT咖啡馆-「Github一周热点126期」MiniMax全模态视频模型、PDF解析、团队Agent记忆、低显存跑大模型、逆向工程Skill.md
+d:\obsidian\视频\resource\IT咖啡馆-「Github一周热点62期」DeepSeek 实用集成 、开源多模态模型、Markdown换行工具、视觉AI工具和V社的游戏SDK.md
+d:\obsidian\视频\resource\IT咖啡馆-「Github一周热点63期」DeepSeek 开源周汇总 、超过Sora的万象2.1、AI数据分析库、Notion 替代品和AI 助手平台.md
+d:\obsidian\视频\resource\IT咖啡馆-42K star!替掉item2，好看、好用的跨平台终端工具：Hyper.md
+d:\obsidian\视频\resource\IT咖啡馆-42K star！开源Notion 平替笔记推荐.md
+d:\obsidian\视频\resource\IT咖啡馆-44K star！2023最火的前端开源项目.md
+d:\obsidian\视频\resource\IT咖啡馆-47天破万星？国产开源工具正成为AI时代的趋势.md
+d:\obsidian\视频\resource\IT咖啡馆-500PB的史诗级云上迁移？！5分钟，带你复刻迷你版过程.md
+d:\obsidian\视频\resource\IT咖啡馆-53K star! 平替TeamViewer，试试这个开源神器.md
+d:\obsidian\视频\resource\IT咖啡馆-56K star！一键拥有跨平台 ChatGPT 应用：ChatGPT-Next-Web.md
+d:\obsidian\视频\resource\IT咖啡馆-57K star! strapi 开源无头CMS首选.md
+d:\obsidian\视频\resource\IT咖啡馆-57K star！hoppscotch 超好用的API开发工具.md
+d:\obsidian\视频\resource\IT咖啡馆-57K star！开源BI神器，比收费软件还好用的数据可视化工具.md
+d:\obsidian\视频\resource\IT咖啡馆-5分钟速通声音克隆！这可能是最简单的声音克隆部署教程.md
+d:\obsidian\视频\resource\IT咖啡馆-62K star！动画图解、一键运行，学习算法必备的项目.md
+d:\obsidian\视频\resource\IT咖啡馆-66K star！想画出高颜值的流程图，试试这个手绘风开源白板.md
+d:\obsidian\视频\resource\IT咖啡馆-68K star！24年替换Node.js的最佳选择：Bun.md
+d:\obsidian\视频\resource\IT咖啡馆-6K star! 100%本地运行LLM的AI助手.md
+d:\obsidian\视频\resource\IT咖啡馆-75K star！让生产力起飞的开源 CSS 框架：tailwindcss.md
+d:\obsidian\视频\resource\IT咖啡馆-满血DeepSeek选择指南，腾讯这次出了个好东西.md
+d:\obsidian\视频\resource\IT咖啡馆-「Github一周热点118期」自托管AI工作空间、AI求职系统、Markdown知识库、MD规划SKILL以及大模型解禁工具.md
+d:\obsidian\视频\resource\IT咖啡馆-「Github一周热点119期」生产级Agent技能包、苹果容器工具、NVIDIA物理AI世界模型、开源客服平台和全球公开IPTV播放列表.md
+d:\obsidian\视频\resource\IT咖啡馆-「Github一周热点120期」Agent视频生产系统、用户名情报搜索工具、Agent联网冲浪工具、代码库记忆MCP和开源剪辑工具.md
+d:\obsidian\视频\resource\IT咖啡馆-「Github一周热点121期」DeepSeek推理加速框架、Google设计记忆规范、AI投研技能包、AI渗透测试和免费开发者资源清单.md
+d:\obsidian\视频\resource\IT咖啡馆-「Github一周热点122期」AI求职助手、Photoshop版GIMP、Agent省Token插件、本地会议助手和Office文档CLI.md
+d:\obsidian\视频\resource\IT咖啡馆-「Github一周热点123期」最强多说话人 ASR 模型、并行Agent工作台、DESIGNMD集、AI交易Agent和健身动作数据集.md
+d:\obsidian\视频\resource\IT咖啡馆-「Github一周热点124期」Kimi K3、AI网关、开源部署平台、反AI味设计Skill和人与Agent 协作工作台.md
+d:\obsidian\视频\resource\IT咖啡馆-「Github一周热点125期」从零实现技术合集、离线蓝牙聊天、阿里代码审查Agent、AI Agent开源书和把书变成Skill.md
+d:\obsidian\视频\resource\IT咖啡馆-「Github一周热点126期」MiniMax全模态视频模型、PDF解析、团队Agent记忆、低显存跑大模型、逆向工程Skill.md
+d:\obsidian\视频\resource\IT咖啡馆-「Github一周热点62期」DeepSeek 实用集成 、开源多模态模型、Markdown换行工具、视觉AI工具和V社的游戏SDK.md
+d:\obsidian\视频\resource\IT咖啡馆-「Github一周热点63期」DeepSeek 开源周汇总 、超过Sora的万象2.1、AI数据分析库、Notion 替代品和AI 助手平台.md
+d:\obsidian\视频\resource\IT咖啡馆-满血DeepSeek选择指南，腾讯这次出了个好东西.md
