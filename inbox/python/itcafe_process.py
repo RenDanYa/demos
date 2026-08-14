@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
-"""IT咖啡馆笔记处理: 追加视频简介 + 修复二级标题格式
+"""视频笔记处理: 追加视频简介 + 修复二级标题格式 (IT咖啡馆)
 
 功能:
 1. 对没有 ## 项目地址 / ## 视频简介 模块的笔记,
    调用 opencli bilibili video 获取 desc, 格式化后追加到末尾。
    - desc 含 "GitHub链接"/"项目名称" → 追加为 ## 项目地址 (多行)
    - desc 为普通简介 → 追加为 ## 视频简介
+   支持按修改时间过滤: 只处理指定时间之后的笔记。
 
-2. 修复二级标题误用:
+2. 修复二级标题误用 (仅 IT咖啡馆 笔记):
    - `## - xxx` → `- xxx` (二级标题误用为列表项)
    - `* ## xxx` / `- ## xxx` → `* xxx` / `- xxx` (列表项中嵌套二级标题)
    - `## xxx` → `- xxx` (二级标题误用为内容)
@@ -15,12 +16,14 @@
 
 支持断点续传: 已处理文件路径记录在 _processed.txt 中。
 用法:
-    python itcafe_process.py
+    python itcafe_process.py                    # 处理所有笔记
+    python itcafe_process.py "2026-08-14 10:37" # 只处理该时间之后的笔记
 """
 import json
 import re
 import sys
 import time
+from datetime import datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
@@ -266,14 +269,33 @@ def fix_format(all_files):
 # ============ 主流程 ============
 
 def main():
+    # 解析时间过滤参数
+    since_time = None
+    if len(sys.argv) > 1:
+        try:
+            since_time = datetime.strptime(sys.argv[1], "%Y-%m-%d %H:%M")
+        except ValueError:
+            try:
+                since_time = datetime.strptime(sys.argv[1], "%Y-%m-%d %H:%M:%S")
+            except ValueError:
+                log(f"无法解析时间参数: {sys.argv[1]}, 格式: 'YYYY-MM-DD HH:MM'")
+                return
+
     LOG_DIR.mkdir(parents=True, exist_ok=True)
 
-    # ===== 第一步: 追加视频简介/项目地址模块 =====
+    # ===== 第一步: 追加视频简介/项目地址模块 (所有笔记) =====
     log("========== 第一步: 追加视频简介/项目地址 ==========")
 
-    all_files = sorted(RESOURCE_DIR.glob("IT咖啡馆*.md"))
+    if since_time:
+        log(f"时间过滤: {since_time.strftime('%Y-%m-%d %H:%M')} 之后")
+
+    # 处理所有 *.md 文件 (不只是 IT咖啡馆)
+    all_md_files = sorted(RESOURCE_DIR.glob("*.md"))
+    if since_time:
+        all_md_files = [f for f in all_md_files if datetime.fromtimestamp(f.stat().st_mtime) >= since_time]
+
     need_process = []
-    for f in all_files:
+    for f in all_md_files:
         try:
             content = f.read_text(encoding="utf-8")
         except Exception as e:
@@ -282,7 +304,7 @@ def main():
         if not has_existing_section(content):
             need_process.append(f)
 
-    log(f"总文件数: {len(all_files)}")
+    log(f"扫描文件数: {len(all_md_files)}")
     log(f"待追加: {len(need_process)}")
 
     # 断点续传: 读取已处理文件
@@ -316,12 +338,15 @@ def main():
         for name in failed_files:
             log(f"  - {name}")
 
-    # ===== 第二步: 修复二级标题格式 =====
+    # ===== 第二步: 修复二级标题格式 (仅 IT咖啡馆 笔记) =====
     log("")
-    log("========== 第二步: 修复二级标题格式 ==========")
-    log(f"扫描文件数: {len(all_files)}")
+    log("========== 第二步: 修复二级标题格式 (仅 IT咖啡馆) ==========")
+    itcafe_files = sorted(RESOURCE_DIR.glob("IT咖啡馆*.md"))
+    if since_time:
+        itcafe_files = [f for f in itcafe_files if datetime.fromtimestamp(f.stat().st_mtime) >= since_time]
+    log(f"扫描 IT咖啡馆 文件数: {len(itcafe_files)}")
 
-    affected_files, total_fixed = fix_format(all_files)
+    affected_files, total_fixed = fix_format(itcafe_files)
 
     log("")
     log(f"修复结果: 影响文件 {affected_files} 个, 总修复 {total_fixed} 处")
