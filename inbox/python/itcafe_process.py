@@ -181,12 +181,12 @@ def append_sections(need_process, processed):
 
 # ============ 修复二级标题格式 ============
 
-def fix_content(content):
+def fix_content(content, apply_pattern3=False):
     """修复二级标题误用
 
-    1. `## - xxx` → `- xxx` (二级标题误用为列表项)
-    2. `* ## xxx` / `- ## xxx` → `* xxx` / `- xxx` (列表项中嵌套二级标题)
-    3. `## xxx` → `- xxx` (二级标题误用为内容)
+    1. `## - xxx` → `- xxx` (二级标题误用为列表项, 所有笔记)
+    2. `* ## xxx` / `- ## xxx` → `* xxx` / `- xxx` (列表项中嵌套二级标题, 所有笔记)
+    3. `## xxx` → `- xxx` (二级标题误用为内容, 仅 apply_pattern3=True 时处理)
     4. 删除该行前面的空行, 让列表连续
     5. 跳过合法标题: ## 项目地址, ## 视频简介
     """
@@ -229,8 +229,8 @@ def fix_content(content):
                 new_lines.pop()
             new_lines.append(new_line)
             fixed_count += 1
-        elif m3:
-            # `## xxx` → `- xxx`
+        elif m3 and apply_pattern3:
+            # `## xxx` → `- xxx` (仅 IT咖啡馆 等指定文件)
             new_line = f"- {m3.group(1)}"
             while new_lines and new_lines[-1].strip() == "":
                 new_lines.pop()
@@ -243,7 +243,10 @@ def fix_content(content):
 
 
 def fix_format(all_files):
-    """修复所有 IT咖啡馆笔记的二级标题格式
+    """修复笔记的二级标题格式
+
+    IT咖啡馆 笔记: 应用全部三种模式
+    其他笔记: 仅应用模式1和模式2 (避免误伤合法章节标题)
 
     返回: (affected_files, total_fixed)
     """
@@ -251,9 +254,11 @@ def fix_format(all_files):
     total_fixed = 0
 
     for md_path in all_files:
+        # IT咖啡馆 笔记应用全部三种模式, 其他笔记仅模式1和2
+        is_itcafe = md_path.name.startswith("IT咖啡馆")
         try:
             content = md_path.read_text(encoding="utf-8")
-            new_content, fixed_count = fix_content(content)
+            new_content, fixed_count = fix_content(content, apply_pattern3=is_itcafe)
 
             if fixed_count > 0:
                 md_path.write_text(new_content, encoding="utf-8")
@@ -338,15 +343,16 @@ def main():
         for name in failed_files:
             log(f"  - {name}")
 
-    # ===== 第二步: 修复二级标题格式 (仅 IT咖啡馆 笔记) =====
+    # ===== 第二步: 修复二级标题格式 (所有笔记) =====
     log("")
-    log("========== 第二步: 修复二级标题格式 (仅 IT咖啡馆) ==========")
-    itcafe_files = sorted(RESOURCE_DIR.glob("IT咖啡馆*.md"))
+    log("========== 第二步: 修复二级标题格式 ==========")
+    # 模式1,2 对所有笔记; 模式3 仅对 IT咖啡馆
+    fix_files = sorted(RESOURCE_DIR.glob("*.md"))
     if since_time:
-        itcafe_files = [f for f in itcafe_files if datetime.fromtimestamp(f.stat().st_mtime) >= since_time]
-    log(f"扫描 IT咖啡馆 文件数: {len(itcafe_files)}")
+        fix_files = [f for f in fix_files if datetime.fromtimestamp(f.stat().st_mtime) >= since_time]
+    log(f"扫描文件数: {len(fix_files)}")
 
-    affected_files, total_fixed = fix_format(itcafe_files)
+    affected_files, total_fixed = fix_format(fix_files)
 
     log("")
     log(f"修复结果: 影响文件 {affected_files} 个, 总修复 {total_fixed} 处")
