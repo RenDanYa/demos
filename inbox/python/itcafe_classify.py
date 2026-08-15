@@ -369,7 +369,7 @@ def main():
         lines.append(f"- [{cat}](#{anchor}) ({count})")
     lines.append("")
 
-    # 各分类详情
+    # 各分类详情 (表格形式)
     lines.append("## 分类详情")
     lines.append("")
     for cat in sorted(by_category.keys(), key=lambda c: -len(by_category[c])):
@@ -380,16 +380,27 @@ def main():
         # 按发布时间排序
         projects.sort(key=lambda p: p["pub_time"], reverse=True)
 
-        for p in projects:
-            lines.append(f"- **{p['name']}**")
-            if p["desc"]:
-                lines.append(f"  - {p['desc']}")
-            if p["link"] and p["link"].startswith("http"):
-                lines.append(f"  - 链接: {p['link']}")
-            if p["source"] != p["name"]:
-                lines.append(f"  - 来源: {p['source']} ({p['pub_time'][:10]})")
-            lines.append("")
+        # 表格表头
+        lines.append("| 项目名称 | 描述 | 链接 | 来源 |")
+        lines.append("| --- | --- | --- | --- |")
 
+        for p in projects:
+            # 转义表格中的管道符
+            name = p["name"].replace("|", "\\|")
+            desc = (p["desc"] or "").replace("|", "\\|").replace("\n", " ")
+            link = p["link"] if p["link"] and p["link"].startswith("http") else ""
+            source = p["source"].replace("|", "\\|")
+            pub_short = p["pub_time"][:10] if p["pub_time"] else ""
+            source_full = f"{source} ({pub_short})"
+
+            if link:
+                link_cell = f"[GitHub]({link})"
+            else:
+                link_cell = ""
+
+            lines.append(f"| {name} | {desc} | {link_cell} | {source_full} |")
+
+        lines.append("")
         lines.append("---")
         lines.append("")
 
