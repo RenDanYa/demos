@@ -2154,7 +2154,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-08-04T03:02:21.802Z",
+      "updateAt": "2026-08-17T00:31:11.404Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -2233,7 +2233,7 @@
         "collapseds": [
           "__$uncategorizedGroup",
           "BOSS直聘",
-          "前程无忧"
+          "智联招聘"
         ]
       },
       "filter": {
