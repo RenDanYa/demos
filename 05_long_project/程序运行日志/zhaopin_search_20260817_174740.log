@@ -30,3 +30,17 @@
 [17:50:33] 第 6 页新增 0 个 (累计 105)
 [17:50:37] --- 第 7/10 页 ---
 [17:50:37] 调用 opencli zhaopin search (city=宁波, limit=30, page=7)
+[17:50:53] zhaopin search 调用失败: 📭 zhaopin search returned no data
+→ The page structure may have changed — this adapter may be outdated.
+  Debug:  zhaopin/search --verbose
+  Report: https://github.com/jackwener/opencli/issues
+
+[17:50:53] 第 7 页无数据, 结束分页
+[17:50:53] 全市共获取 105 个职位, 开始按区域过滤...
+[17:50:53]   海曙区: 0 个
+[17:50:53]   江北区: 0 个
+[17:50:53]   北仑区: 0 个
+[17:50:53]   镇海区: 0 个
+[17:50:53]   鄞州区: 0 个
+[17:50:53] 过滤后总计: 0 个 (全市共 105, 其他区域 105)
+[17:50:53] 未获取到职位, 退出
