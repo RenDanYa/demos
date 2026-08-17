@@ -1,0 +1,40 @@
+[14:28:41] ============================================================
+[14:28:41] 前程无忧职位搜索采集 启动
+[14:28:41] OPENCLI_CMD: ('node', 'd:\\voice\\opencli-main\\dist\\main.js')
+[14:28:41] 输出目录: d:\obsidian\demo\05_long_project\招聘
+[14:28:41] ============================================================
+[14:29:37] 关键词: 录入
+[14:29:37] 城市: 宁波
+[14:29:37] 区域(多选): 海曙区, 江北区, 北仑区, 镇海区, 鄞州区
+[14:29:37] 数量: 50
+[14:29:37] 搜索中, 请稍候 (约 15-30 秒)...
+[14:29:37] --- 搜索区域: 海曙区 (代码 080302) ---
+[14:29:37] 调用 opencli job51 search (city=080302, limit=50)
+[14:29:50] job51 search 调用失败: 📭 job51 search returned no data
+→ The page structure may have changed — this adapter may be outdated.
+  Debug:  job51/search --verbose
+  Report: https://github.com/jackwener/opencli/issues
+
+[14:29:50]   海曙区 未获取到职位
+[14:29:50] --- 搜索区域: 江北区 (代码 080304) ---
+[14:29:50] 调用 opencli job51 search (city=080304, limit=50)
+[14:29:59] job51 search 调用失败: 📭 job51 search returned no data
+→ The page structure may have changed — this adapter may be outdated.
+  Debug:  job51/search --verbose
+  Report: https://github.com/jackwener/opencli/issues
+
+[14:29:59]   江北区 未获取到职位
+[14:29:59] --- 搜索区域: 北仑区 (代码 080306) ---
+[14:29:59] 调用 opencli job51 search (city=080306, limit=50)
+[14:30:14]   北仑区: 新增 50 个 (累计 50)
+[14:30:18] --- 搜索区域: 镇海区 (代码 080311) ---
+[14:30:18] 调用 opencli job51 search (city=080311, limit=50)
+[14:30:33]   镇海区: 新增 44 个 (累计 94)
+[14:30:37] --- 搜索区域: 鄞州区 (代码 080312) ---
+[14:30:37] 调用 opencli job51 search (city=080312, limit=50)
+[14:30:51]   鄞州区: 新增 44 个 (累计 138)
+[14:30:54] 获取到 138 个职位 (去重后)
+[14:30:54] 已创建 (采集中): d:\obsidian\demo\05_long_project\招聘\前程无忧_录入_宁波多区.md
+[14:30:54] 跳过详情获取 (已暂时取消), 只保留表格; 设置 SKIP_DETAIL=0 可恢复详情获取
+[14:30:54] 已保存 (已采集): d:\obsidian\demo\05_long_project\招聘\前程无忧_录入_宁波多区.md
+[14:30:54] 完成

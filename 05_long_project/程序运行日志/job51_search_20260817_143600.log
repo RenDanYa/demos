@@ -1,0 +1,19 @@
+[14:36:00] ============================================================
+[14:36:00] 前程无忧职位搜索采集 启动
+[14:36:00] OPENCLI_CMD: ('node', 'd:\\voice\\opencli-main\\dist\\main.js')
+[14:36:00] 输出目录: d:\obsidian\demo\05_long_project\招聘
+[14:36:00] ============================================================
+[14:36:27] 关键词: 录入
+[14:36:27] 城市: 宁波
+[14:36:27] 区域(多选): 海曙区, 江北区, 北仑区, 镇海区, 鄞州区
+[14:36:27] 数量: 50
+[14:36:27] 搜索中, 请稍候 (约 15-30 秒)...
+[14:36:27] --- 全市搜索 (代码 080300, limit=100) ---
+[14:36:27] 调用 opencli job51 search (city=080300, limit=100)
+[14:36:33] job51 search 调用失败: 📭 job51 search returned no data
+→ The page structure may have changed — this adapter may be outdated.
+  Debug:  job51/search --verbose
+  Report: https://github.com/jackwener/opencli/issues
+
+[14:36:33] 全市搜索未获取到职位
+[14:36:33] 未获取到职位, 退出
