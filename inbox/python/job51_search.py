@@ -232,20 +232,22 @@ def _extract_job_id(url):
     return url
 
 
-def search_jobs(query, city, limit):
+def search_jobs(query, city, limit, page=1):
     """调用 opencli job51 search
 
     city: 城市名或 6 位数字代码 (如 "宁波" 或 "080300")
+    page: 起始页码 (1-based), 用于分页采集
     返回: [{rank, title, salary, company, location, experience, education, tags, url}, ...]
     """
     args = [
         "job51", "search", query,
         "--city", city,
         "--limit", str(limit),
+        "--page", str(page),
         "-f", "json",
     ]
 
-    log(f"调用 opencli job51 search (city={city}, limit={limit})")
+    log(f"调用 opencli job51 search (city={city}, limit={limit}, page={page})")
     ok, stdout, err = run_opencli(args, TIMEOUT_SEARCH)
     if not ok:
         log(f"job51 search 调用失败: {err}")
@@ -263,6 +265,52 @@ def search_jobs(query, city, limit):
         return None
 
 
+def search_jobs_paginated(query, city, total_limit, max_pages=5):
+    """分页采集职位 (每页 20 条, 最多 max_pages 页)
+
+    51job 单次最多返回 50 条 (约 3 页), 超过会反爬返回 no data。
+    此函数分多次调用, 每次取一页 20 条, 累计到 total_limit 或翻完 max_pages 页。
+
+    返回: [{...}, ...] 累计的职位列表 (按 jobId 去重)
+    """
+    PER_PAGE = 20
+    pages_to_fetch = min(max_pages, (total_limit + PER_PAGE - 1) // PER_PAGE)
+
+    log(f"分页采集: 目标 {total_limit} 个, 每页 {PER_PAGE}, 最多 {pages_to_fetch} 页")
+
+    all_jobs = []
+    seen_ids = set()
+
+    for p in range(1, pages_to_fetch + 1):
+        log(f"--- 第 {p}/{pages_to_fetch} 页 ---")
+        jobs = search_jobs(query, city, PER_PAGE, page=p)
+
+        if not jobs:
+            log(f"第 {p} 页无数据, 结束分页")
+            break
+
+        added = 0
+        for j in jobs:
+            url = j.get("url", "")
+            job_id = _extract_job_id(url)
+            if not job_id or job_id in seen_ids:
+                continue
+            seen_ids.add(job_id)
+            all_jobs.append(j)
+            added += 1
+
+        log(f"第 {p} 页新增 {added} 个 (累计 {len(all_jobs)})")
+
+        if len(all_jobs) >= total_limit:
+            break
+
+        # 页间间隔, 避免风控
+        time.sleep(random.uniform(2, 4))
+
+    # 截断到目标数量
+    return all_jobs[:total_limit]
+
+
 def search_jobs_multi_district(query, districts, limit):
     """对选中的多个宁波区域进行搜索并过滤
 
@@ -274,15 +322,12 @@ def search_jobs_multi_district(query, districts, limit):
     limit: 每个区域最多保留多少个职位
     返回: list[dict] 过滤后的职位列表
     """
-    # 全市搜索: limit 上限 50 (51job 单次最多返回 50 条, 超过会反爬返回 no data)
-    # 注意: 若选了多个区且每区要 limit 个, 50 条可能不够覆盖, 会被截断
+    # 全市搜索: 分页采集, 每页 20 条, 最多 10 页 (共 200 条)
+    # 选了多个区且每区要 limit 个时, 需要更大的样本量
     target_total = limit * len(districts) * 2
-    if target_total > 50:
-        log(f"⚠ 需求 {limit} 个/区 × {len(districts)} 区 = {limit * len(districts)} 个, "
-            f"但 51job 单次最多 50 条, 实际可能不足")
-    total_limit = min(50, max(limit * 2, 20))
-    log(f"--- 全市搜索 (city=宁波, limit={total_limit}) ---")
-    all_jobs = search_jobs(query, "宁波", total_limit)
+    max_pages = min(10, (target_total + 19) // 20)
+    log(f"--- 全市分页搜索 (city=宁波, 目标 {target_total} 个, 最多 {max_pages} 页) ---")
+    all_jobs = search_jobs_paginated(query, "宁波", target_total, max_pages=max_pages)
 
     if not all_jobs:
         log("全市搜索未获取到职位")
