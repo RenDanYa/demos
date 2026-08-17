@@ -200,6 +200,13 @@ def main():
             log("  请在 Chrome 中登录 51job 后重试")
             append_record(md_path, job_id, "", status, message)
             break  # 需要登录, 中止
+        elif status == "verify":
+            log(f"  触发风控: {message}")
+            append_record(md_path, job_id, "", status, message)
+            log("  ⚠ 检测到滑动验证, 立即停止批量投递 (避免账号被风控封禁)")
+            log("  请手动访问 51job 搜索页解除风控后, 使用 --start 参数续投")
+            log(f"  续投命令: python job51_apply.py \"{md_path}\" --start {i + 1}")
+            break  # 触发风控, 立即停止
         else:
             log(f"  状态: {status} - {message}")
             fail += 1
