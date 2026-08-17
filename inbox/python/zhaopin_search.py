@@ -3,12 +3,20 @@
 
 调用 opencli zhaopin search/detail 命令, 把搜索结果(职位/薪资/公司/地区/经验/学历等)保存为 Obsidian Markdown。
 
+城市固定为宁波, 支持选择宁波下不同区域(多选)。
+
+实现说明:
+    智联招聘的 search 命令通过 URL 参数 jl 传城市代码, 不支持区级代码,
+    所以多区域搜索时改为调用全市搜索一次, 然后在 Python 端按 location 字段过滤。
+
 用法:
-    python zhaopin_search.py                          # 弹窗输入关键词 + 城市 + 数量
-    python zhaopin_search.py "外贸"                    # 默认宁波, 采集 20 个
-    python zhaopin_search.py "外贸" 上海               # 指定城市
-    python zhaopin_search.py "外贸" 上海 30            # 指定城市 + 数量
-    python zhaopin_search.py "外贸" 上海 30 5          # 断点续传: 从第 5 个开始获取详情
+    python zhaopin_search.py                          # 弹窗: 关键词 + 宁波区域多选 + 数量
+    python zhaopin_search.py "外贸"                    # 宁波全市, 20 个
+    python zhaopin_search.py "外贸" 鄞州区,海曙区      # 指定多个区域 (逗号分隔)
+    python zhaopin_search.py "外贸" 鄞州区,海曙区 30   # 多区域 + 数量 (每区最多 N 个)
+    python zhaopin_search.py "外贸" "" 30 5            # 全市 + 数量 + 断点续传(从第5个开始)
+
+区域名称见 NINGBO_DISTRICTS 常量 (海曙区/江北区/北仑区/镇海区/鄞州区/奉化区/余姚市/慈溪市/象山县/宁海县)。
 """
 
 import json
@@ -59,6 +67,13 @@ CITY_OPTIONS = [
     "武汉", "西安", "苏州", "厦门", "宁波",
 ]
 
+# 宁波固定城市, 区级名称列表 (用于多区域搜索)
+# 智联招聘 search 不支持区级代码, 只能全市搜索后 Python 端按 location 过滤
+NINGBO_DISTRICTS = [
+    "海曙区", "江北区", "北仑区", "镇海区", "鄞州区",
+    "奉化区", "余姚市", "慈溪市", "象山县", "宁海县",
+]
+
 # CLI 内部浏览器命令超时
 os.environ.setdefault("OPENCLI_BROWSER_COMMAND_TIMEOUT", "120")
 
@@ -76,7 +91,11 @@ def _sleep_with_heartbeat(seconds, label="暂停"):
 
 
 def show_search_dialog():
-    """tkinter 弹窗: 关键词 + 城市 + 数量"""
+    """tkinter 弹窗: 关键词 + 宁波区域多选 + 数量
+
+    返回: (kw, districts, limit)
+        - districts: list[str] 选中的区域名 (空列表表示全市)
+    """
     try:
         import tkinter as tk
         from tkinter import simpledialog
@@ -96,22 +115,16 @@ def show_search_dialog():
     )
     if not kw or not kw.strip():
         root.destroy()
-        return None, None, 0
+        return None, [], 0
     kw = kw.strip()
 
-    # 2. 城市
-    city = simpledialog.askstring(
-        "城市",
-        f"城市名 (如 宁波/上海/杭州, 留空=宁波):",
-        initialvalue="宁波",
-        parent=root,
-    )
-    city = (city or "宁波").strip() or "宁波"
+    # 2. 宁波区域多选 (Listbox)
+    districts = _show_district_multiselect(root, kw)
 
     # 3. 数量
     limit_str = simpledialog.askstring(
         "采集数量",
-        f"搜索「{kw}」前几个职位? (1-100)",
+        f"搜索「{kw}」前几个职位? (1-100)\n(多区域时, 每个区域各取 N 个)",
         initialvalue="20",
         parent=root,
     )
@@ -121,22 +134,71 @@ def show_search_dialog():
         limit = 20
 
     root.destroy()
-    return kw, city, limit
+    return kw, districts, limit
+
+
+def _show_district_multiselect(parent, kw):
+    """tkinter Listbox 多选宁波区域
+
+    返回: list[str] 选中的区域名 (空列表 = 全市)
+    """
+    import tkinter as tk
+
+    win = tk.Toplevel(parent)
+    win.title(f"宁波区域多选 - 搜索「{kw}」")
+    win.attributes("-topmost", True)
+    win.geometry("320x420")
+
+    tk.Label(win, text="选择宁波区域 (按住 Ctrl/Shift 多选, 留空=全市):").pack(pady=8, padx=10, anchor="w")
+
+    listbox = tk.Listbox(win, selectmode=tk.MULTIPLE, height=12, exportselection=False)
+    listbox.pack(fill="both", expand=True, padx=10, pady=5)
+
+    for d in NINGBO_DISTRICTS:
+        listbox.insert(tk.END, d)
+
+    result = {"selected": []}
+
+    def on_ok():
+        sel_idx = listbox.curselection()
+        result["selected"] = [NINGBO_DISTRICTS[i] for i in sel_idx]
+        win.destroy()
+
+    def on_clear():
+        listbox.selection_clear(0, tk.END)
+
+    btn_frame = tk.Frame(win)
+    btn_frame.pack(fill="x", padx=10, pady=8)
+    tk.Button(btn_frame, text="清空 (全市)", command=on_clear).pack(side="left", padx=5)
+    tk.Button(btn_frame, text="确定", command=on_ok).pack(side="right", padx=5)
+
+    win.wait_window()
+    return result["selected"]
 
 
 def _parse_cli_args():
-    """无 tkinter 时从命令行参数解析"""
+    """无 tkinter 时从命令行参数解析
+
+    用法:
+        python zhaopin_search.py <关键词> [区域1,区域2,...] [数量] [start_index]
+        区域用逗号分隔, 留空 = 全市
+        例: python zhaopin_search.py 外贸 鄞州区,海曙区 20
+    """
     if len(sys.argv) < 2:
-        return None, None, 0
+        return None, [], 0
     kw = sys.argv[1].strip()
-    city = sys.argv[2].strip() if len(sys.argv) >= 3 else "宁波"
+    districts = []
+    if len(sys.argv) >= 3:
+        arg2 = sys.argv[2].strip()
+        if arg2:
+            districts = [d.strip() for d in arg2.split(",") if d.strip()]
     limit = 20
     if len(sys.argv) >= 4:
         try:
             limit = max(1, min(100, int(sys.argv[3])))
         except ValueError:
             pass
-    return kw, city, limit
+    return kw, districts, limit
 
 
 def _extract_job_id(url):
@@ -152,19 +214,22 @@ def _extract_job_id(url):
     return url
 
 
-def search_jobs(query, city, limit):
+def search_jobs(query, city, limit, page=1):
     """调用 opencli zhaopin search
 
+    city: 城市名 (如 "宁波")
+    page: 起始页码 (1-based), 用于分页采集
     返回: [{rank, title, salary, company, location, experience, education, tags, url}, ...]
     """
     args = [
         "zhaopin", "search", query,
         "--city", city,
+        "--page", str(page),
         "--limit", str(limit),
         "-f", "json",
     ]
 
-    log(f"调用 opencli zhaopin search (城市={city}, limit={limit})")
+    log(f"调用 opencli zhaopin search (city={city}, limit={limit}, page={page})")
     ok, stdout, err = run_opencli(args, TIMEOUT_SEARCH)
     if not ok:
         log(f"zhaopin search 调用失败: {err}")
@@ -180,6 +245,118 @@ def search_jobs(query, city, limit):
         log(f"JSON 解析失败: {e}")
         log(f"原始 stdout 前 300 字符: {stdout[:300] if stdout else '(空)'}")
         return None
+
+
+def search_jobs_paginated(query, city, total_limit, max_pages=5):
+    """分页采集职位 (每页约 30 条, 最多 max_pages 页)
+
+    智联招聘单次搜索最多返回约 30 条/页, 需要更多结果时翻页采集。
+
+    返回: [{...}, ...] 累计的职位列表 (按 jobId 去重)
+    """
+    PER_PAGE = 30
+    pages_to_fetch = min(max_pages, (total_limit + PER_PAGE - 1) // PER_PAGE)
+
+    log(f"分页采集: 目标 {total_limit} 个, 每页 {PER_PAGE}, 最多 {pages_to_fetch} 页")
+
+    all_jobs = []
+    seen_ids = set()
+
+    for p in range(1, pages_to_fetch + 1):
+        log(f"--- 第 {p}/{pages_to_fetch} 页 ---")
+        jobs = search_jobs(query, city, PER_PAGE, page=p)
+
+        if not jobs:
+            log(f"第 {p} 页无数据, 结束分页")
+            break
+
+        added = 0
+        for j in jobs:
+            url = j.get("url", "")
+            job_id = _extract_job_id(url)
+            if not job_id or job_id in seen_ids:
+                continue
+            seen_ids.add(job_id)
+            all_jobs.append(j)
+            added += 1
+
+        log(f"第 {p} 页新增 {added} 个 (累计 {len(all_jobs)})")
+
+        if len(all_jobs) >= total_limit:
+            break
+
+        # 页间间隔, 避免风控
+        time.sleep(random.uniform(2, 4))
+
+    return all_jobs[:total_limit]
+
+
+def search_jobs_multi_district(query, districts, limit):
+    """对选中的多个宁波区域进行搜索并过滤
+
+    实现方式: 智联招聘 search 不支持区级代码, 只能全市搜索一次,
+    然后在 Python 端按 location 字段过滤选中区域。
+
+    districts: list[str] 区域名名 (如 ["鄞州区", "海曙区"])
+    limit: 每个区域最多保留多少个职位
+    返回: list[dict] 过滤后的职位列表
+    """
+    # 全市搜索: 分页采集, 每页 30 条
+    # 选了多个区且每区要 limit 个时, 需要更大的样本量
+    target_total = limit * len(districts) * 2
+    max_pages = min(10, (target_total + 29) // 30)
+    log(f"--- 全市分页搜索 (city=宁波, 目标 {target_total} 个, 最多 {max_pages} 页) ---")
+    all_jobs = search_jobs_paginated(query, "宁波", target_total, max_pages=max_pages)
+
+    if not all_jobs:
+        log("全市搜索未获取到职位")
+        return []
+
+    log(f"全市共获取 {len(all_jobs)} 个职位, 开始按区域过滤...")
+
+    # 按 location 字段过滤
+    # location 格式: "宁波 鄞州区" / "宁波-鄞州区" / "鄞州区" / "宁波·鄞州区"
+    def extract_district(loc):
+        """从 location 提取区域名 (去掉 '宁波' 前缀和分隔符)"""
+        if not loc:
+            return ""
+        s = re.sub(r'^宁波[\s·\-]*', '', loc.strip())
+        return s.strip()
+
+    # 按区域分组
+    by_district = {d: [] for d in districts}
+    seen_ids = set()
+    other_count = 0
+
+    for j in all_jobs:
+        url = j.get("url", "")
+        job_id = _extract_job_id(url)
+        if not job_id or job_id in seen_ids:
+            continue
+        seen_ids.add(job_id)
+
+        loc = j.get("location", "")
+        district = extract_district(loc)
+
+        if district in by_district:
+            if len(by_district[district]) < limit:
+                by_district[district].append(j)
+        else:
+            other_count += 1
+
+    # 合并结果, 重排 rank
+    merged = []
+    new_rank = 0
+    for district_name in districts:
+        jobs_in_d = by_district.get(district_name, [])
+        log(f"  {district_name}: {len(jobs_in_d)} 个")
+        for j in jobs_in_d:
+            new_rank += 1
+            j["rank"] = new_rank
+            merged.append(j)
+
+    log(f"过滤后总计: {len(merged)} 个 (全市共 {len(all_jobs)}, 其他区域 {other_count})")
+    return merged
 
 
 def get_job_detail(job_url):
@@ -305,31 +482,41 @@ def _split_description(text):
     return result
 
 
-def build_markdown(query, city, jobs, details=None, status="采集中"):
+def build_markdown(query, city, jobs, details=None, status="采集中", districts=None):
     """生成 Obsidian markdown (汇总表格 + 职位详情)
 
     jobs: [{rank, title, salary, company, location, experience, education, tags, url}, ...]
     details: {job_id: detail_dict, ...} 或 None
+    districts: list[str] 宁波区域列表 (用于 frontmatter 显示)
     """
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     safe_title = re.sub(r"[\r\n]+", " ", query)[:50]
     details = details or {}
 
+    # 区域信息字符串
+    if districts:
+        districts_str = ", ".join(districts)
+        districts_yaml = json.dumps(districts, ensure_ascii=False)
+    else:
+        districts_str = "全市"
+        districts_yaml = "[]"
+
     lines = [
         "---",
         "tags: [智联招聘, 职位搜索]",
-        f'title: "智联招聘搜索 - {safe_title}"',
+        f'title: "智联招聘搜索 - {safe_title} ({districts_str})"',
         f'query: {json.dumps(query, ensure_ascii=False)}',
         f'city: "{city}"',
+        f'districts: {districts_yaml}',
         'source: "智联招聘"',
         f"count: {len(jobs)}",
         f"createTime: {datetime.now().isoformat(timespec='seconds')}",
         f"status: {status}",
         "---",
         "",
-        f"# 智联招聘搜索 - {query}",
+        f"# 智联招聘搜索 - {query} ({districts_str})",
         "",
-        f"> **关键词**: {query} | **城市**: {city} | **数量**: {len(jobs)} | **时间**: {now}",
+        f"> **关键词**: {query} | **城市**: {city} | **区域**: {districts_str} | **数量**: {len(jobs)} | **时间**: {now}",
         "",
         "## 职位列表",
         "",
@@ -449,16 +636,34 @@ def _build_detail_section(job, detail):
     return lines
 
 
-def get_md_path(query, city):
-    """确定 markdown 文件路径 (文件名含来源前缀, 冲突时加时间戳)"""
+def get_md_path(query, city, districts=None):
+    """确定 markdown 文件路径 (文件名含来源前缀, 冲突时加时间戳)
+
+    districts: list[str] 宁波区域列表
+        - 空或 None → city 作为后缀
+        - 有值 → 用 "鄞州海曙" 这样的区简称拼接 (超过 3 个区用 "宁波多区")
+    """
     OUTPUT_ROOT.mkdir(parents=True, exist_ok=True)
     safe_source = sanitize_filename(SOURCE)[:20]
     safe_name = sanitize_filename(query)[:60] or "untitled"
-    safe_city = sanitize_filename(city)[:20]
-    md_path = OUTPUT_ROOT / f"{safe_source}_{safe_name}_{safe_city}.md"
+
+    if districts:
+        if len(districts) <= 3:
+            # 拼接区简称 (去掉"区"/"市"/"县"后缀)
+            short_names = []
+            for d in districts:
+                short = re.sub(r'[市区县]$', '', d)
+                short_names.append(short)
+            city_suffix = "".join(short_names)
+        else:
+            city_suffix = "宁波多区"
+    else:
+        city_suffix = sanitize_filename(city)[:20]
+
+    md_path = OUTPUT_ROOT / f"{safe_source}_{safe_name}_{city_suffix}.md"
     if md_path.exists():
         ts = datetime.now().strftime("%H%M%S")
-        md_path = OUTPUT_ROOT / f"{safe_source}_{safe_name}_{safe_city}_{ts}.md"
+        md_path = OUTPUT_ROOT / f"{safe_source}_{safe_name}_{city_suffix}_{ts}.md"
     return md_path
 
 
@@ -477,13 +682,17 @@ def main():
 
     # 1. 获取搜索参数 (命令行参数优先, 无参数时弹窗)
     query = None
-    city = "宁波"
+    city = "宁波"  # 固定宁波
+    districts = []  # 多选区域 (空 = 全市)
     limit = 20
     start_index = 1  # 从第几个开始获取详情 (断点续传)
     if len(sys.argv) >= 2:
         query = sys.argv[1].strip()
+        # 第 2 参数: 逗号分隔的区域 (如 "鄞州区,海曙区")
         if len(sys.argv) >= 3:
-            city = sys.argv[2].strip() or "宁波"
+            arg2 = sys.argv[2].strip()
+            if arg2:
+                districts = [d.strip() for d in arg2.split(",") if d.strip()]
         if len(sys.argv) >= 4:
             try:
                 limit = max(1, min(100, int(sys.argv[3])))
@@ -503,7 +712,7 @@ def main():
                 except ValueError:
                     pass
     else:
-        query, city, limit = show_search_dialog()
+        query, districts, limit = show_search_dialog()
 
     if not query:
         log("未输入关键词, 退出")
@@ -511,21 +720,28 @@ def main():
 
     log(f"关键词: {query}")
     log(f"城市: {city}")
+    if districts:
+        log(f"区域(多选): {', '.join(districts)}")
+    else:
+        log(f"区域: 全市")
     log(f"数量: {limit}")
 
     # 2. 调用 opencli zhaopin search
     log("搜索中, 请稍候 (约 15-30 秒)...")
-    jobs = search_jobs(query, city, limit)
+    if districts:
+        jobs = search_jobs_multi_district(query, districts, limit)
+    else:
+        jobs = search_jobs(query, city, limit)
 
     if not jobs:
         log("未获取到职位, 退出")
         return 2
 
-    log(f"获取到 {len(jobs)} 个职位")
+    log(f"获取到 {len(jobs)} 个职位 (去重后)")
 
     # 3. 断点续传: 读取已有详情
     details = {}
-    md_path = get_md_path(query, city)
+    md_path = get_md_path(query, city, districts)
 
     if start_index > 1 and md_path.exists():
         log(f"断点续传: 从第 {start_index} 个开始, 尝试读取已有详情...")
@@ -540,7 +756,7 @@ def main():
 
     # 写入初始文件 (如果不存在), 状态为"采集中"
     if not md_path.exists() or start_index == 1:
-        md_content = build_markdown(query, city, jobs, details=details, status="采集中")
+        md_content = build_markdown(query, city, jobs, details=details, status="采集中", districts=districts)
         write_markdown(md_path, md_content)
         log(f"已创建 (采集中): {md_path}")
     else:
@@ -620,7 +836,7 @@ def main():
             log(f"  [{i}/{len(jobs)}] 失败 (重试{DETAIL_RETRY_MAX}次仍失败)")
 
         # 每次获取后立即更新文件
-        md_content = build_markdown(query, city, jobs, details=details)
+        md_content = build_markdown(query, city, jobs, details=details, districts=districts)
         write_markdown(md_path, md_content)
 
     # 验证采集完整性并更新状态
