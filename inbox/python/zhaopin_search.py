@@ -315,13 +315,24 @@ def search_jobs_multi_district(query, districts, limit):
     log(f"全市共获取 {len(all_jobs)} 个职位, 开始按区域过滤...")
 
     # 按 location 字段过滤
-    # location 格式: "宁波 鄞州区" / "宁波-鄞州区" / "鄞州区" / "宁波·鄞州区"
+    # zhaopin 实际 location 格式: "宁波·鄞州·东胜" / "宁波·海曙·江厦" (用中点 · 分隔, 区名不带"区"后缀)
+    # 部分老格式可能为: "宁波 鄞州区" / "宁波-鄞州区" / "鄞州区"
     def extract_district(loc):
-        """从 location 提取区域名 (去掉 '宁波' 前缀和分隔符)"""
+        """从 location 提取区简称 (去掉 '宁波' 前缀 + 分隔符 + '区/市/县' 后缀)
+
+        返回: 区简称 (如 "鄞州" / "海曙" / "余姚"), 便于和 NINGBO_DISTRICTS 匹配
+        """
         if not loc:
             return ""
+        # 去 "宁波" 前缀 + 任意分隔符 (空格/中点/连字符)
         s = re.sub(r'^宁波[\s·\-]*', '', loc.strip())
+        # 取第一个分隔符前的部分 (区名), 再去掉 "区/市/县" 后缀
+        s = re.split(r'[\s·\-]', s, maxsplit=1)[0]
+        s = re.sub(r'[市区县]$', '', s)
         return s.strip()
+
+    # 构造 "区简称 → 原区域名" 映射 (如 "鄞州" → "鄞州区")
+    short_to_name = {re.sub(r'[市区县]$', '', d): d for d in districts}
 
     # 按区域分组
     by_district = {d: [] for d in districts}
@@ -336,11 +347,12 @@ def search_jobs_multi_district(query, districts, limit):
         seen_ids.add(job_id)
 
         loc = j.get("location", "")
-        district = extract_district(loc)
+        district_short = extract_district(loc)
 
-        if district in by_district:
-            if len(by_district[district]) < limit:
-                by_district[district].append(j)
+        if district_short in short_to_name:
+            original_name = short_to_name[district_short]
+            if len(by_district[original_name]) < limit:
+                by_district[original_name].append(j)
         else:
             other_count += 1
 

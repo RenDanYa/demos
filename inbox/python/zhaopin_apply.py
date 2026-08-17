@@ -42,8 +42,9 @@ DEFAULT_DELAY = 5
 RECHECK_DELAY = 3
 
 # 智联招聘 URL 正则
-# URL 模式: https://www.zhaopin.com/jobdetail/CCL1524841160J40863457009.htm?refcode=...
-URL_PATTERN = re.compile(r'https://www\.zhaopin\.com/jobdetail/([A-Za-z0-9]+)\.htm[^\s)]*')
+# URL 模式: http(s)://www.zhaopin.com/jobdetail/CCL1524841160J40863457009.htm?refcode=...
+# 注意: 搜索结果返回的 URL 是 http://, 详情页跳转后才是 https://, 两者都要匹配
+URL_PATTERN = re.compile(r'https?://www\.zhaopin\.com/jobdetail/([A-Za-z0-9]+)\.htm[^\s)]*')
 
 
 def extract_urls(md_path):
