@@ -435,7 +435,7 @@ def main():
             log(f"  已投递过: {message}")
             already += 1
             append_record(md_path, job_id, "", status, message)
-            applied_urls.append((job_id, url))
+            # 已投递过的不加入复核列表 (无需复核)
             update_md_row_status(md_path, job_id, "✓ 已投递")
         elif status == "need_login":
             log(f"  需要登录: {message}")
