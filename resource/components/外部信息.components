@@ -2154,7 +2154,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-08-17T12:03:57.087Z",
+      "updateAt": "2026-08-17T23:47:11.305Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -2234,6 +2234,7 @@
           "__$uncategorizedGroup",
           "BOSS直聘",
           "前程无忧",
+          "鱼泡网",
           "智联招聘"
         ]
       },
@@ -2459,7 +2460,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-08-12T09:45:15.517Z",
-      "updateAt": "2026-08-12T09:45:41.194Z",
+      "updateAt": "2026-08-17T23:46:27.431Z",
       "viewType": "gallary",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}} ",
       "properties": [
@@ -2470,6 +2471,16 @@
           "isShow": true,
           "wrap": false,
           "options": {}
+        },
+        {
+          "id": "d4ec22d1-ecd4-4f66-9315-f6ac0f3e8651",
+          "name": "页面是否有内容",
+          "isShow": true,
+          "type": "formula",
+          "options": {
+            "formula": "extractHeadingContent(\"# GitHub Trending - python - 今日\")",
+            "renderType": "markdown"
+          }
         }
       ],
       "templates": [],
@@ -2478,7 +2489,17 @@
       "viewOptions": {
         "openPageIn": "tab",
         "openPageAfterCreate": true,
+        "itemSize": "components--page-card-large",
+        "showPropertyName": false,
+        "showAllProperties": false,
         "items": [],
+        "cover": {
+          "type": "none",
+          "source": "default",
+          "fit": "contains",
+          "layout": "components--page-card-cover-landscape",
+          "position": "top"
+        },
         "pinFiltersToMenuBar": false,
         "hideHeaderMenu": false,
         "showGrid": false,
