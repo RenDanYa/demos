@@ -1,0 +1,57 @@
+[21:22:12] ============================================================
+[21:22:12] 鱼泡网职位搜索采集 启动
+[21:22:12] OPENCLI_CMD: ('node', 'd:\\voice\\opencli-main\\dist\\main.js')
+[21:22:12] 输出目录: d:\obsidian\demo\05_long_project\招聘
+[21:22:12] ============================================================
+[21:22:12] 关键词: 文员
+[21:22:12] 城市: 宁波 (代码: a388)
+[21:22:12] 区域: 全市
+[21:22:12] 数量: 100
+[21:22:12] 搜索中, 请稍候 (鱼泡 WAF 验证 + 滚动加载, limit=100, 最长 340s)...
+[21:22:12] 调用 opencli yupao search (city=宁波[a388], limit=100, 超时 浏览器=340s/Python=370s)
+[21:23:02]   [cli] [yupao:url 0s ready] https://www.yupao.com/topic/a388c0/?keywords=%E6%96%87%E5%91%98 | title=「宁波文员招聘信息」宁波文员哪里找工作-鱼泡直聘网 | cards=15
+[21:23:02]   [cli] [yupao:url 0s first-batch(15)] https://www.yupao.com/topic/a388c0/?keywords=%E6%96%87%E5%91%98 | title=「宁波文员招聘信息」宁波文员哪里找工作-鱼泡直聘网 | cards=15
+[21:23:02]   [cli] [yupao:recon] {"bundleMatches":[],"hasNextData":true,"scripts":["https://hm.baidu.com/hm.js?14752563c89f0870e93d2f6ac497f815","https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/polyfills-c67a75d1b6f99dc8.js","https://cdn.yupaowang.com/yupao_pc/utils/yp-web-vitals.js","https://cdn.yupaowang.com/other/apm/apm-browser.js?aid=0&globalName=apmPlus","https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/webpack-7d9fd506c2fa2eae.js","https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/framework-7ed26e7ed5f73173.js","https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/8310-4e98afe3619722fc.js","https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/main-bd7e209121cfcd1b.js","https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/chunk-rc-components-49477afdc47a2669.js","https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/3557-2cd7f3ae4aabbd69.js","https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/319-07d1f5213c9f2e9b.js","https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/pages/_app-7baceb8c2580a267.js","https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/6545-89cdcec40506893e.js","https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/789-1287ba7b00313044.js","https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/5288-a19d65837f64337c.js","https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/4898-4e112f2de2eef3dc.js","https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/pages/job/recommend-b0935d115b873ce5.js","https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/9JWr33IjbGog0CiQHKmml/_buildManifest.js","https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/9JWr33IjbGog0CiQHKmml/_ssgManifest.js","https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/4555.2ca7af9e12fbb1dc.js","https://cdn.yupaowang.com/yupao_pc/images/ql/start2.js","https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js","https://www.yupao.com/burypoint.js","https://cdn.yupao.com/new_yupao_hybrid/js/collect-privity-v5.1.2.js?1787145737877","https://cdn.yupaowang.com/other/gt4.js","https://cdn.yupaowang.com/other/gd.js","https://cdn.yupaowang.com/other/r-1.8.js","https://webapi.amap.com/maps?callback=___onAPILoaded&v=1.4.15&key=0cbd2a50ba8c485053bbb021a12d0067&plugin="],"xhrResources":["https://cdn.yupaowang.com/other/check/reach","https://cdn.yupaowang.com/other/apm/check","https://apmplus.volces.com/settings/get/webpro?aid=661661","https://www.yupao.com/api/api-seo/?id=05101bbe02606731aeb4d3b05cb81a7a","https://cdn.yupaowang.com/yupao_pc/wasm/robot_inspect_wasm_bg.wasm","https://yupao-prod.yupaowang.com/ab/v1/ui/all","https://yupao-prod.yupaowang.com/member/v1/resumeVipMembership/query","https://yupao-prod.yupaowang.com/account/v1/ypzp/authentication/getAuthStatus","https://yupao-prod.yupaowang.com/account/v1/userBase/getLoginUserInfo","https://yupao-prod.yupaowang.com/account/v1/identity/query","https://yupao-prod.yupaowang.com/account/v2/userBase/userCenter","https://yupao-prod.yupaowang.com/job/v2/search/words/guess","https://yupao-prod.yupaowang.com/integral/v1/integralPrice/getIntegralPrice","https://yupao-prod.yupaowang.com/reach/v2/im/account/getImToken","https://yupao-prod.yupaowang.com/crm-css/v1/complaint/buttonStyle","https://yupao-prod.yupaowang.com/lbs/v1/area/hot","https://yupao-prod.yupaowang.com/rightGateway/v1/right/batchQuery","https://yupao-prod.yupaowang.com/account/v1/setting/config","https://yupao-prod.yupaowang.com/account/v1/ypzp/authentication/getAuthStatus"]}
+[21:23:02]   [cli] [yupao:url 2s container-found] https://www.yupao.com/topic/a388c0/?keywords=%E6%96%87%E5%91%98 | title=「宁波文员招聘信息」宁波文员哪里找工作-鱼泡直聘网 | cards=15
+[21:23:02]   [cli] [yupao:diag before#1] {"bodyScrollTop":0,"bodyText":"首页 职位 公司 校园 意外险 下载APP 消息 简历 任女士 推荐 文员 推荐 文员 添加求职期望 搜索 宁波 工作区域 职位类型 薪资待遇 结算方式 清空筛选条件 录入文员/无责月6K起/包吃包住/五险一金 7000-9000元/月 文员 月结 全职 20人以上 包住 包吃 社保 连渝科技 宁波","cards_data_index":15,"cards_yppc":0,"documentScrollTop":0,"innerHeight":762,"scrollables":[{"className":"","clientHeight":762,"diff":1806,"id":"","scrollHeight":2568,"scrollTop":0,"tag":"BODY"},{"className":"ahfj","clientHeight":562,"diff":1278,"id":"mainR","scrollHeight":1840,"scrollTop":0,"tag":"DIV"}],"sentinel":{"bottom":2568,"text":"加载中","top":2528,"visible":false},"title":"「宁波文员招聘信息」宁波文员哪里找工作-鱼泡直聘网","url":"https://www.yupao.com/topic/a388c0/?keywords=%E6%96%87%E5%91%98","windowScrollY":0}
+[21:23:02]   [cli] [yupao:diag before#1] scrollContainer: {"clientHeight":562,"diff":1278,"found":true,"scrollHeight":1840,"scrollTop":0}
+[21:23:02]   [cli] [yupao:url 6s scroll#1-done] about:blank | title= | cards=0
+[21:23:02]   [cli] [yupao:probe] (no probe in window.name: )
+[21:23:02]   [cli] [yupao:diag after#1] {"bodyScrollTop":0,"bodyText":"","cards_data_index":0,"cards_yppc":0,"documentScrollTop":0,"innerHeight":760,"scrollables":[],"sentinel":null,"title":"","url":"about:blank","windowScrollY":0}
+[21:23:02]   [cli] [yupao:diag after#1] scrollContainer: {"found":false}
+[21:23:02]   [cli] [yupao:scroll#1] DOM=0 cards, allJobs 15→15, noProgress=0
+[21:23:02]   [cli] [yupao:url 10s scroll#2-done] about:blank | title= | cards=0
+[21:23:02]   [cli] [yupao:scroll#2] DOM=0 cards, allJobs 15→15, noProgress=1
+[21:23:02]   [cli] [yupao:diag before#3] {"bodyScrollTop":0,"bodyText":"","cards_data_index":0,"cards_yppc":0,"documentScrollTop":0,"innerHeight":760,"scrollables":[],"sentinel":null,"title":"","url":"about:blank","windowScrollY":0}
+[21:23:02]   [cli] [yupao:diag before#3] scrollContainer: {"found":false}
+[21:23:02]   [cli] [yupao:url 14s scroll#3-done] about:blank | title= | cards=0
+[21:23:02]   [cli] [yupao:diag after#3] {"bodyScrollTop":0,"bodyText":"","cards_data_index":0,"cards_yppc":0,"documentScrollTop":0,"innerHeight":760,"scrollables":[],"sentinel":null,"title":"","url":"about:blank","windowScrollY":0}
+[21:23:02]   [cli] [yupao:diag after#3] scrollContainer: {"found":false}
+[21:23:03]   [cli] [yupao:scroll#3] DOM=0 cards, allJobs 15→15, noProgress=2
+[21:23:03]   [cli] [yupao:url 18s scroll#4-done] about:blank | title= | cards=0
+[21:23:03]   [cli] [yupao:scroll#4] DOM=0 cards, allJobs 15→15, noProgress=3
+[21:23:03]   [cli] [yupao:url 22s scroll#5-done] about:blank | title= | cards=0
+[21:23:03]   [cli] [yupao:scroll#5] DOM=0 cards, allJobs 15→15, noProgress=4
+[21:23:03]   [cli] [yupao:diag before#6] {"bodyScrollTop":0,"bodyText":"","cards_data_index":0,"cards_yppc":0,"documentScrollTop":0,"innerHeight":760,"scrollables":[],"sentinel":null,"title":"","url":"about:blank","windowScrollY":0}
+[21:23:03]   [cli] [yupao:diag before#6] scrollContainer: {"found":false}
+[21:23:03]   [cli] [yupao:url 27s scroll#6-done] about:blank | title= | cards=0
+[21:23:03]   [cli] [yupao:diag after#6] {"bodyScrollTop":0,"bodyText":"","cards_data_index":0,"cards_yppc":0,"documentScrollTop":0,"innerHeight":760,"scrollables":[],"sentinel":null,"title":"","url":"about:blank","windowScrollY":0}
+[21:23:03]   [cli] [yupao:diag after#6] scrollContainer: {"found":false}
+[21:23:03]   [cli] [yupao:scroll#6] DOM=0 cards, allJobs 15→15, noProgress=5
+[21:23:03]   [cli] [yupao:url 31s scroll#7-done] about:blank | title= | cards=0
+[21:23:03]   [cli] [yupao:scroll#7] DOM=0 cards, allJobs 15→15, noProgress=6
+[21:23:03]   [cli] [yupao:url 35s scroll#8-done] about:blank | title= | cards=0
+[21:23:03]   [cli] [yupao:scroll#8] DOM=0 cards, allJobs 15→15, noProgress=7
+[21:23:03]   [cli] [yupao:diag before#9] {"bodyScrollTop":0,"bodyText":"","cards_data_index":0,"cards_yppc":0,"documentScrollTop":0,"innerHeight":760,"scrollables":[],"sentinel":null,"title":"","url":"about:blank","windowScrollY":0}
+[21:23:03]   [cli] [yupao:diag before#9] scrollContainer: {"found":false}
+[21:23:03]   [cli] [yupao:url 39s scroll#9-done] about:blank | title= | cards=0
+[21:23:03]   [cli] [yupao:diag after#9] {"bodyScrollTop":0,"bodyText":"","cards_data_index":0,"cards_yppc":0,"documentScrollTop":0,"innerHeight":760,"scrollables":[],"sentinel":null,"title":"","url":"about:blank","windowScrollY":0}
+[21:23:04]   [cli] [yupao:diag after#9] scrollContainer: {"found":false}
+[21:23:04]   [cli] [yupao:scroll#9] DOM=0 cards, allJobs 15→15, noProgress=8
+[21:23:04]   [cli] [yupao:url 43s scroll#10-done] about:blank | title= | cards=0
+[21:23:04]   [cli] [yupao:scroll#10] DOM=0 cards, allJobs 15→15, noProgress=9
+[21:23:04]   [cli] [yupao:scroll] loop ended: iter=10, allJobs=15, noProgress=10
+[21:23:04]   [cli] [yupao:probe-final] []
+[21:23:04] 获取到 15 个职位 (去重后)
+[21:23:04] 已保存: d:\obsidian\demo\05_long_project\招聘\鱼泡网_文员_宁波_212304.md
+[21:23:04] 完成
