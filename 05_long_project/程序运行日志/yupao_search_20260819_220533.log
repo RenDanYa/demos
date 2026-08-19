@@ -1,0 +1,71 @@
+[22:05:33] ============================================================
+[22:05:33] 鱼泡网职位搜索采集 启动
+[22:05:33] OPENCLI_CMD: ('node', 'd:\\voice\\opencli-main\\dist\\main.js')
+[22:05:33] 输出目录: d:\obsidian\demo\05_long_project\招聘
+[22:05:33] ============================================================
+[22:05:33] 关键词: 文员
+[22:05:33] 城市: 宁波 (代码: a388)
+[22:05:33] 区域: 全市
+[22:05:33] 数量: 60
+[22:05:33] 搜索中, 请稍候 (鱼泡 WAF 验证 + 滚动加载, limit=60, 最长 240s)...
+[22:05:33] 调用 opencli yupao search (city=宁波[a388], limit=60, 超时 浏览器=240s/Python=270s)
+[22:07:31]   [cli] [exp 0s first-batch(15)] https://www.yupao.com/topic/a388c0/?keywords=%E6%96%87%E5%91%98 | cards=15 | sentinel="加载中" visible=false
+[22:07:31]   [cli] [exp   +req] https://cdn.yupaowang.com/other/check/reach dur=31ms size=0
+[22:07:31]   [cli] [exp   +req] https://cdn.yupaowang.com/other/apm/check dur=39ms size=0
+[22:07:31]   [cli] [exp   +req] https://www.yupao.com/api/api-seo/?id=5bfc36baee3a22d910ede95e66dd0443 dur=108ms size=116336
+[22:07:31]   [cli] [exp   +req] https://apmplus.volces.com/settings/get/webpro?aid=661661 dur=76ms size=1012
+[22:07:31]   [cli] [exp   +req] https://cdn.yupaowang.com/yupao_pc/wasm/robot_inspect_wasm_bg.wasm dur=6ms size=0
+[22:07:31]   [cli] [exp   +req] https://yupao-prod.yupaowang.com/ab/v1/ui/all dur=79ms size=0
+[22:07:31]   [cli] [exp   +req] https://yupao-prod.yupaowang.com/member/v1/resumeVipMembership/query dur=74ms size=0
+[22:07:31]   [cli] [exp   +req] https://yupao-prod.yupaowang.com/account/v1/ypzp/authentication/getAuthStatus dur=60ms size=0
+[22:07:31]   [cli] [exp   +req] https://yupao-prod.yupaowang.com/account/v1/userBase/getLoginUserInfo dur=84ms size=0
+[22:07:31]   [cli] [exp   +req] https://yupao-prod.yupaowang.com/account/v1/identity/query dur=55ms size=0
+[22:07:31]   [cli] [exp   +req] https://yupao-prod.yupaowang.com/account/v2/userBase/userCenter dur=182ms size=0
+[22:07:31]   [cli] [exp   +req] https://yupao-prod.yupaowang.com/job/v2/search/words/guess dur=100ms size=0
+[22:07:31]   [cli] [exp   +req] https://yupao-prod.yupaowang.com/integral/v1/integralPrice/getIntegralPrice dur=84ms size=0
+[22:07:31]   [cli] [exp   +req] https://yupao-prod.yupaowang.com/reach/v2/im/account/getImToken dur=62ms size=780
+[22:07:31]   [cli] [exp   +req] https://yupao-prod.yupaowang.com/crm-css/v1/complaint/buttonStyle dur=75ms size=0
+[22:07:31]   [cli] [exp   +req] https://yupao-prod.yupaowang.com/lbs/v1/area/hot dur=93ms size=0
+[22:07:31]   [cli] [exp   +req] https://yupao-prod.yupaowang.com/rightGateway/v1/right/batchQuery dur=115ms size=0
+[22:07:31]   [cli] [exp   +req] https://yupao-prod.yupaowang.com/account/v1/setting/config dur=119ms size=0
+[22:07:31]   [cli] [exp   +req] https://yupao-prod.yupaowang.com/account/v1/ypzp/authentication/getAuthStatus dur=61ms size=0
+[22:07:31]   [cli] [exp   +req] https://snssdk.yupaowang.com/list dur=96ms size=0
+[22:07:32]   [cli] [exp   +req] https://yupao-prod.yupaowang.com/eventreport/v1/event/report dur=51ms size=0
+[22:07:32]   [cli] [exp   +req] https://snssdk.yupaowang.com/list dur=47ms size=0
+[22:07:32]   [cli] [exp 8s baseline-8s] https://www.yupao.com/topic/a388c0/?keywords=%E6%96%87%E5%91%98 | cards=15 | sentinel="加载中" visible=false
+[22:07:32]   [cli] [exp   +req] https://snssdk.yupaowang.com/list dur=46ms size=0
+[22:07:32]   [cli] [exp container] {"clientHeight":520,"diff":2328,"scrollHeight":2848,"scrollTop":0,"selector":"#mainR"}
+[22:07:32]   [cli] [exp 11s scroll#1-done] https://www.yupao.com/topic/a388c0/?keywords=%E6%96%87%E5%91%98 | cards=15 | sentinel="加载中" visible=false
+[22:07:32]   [cli] [exp scroll#1] DOM=15, allJobs 15→15, scrollTop=624/2848
+[22:07:32]   [cli] [exp 14s scroll#2-done] https://www.yupao.com/topic/a388c0/?keywords=%E6%96%87%E5%91%98 | cards=15 | sentinel="加载中" visible=false
+[22:07:32]   [cli] [exp scroll#2] DOM=15, allJobs 15→15, scrollTop=1248/2848
+[22:07:32]   [cli] [exp 17s scroll#3-done] https://www.yupao.com/topic/a388c0/?keywords=%E6%96%87%E5%91%98 | cards=15 | sentinel="加载中" visible=false
+[22:07:32]   [cli] [exp scroll#3] DOM=15, allJobs 15→15, scrollTop=1872/2848
+[22:07:32]   [cli] [exp 20s scroll#4-done] https://www.yupao.com/topic/a388c0/?keywords=%E6%96%87%E5%91%98 | cards=15 | sentinel="加载中" visible=false
+[22:07:32]   [cli] [exp scroll#4] DOM=15, allJobs 15→15, scrollTop=2328/2848
+[22:07:32]   [cli] [exp 24s scroll#5-done] https://www.yupao.com/topic/a388c0/?keywords=%E6%96%87%E5%91%98 | cards=15 | sentinel="加载中" visible=false
+[22:07:32]   [cli] [exp scroll#5] DOM=15, allJobs 15→15, scrollTop=2328/2848
+[22:07:32]   [cli] [exp 27s scroll#6-done] https://www.yupao.com/topic/a388c0/?keywords=%E6%96%87%E5%91%98 | cards=15 | sentinel="加载中" visible=false
+[22:07:32]   [cli] [exp scroll#6] DOM=15, allJobs 15→15, scrollTop=2328/2848
+[22:07:32]   [cli] [exp 30s scroll#7-done] https://www.yupao.com/topic/a388c0/?keywords=%E6%96%87%E5%91%98 | cards=15 | sentinel="加载中" visible=false
+[22:07:32]   [cli] [exp scroll#7] DOM=15, allJobs 15→15, scrollTop=2328/2848
+[22:07:33]   [cli] [exp 33s scroll#8-done] https://www.yupao.com/topic/a388c0/?keywords=%E6%96%87%E5%91%98 | cards=15 | sentinel="加载中" visible=false
+[22:07:33]   [cli] [exp scroll#8] DOM=15, allJobs 15→15, scrollTop=2328/2848
+[22:07:33]   [cli] [exp 36s scroll#9-done] https://www.yupao.com/topic/a388c0/?keywords=%E6%96%87%E5%91%98 | cards=15 | sentinel="加载中" visible=false
+[22:07:33]   [cli] [exp scroll#9] DOM=15, allJobs 15→15, scrollTop=2328/2848
+[22:07:33]   [cli] [exp 39s scroll#10-done] https://www.yupao.com/topic/a388c0/?keywords=%E6%96%87%E5%91%98 | cards=15 | sentinel="加载中" visible=false
+[22:07:33]   [cli] [exp scroll#10] DOM=15, allJobs 15→15, scrollTop=2328/2848
+[22:07:33]   [cli] [exp 42s scroll#11-done] https://www.yupao.com/topic/a388c0/?keywords=%E6%96%87%E5%91%98 | cards=15 | sentinel="加载中" visible=false
+[22:07:33]   [cli] [exp scroll#11] DOM=15, allJobs 15→15, scrollTop=2328/2848
+[22:07:33]   [cli] [exp 45s scroll#12-done] https://www.yupao.com/topic/a388c0/?keywords=%E6%96%87%E5%91%98 | cards=15 | sentinel="加载中" visible=false
+[22:07:33]   [cli] [exp scroll#12] DOM=15, allJobs 15→15, scrollTop=2328/2848
+[22:07:33]   [cli] [exp 48s scroll#13-done] https://www.yupao.com/topic/a388c0/?keywords=%E6%96%87%E5%91%98 | cards=15 | sentinel="加载中" visible=false
+[22:07:33]   [cli] [exp scroll#13] DOM=15, allJobs 15→15, scrollTop=2328/2848
+[22:07:33]   [cli] [exp 51s scroll#14-done] https://www.yupao.com/topic/a388c0/?keywords=%E6%96%87%E5%91%98 | cards=15 | sentinel="加载中" visible=false
+[22:07:33]   [cli] [exp scroll#14] DOM=15, allJobs 15→15, scrollTop=2328/2848
+[22:07:33]   [cli] [exp 54s scroll#15-done] https://www.yupao.com/topic/a388c0/?keywords=%E6%96%87%E5%91%98 | cards=15 | sentinel="加载中" visible=false
+[22:07:33]   [cli] [exp scroll#15] DOM=15, allJobs 15→15, scrollTop=2328/2848
+[22:07:33]   [cli] [exp] loop ended: iter=15, allJobs=15
+[22:07:34] 获取到 15 个职位 (去重后)
+[22:07:34] 已保存: d:\obsidian\demo\05_long_project\招聘\鱼泡网_文员_宁波_220734.md
+[22:07:34] 完成
