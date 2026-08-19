@@ -1,0 +1,49 @@
+[21:41:46] ============================================================
+[21:41:46] 鱼泡网职位搜索采集 启动
+[21:41:46] OPENCLI_CMD: ('node', 'd:\\voice\\opencli-main\\dist\\main.js')
+[21:41:46] 输出目录: d:\obsidian\demo\05_long_project\招聘
+[21:41:46] ============================================================
+[21:41:46] 关键词: 文员
+[21:41:46] 城市: 宁波 (代码: a388)
+[21:41:46] 区域: 全市
+[21:41:46] 数量: 100
+[21:41:46] 搜索中, 请稍候 (鱼泡 WAF 验证 + 滚动加载, limit=100, 最长 340s)...
+[21:41:46] 调用 opencli yupao search (city=宁波[a388], limit=100, 超时 浏览器=340s/Python=370s)
+[21:42:37]   [cli] [yupao:url 0s ready] https://www.yupao.com/topic/a388c0/?keywords=%E6%96%87%E5%91%98 | title=「宁波文员招聘信息」宁波文员哪里找工作-鱼泡直聘网 | cards=15
+[21:42:37]   [cli] [yupao:url 0s first-batch(15)] https://www.yupao.com/topic/a388c0/?keywords=%E6%96%87%E5%91%98 | title=「宁波文员招聘信息」宁波文员哪里找工作-鱼泡直聘网 | cards=15
+[21:42:37]   [cli] [yupao:api] page 1 failed: AxiosError: Request aborted
+[21:42:37]   [cli] [yupao:url 2s container-found] about:blank | title= | cards=0
+[21:42:37]   [cli] [yupao:probe] (no probe in window.name: )
+[21:42:37]   [cli] [yupao:diag before#1] {"bodyScrollTop":0,"bodyText":"","cards_data_index":0,"cards_yppc":0,"documentScrollTop":0,"innerHeight":752,"scrollables":[],"sentinel":null,"title":"","url":"about:blank","windowScrollY":0}
+[21:42:37]   [cli] [yupao:url 6s scroll#1-done] about:blank | title= | cards=0
+[21:42:37]   [cli] [yupao:diag after#1] {"bodyScrollTop":0,"bodyText":"","cards_data_index":0,"cards_yppc":0,"documentScrollTop":0,"innerHeight":752,"scrollables":[],"sentinel":null,"title":"","url":"about:blank","windowScrollY":0}
+[21:42:37]   [cli] [yupao:scroll#1] DOM=0 cards, allJobs 15→15, noProgress=0
+[21:42:37]   [cli] [yupao:url 10s scroll#2-done] about:blank | title= | cards=0
+[21:42:37]   [cli] [yupao:scroll#2] DOM=0 cards, allJobs 15→15, noProgress=1
+[21:42:37]   [cli] [yupao:diag before#3] {"bodyScrollTop":0,"bodyText":"","cards_data_index":0,"cards_yppc":0,"documentScrollTop":0,"innerHeight":752,"scrollables":[],"sentinel":null,"title":"","url":"about:blank","windowScrollY":0}
+[21:42:37]   [cli] [yupao:url 14s scroll#3-done] about:blank | title= | cards=0
+[21:42:37]   [cli] [yupao:diag after#3] {"bodyScrollTop":0,"bodyText":"","cards_data_index":0,"cards_yppc":0,"documentScrollTop":0,"innerHeight":752,"scrollables":[],"sentinel":null,"title":"","url":"about:blank","windowScrollY":0}
+[21:42:37]   [cli] [yupao:scroll#3] DOM=0 cards, allJobs 15→15, noProgress=2
+[21:42:37]   [cli] [yupao:url 18s scroll#4-done] about:blank | title= | cards=0
+[21:42:37]   [cli] [yupao:scroll#4] DOM=0 cards, allJobs 15→15, noProgress=3
+[21:42:37]   [cli] [yupao:url 22s scroll#5-done] about:blank | title= | cards=0
+[21:42:37]   [cli] [yupao:scroll#5] DOM=0 cards, allJobs 15→15, noProgress=4
+[21:42:37]   [cli] [yupao:diag before#6] {"bodyScrollTop":0,"bodyText":"","cards_data_index":0,"cards_yppc":0,"documentScrollTop":0,"innerHeight":752,"scrollables":[],"sentinel":null,"title":"","url":"about:blank","windowScrollY":0}
+[21:42:37]   [cli] [yupao:url 26s scroll#6-done] about:blank | title= | cards=0
+[21:42:37]   [cli] [yupao:diag after#6] {"bodyScrollTop":0,"bodyText":"","cards_data_index":0,"cards_yppc":0,"documentScrollTop":0,"innerHeight":752,"scrollables":[],"sentinel":null,"title":"","url":"about:blank","windowScrollY":0}
+[21:42:37]   [cli] [yupao:scroll#6] DOM=0 cards, allJobs 15→15, noProgress=5
+[21:42:37]   [cli] [yupao:url 30s scroll#7-done] about:blank | title= | cards=0
+[21:42:37]   [cli] [yupao:scroll#7] DOM=0 cards, allJobs 15→15, noProgress=6
+[21:42:38]   [cli] [yupao:url 34s scroll#8-done] about:blank | title= | cards=0
+[21:42:38]   [cli] [yupao:scroll#8] DOM=0 cards, allJobs 15→15, noProgress=7
+[21:42:38]   [cli] [yupao:diag before#9] {"bodyScrollTop":0,"bodyText":"","cards_data_index":0,"cards_yppc":0,"documentScrollTop":0,"innerHeight":752,"scrollables":[],"sentinel":null,"title":"","url":"about:blank","windowScrollY":0}
+[21:42:38]   [cli] [yupao:url 39s scroll#9-done] about:blank | title= | cards=0
+[21:42:38]   [cli] [yupao:diag after#9] {"bodyScrollTop":0,"bodyText":"","cards_data_index":0,"cards_yppc":0,"documentScrollTop":0,"innerHeight":752,"scrollables":[],"sentinel":null,"title":"","url":"about:blank","windowScrollY":0}
+[21:42:38]   [cli] [yupao:scroll#9] DOM=0 cards, allJobs 15→15, noProgress=8
+[21:42:38]   [cli] [yupao:url 43s scroll#10-done] about:blank | title= | cards=0
+[21:42:38]   [cli] [yupao:scroll#10] DOM=0 cards, allJobs 15→15, noProgress=9
+[21:42:38]   [cli] [yupao:scroll] loop ended: iter=10, allJobs=15, noProgress=10
+[21:42:38]   [cli] [yupao:probe-final] []
+[21:42:38] 获取到 15 个职位 (去重后)
+[21:42:38] 已保存: d:\obsidian\demo\05_long_project\招聘\鱼泡网_文员_宁波_214238.md
+[21:42:38] 完成

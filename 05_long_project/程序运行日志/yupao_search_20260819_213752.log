@@ -1,0 +1,20 @@
+[21:37:52] ============================================================
+[21:37:52] 鱼泡网职位搜索采集 启动
+[21:37:52] OPENCLI_CMD: ('node', 'd:\\voice\\opencli-main\\dist\\main.js')
+[21:37:52] 输出目录: d:\obsidian\demo\05_long_project\招聘
+[21:37:52] ============================================================
+[21:37:52] 关键词: 文员
+[21:37:52] 城市: 宁波 (代码: a388)
+[21:37:52] 区域: 全市
+[21:37:52] 数量: 30
+[21:37:52] 搜索中, 请稍候 (鱼泡 WAF 验证 + 滚动加载, limit=30, 最长 165s)...
+[21:37:52] 调用 opencli yupao search (city=宁波[a388], limit=30, 超时 浏览器=165s/Python=195s)
+[21:39:03]   [cli] [yupao:url 0s ready] https://www.yupao.com/topic/a388c0/?keywords=%E6%96%87%E5%91%98 | title=「宁波文员招聘信息」宁波文员哪里找工作-鱼泡直聘网 | cards=15
+[21:39:03]   [cli] [yupao:url 0s first-batch(15)] https://www.yupao.com/topic/a388c0/?keywords=%E6%96%87%E5%91%98 | title=「宁波文员招聘信息」宁波文员哪里找工作-鱼泡直聘网 | cards=15
+[21:39:03]   [cli] [yupao:exp:pp] token=JWT(512), selAreaId=388, pageSize=15
+[21:39:03]   [cli] [yupao:exp:api-module] {"apiType":"function","ok":true}
+[21:39:03]   [cli] [yupao:exp:api-page2] {"code":0,"first":"{\"jobId\":432392006,\"jobBizId\":\"A3gpkIBge06wMPVLvVLvDDQUOA\",\"isMine\":false,\"isX\":false,\"enterpriseId\":\"2014226593769414658\",\"title\":\"数据<span style='color:#0099ff'>文员</span>/无责月6K起/包吃住/五险一金\",\"titleEnhanceWords\":null,\"detail\":\"【岗位职责】1、负责日常文件整理、归档、打印、复印、资料录入；2、负责产品货物、报表、表格统计，日常数据汇总更新；3、负责对接厂部各部门及基础对外沟通，传达通知、整理工作信息；4、负责办公室日常物资盘点、领用、整理，保持办公区域整洁有序；5、协助生产部门进行日常产品检测，负责与其他部门沟通协调，确保信息传递准确高效【薪资待遇】6500元/月加绩效津贴综合工资8500起，月休固定，带薪节假日、带薪年假，，不定期团队福利、下午茶、节日礼品【任职要求】1、年龄16–45岁，学历不限，有无经验均可，应届生可培养；2、熟练使用Office办公软件，会基础表格制作；3、做事细心耐心、责任心强，条理清晰，服从工作安排；4、性格温和好沟通，工作踏实稳定，能长期稳定上班；【福利待遇】1.周末双休，早8晚六；2.入职当天签订劳动合同，缴纳五险一金;3.包吃包住，有免费无线网、图书馆、健身房等.....4.节假日正常放假休息，年假带薪15 天，\",\"userId\":0,\"userName\":\"罗先生\",\"headerImage\":\"https://static108.cdqlkj.cn/r/3348/108/pb/p/20260805/2d401de5529c4159b6c859de09059d29.png\",\"location\":{\"longitude\":\"121.571773\",\"latitude\":\"29.829754\"},\"address\":\"宁波·鄞州区·印象城广场\",\"showDate\":\"8月19日 15:50\",\"updateDate\":\"8月19日 15:50\",\"activeDate\":\"今日活跃\",\"sortTime\":\"2026-08-19 15:50:11\",\"weakActiveTime\":1785635819,\"weakTempTime\":0,\"isTop\":false,\"isEnd\":{\"code\":1,\"desc\":\"正在招\"},\"checkDegreeStatus\":2,\"contactStatus\":3,\"isLook\":false,\"isIm\":false,\"priceInfo\":{\"freeCount\":6,\"priceId\":589},\"showTags\":[{\"name\":\"7000-8000元/月\",\"type\":1,\"id\":null},{\"name\":\"工厂文员\",\"type\":2,\"id\":7854},{\"name\":\"经验不限\",\"type\":15,\"id\":null},{\"name\":\"学历不限\",\"type\":17,\"id\":null},{\"name\":\"月结\",\"type\":6,\"id\":null},{\"name\":\"20人以上\",\"type\":5,\"id\":null},","firstKeys":["jobId","jobBizId","isMine","isX","enterpriseId","title","titleEnhanceWords","detail","userId","userName","headerImage","location","address","showDate","updateDate","activeDate","sortTime","weakActiveTime","weakTempTime","isTop","isEnd","checkDegreeStatus","contactStatus","isLook","isIm","priceInfo","showTags","buriedData","seo","companyInfo","isActive","occV2","areaInfo","occMode","isWhiteCollar","showPerfect","replyInfo","recommendedReason","tenant","occIds","isLongTermRecruit","telHelperInfo","companyBaseInfo","recruitType","isPreferred"],"msg":"请求成功","nList":15,"total":123}
+[21:39:03]   [cli] [yupao:exp:api-page3] {"code":0,"first":null,"firstKeys":null,"msg":"请求成功","nList":15,"total":123}
+[21:39:03] 获取到 15 个职位 (去重后)
+[21:39:03] 已保存: d:\obsidian\demo\05_long_project\招聘\鱼泡网_文员_宁波_213903.md
+[21:39:03] 完成

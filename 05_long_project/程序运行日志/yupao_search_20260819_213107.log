@@ -1,0 +1,18 @@
+[21:31:07] ============================================================
+[21:31:07] 鱼泡网职位搜索采集 启动
+[21:31:07] OPENCLI_CMD: ('node', 'd:\\voice\\opencli-main\\dist\\main.js')
+[21:31:07] 输出目录: d:\obsidian\demo\05_long_project\招聘
+[21:31:07] ============================================================
+[21:31:07] 关键词: 文员
+[21:31:07] 城市: 宁波 (代码: a388)
+[21:31:07] 区域: 全市
+[21:31:07] 数量: 30
+[21:31:07] 搜索中, 请稍候 (鱼泡 WAF 验证 + 滚动加载, limit=30, 最长 165s)...
+[21:31:07] 调用 opencli yupao search (city=宁波[a388], limit=30, 超时 浏览器=165s/Python=195s)
+[21:31:14]   [cli] [yupao:url 0s ready] https://www.yupao.com/topic/a388c0/?keywords=%E6%96%87%E5%91%98 | title=「宁波文员招聘信息」宁波文员哪里找工作-鱼泡直聘网 | cards=15
+[21:31:14]   [cli] [yupao:url 0s first-batch(15)] https://www.yupao.com/topic/a388c0/?keywords=%E6%96%87%E5%91%98 | title=「宁波文员招聘信息」宁波文员哪里找工作-鱼泡直聘网 | cards=15
+[21:31:14]   [cli] [yupao:exp:api-module] {"err":"no wpRequire"}
+[21:31:14]   [cli] [yupao:exp:pp] {"keywords":"文员","page":1,"pageSize":15,"pageType":"jobSearch","query":{"keywords":"文员","urlAreaId":"388","urlFlag":"/","urlOccIdStr":"c0","urlPageType":"topic"},"selAreaId":"388","selAreaIds":[],"selDynamicObj":{},"selOccOld":[],"selOccRec":[],"selTab":null,"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3ODcxNDE0MTcsImV4cCI6MTc5NzUwOTQxNywiZGF0YSI6eyJzaW5nbGUiOiJVUDM1UDlNOE5MU1k0RlZYIiwidWlkIjoyMjAwMDk1MjYsImJ1c2luZXNzIjoiMSIsInN5c3RlbV90eXBlIjoiY29tcHV0ZXIiLCJtaW5pX3Rva2VuIjoiVVAzNVA5TThOTFNZNEZWWCIsImlkIjoyMjAwMDk1MjYsInV1aWQiOjIyMDAwOTUyNn0sInRva2VuIjp7InJlZ1J0IjoicGMiLCJ0ZW5hbnRLZXkiOiJZUFpQIiwidGVuYW50SWQiOjIyMDAwOTUyNiwicGFja2FnZU5hbWUiOiJ5cC5wYyIsInVzZXJJZCI6MjIwMDA5NTI2LCJ0b2tlbiI6IlVQMzVQOU04TkxTWTRGVlgifX0.Auf2SFLR1gpQW9E7V-DP5_BG8LuOIYA_p4JEHeZvEVM"}
+[21:31:14] 获取到 15 个职位 (去重后)
+[21:31:14] 已保存: d:\obsidian\demo\05_long_project\招聘\鱼泡网_文员_宁波_213114.md
+[21:31:14] 完成

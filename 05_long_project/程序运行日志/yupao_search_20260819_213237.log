@@ -1,0 +1,19 @@
+[21:32:37] ============================================================
+[21:32:37] 鱼泡网职位搜索采集 启动
+[21:32:37] OPENCLI_CMD: ('node', 'd:\\voice\\opencli-main\\dist\\main.js')
+[21:32:38] 输出目录: d:\obsidian\demo\05_long_project\招聘
+[21:32:38] ============================================================
+[21:32:38] 关键词: 文员
+[21:32:38] 城市: 宁波 (代码: a388)
+[21:32:38] 区域: 全市
+[21:32:38] 数量: 30
+[21:32:38] 搜索中, 请稍候 (鱼泡 WAF 验证 + 滚动加载, limit=30, 最长 165s)...
+[21:32:38] 调用 opencli yupao search (city=宁波[a388], limit=30, 超时 浏览器=165s/Python=195s)
+[21:32:46]   [cli] [yupao:url 0s ready] https://www.yupao.com/topic/a388c0/?keywords=%E6%96%87%E5%91%98 | title=「宁波文员招聘信息」宁波文员哪里找工作-鱼泡直聘网 | cards=15
+[21:32:46]   [cli] [yupao:url 0s first-batch(15)] https://www.yupao.com/topic/a388c0/?keywords=%E6%96%87%E5%91%98 | title=「宁波文员招聘信息」宁波文员哪里找工作-鱼泡直聘网 | cards=15
+[21:32:46]   [cli] [yupao:exp:pp] token=JWT(512), selAreaId=388, pageSize=15, pageType=jobSearch
+[21:32:46]   [cli] [yupao:exp:api-page2] {"code":400,"first":"{\"code\":400,\"message\":\"无签名信息\",\"askId\":\"20ff98643f6a8b08f4ddc1f2566940a9\",\"data\":null,\"error\":true}","firstKeys":null,"msg":"无签名信息","nList":-1,"status":200,"total":null}
+[21:32:46]   [cli] [yupao:exp:api-page3] {"code":400,"first":"{\"code\":400,\"message\":\"无签名信息\",\"askId\":\"db09f62875b31fc66dec2aa756a54b26\",\"data\":null,\"error\":true}","firstKeys":null,"msg":"无签名信息","nList":-1,"status":200,"total":null}
+[21:32:46] 获取到 15 个职位 (去重后)
+[21:32:46] 已保存: d:\obsidian\demo\05_long_project\招聘\鱼泡网_文员_宁波_213246.md
+[21:32:46] 完成
