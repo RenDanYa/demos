@@ -16,6 +16,7 @@
     python yupao_search.py                          # 弹窗: 关键词 + 城市 + 宁波区域多选 + 数量
     python yupao_search.py "焊工"                    # 宁波全市, 20 个
     python yupao_search.py "焊工" 宁波               # 指定城市
+    python yupao_search.py "焊工" 宁波 30            # 指定城市 + 数量 (简写, 纯数字视为 limit)
     python yupao_search.py "焊工" 宁波 鄞州区,海曙区 # 指定城市 + 多区域 (仅宁波支持区级过滤)
     python yupao_search.py "焊工" 宁波 鄞州区,海曙区 30  # 多区域 + 数量 (每区最多 N 个)
 
@@ -46,7 +47,22 @@ from xiaohongshu_collect import (  # noqa: E402
 # ============ 配置 ============
 SOURCE = "鱼泡网"
 OUTPUT_ROOT = OBSIDIAN_ROOT / "05_long_project" / "招聘"
-TIMEOUT_SEARCH = 150  # 搜索给足时间 (WAF 验证 + 虚拟列表滚动加载)
+# 搜索超时基线 (WAF 验证最多 80s + 首屏渲染), 每个职位约需 2.5s 滚动加载
+# limit=20 → 150s, limit=50 → 215s, limit=100 → 340s
+TIMEOUT_SEARCH_BASE = 90
+TIMEOUT_SEARCH_PER_ITEM = 2.5
+TIMEOUT_SEARCH_MIN = 150  # 即使 limit 很小也至少给 150s (WAF 冷启动)
+
+
+def _compute_search_timeout(limit):
+    """根据 limit 动态计算搜索超时 (秒)
+
+    鱼泡网搜索耗时组成:
+      - WAF 验证 + 首屏渲染: 最多 80s (冷启动重试另加 30s)
+      - 虚拟列表滚动: 每屏 3s wait + 0-10s waitLoading, 每屏加载 ~7 个职位
+      - 每个 limit 大约需要 2.5s 滚动时间
+    """
+    return max(TIMEOUT_SEARCH_MIN, int(TIMEOUT_SEARCH_BASE + limit * TIMEOUT_SEARCH_PER_ITEM))
 
 # 鱼泡网城市代码映射 (cityCode 用于构建搜索/浏览 URL)
 # 数据来源: yupao/search.ts 中 CITY_CODES 常量
@@ -77,7 +93,8 @@ NINGBO_DISTRICTS = [
 ]
 
 # CLI 内部浏览器命令超时 (鱼泡 WAF 验证可能耗时较长)
-os.environ.setdefault("OPENCLI_BROWSER_COMMAND_TIMEOUT", "180")
+# 留空在此处设置默认值, search_jobs() 会按 limit 动态覆盖
+os.environ.setdefault("OPENCLI_BROWSER_COMMAND_TIMEOUT", "240")
 
 
 def _sleep_with_heartbeat(seconds, label="暂停"):
@@ -267,7 +284,14 @@ def _parse_cli_args():
     if len(sys.argv) >= 4:
         arg3 = sys.argv[3].strip()
         if arg3:
-            districts = [d.strip() for d in arg3.split(",") if d.strip()]
+            if arg3.isdigit():
+                # 纯数字当作 limit (允许 `python yupao_search.py 焊工 宁波 30` 简写)
+                try:
+                    limit = max(1, min(100, int(arg3)))
+                except ValueError:
+                    pass
+            else:
+                districts = [d.strip() for d in arg3.split(",") if d.strip()]
     if len(sys.argv) >= 5:
         try:
             limit = max(1, min(100, int(sys.argv[4])))
@@ -314,8 +338,15 @@ def search_jobs(query, city, limit):
         "-f", "json",
     ])
 
-    log(f"调用 opencli yupao search (city={city}[{city_code}], limit={limit})")
-    ok, stdout, err = run_opencli(args, TIMEOUT_SEARCH)
+    # 按 limit 动态计算超时: CLI 内部浏览器命令超时 + Python 端子进程超时
+    # Python 超时 > CLI 超时 (多 30s), 确保 CLI 先自己结束并返回错误信息,
+    # Python 端能拿到完整的 timeout 原因, 而不是粗暴地 kill 掉子进程
+    browser_timeout = _compute_search_timeout(limit)
+    python_timeout = browser_timeout + 30
+    os.environ["OPENCLI_BROWSER_COMMAND_TIMEOUT"] = str(browser_timeout)
+
+    log(f"调用 opencli yupao search (city={city}[{city_code}], limit={limit}, 超时 浏览器={browser_timeout}s/Python={python_timeout}s)")
+    ok, stdout, err = run_opencli(args, python_timeout)
     if not ok:
         log(f"yupao search 调用失败: {err}")
         return None
@@ -566,7 +597,14 @@ def main():
         if len(sys.argv) >= 4:
             arg3 = sys.argv[3].strip()
             if arg3:
-                districts = [d.strip() for d in arg3.split(",") if d.strip()]
+                if arg3.isdigit():
+                    # 纯数字当作 limit (允许 `python yupao_search.py 焊工 宁波 30` 简写)
+                    try:
+                        limit = max(1, min(100, int(arg3)))
+                    except ValueError:
+                        pass
+                else:
+                    districts = [d.strip() for d in arg3.split(",") if d.strip()]
         if len(sys.argv) >= 5:
             try:
                 limit = max(1, min(100, int(sys.argv[4])))
@@ -593,7 +631,8 @@ def main():
     log(f"数量: {limit}")
 
     # 2. 调用 opencli yupao search
-    log("搜索中, 请稍候 (鱼泡 WAF 验证 + 滚动加载, 约 30-90 秒)...")
+    expected_timeout = _compute_search_timeout(limit)
+    log(f"搜索中, 请稍候 (鱼泡 WAF 验证 + 滚动加载, limit={limit}, 最长 {expected_timeout}s)...")
     if districts:
         jobs = search_jobs_multi_district(query, city, districts, limit)
     else:
