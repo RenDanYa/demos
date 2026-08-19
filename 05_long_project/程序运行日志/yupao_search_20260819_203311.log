@@ -1,0 +1,33 @@
+[20:33:11] ============================================================
+[20:33:11] 鱼泡网职位搜索采集 启动
+[20:33:11] OPENCLI_CMD: ('node', 'd:\\voice\\opencli-main\\dist\\main.js')
+[20:33:11] 输出目录: d:\obsidian\demo\05_long_project\招聘
+[20:33:11] ============================================================
+[20:33:11] 关键词: 文员
+[20:33:11] 城市: 宁波 (代码: a388)
+[20:33:11] 区域: 全市
+[20:33:11] 数量: 100
+[20:33:11] 搜索中, 请稍候 (鱼泡 WAF 验证 + 滚动加载, limit=100, 最长 340s)...
+[20:33:11] 调用 opencli yupao search (city=宁波[a388], limit=100, 超时 浏览器=340s/Python=370s)
+[20:34:49]   [cli] [yupao:diag before#1] {"bodyScrollTop":0,"cards_data_index":15,"cards_yppc":0,"documentScrollTop":0,"innerHeight":720,"scrollables":[{"className":"","clientHeight":720,"diff":1848,"id":"","scrollHeight":2568,"scrollTop":0,"tag":"BODY"},{"className":"ahfj","clientHeight":520,"diff":1320,"id":"mainR","scrollHeight":1840,"scrollTop":0,"tag":"DIV"}],"sentinel":{"bottom":2568,"text":"加载中","top":2528,"visible":false},"windowScrollY":0}
+[20:34:49]   [cli] [yupao:diag after#1] {"bodyScrollTop":0,"cards_data_index":0,"cards_yppc":0,"documentScrollTop":0,"innerHeight":732,"scrollables":[],"sentinel":null,"windowScrollY":0}
+[20:34:49]   [cli] [yupao:scroll#1] DOM=0 cards, allJobs 15→15, noProgress=0
+[20:34:49]   [cli] [yupao:scroll#2] DOM=0 cards, allJobs 15→15, noProgress=1
+[20:34:49]   [cli] [yupao:diag before#3] {"bodyScrollTop":0,"cards_data_index":0,"cards_yppc":0,"documentScrollTop":0,"innerHeight":732,"scrollables":[],"sentinel":null,"windowScrollY":0}
+[20:34:49]   [cli] [yupao:diag after#3] {"bodyScrollTop":0,"cards_data_index":0,"cards_yppc":0,"documentScrollTop":0,"innerHeight":732,"scrollables":[],"sentinel":null,"windowScrollY":0}
+[20:34:49]   [cli] [yupao:scroll#3] DOM=0 cards, allJobs 15→15, noProgress=2
+[20:34:49]   [cli] [yupao:scroll#4] DOM=0 cards, allJobs 15→15, noProgress=3
+[20:34:49]   [cli] [yupao:scroll#5] DOM=0 cards, allJobs 15→15, noProgress=4
+[20:34:49]   [cli] [yupao:diag before#6] {"bodyScrollTop":0,"cards_data_index":0,"cards_yppc":0,"documentScrollTop":0,"innerHeight":732,"scrollables":[],"sentinel":null,"windowScrollY":0}
+[20:34:49]   [cli] [yupao:diag after#6] {"bodyScrollTop":0,"cards_data_index":0,"cards_yppc":0,"documentScrollTop":0,"innerHeight":732,"scrollables":[],"sentinel":null,"windowScrollY":0}
+[20:34:49]   [cli] [yupao:scroll#6] DOM=0 cards, allJobs 15→15, noProgress=5
+[20:34:49]   [cli] [yupao:scroll#7] DOM=0 cards, allJobs 15→15, noProgress=6
+[20:34:49]   [cli] [yupao:scroll#8] DOM=0 cards, allJobs 15→15, noProgress=7
+[20:34:49]   [cli] [yupao:diag before#9] {"bodyScrollTop":0,"cards_data_index":0,"cards_yppc":0,"documentScrollTop":0,"innerHeight":732,"scrollables":[],"sentinel":null,"windowScrollY":0}
+[20:34:49]   [cli] [yupao:diag after#9] {"bodyScrollTop":0,"cards_data_index":0,"cards_yppc":0,"documentScrollTop":0,"innerHeight":732,"scrollables":[],"sentinel":null,"windowScrollY":0}
+[20:34:49]   [cli] [yupao:scroll#9] DOM=0 cards, allJobs 15→15, noProgress=8
+[20:34:49]   [cli] [yupao:scroll#10] DOM=0 cards, allJobs 15→15, noProgress=9
+[20:34:49]   [cli] [yupao:scroll] loop ended: iter=10, allJobs=15, noProgress=10
+[20:34:49] 获取到 15 个职位 (去重后)
+[20:34:49] 已保存: d:\obsidian\demo\05_long_project\招聘\鱼泡网_文员_宁波_203449.md
+[20:34:49] 完成
