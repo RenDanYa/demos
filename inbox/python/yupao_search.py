@@ -351,6 +351,13 @@ def search_jobs(query, city, limit):
         log(f"yupao search 调用失败: {err}")
         return None
 
+    # 显示 CLI 的 stderr 诊断信息 (滚动循环调试等)
+    # 不污染 stdout JSON, 但对排查问题有用
+    if err:
+        for line in err.strip().splitlines():
+            if line.strip():
+                log(f"  [cli] {line}")
+
     try:
         data = json.loads(stdout)
         if isinstance(data, list):

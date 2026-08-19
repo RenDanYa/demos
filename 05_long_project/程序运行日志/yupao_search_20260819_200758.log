@@ -1,0 +1,15 @@
+[20:07:58] ============================================================
+[20:07:58] 鱼泡网职位搜索采集 启动
+[20:07:58] OPENCLI_CMD: ('node', 'd:\\voice\\opencli-main\\dist\\main.js')
+[20:07:58] 输出目录: d:\obsidian\demo\05_long_project\招聘
+[20:07:58] ============================================================
+[20:07:58] 关键词: 文员
+[20:07:58] 城市: 宁波 (代码: a388)
+[20:07:58] 区域: 全市
+[20:07:58] 数量: 100
+[20:07:58] 搜索中, 请稍候 (鱼泡 WAF 验证 + 滚动加载, limit=100, 最长 340s)...
+[20:07:58] 调用 opencli yupao search (city=宁波[a388], limit=100, 超时 浏览器=340s/Python=370s)
+[20:08:06] yupao search 调用失败: 💥 Unexpected error: SyntaxError: Unexpected identifier 'as'
+  Run with --verbose for details, or report: https://github.com/jackwener/opencli/issues
+
+[20:08:06] 未获取到职位, 退出 (可能原因: WAF 验证未通过/关键词无结果/网络超时)

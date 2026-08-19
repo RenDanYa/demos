@@ -1,0 +1,31 @@
+[20:24:33] ============================================================
+[20:24:33] 鱼泡网职位搜索采集 启动
+[20:24:33] OPENCLI_CMD: ('node', 'd:\\voice\\opencli-main\\dist\\main.js')
+[20:24:33] 输出目录: d:\obsidian\demo\05_long_project\招聘
+[20:24:33] ============================================================
+[20:24:33] 关键词: 文员
+[20:24:33] 城市: 宁波 (代码: a388)
+[20:24:33] 区域: 全市
+[20:24:33] 数量: 100
+[20:24:33] 搜索中, 请稍候 (鱼泡 WAF 验证 + 滚动加载, limit=100, 最长 340s)...
+[20:24:33] 调用 opencli yupao search (city=宁波[a388], limit=100, 超时 浏览器=340s/Python=370s)
+[20:24:33] yupao search 调用失败: node:internal/modules/esm/resolve:275
+    throw new ERR_MODULE_NOT_FOUND(
+          ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module 'd:\voice\opencli-main\dist\browser\index.js' imported from d:\voice\opencli-main\dist\runtime.js
+    at finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    at moduleResolve (node:internal/modules/esm/resolve:860:10)
+    at defaultResolve (node:internal/modules/esm/resolve:984:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:780:12)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:704:25)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:137:49) {
+  code: 'ERR_MODULE_NOT_FOUND',
+  url: 'file:///d:/voice/opencli-main/dist/browser/index.js'
+}
+
+Node.js v22.16.0
+
+[20:24:33] 未获取到职位, 退出 (可能原因: WAF 验证未通过/关键词无结果/网络超时)
