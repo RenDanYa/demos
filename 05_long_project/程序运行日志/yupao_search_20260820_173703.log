@@ -1,0 +1,19 @@
+[17:37:03] ============================================================
+[17:37:03] 鱼泡网职位搜索采集 启动
+[17:37:03] OPENCLI_CMD: ('node', 'd:\\voice\\opencli-main\\dist\\main.js')
+[17:37:03] 输出目录: d:\obsidian\demo\05_long_project\招聘
+[17:37:03] ============================================================
+[17:37:11] 关键词: 运营
+[17:37:11] 城市: 宁波 (代码: a388)
+[17:37:11] 区域: 全市
+[17:37:11] 数量: 20
+[17:37:11] 搜索中, 请稍候 (鱼泡 WAF 验证 + 滚动加载, limit=20, 最长 150s)...
+[17:37:11] 调用 opencli yupao search (city=宁波[a388], limit=20, 超时 浏览器=150s/Python=180s)
+[17:37:19]   [cli] [yupao] first batch: 15 jobs
+[17:37:19]   [cli] [yupao] wheel failed: Error: Unknown action: input
+[17:37:19]   [cli] [yupao] done: 15 jobs in 0s (1 wheels)
+[17:37:19]   [cli]   Update available: v1.5.8 → v1.8.6
+[17:37:19]   [cli]   Run: npm install -g @jackwener/opencli
+[17:37:19] 获取到 15 个职位 (去重后)
+[17:37:19] 已保存: d:\obsidian\demo\05_long_project\招聘\鱼泡网_运营_宁波.md
+[17:37:19] 完成
