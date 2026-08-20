@@ -1,0 +1,24 @@
+{
+ "EmptyCard": "{\"key\":null,\"ref\":null,\"props\":{\"txt\":\"没有找到相关职位\",\"children\":[{\"type\":\"p\",\"key\":null,\"ref\":null,\"props\":{\"className\":\"ahhb\",\"children\":\"打开 APP，查看全部职位库，优质职位随心选\"},\"_owner\":null},{\"key\":null,\"ref\":null,\"p",
+ "__hooks": [
+  "ref: [object HTMLDivElement]",
+  "true",
+  "obj: list,requestParams,hasMore,showEmptyCard,pageInfo",
+  "ref: [object Object]",
+  "ref: function(e){var n=arguments.length>1&&void 0!==arguments[1]&",
+  "1787152364025",
+  "ref: [object HTMLDivElement],[object HTMLDivElement],[object HTML",
+  "array(2): [null,[]]",
+  "false",
+  "obj: tag,create,destroy,deps,next",
+  "obj: tag,create,destroy,deps,next",
+  "obj: tag,create,destroy,deps,next"
+ ],
+ "emptyClass": "ahfe",
+ "noMoreTxt": "暂无更多数据",
+ "pageSize": 15,
+ "renderItem_src": "function(e,n){var t=e.id==ue.selJobId,i=(0,a.Z)({location_id:null===e||void 0===e?void 0:e.location_id,pagination:null===e||void 0===e?void 0:e.pagination,pagination_location:null===e||void 0===e?void 0:e.pagination_location,request_id:null===e||void 0===e?void 0:e.guid},Xe);return(0,u.jsx)(\"div\",{children:(0,u.jsx)(L.qj,{showUrgent:!0,isShowAddress:!0,isHideAuthTag:!0,showMQTag:Tn,className:h()(it().jobCard,(0,r.Z)({},it().jobCardA,t)),data:(0,a.Z)({},e,i),isActive:t,onClick:function(n){var t,i;An.current=(null===n||void 0===n?void 0:n.etData)||{},An.current.backend_id=null===(t=n.buriedData)||void 0===t?void 0:t.backend_id,An.current.hasShowMQTag=Tn&&(null===n||void 0===n||null===(i=n.enterpriseIcon)||void 0===i?void 0:i.url),ot(e.id,e.enterpriseId,e.isAuthQY,!1,e.jobBizId)},isClicked:we.has(e.id)&&!t,isPreventDefault:!0},\"JC_\"+n)},\"JC_\"+n)}",
+ "reportListFunc_src": "function(e){var n=function(){var e=(ue.listDynamicFilters||[]).reduce((function(e,n){var t=(n.value||[]).filter(Boolean);return t.length>0&&(e[n.titleKey]=t),e}),{});return Object.keys(e).length>0?JSON.stringify(e):\"-99999\"}();(0,p.Xx)((0,o.Z)((0,a.Z)({},e),{showMQTag:Tn}),(0,o.Z)((0,a.Z)({},En?Xe:(0,o.Z)((0,a.Z)({},Ue),{keywords_source:ln,search_result:ue.keywords||\"-99999\"})),{filter_condition:n}));var t=e.item.etData||{};1!=t.topping&&1!=t.isUrgent||(0,p.p$)({topping:Number(t.topping)||0,urgent:Number(t.isUrgent)||0})}",
+ "service_src": "function(n){return e.apply(this,arguments)}",
+ "type": "scroll"
+}

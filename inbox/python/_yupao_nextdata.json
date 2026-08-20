@@ -1,0 +1,91 @@
+{
+  "buildId": "9JWr33IjbGog0CiQHKmml",
+  "isLoadFinished": false,
+  "listJob0": [
+    "id",
+    "jobBizId",
+    "idQY",
+    "idUser",
+    "enterpriseId",
+    "coBizId",
+    "enterpriseIcon",
+    "title",
+    "salary",
+    "tags",
+    "username",
+    "dateStr",
+    "activeStr",
+    "address",
+    "isEnd",
+    "isLongTermRecruit",
+    "isLowQuality",
+    "isActive",
+    "isUrgent",
+    "isAuthQY",
+    "isAuth",
+    "isTop",
+    "hiringAgency",
+    "etData",
+    "buriedData",
+    "isMine",
+    "isX"
+  ],
+  "listJobLen": 15,
+  "page": 1,
+  "pageSize": 15,
+  "page_path": "/job/recommend",
+  "prefetchInfo": {
+    "currentPage": "/job/recommend",
+    "prefetchList": [
+      {
+        "page": "/job/details",
+        "scripts": [
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/webpack-7d9fd506c2fa2eae.js",
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/framework-7ed26e7ed5f73173.js",
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/8310-4e98afe3619722fc.js",
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/main-bd7e209121cfcd1b.js",
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/chunk-rc-components-49477afdc47a2669.js",
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/3557-2cd7f3ae4aabbd69.js",
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/319-07d1f5213c9f2e9b.js",
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/pages/_app-7baceb8c2580a267.js",
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/6545-89cdcec40506893e.js",
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/789-1287ba7b00313044.js",
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/5288-a19d65837f64337c.js",
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/4898-4e112f2de2eef3dc.js",
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/pages/job/details-aec0bf41e52682af.js",
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/9JWr33IjbGog0CiQHKmml/_buildManifest.js",
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/9JWr33IjbGog0CiQHKmml/_ssgManifest.js"
+        ],
+        "styles": [
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/css/10df99632e714470.css",
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/css/c36b2902e2f6dbbf.css",
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/css/d2519f6c5ec10adf.css",
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/css/05bd70a9da81285f.css"
+        ]
+      },
+      {
+        "page": "/job/list",
+        "scripts": [
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/webpack-7d9fd506c2fa2eae.js",
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/framework-7ed26e7ed5f73173.js",
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/8310-4e98afe3619722fc.js",
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/main-bd7e209121cfcd1b.js",
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/chunk-rc-components-49477afdc47a2669.js",
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/3557-2cd7f3ae4aabbd69.js",
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/319-07d1f5213c9f2e9b.js",
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/pages/_app-7baceb8c2580a267.js",
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/5288-a19d65837f64337c.js",
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/chunks/pages/job/list-8bf27f8dbfaae17f.js",
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/9JWr33IjbGog0CiQHKmml/_buildManifest.js",
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/9JWr33IjbGog0CiQHKmml/_ssgManifest.js"
+        ],
+        "styles": [
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/css/10df99632e714470.css",
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/css/c36b2902e2f6dbbf.css",
+          "https://cdn.yupaowang.com/yp_pc_static/static/pro/8172026112124/_next/static/css/1851022b921f6b69.css"
+        ]
+      }
+    ]
+  },
+  "ssrInfo": "{\"ms_total_api\":514,\"ms_total\":514}"
+}
