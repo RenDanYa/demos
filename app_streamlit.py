@@ -7,19 +7,18 @@ st.set_page_config(page_title='成果表生成', page_icon='📊', layout='wide'
 st.title('📊 成果表生成工具')
 st.caption('上传Excel → 自动处理 → 预览 & 下载')
 
-# ========== 文件上传 ==========
+# ========== 文件来源 ==========
+DEFAULT_FILE = r'c:\Users\godisgirl\.trae-cn\attachments\6a8bfd85e15d64a332569168\72b3f34c-a8ed-45ba-9b0d-418e8cf14243_测试.xlsx'
 uploaded = st.file_uploader('拖入Excel文件（测试.xlsx）', type=['xlsx'])
 
-if uploaded is not None:
-    SRC = uploaded
+SRC = uploaded if uploaded is not None else DEFAULT_FILE
 
-    # 读取全部sheet
+if SRC is not None:
     with st.spinner('读取文件中...'):
         xls = pd.ExcelFile(SRC)
         sheets = xls.sheet_names
     st.success(f'已识别 {len(sheets)} 个工作表：{" / ".join(sheets)}')
 
-    # ========== 1. 商品描述、division ==========
     with st.spinner('[1/6] 读取商品描述、division...'):
         master = pd.read_excel(SRC, sheet_name='商品描述、division', header=0)
         master = master[['Article', 'Article Name', 'Division']].dropna(subset=['Article'])
@@ -27,7 +26,6 @@ if uploaded is not None:
         master_dict = master.set_index('Article')[['Article Name', 'Division']].to_dict('index')
     st.info(f'商品主数据：{len(master_dict)} 条')
 
-    # ========== 2. 净金额、数量 ==========
     with st.spinner('[2/6] 读取净金额、数量...'):
         sales = pd.read_excel(SRC, sheet_name='净金额、数量', header=0)
         sales = sales[sales['商品编号'].astype(str).str.startswith('GD')]
@@ -40,14 +38,12 @@ if uploaded is not None:
         sales_agg = sales_agg.rename(columns={'商品编号': '物料编号'})
     st.info(f'销售汇总：{len(sales_agg)} 条')
 
-    # ========== 3. 出样 ==========
     with st.spinner('[3/6] 读取出样...'):
         cy = pd.read_excel(SRC, sheet_name='出样', header=0)
         cy['出样'] = cy['收据号'].astype(str) + '|' + cy['数量'].astype(str)
         cy_dict = cy.set_index('物料编号')['出样'].to_dict()
     st.info(f'出样记录：{len(cy_dict)} 条')
 
-    # ========== 4. 库存 ==========
     with st.spinner('[4/6] 读取库存表（13万行，请稍候）...'):
         inv_raw = pd.read_excel(SRC, sheet_name='库存', header=None)
         h1_idx = inv_raw.index[inv_raw.eq('物料编号').any(axis=1)][0]
@@ -67,7 +63,6 @@ if uploaded is not None:
         size_dict = inv_stock.groupby('物料编号')['库存尺码'].apply(lambda s: '、'.join(s)).to_dict()
     st.info(f'有库存物料：{len(stock_dict)} 个')
 
-    # ========== 5. 汇总 ==========
     with st.spinner('[5/6] 汇总成果表...'):
         result = sales_agg.copy()
         result['商品描述'] = result['物料编号'].map(lambda x: master_dict.get(x, {}).get('Article Name', ''))
@@ -77,7 +72,6 @@ if uploaded is not None:
         result['库存尺码'] = result['物料编号'].map(size_dict)
         result = result[['商品描述', 'Division', '物料编号', '净金额', '数量', '当日库存', '出样', '库存尺码']]
 
-    # ========== 结果展示 ==========
     st.divider()
     col1, col2, col3, col4 = st.columns(4)
     col1.metric('物料总数', len(result))
@@ -89,7 +83,6 @@ if uploaded is not None:
     st.subheader('成果表预览')
     st.dataframe(result, use_container_width=True, height=400)
 
-    # 图表
     st.divider()
     st.subheader('可视化图表')
     tab1, tab2 = st.tabs(['净金额TOP10', '数量分布'])
@@ -100,7 +93,6 @@ if uploaded is not None:
     with tab2:
         st.bar_chart(result.set_index('物料编号')['数量'].head(20))
 
-    # 下载
     st.divider()
     st.subheader('下载文件')
     col_dl1, col_dl2 = st.columns(2)
