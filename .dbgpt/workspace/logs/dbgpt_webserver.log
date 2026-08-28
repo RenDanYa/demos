@@ -1,0 +1,712 @@
+2026-08-28 09:52:18 | INFO | dbgpt.component | Register component with name dbgpt_unified_metadata_db_manager_factory and instance: <dbgpt.storage.metadata.db_factory.UnifiedDBManagerFactory object at 0x000001E5DF05DB40>
+2026-08-28 09:52:18 | INFO | dbgpt.component | Register component with name dbgpt_unified_metadata_db_manager_factory and instance: <dbgpt.storage.metadata.db_factory.UnifiedDBManagerFactory object at 0x000001E5DF05DB40>
+2026-08-28 09:52:18 | INFO | dbgpt.datasource.rdbms.base | Closing RDBMS connector resources...
+2026-08-28 09:52:18 | INFO | dbgpt.datasource.rdbms.base | Closing RDBMS connector resources...
+2026-08-28 09:52:22 | INFO | dbgpt.component | Register component with name dbgpt_thread_pool_default and instance: <dbgpt.util.executor_utils.DefaultExecutorFactory object at 0x000001E5DF93B190>
+2026-08-28 09:52:22 | INFO | dbgpt.component | Register component with name dbgpt_thread_pool_default and instance: <dbgpt.util.executor_utils.DefaultExecutorFactory object at 0x000001E5DF93B190>
+2026-08-28 09:52:22 | INFO | dbgpt.component | Register component with name dbgpt_default_scheduler and instance: <dbgpt_app.initialization.scheduler.DefaultScheduler object at 0x000001E5DF93B910>
+2026-08-28 09:52:22 | INFO | dbgpt.component | Register component with name dbgpt_default_scheduler and instance: <dbgpt_app.initialization.scheduler.DefaultScheduler object at 0x000001E5DF93B910>
+2026-08-28 09:52:22 | INFO | dbgpt.component | Register component with name dbgpt_model_controller and instance: <dbgpt.model.cluster.controller.controller.ModelControllerAdapter object at 0x000001E5B9003730>
+2026-08-28 09:52:22 | INFO | dbgpt.component | Register component with name dbgpt_model_controller and instance: <dbgpt.model.cluster.controller.controller.ModelControllerAdapter object at 0x000001E5B9003730>
+2026-08-28 09:52:22 | INFO | dbgpt.component | Register component with name dbgpt_connector_manager and instance: <dbgpt_serve.datasource.manages.connector_manager.ConnectorManager object at 0x000001E5DF93BA00>
+2026-08-28 09:52:22 | INFO | dbgpt.component | Register component with name dbgpt_connector_manager and instance: <dbgpt_serve.datasource.manages.connector_manager.ConnectorManager object at 0x000001E5DF93BA00>
+2026-08-28 09:52:22 | INFO | dbgpt.component | Register component with name dbgpt_rag_storage_manager and instance: <dbgpt_serve.rag.storage_manager.StorageManager object at 0x000001E5DF93BA90>
+2026-08-28 09:52:22 | INFO | dbgpt.component | Register component with name dbgpt_rag_storage_manager and instance: <dbgpt_serve.rag.storage_manager.StorageManager object at 0x000001E5DF93BA90>
+2026-08-28 09:52:22 | INFO | dbgpt.component | Register component with name dbgpt_plugin_hub and instance: <dbgpt_serve.agent.hub.controller.ModulePlugin object at 0x000001E5DF9BC610>
+2026-08-28 09:52:22 | INFO | dbgpt.component | Register component with name dbgpt_plugin_hub and instance: <dbgpt_serve.agent.hub.controller.ModulePlugin object at 0x000001E5DF9BC610>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_multi_agents and instance: <dbgpt_serve.agent.agents.controller.MultiAgents object at 0x000001E5DF718C10>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_multi_agents and instance: <dbgpt_serve.agent.agents.controller.MultiAgents object at 0x000001E5DF718C10>
+2026-08-28 09:52:23 | INFO | dbgpt_app.initialization.embedding_component | Register remote RemoteEmbeddingFactory
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name embedding_factory and instance: <dbgpt_app.initialization.embedding_component.RemoteEmbeddingFactory object at 0x000001E5DF9EA620>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name embedding_factory and instance: <dbgpt_app.initialization.embedding_component.RemoteEmbeddingFactory object at 0x000001E5DF9EA620>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_model_cache_manager and instance: <dbgpt.storage.cache.manager.LocalCacheManager object at 0x000001E5DF9EA8C0>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_model_cache_manager and instance: <dbgpt.storage.cache.manager.LocalCacheManager object at 0x000001E5DF9EA8C0>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_awel_trigger_manager and instance: <dbgpt.core.awel.trigger.trigger_manager.DefaultTriggerManager object at 0x000001E5DF9EA920>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_awel_trigger_manager and instance: <dbgpt.core.awel.trigger.trigger_manager.DefaultTriggerManager object at 0x000001E5DF9EA920>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_awel_dag_manager and instance: <dbgpt.core.awel.dag.dag_manager.DAGManager object at 0x000001E5DF9EB130>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_awel_dag_manager and instance: <dbgpt.core.awel.dag.dag_manager.DAGManager object at 0x000001E5DF9EB130>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_resource_manager and instance: <dbgpt.agent.resource.manage.ResourceManager object at 0x000001E5DF9EB280>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_resource_manager and instance: <dbgpt.agent.resource.manage.ResourceManager object at 0x000001E5DF9EB280>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_skill_manager and instance: <dbgpt.agent.skill.manage.SkillManager object at 0x000001E5DF9EB2E0>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_skill_manager and instance: <dbgpt.agent.skill.manage.SkillManager object at 0x000001E5DF9EB2E0>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_agent_manager and instance: <dbgpt.agent.core.agent_manage.AgentManager object at 0x000001E5DFA28A60>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_agent_manager and instance: <dbgpt.agent.core.agent_manage.AgentManager object at 0x000001E5DFA28A60>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_app_editor_service and instance: <dbgpt_app.openapi.api_v1.editor.service.EditorService object at 0x000001E5DFA289A0>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_app_editor_service and instance: <dbgpt_app.openapi.api_v1.editor.service.EditorService object at 0x000001E5DFA289A0>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_serve_prompt and instance: <dbgpt_serve.prompt.serve.Serve object at 0x000001E5DFA29150>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_serve_prompt and instance: <dbgpt_serve.prompt.serve.Serve object at 0x000001E5DFA29150>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_serve_prompt_service and instance: <dbgpt_serve.prompt.service.service.Service object at 0x000001E5DFA5D4B0>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_serve_prompt_service and instance: <dbgpt_serve.prompt.service.service.Service object at 0x000001E5DFA5D4B0>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_serve_conversation and instance: <dbgpt_serve.conversation.serve.Serve object at 0x000001E5DFA5D630>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_serve_conversation and instance: <dbgpt_serve.conversation.serve.Serve object at 0x000001E5DFA5D630>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_serve_conversation_service and instance: <dbgpt_serve.conversation.service.service.Service object at 0x000001E5DFA762F0>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_serve_conversation_service and instance: <dbgpt_serve.conversation.service.service.Service object at 0x000001E5DFA762F0>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_variables_provider and instance: <dbgpt.core.interface.variables.StorageVariablesProvider object at 0x000001E5DFA76D10>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_variables_provider and instance: <dbgpt.core.interface.variables.StorageVariablesProvider object at 0x000001E5DFA76D10>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_serve_flow and instance: <dbgpt_serve.flow.serve.Serve object at 0x000001E5DFA76830>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_serve_flow and instance: <dbgpt_serve.flow.serve.Serve object at 0x000001E5DFA76830>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_dbgpts_loader and instance: <dbgpt.util.dbgpts.loader.DBGPTsLoader object at 0x000001E5DFB16AD0>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_dbgpts_loader and instance: <dbgpt.util.dbgpts.loader.DBGPTsLoader object at 0x000001E5DFB16AD0>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_serve_flow_service and instance: <dbgpt_serve.flow.service.service.Service object at 0x000001E5DFA76D40>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_serve_flow_service and instance: <dbgpt_serve.flow.service.service.Service object at 0x000001E5DFA76D40>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_serve_flow_variables_service and instance: <dbgpt_serve.flow.service.variables_service.VariablesService object at 0x000001E5DFB16B60>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt_serve_flow_variables_service and instance: <dbgpt_serve.flow.service.variables_service.VariablesService object at 0x000001E5DFB16B60>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt.core.flow.flows and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinFlowVariablesProvider object at 0x000001E5DFB16C20>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt.core.flow.flows and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinFlowVariablesProvider object at 0x000001E5DFB16C20>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt.core.flow.nodes and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinNodeVariablesProvider object at 0x000001E5DFB16C80>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt.core.flow.nodes and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinNodeVariablesProvider object at 0x000001E5DFB16C80>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt.core.variables and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinAllVariablesProvider object at 0x000001E5DFB16CE0>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt.core.variables and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinAllVariablesProvider object at 0x000001E5DFB16CE0>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt.core.secrets and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinAllSecretVariablesProvider object at 0x000001E5DFB16D40>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt.core.secrets and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinAllSecretVariablesProvider object at 0x000001E5DFB16D40>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt.core.model.llms and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinLLMVariablesProvider object at 0x000001E5DFB16DA0>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt.core.model.llms and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinLLMVariablesProvider object at 0x000001E5DFB16DA0>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt.core.model.embeddings and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinEmbeddingsVariablesProvider object at 0x000001E5DFB16E00>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt.core.model.embeddings and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinEmbeddingsVariablesProvider object at 0x000001E5DFB16E00>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt.core.datasources and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinDatasourceVariablesProvider object at 0x000001E5DFB16E60>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt.core.datasources and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinDatasourceVariablesProvider object at 0x000001E5DFB16E60>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt.core.agent.agents and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinAgentsVariablesProvider object at 0x000001E5DFB16EC0>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt.core.agent.agents and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinAgentsVariablesProvider object at 0x000001E5DFB16EC0>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt.core.knowledge_spaces and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinKnowledgeSpacesVariablesProvider object at 0x000001E5DFB16F20>
+2026-08-28 09:52:23 | INFO | dbgpt.component | Register component with name dbgpt.core.knowledge_spaces and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinKnowledgeSpacesVariablesProvider object at 0x000001E5DFB16F20>
+2026-08-28 09:52:24 | INFO | dbgpt.component | Register component with name dbgpt_rag and instance: <dbgpt_serve.rag.serve.Serve object at 0x000001E5DFB16FB0>
+2026-08-28 09:52:24 | INFO | dbgpt.component | Register component with name dbgpt_rag and instance: <dbgpt_serve.rag.serve.Serve object at 0x000001E5DFB16FB0>
+2026-08-28 09:52:24 | INFO | dbgpt.component | Register component with name dbgpt_rag_service and instance: <dbgpt_serve.rag.service.service.Service object at 0x000001E5DFBFA6B0>
+2026-08-28 09:52:24 | INFO | dbgpt.component | Register component with name dbgpt_rag_service and instance: <dbgpt_serve.rag.service.service.Service object at 0x000001E5DFBFA6B0>
+2026-08-28 09:52:24 | INFO | dbgpt.component | Register component with name dbgpt_datasource and instance: <dbgpt_serve.datasource.serve.Serve object at 0x000001E5DFBFA170>
+2026-08-28 09:52:24 | INFO | dbgpt.component | Register component with name dbgpt_datasource and instance: <dbgpt_serve.datasource.serve.Serve object at 0x000001E5DFBFA170>
+2026-08-28 09:52:24 | INFO | dbgpt.component | Register component with name dbgpt_datasource_service and instance: <dbgpt_serve.datasource.service.service.Service object at 0x000001E5DFC1AAA0>
+2026-08-28 09:52:24 | INFO | dbgpt.component | Register component with name dbgpt_datasource_service and instance: <dbgpt_serve.datasource.service.service.Service object at 0x000001E5DFC1AAA0>
+2026-08-28 09:52:24 | INFO | dbgpt.component | Register component with name dbgpt_serve_feedback and instance: <dbgpt_serve.feedback.serve.Serve object at 0x000001E5DFC1ABF0>
+2026-08-28 09:52:24 | INFO | dbgpt.component | Register component with name dbgpt_serve_feedback and instance: <dbgpt_serve.feedback.serve.Serve object at 0x000001E5DFC1ABF0>
+2026-08-28 09:52:24 | INFO | dbgpt.component | Register component with name dbgpt_serve_feedback_service and instance: <dbgpt_serve.feedback.service.service.Service object at 0x000001E5DFC3A380>
+2026-08-28 09:52:24 | INFO | dbgpt.component | Register component with name dbgpt_serve_feedback_service and instance: <dbgpt_serve.feedback.service.service.Service object at 0x000001E5DFC3A380>
+2026-08-28 09:52:24 | INFO | dbgpt.component | Register component with name dbgpt_serve_dbgpts_hub and instance: <dbgpt_serve.dbgpts.hub.serve.Serve object at 0x000001E5DFC3A4D0>
+2026-08-28 09:52:24 | INFO | dbgpt.component | Register component with name dbgpt_serve_dbgpts_hub and instance: <dbgpt_serve.dbgpts.hub.serve.Serve object at 0x000001E5DFC3A4D0>
+2026-08-28 09:52:24 | INFO | dbgpt.component | Register component with name dbgpt_serve_dbgpts_hub_service and instance: <dbgpt_serve.dbgpts.hub.service.service.Service object at 0x000001E5DFCB4BE0>
+2026-08-28 09:52:24 | INFO | dbgpt.component | Register component with name dbgpt_serve_dbgpts_hub_service and instance: <dbgpt_serve.dbgpts.hub.service.service.Service object at 0x000001E5DFCB4BE0>
+2026-08-28 09:52:24 | INFO | dbgpt.component | Register component with name dbgpt_serve_dbgpts_my and instance: <dbgpt_serve.dbgpts.my.serve.Serve object at 0x000001E5DFCB4CA0>
+2026-08-28 09:52:24 | INFO | dbgpt.component | Register component with name dbgpt_serve_dbgpts_my and instance: <dbgpt_serve.dbgpts.my.serve.Serve object at 0x000001E5DFCB4CA0>
+2026-08-28 09:52:24 | INFO | dbgpt.component | Register component with name dbgpt_serve_dbgpts_my_service and instance: <dbgpt_serve.dbgpts.my.service.service.Service object at 0x000001E5DFD122F0>
+2026-08-28 09:52:24 | INFO | dbgpt.component | Register component with name dbgpt_serve_dbgpts_my_service and instance: <dbgpt_serve.dbgpts.my.service.service.Service object at 0x000001E5DFD122F0>
+2026-08-28 09:52:24 | INFO | dbgpt.component | Register component with name dbgpt_serve_file and instance: <dbgpt_serve.file.serve.Serve object at 0x000001E5DFD12080>
+2026-08-28 09:52:24 | INFO | dbgpt.component | Register component with name dbgpt_serve_file and instance: <dbgpt_serve.file.serve.Serve object at 0x000001E5DFD12080>
+2026-08-28 09:52:24 | INFO | dbgpt.component | Register component with name dbgpt_serve_file_service and instance: <dbgpt_serve.file.service.service.Service object at 0x000001E5DFD31960>
+2026-08-28 09:52:24 | INFO | dbgpt.component | Register component with name dbgpt_serve_file_service and instance: <dbgpt_serve.file.service.service.Service object at 0x000001E5DFD31960>
+2026-08-28 09:52:30 | INFO | dbgpt.component | Register component with name dbgpt_serve_evaluate and instance: <dbgpt_serve.evaluate.serve.Serve object at 0x000001E5DFD31A80>
+2026-08-28 09:52:30 | INFO | dbgpt.component | Register component with name dbgpt_serve_evaluate and instance: <dbgpt_serve.evaluate.serve.Serve object at 0x000001E5DFD31A80>
+2026-08-28 09:52:30 | INFO | dbgpt.component | Register component with name dbgpt_serve_evaluate_service and instance: <dbgpt_serve.evaluate.service.service.Service object at 0x000001E5DFD31D50>
+2026-08-28 09:52:30 | INFO | dbgpt.component | Register component with name dbgpt_serve_evaluate_service and instance: <dbgpt_serve.evaluate.service.service.Service object at 0x000001E5DFD31D50>
+2026-08-28 09:52:30 | INFO | dbgpt.component | Register component with name dbgpt_benchmark_data_manager and instance: <dbgpt_serve.evaluate.service.fetchdata.benchmark_data_manager.BenchmarkDataManager object at 0x000001E5E04D6200>
+2026-08-28 09:52:30 | INFO | dbgpt.component | Register component with name dbgpt_benchmark_data_manager and instance: <dbgpt_serve.evaluate.service.fetchdata.benchmark_data_manager.BenchmarkDataManager object at 0x000001E5E04D6200>
+2026-08-28 09:52:30 | INFO | dbgpt.component | Register component with name dbgpt_serve_evaluate_benchmark_service and instance: <dbgpt_serve.evaluate.service.benchmark.benchmark_service.BenchmarkService object at 0x000001E5E04D5DB0>
+2026-08-28 09:52:30 | INFO | dbgpt.component | Register component with name dbgpt_serve_evaluate_benchmark_service and instance: <dbgpt_serve.evaluate.service.benchmark.benchmark_service.BenchmarkService object at 0x000001E5E04D5DB0>
+2026-08-28 09:52:30 | INFO | dbgpt.component | Register component with name dbgpt_serve_libro and instance: <dbgpt_serve.libro.serve.Serve object at 0x000001E5E04D6410>
+2026-08-28 09:52:30 | INFO | dbgpt.component | Register component with name dbgpt_serve_libro and instance: <dbgpt_serve.libro.serve.Serve object at 0x000001E5E04D6410>
+2026-08-28 09:52:30 | INFO | dbgpt.component | Register component with name dbgpt_serve_libro_service and instance: <dbgpt_serve.libro.service.service.Service object at 0x000001E5E051DC30>
+2026-08-28 09:52:30 | INFO | dbgpt.component | Register component with name dbgpt_serve_libro_service and instance: <dbgpt_serve.libro.service.service.Service object at 0x000001E5E051DC30>
+2026-08-28 09:52:30 | INFO | dbgpt.component | Register component with name dbgpt_serve_model and instance: <dbgpt_serve.model.serve.Serve object at 0x000001E5E051DF00>
+2026-08-28 09:52:30 | INFO | dbgpt.component | Register component with name dbgpt_serve_model and instance: <dbgpt_serve.model.serve.Serve object at 0x000001E5E051DF00>
+2026-08-28 09:52:30 | INFO | dbgpt.component | Register component with name dbgpt_serve_model_service and instance: <dbgpt_serve.model.service.service.Service object at 0x000001E5E051E1D0>
+2026-08-28 09:52:30 | INFO | dbgpt.component | Register component with name dbgpt_serve_model_service and instance: <dbgpt_serve.model.service.service.Service object at 0x000001E5E051E1D0>
+2026-08-28 09:52:30 | INFO | dbgpt.component | Register component with name dbgpt_serve_connector and instance: <dbgpt_serve.connector.serve.ConnectorServe object at 0x000001E5E056BCD0>
+2026-08-28 09:52:30 | INFO | dbgpt.component | Register component with name dbgpt_serve_connector and instance: <dbgpt_serve.connector.serve.ConnectorServe object at 0x000001E5E056BCD0>
+2026-08-28 09:52:30 | INFO | dbgpt.component | Register component with name dbgpt_serve_connector_service and instance: <dbgpt_serve.connector.service.service.ConnectorService object at 0x000001E5E0635390>
+2026-08-28 09:52:30 | INFO | dbgpt.component | Register component with name dbgpt_serve_connector_service and instance: <dbgpt_serve.connector.service.service.ConnectorService object at 0x000001E5E0635390>
+2026-08-28 09:52:33 | INFO | dbgpt.component | Register component with name dbgpt_serve_scheduled_task and instance: <dbgpt_serve.scheduled_task.serve.ScheduledTaskServe object at 0x000001E5E0635630>
+2026-08-28 09:52:33 | INFO | dbgpt.component | Register component with name dbgpt_serve_scheduled_task and instance: <dbgpt_serve.scheduled_task.serve.ScheduledTaskServe object at 0x000001E5E0635630>
+2026-08-28 09:52:34 | INFO | dbgpt.component | Register component with name dbgpt_serve_session_file and instance: <dbgpt_serve.session_file.serve.SessionFileServe object at 0x000001E5E0759600>
+2026-08-28 09:52:34 | INFO | dbgpt.component | Register component with name dbgpt_serve_session_file and instance: <dbgpt_serve.session_file.serve.SessionFileServe object at 0x000001E5E0759600>
+2026-08-28 09:52:34 | INFO | dbgpt_serve.session_file.serve | No shared FileStorageClient registered; session file serve creates a default local storage client.
+2026-08-28 09:52:36 | INFO | dbgpt.component | Register component with name base_dbgpt_component and instance: <dbgpt.util.code.server.CodeServer object at 0x000001E5E083D270>
+2026-08-28 09:52:36 | INFO | dbgpt.component | Register component with name base_dbgpt_component and instance: <dbgpt.util.code.server.CodeServer object at 0x000001E5E083D270>
+2026-08-28 09:52:36 | INFO | dbgpt_app.component_configs | Initializing prompt templates...
+2026-08-28 09:52:36 | INFO | dbgpt_app.component_configs | Initializing prompt templates...
+2026-08-28 09:52:36 | INFO | dbgpt_app.component_configs | Successfully initialized prompt templates for scenes: ['chat_dashboard', 'chat_excel', 'excel_learning', 'chat_with_db_execute', 'chat_with_db_qa', 'extract_refine_summary', 'chat_knowledge', 'chat_normal']
+2026-08-28 09:52:36 | INFO | dbgpt_app.component_configs | Successfully initialized prompt templates for scenes: ['chat_dashboard', 'chat_excel', 'excel_learning', 'chat_with_db_execute', 'chat_with_db_qa', 'extract_refine_summary', 'chat_knowledge', 'chat_normal']
+2026-08-28 09:52:36 | INFO | dbgpt.component | Register component with name dbgpt_benchmark_data_manager and instance: <dbgpt_serve.evaluate.service.fetchdata.benchmark_data_manager.BenchmarkDataManager object at 0x000001E5E08CBE50>
+2026-08-28 09:52:36 | INFO | dbgpt.component | Register component with name dbgpt_benchmark_data_manager and instance: <dbgpt_serve.evaluate.service.fetchdata.benchmark_data_manager.BenchmarkDataManager object at 0x000001E5E08CBE50>
+2026-08-28 09:52:36 | WARNING | dbgpt.agent.resource.connector.credential | CredentialStore falling back to ephemeral master key because no dbgpt.app.global.encrypt_key or ENCRYPT_KEY was provided. Encrypted connector credentials will not survive process restarts.
+2026-08-28 09:52:36 | INFO | dbgpt.component | Register component with name connector_manager and instance: <dbgpt.agent.resource.connector.manager.ConnectorManager object at 0x000001E5E0A131C0>
+2026-08-28 09:52:36 | INFO | dbgpt.component | Register component with name connector_manager and instance: <dbgpt.agent.resource.connector.manager.ConnectorManager object at 0x000001E5E0A131C0>
+2026-08-28 09:52:36 | INFO | dbgpt.agent.resource.connector.manager | Connector catalog loaded from C:\Users\godisgirl\AppData\Roaming\TRAE SOLO CN\ModularData\ai-agent\vm\tools\python\lib\site-packages\dbgpt_ext\connector\catalog.json
+2026-08-28 09:52:36 | INFO | dbgpt_app.component_configs | External ConnectorManager registered successfully
+2026-08-28 09:52:36 | INFO | dbgpt_app.component_configs | External ConnectorManager registered successfully
+2026-08-28 09:52:36 | INFO | dbgpt_app.initialization.workspace_provisioning | Provisioned: d:\obsidian\demo\.dbgpt\workspace\pilot\benchmark_meta_data\2025_07_27_public_500_standard_benchmark_question_list.xlsx
+2026-08-28 09:52:36 | INFO | dbgpt_app.initialization.workspace_provisioning | Provisioned: d:\obsidian\demo\.dbgpt\workspace\pilot\examples\Walmart_Sales.db
+2026-08-28 09:52:36 | INFO | dbgpt_app.initialization.workspace_provisioning | Provisioned: d:\obsidian\demo\.dbgpt\workspace\pilot\meta_data\alembic.ini
+2026-08-28 09:52:36 | INFO | dbgpt_app.initialization.workspace_provisioning | Provisioned: d:\obsidian\demo\.dbgpt\workspace\pilot\meta_data\alembic\env.py
+2026-08-28 09:52:36 | INFO | dbgpt_app.initialization.workspace_provisioning | Provisioned: d:\obsidian\demo\.dbgpt\workspace\pilot\meta_data\alembic\README
+2026-08-28 09:52:36 | INFO | dbgpt_app.initialization.workspace_provisioning | Provisioned: d:\obsidian\demo\.dbgpt\workspace\pilot\meta_data\alembic\script.py.mako
+2026-08-28 09:52:37 | INFO | dbgpt_app.initialization.skills_provisioning | Provisioned builtin skill: agent-browser
+2026-08-28 09:52:37 | INFO | dbgpt_app.initialization.skills_provisioning | Provisioned builtin skill: csv-data-analysis
+2026-08-28 09:52:38 | INFO | dbgpt_app.initialization.skills_provisioning | Provisioned builtin skill: financial-report-analyzer
+2026-08-28 09:52:38 | INFO | dbgpt_app.initialization.skills_provisioning | Provisioned builtin skill: skill-creator
+2026-08-28 09:52:39 | INFO | dbgpt_app.initialization.skills_provisioning | Provisioned builtin skill: walmart-sales-analyzer
+2026-08-28 09:52:44 | WARNING | dbgpt.util._db_migration_utils | Initialize and upgrade database metadata with alembic, just run this in your development environment, if you deploy this in production environment, please run webserver with --disable_alembic_upgrade(`python dbgpt/app/dbgpt_server.py --disable_alembic_upgrade`).
+we suggest you to use `dbgpt db migration` to initialize and upgrade database metadata with alembic, your can run `dbgpt db migration --help` to get more information.
+2026-08-28 09:52:44 | INFO | alembic.runtime.migration | Context impl SQLiteImpl.
+2026-08-28 09:52:44 | INFO | alembic.runtime.migration | Will assume non-transactional DDL.
+2026-08-28 09:52:44 | INFO | dbgpt.util._db_migration_utils | Migration versions and their file paths:
+========================================Migration versions========================================
+
+==========================================================================================
+2026-08-28 09:52:44 | INFO | alembic.runtime.migration | Context impl SQLiteImpl.
+2026-08-28 09:52:44 | INFO | alembic.runtime.migration | Will assume non-transactional DDL.
+2026-08-28 09:52:44 | INFO | alembic.runtime.migration | Context impl SQLiteImpl.
+2026-08-28 09:52:44 | INFO | alembic.runtime.migration | Will assume non-transactional DDL.
+2026-08-28 09:52:44 | INFO | dbgpt.util._db_migration_utils | alembic migration current revision: None, latest revision: None
+2026-08-28 09:52:44 | INFO | alembic.runtime.migration | Context impl SQLiteImpl.
+2026-08-28 09:52:44 | INFO | alembic.runtime.migration | Will assume non-transactional DDL.
+2026-08-28 09:52:44 | INFO | alembic.runtime.migration | Context impl SQLiteImpl.
+2026-08-28 09:52:44 | INFO | alembic.runtime.migration | Will assume non-transactional DDL.
+2026-08-28 09:52:44 | INFO | alembic.runtime.migration | Running upgrade  -> a9e9997d4dec, New migration
+2026-08-28 09:52:45 | INFO | dbgpt.component | Register component with name dbgpt_file_storage_client and instance: <dbgpt.core.interface.file.FileStorageClient object at 0x000001E5E20DA740>
+2026-08-28 09:52:45 | INFO | dbgpt.component | Register component with name dbgpt_file_storage_client and instance: <dbgpt.core.interface.file.FileStorageClient object at 0x000001E5E20DA740>
+2026-08-28 09:52:47 | INFO | dbgpt_app.dbgpt_server | Successfully registered default data source: Walmart_Sales at d:\obsidian\demo\.dbgpt\workspace\pilot\examples\Walmart_Sales.db
+2026-08-28 09:52:47 | INFO | dbgpt_app.dbgpt_server | Successfully registered default data source: Walmart_Sales at d:\obsidian\demo\.dbgpt\workspace\pilot\examples\Walmart_Sales.db
+2026-08-28 09:52:47 | INFO | dbgpt_app.dbgpt_server | Model Unified Deployment Mode, run all services in the same process
+2026-08-28 09:52:47 | INFO | dbgpt_app.dbgpt_server | Model Unified Deployment Mode, run all services in the same process
+2026-08-28 09:52:47 | INFO | dbgpt.model.cluster.worker.manager | Register WorkerManager dbgpt_worker_manager_factory
+2026-08-28 09:52:47 | INFO | dbgpt.model.cluster.worker.manager | Register WorkerManager dbgpt_worker_manager_factory
+2026-08-28 09:52:47 | INFO | dbgpt.component | Register component with name dbgpt_worker_manager_factory and instance: <dbgpt.model.cluster.worker.manager._DefaultWorkerManagerFactory object at 0x000001E5E22C2320>
+2026-08-28 09:52:47 | INFO | dbgpt.component | Register component with name dbgpt_worker_manager_factory and instance: <dbgpt.model.cluster.worker.manager._DefaultWorkerManagerFactory object at 0x000001E5E22C2320>
+2026-08-28 09:52:47 | INFO | dbgpt.model.cluster.worker.manager | Worker params: 
+
+=========================== ModelWorkerParameters ===========================
+
+host: 0.0.0.0
+port: 5670
+daemon: False
+log: 
+
+=========================== LoggingParameters ===========================
+
+level: INFO
+file: None
+
+======================================================================
+
+
+trace: None
+worker_type: None
+worker_class: None
+standalone: True
+register: True
+worker_register_host: None
+controller_addr: None
+send_heartbeat: True
+heartbeat_interval: 20
+
+======================================================================
+
+
+2026-08-28 09:52:47 | INFO | dbgpt.model.cluster.worker.manager | Worker params: 
+
+=========================== ModelWorkerParameters ===========================
+
+host: 0.0.0.0
+port: 5670
+daemon: False
+log: 
+
+=========================== LoggingParameters ===========================
+
+level: INFO
+file: None
+
+======================================================================
+
+
+trace: None
+worker_type: None
+worker_class: None
+standalone: True
+register: True
+worker_register_host: None
+controller_addr: None
+send_heartbeat: True
+heartbeat_interval: 20
+
+======================================================================
+
+
+2026-08-28 09:52:47 | INFO | dbgpt.model.cluster.worker.manager | Run WorkerManager with standalone mode, controller_addr: http://127.0.0.1:5670
+2026-08-28 09:52:47 | INFO | dbgpt.model.cluster.worker.manager | Run WorkerManager with standalone mode, controller_addr: http://127.0.0.1:5670
+2026-08-28 09:52:47 | INFO | dbgpt.model.adapter.model_adapter | Current model qwen-plus use new adapter <_DynProxyLLMModelAdapter model_name=qwen-plus model_path=None>
+2026-08-28 09:52:47 | INFO | dbgpt.model.adapter.model_adapter | Current model qwen-plus use new adapter <_DynProxyLLMModelAdapter model_name=qwen-plus model_path=None>
+2026-08-28 09:52:47 | INFO | dbgpt.model.cluster.worker.default_worker | model_name: qwen-plus, model_path: None, model_param_class: <class 'dbgpt.model.proxy.llms.tongyi.TongyiDeployModelParameters'>
+2026-08-28 09:52:47 | INFO | dbgpt.model.cluster.worker.default_worker | model_name: qwen-plus, model_path: None, model_param_class: <class 'dbgpt.model.proxy.llms.tongyi.TongyiDeployModelParameters'>
+2026-08-28 09:52:47 | INFO | dbgpt.model.cluster.worker.manager | Init empty instances list for qwen-plus@llm
+2026-08-28 09:52:47 | INFO | dbgpt.model.cluster.worker.manager | Init empty instances list for qwen-plus@llm
+2026-08-28 09:52:47 | INFO | dbgpt.model.cluster.worker.manager | Start local embedding worker with embedding parameters
+
+
+=========================== ModelWorkerParameters ===========================
+
+host: 0.0.0.0
+port: 8001
+daemon: False
+log: 
+
+=========================== LoggingParameters ===========================
+
+level: ${env:DBGPT_LOG_LEVEL:-INFO}
+file: None
+
+======================================================================
+
+
+trace: None
+worker_type: text2vec
+worker_class: None
+standalone: False
+register: True
+worker_register_host: None
+controller_addr: None
+send_heartbeat: True
+heartbeat_interval: 20
+
+======================================================================
+
+
+2026-08-28 09:52:47 | INFO | dbgpt.model.cluster.worker.manager | Start local embedding worker with embedding parameters
+
+
+=========================== ModelWorkerParameters ===========================
+
+host: 0.0.0.0
+port: 8001
+daemon: False
+log: 
+
+=========================== LoggingParameters ===========================
+
+level: ${env:DBGPT_LOG_LEVEL:-INFO}
+file: None
+
+======================================================================
+
+
+trace: None
+worker_type: text2vec
+worker_class: None
+standalone: False
+register: True
+worker_register_host: None
+controller_addr: None
+send_heartbeat: True
+heartbeat_interval: 20
+
+======================================================================
+
+
+2026-08-28 09:52:47 | INFO | dbgpt.model.cluster.worker.manager | Init empty instances list for text-embedding-v2@text2vec
+2026-08-28 09:52:47 | INFO | dbgpt.model.cluster.worker.manager | Init empty instances list for text-embedding-v2@text2vec
+2026-08-28 09:52:48 | INFO | dbgpt.util.dbgpts.loader | Found 0 dbgpts packages from C:\Users\godisgirl\.dbgpts\packages\05b55fb2f89d211465fa6708324a7a74
+2026-08-28 09:52:48 | INFO | dbgpt_serve.flow.service.compat_service | Found compat file: 0.7.0, use latest: 0.7.0
+2026-08-28 09:52:53 | INFO | dbgpt.model.cluster.worker.manager | Begin start all worker, apply_req: None
+2026-08-28 09:52:53 | INFO | dbgpt.model.cluster.worker.manager | Begin start all worker, apply_req: None
+2026-08-28 09:52:53 | INFO | dbgpt.model.cluster.worker.manager | Apply req: None, apply_func: <function LocalWorkerManager._start_all_worker.<locals>._start_worker at 0x000001E5E26B0310>
+2026-08-28 09:52:53 | INFO | dbgpt.model.cluster.worker.manager | Apply req: None, apply_func: <function LocalWorkerManager._start_all_worker.<locals>._start_worker at 0x000001E5E26B0310>
+2026-08-28 09:52:53 | INFO | dbgpt.model.cluster.worker.manager | Apply to all workers
+2026-08-28 09:52:53 | INFO | dbgpt.model.cluster.worker.manager | Apply to all workers
+2026-08-28 09:52:53 | INFO | apscheduler.scheduler | Scheduler started
+2026-08-28 09:52:53 | INFO | dbgpt.util.scheduler.task_scheduler | TaskScheduler started.
+2026-08-28 09:52:53 | INFO | dbgpt_serve.scheduled_task.serve | TaskScheduler started in async_after_start.
+2026-08-28 09:52:53 | INFO | dbgpt_serve.scheduled_task.serve | Recovered 0 scheduled jobs from DB
+2026-08-28 09:52:53 | INFO | dbgpt.util.scheduler.task_scheduler | TaskScheduler shut down.
+2026-08-28 09:52:53 | INFO | dbgpt_serve.scheduled_task.serve | TaskScheduler shut down.
+2026-08-28 09:52:53 | INFO | dbgpt_serve.session_file.serve | Session file endpoints unbound; serve stopped.
+2026-08-28 09:52:53 | INFO | apscheduler.scheduler | Scheduler has been shut down
+2026-08-28 09:52:53 | INFO | dbgpt.model.cluster.worker.manager | Stop all workers
+2026-08-28 09:52:53 | INFO | dbgpt.model.cluster.worker.manager | Stop all workers
+2026-08-28 09:52:53 | INFO | dbgpt.model.cluster.worker.manager | Apply req: None, apply_func: <function LocalWorkerManager._stop_all_worker.<locals>._stop_worker at 0x000001E5E280D6C0>
+2026-08-28 09:52:53 | INFO | dbgpt.model.cluster.worker.manager | Apply req: None, apply_func: <function LocalWorkerManager._stop_all_worker.<locals>._stop_worker at 0x000001E5E280D6C0>
+2026-08-28 09:52:53 | INFO | dbgpt.model.cluster.worker.manager | Apply to all workers
+2026-08-28 09:52:53 | INFO | dbgpt.model.cluster.worker.manager | Apply to all workers
+2026-08-28 09:52:54 | INFO | dbgpt.model.cluster.worker.default_worker | Begin load model, model params: 
+
+=========================== TongyiDeployModelParameters ===========================
+
+name: qwen-plus
+provider: proxy/tongyi
+verbose: False
+concurrency: 100
+backend: None
+prompt_template: None
+context_length: None
+reasoning_model: None
+api_base: https://dashscope.aliyuncs.com/compatible-mode/v1
+api_key: sk******ba
+api_type: None
+api_version: None
+http_proxy: None
+
+======================================================================
+
+
+2026-08-28 09:52:54 | INFO | dbgpt.model.cluster.worker.default_worker | Begin load model, model params: 
+
+=========================== TongyiDeployModelParameters ===========================
+
+name: qwen-plus
+provider: proxy/tongyi
+verbose: False
+concurrency: 100
+backend: None
+prompt_template: None
+context_length: None
+reasoning_model: None
+api_base: https://dashscope.aliyuncs.com/compatible-mode/v1
+api_key: sk******ba
+api_type: None
+api_version: None
+http_proxy: None
+
+======================================================================
+
+
+2026-08-28 09:52:54 | INFO | dbgpt.model.adapter.proxy_adapter | Load model from params: 
+
+=========================== TongyiDeployModelParameters ===========================
+
+name: qwen-plus
+provider: proxy/tongyi
+verbose: False
+concurrency: 100
+backend: None
+prompt_template: None
+context_length: None
+reasoning_model: None
+api_base: https://dashscope.aliyuncs.com/compatible-mode/v1
+api_key: sk******ba
+api_type: None
+api_version: None
+http_proxy: None
+
+======================================================================
+
+llm client class: <class 'dbgpt.model.proxy.llms.tongyi.TongyiLLMClient'>
+2026-08-28 09:52:54 | INFO | dbgpt.model.adapter.proxy_adapter | Load model from params: 
+
+=========================== TongyiDeployModelParameters ===========================
+
+name: qwen-plus
+provider: proxy/tongyi
+verbose: False
+concurrency: 100
+backend: None
+prompt_template: None
+context_length: None
+reasoning_model: None
+api_base: https://dashscope.aliyuncs.com/compatible-mode/v1
+api_key: sk******ba
+api_type: None
+api_version: None
+http_proxy: None
+
+======================================================================
+
+llm client class: <class 'dbgpt.model.proxy.llms.tongyi.TongyiLLMClient'>
+2026-08-28 09:53:04 | WARNING | dbgpt.model.cluster.worker.default_worker | Model has been stopped!!
+2026-08-28 09:53:04 | WARNING | dbgpt.model.cluster.worker.default_worker | Model has been stopped!!
+2026-08-28 09:53:07 | WARNING | dbgpt.util.api_utils | Health check failed, error: cannot schedule new futures after shutdown
+2026-08-28 09:53:07 | WARNING | dbgpt.util.api_utils | Health check failed, error: cannot schedule new futures after shutdown
+2026-08-28 09:53:12 | WARNING | dbgpt.util.api_utils | Health check failed, error: cannot schedule new futures after shutdown
+2026-08-28 09:53:12 | WARNING | dbgpt.util.api_utils | Health check failed, error: cannot schedule new futures after shutdown
+2026-08-28 09:55:15 | INFO | dbgpt.component | Register component with name dbgpt_unified_metadata_db_manager_factory and instance: <dbgpt.storage.metadata.db_factory.UnifiedDBManagerFactory object at 0x000002406E17DC90>
+2026-08-28 09:55:15 | INFO | dbgpt.component | Register component with name dbgpt_unified_metadata_db_manager_factory and instance: <dbgpt.storage.metadata.db_factory.UnifiedDBManagerFactory object at 0x000002406E17DC90>
+2026-08-28 09:55:15 | INFO | dbgpt.datasource.rdbms.base | Closing RDBMS connector resources...
+2026-08-28 09:55:15 | INFO | dbgpt.datasource.rdbms.base | Closing RDBMS connector resources...
+2026-08-28 09:55:19 | INFO | dbgpt.component | Register component with name dbgpt_thread_pool_default and instance: <dbgpt.util.executor_utils.DefaultExecutorFactory object at 0x000002406EA773A0>
+2026-08-28 09:55:19 | INFO | dbgpt.component | Register component with name dbgpt_thread_pool_default and instance: <dbgpt.util.executor_utils.DefaultExecutorFactory object at 0x000002406EA773A0>
+2026-08-28 09:55:19 | INFO | dbgpt.component | Register component with name dbgpt_default_scheduler and instance: <dbgpt_app.initialization.scheduler.DefaultScheduler object at 0x000002406EA77B20>
+2026-08-28 09:55:19 | INFO | dbgpt.component | Register component with name dbgpt_default_scheduler and instance: <dbgpt_app.initialization.scheduler.DefaultScheduler object at 0x000002406EA77B20>
+2026-08-28 09:55:19 | INFO | dbgpt.component | Register component with name dbgpt_model_controller and instance: <dbgpt.model.cluster.controller.controller.ModelControllerAdapter object at 0x0000024048123730>
+2026-08-28 09:55:19 | INFO | dbgpt.component | Register component with name dbgpt_model_controller and instance: <dbgpt.model.cluster.controller.controller.ModelControllerAdapter object at 0x0000024048123730>
+2026-08-28 09:55:19 | INFO | dbgpt.component | Register component with name dbgpt_connector_manager and instance: <dbgpt_serve.datasource.manages.connector_manager.ConnectorManager object at 0x000002406EA77C10>
+2026-08-28 09:55:19 | INFO | dbgpt.component | Register component with name dbgpt_connector_manager and instance: <dbgpt_serve.datasource.manages.connector_manager.ConnectorManager object at 0x000002406EA77C10>
+2026-08-28 09:55:19 | INFO | dbgpt.component | Register component with name dbgpt_rag_storage_manager and instance: <dbgpt_serve.rag.storage_manager.StorageManager object at 0x000002406EA77CA0>
+2026-08-28 09:55:19 | INFO | dbgpt.component | Register component with name dbgpt_rag_storage_manager and instance: <dbgpt_serve.rag.storage_manager.StorageManager object at 0x000002406EA77CA0>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_plugin_hub and instance: <dbgpt_serve.agent.hub.controller.ModulePlugin object at 0x000002406EAE8F70>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_plugin_hub and instance: <dbgpt_serve.agent.hub.controller.ModulePlugin object at 0x000002406EAE8F70>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_multi_agents and instance: <dbgpt_serve.agent.agents.controller.MultiAgents object at 0x000002406E9409A0>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_multi_agents and instance: <dbgpt_serve.agent.agents.controller.MultiAgents object at 0x000002406E9409A0>
+2026-08-28 09:55:20 | INFO | dbgpt_app.initialization.embedding_component | Register remote RemoteEmbeddingFactory
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name embedding_factory and instance: <dbgpt_app.initialization.embedding_component.RemoteEmbeddingFactory object at 0x000002406EB16830>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name embedding_factory and instance: <dbgpt_app.initialization.embedding_component.RemoteEmbeddingFactory object at 0x000002406EB16830>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_model_cache_manager and instance: <dbgpt.storage.cache.manager.LocalCacheManager object at 0x000002406EB16AD0>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_model_cache_manager and instance: <dbgpt.storage.cache.manager.LocalCacheManager object at 0x000002406EB16AD0>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_awel_trigger_manager and instance: <dbgpt.core.awel.trigger.trigger_manager.DefaultTriggerManager object at 0x000002406EB16B30>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_awel_trigger_manager and instance: <dbgpt.core.awel.trigger.trigger_manager.DefaultTriggerManager object at 0x000002406EB16B30>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_awel_dag_manager and instance: <dbgpt.core.awel.dag.dag_manager.DAGManager object at 0x000002406EB17340>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_awel_dag_manager and instance: <dbgpt.core.awel.dag.dag_manager.DAGManager object at 0x000002406EB17340>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_resource_manager and instance: <dbgpt.agent.resource.manage.ResourceManager object at 0x000002406EB17490>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_resource_manager and instance: <dbgpt.agent.resource.manage.ResourceManager object at 0x000002406EB17490>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_skill_manager and instance: <dbgpt.agent.skill.manage.SkillManager object at 0x000002406EB174F0>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_skill_manager and instance: <dbgpt.agent.skill.manage.SkillManager object at 0x000002406EB174F0>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_agent_manager and instance: <dbgpt.agent.core.agent_manage.AgentManager object at 0x000002406EB4D090>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_agent_manager and instance: <dbgpt.agent.core.agent_manage.AgentManager object at 0x000002406EB4D090>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_app_editor_service and instance: <dbgpt_app.openapi.api_v1.editor.service.EditorService object at 0x000002406EB4CD00>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_app_editor_service and instance: <dbgpt_app.openapi.api_v1.editor.service.EditorService object at 0x000002406EB4CD00>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_serve_prompt and instance: <dbgpt_serve.prompt.serve.Serve object at 0x000002406EB4CBB0>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_serve_prompt and instance: <dbgpt_serve.prompt.serve.Serve object at 0x000002406EB4CBB0>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_serve_prompt_service and instance: <dbgpt_serve.prompt.service.service.Service object at 0x000002406EB816C0>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_serve_prompt_service and instance: <dbgpt_serve.prompt.service.service.Service object at 0x000002406EB816C0>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_serve_conversation and instance: <dbgpt_serve.conversation.serve.Serve object at 0x000002406EB81840>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_serve_conversation and instance: <dbgpt_serve.conversation.serve.Serve object at 0x000002406EB81840>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_serve_conversation_service and instance: <dbgpt_serve.conversation.service.service.Service object at 0x000002406EBA2500>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_serve_conversation_service and instance: <dbgpt_serve.conversation.service.service.Service object at 0x000002406EBA2500>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_variables_provider and instance: <dbgpt.core.interface.variables.StorageVariablesProvider object at 0x000002406EBA2F20>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_variables_provider and instance: <dbgpt.core.interface.variables.StorageVariablesProvider object at 0x000002406EBA2F20>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_serve_flow and instance: <dbgpt_serve.flow.serve.Serve object at 0x000002406EBA2A40>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_serve_flow and instance: <dbgpt_serve.flow.serve.Serve object at 0x000002406EBA2A40>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_dbgpts_loader and instance: <dbgpt.util.dbgpts.loader.DBGPTsLoader object at 0x000002406EC32CE0>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_dbgpts_loader and instance: <dbgpt.util.dbgpts.loader.DBGPTsLoader object at 0x000002406EC32CE0>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_serve_flow_service and instance: <dbgpt_serve.flow.service.service.Service object at 0x000002406EBA2F50>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_serve_flow_service and instance: <dbgpt_serve.flow.service.service.Service object at 0x000002406EBA2F50>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_serve_flow_variables_service and instance: <dbgpt_serve.flow.service.variables_service.VariablesService object at 0x000002406EC32D70>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt_serve_flow_variables_service and instance: <dbgpt_serve.flow.service.variables_service.VariablesService object at 0x000002406EC32D70>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt.core.flow.flows and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinFlowVariablesProvider object at 0x000002406EC32E30>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt.core.flow.flows and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinFlowVariablesProvider object at 0x000002406EC32E30>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt.core.flow.nodes and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinNodeVariablesProvider object at 0x000002406EC32E90>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt.core.flow.nodes and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinNodeVariablesProvider object at 0x000002406EC32E90>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt.core.variables and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinAllVariablesProvider object at 0x000002406EC32EF0>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt.core.variables and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinAllVariablesProvider object at 0x000002406EC32EF0>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt.core.secrets and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinAllSecretVariablesProvider object at 0x000002406EC32F50>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt.core.secrets and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinAllSecretVariablesProvider object at 0x000002406EC32F50>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt.core.model.llms and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinLLMVariablesProvider object at 0x000002406EC32FB0>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt.core.model.llms and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinLLMVariablesProvider object at 0x000002406EC32FB0>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt.core.model.embeddings and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinEmbeddingsVariablesProvider object at 0x000002406EC33010>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt.core.model.embeddings and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinEmbeddingsVariablesProvider object at 0x000002406EC33010>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt.core.datasources and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinDatasourceVariablesProvider object at 0x000002406EC33070>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt.core.datasources and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinDatasourceVariablesProvider object at 0x000002406EC33070>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt.core.agent.agents and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinAgentsVariablesProvider object at 0x000002406EC330D0>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt.core.agent.agents and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinAgentsVariablesProvider object at 0x000002406EC330D0>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt.core.knowledge_spaces and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinKnowledgeSpacesVariablesProvider object at 0x000002406EC33130>
+2026-08-28 09:55:20 | INFO | dbgpt.component | Register component with name dbgpt.core.knowledge_spaces and instance: <dbgpt_serve.flow.api.variables_provider.BuiltinKnowledgeSpacesVariablesProvider object at 0x000002406EC33130>
+2026-08-28 09:55:21 | INFO | dbgpt.component | Register component with name dbgpt_rag and instance: <dbgpt_serve.rag.serve.Serve object at 0x000002406EC331C0>
+2026-08-28 09:55:21 | INFO | dbgpt.component | Register component with name dbgpt_rag and instance: <dbgpt_serve.rag.serve.Serve object at 0x000002406EC331C0>
+2026-08-28 09:55:21 | INFO | dbgpt.component | Register component with name dbgpt_rag_service and instance: <dbgpt_serve.rag.service.service.Service object at 0x000002406ED1A8C0>
+2026-08-28 09:55:21 | INFO | dbgpt.component | Register component with name dbgpt_rag_service and instance: <dbgpt_serve.rag.service.service.Service object at 0x000002406ED1A8C0>
+2026-08-28 09:55:21 | INFO | dbgpt.component | Register component with name dbgpt_datasource and instance: <dbgpt_serve.datasource.serve.Serve object at 0x000002406ED1A380>
+2026-08-28 09:55:21 | INFO | dbgpt.component | Register component with name dbgpt_datasource and instance: <dbgpt_serve.datasource.serve.Serve object at 0x000002406ED1A380>
+2026-08-28 09:55:21 | INFO | dbgpt.component | Register component with name dbgpt_datasource_service and instance: <dbgpt_serve.datasource.service.service.Service object at 0x000002406ED3ACB0>
+2026-08-28 09:55:21 | INFO | dbgpt.component | Register component with name dbgpt_datasource_service and instance: <dbgpt_serve.datasource.service.service.Service object at 0x000002406ED3ACB0>
+2026-08-28 09:55:21 | INFO | dbgpt.component | Register component with name dbgpt_serve_feedback and instance: <dbgpt_serve.feedback.serve.Serve object at 0x000002406ED3AE00>
+2026-08-28 09:55:21 | INFO | dbgpt.component | Register component with name dbgpt_serve_feedback and instance: <dbgpt_serve.feedback.serve.Serve object at 0x000002406ED3AE00>
+2026-08-28 09:55:21 | INFO | dbgpt.component | Register component with name dbgpt_serve_feedback_service and instance: <dbgpt_serve.feedback.service.service.Service object at 0x000002406ED5A590>
+2026-08-28 09:55:21 | INFO | dbgpt.component | Register component with name dbgpt_serve_feedback_service and instance: <dbgpt_serve.feedback.service.service.Service object at 0x000002406ED5A590>
+2026-08-28 09:55:21 | INFO | dbgpt.component | Register component with name dbgpt_serve_dbgpts_hub and instance: <dbgpt_serve.dbgpts.hub.serve.Serve object at 0x000002406ED5A6E0>
+2026-08-28 09:55:21 | INFO | dbgpt.component | Register component with name dbgpt_serve_dbgpts_hub and instance: <dbgpt_serve.dbgpts.hub.serve.Serve object at 0x000002406ED5A6E0>
+2026-08-28 09:55:21 | INFO | dbgpt.component | Register component with name dbgpt_serve_dbgpts_hub_service and instance: <dbgpt_serve.dbgpts.hub.service.service.Service object at 0x000002406EDDCDF0>
+2026-08-28 09:55:21 | INFO | dbgpt.component | Register component with name dbgpt_serve_dbgpts_hub_service and instance: <dbgpt_serve.dbgpts.hub.service.service.Service object at 0x000002406EDDCDF0>
+2026-08-28 09:55:21 | INFO | dbgpt.component | Register component with name dbgpt_serve_dbgpts_my and instance: <dbgpt_serve.dbgpts.my.serve.Serve object at 0x000002406EDDCEB0>
+2026-08-28 09:55:21 | INFO | dbgpt.component | Register component with name dbgpt_serve_dbgpts_my and instance: <dbgpt_serve.dbgpts.my.serve.Serve object at 0x000002406EDDCEB0>
+2026-08-28 09:55:21 | INFO | dbgpt.component | Register component with name dbgpt_serve_dbgpts_my_service and instance: <dbgpt_serve.dbgpts.my.service.service.Service object at 0x000002406EE3A500>
+2026-08-28 09:55:21 | INFO | dbgpt.component | Register component with name dbgpt_serve_dbgpts_my_service and instance: <dbgpt_serve.dbgpts.my.service.service.Service object at 0x000002406EE3A500>
+2026-08-28 09:55:21 | INFO | dbgpt.component | Register component with name dbgpt_serve_file and instance: <dbgpt_serve.file.serve.Serve object at 0x000002406EE3A290>
+2026-08-28 09:55:21 | INFO | dbgpt.component | Register component with name dbgpt_serve_file and instance: <dbgpt_serve.file.serve.Serve object at 0x000002406EE3A290>
+2026-08-28 09:55:21 | INFO | dbgpt.component | Register component with name dbgpt_serve_file_service and instance: <dbgpt_serve.file.service.service.Service object at 0x000002406EE55B70>
+2026-08-28 09:55:21 | INFO | dbgpt.component | Register component with name dbgpt_serve_file_service and instance: <dbgpt_serve.file.service.service.Service object at 0x000002406EE55B70>
+2026-08-28 09:55:26 | INFO | dbgpt.component | Register component with name dbgpt_serve_evaluate and instance: <dbgpt_serve.evaluate.serve.Serve object at 0x000002406EE55C90>
+2026-08-28 09:55:26 | INFO | dbgpt.component | Register component with name dbgpt_serve_evaluate and instance: <dbgpt_serve.evaluate.serve.Serve object at 0x000002406EE55C90>
+2026-08-28 09:55:26 | INFO | dbgpt.component | Register component with name dbgpt_serve_evaluate_service and instance: <dbgpt_serve.evaluate.service.service.Service object at 0x000002406EE55F60>
+2026-08-28 09:55:26 | INFO | dbgpt.component | Register component with name dbgpt_serve_evaluate_service and instance: <dbgpt_serve.evaluate.service.service.Service object at 0x000002406EE55F60>
+2026-08-28 09:55:26 | INFO | dbgpt.component | Register component with name dbgpt_benchmark_data_manager and instance: <dbgpt_serve.evaluate.service.fetchdata.benchmark_data_manager.BenchmarkDataManager object at 0x000002406F612410>
+2026-08-28 09:55:26 | INFO | dbgpt.component | Register component with name dbgpt_benchmark_data_manager and instance: <dbgpt_serve.evaluate.service.fetchdata.benchmark_data_manager.BenchmarkDataManager object at 0x000002406F612410>
+2026-08-28 09:55:26 | INFO | dbgpt.component | Register component with name dbgpt_serve_evaluate_benchmark_service and instance: <dbgpt_serve.evaluate.service.benchmark.benchmark_service.BenchmarkService object at 0x000002406F611FC0>
+2026-08-28 09:55:26 | INFO | dbgpt.component | Register component with name dbgpt_serve_evaluate_benchmark_service and instance: <dbgpt_serve.evaluate.service.benchmark.benchmark_service.BenchmarkService object at 0x000002406F611FC0>
+2026-08-28 09:55:26 | INFO | dbgpt.component | Register component with name dbgpt_serve_libro and instance: <dbgpt_serve.libro.serve.Serve object at 0x000002406F612620>
+2026-08-28 09:55:26 | INFO | dbgpt.component | Register component with name dbgpt_serve_libro and instance: <dbgpt_serve.libro.serve.Serve object at 0x000002406F612620>
+2026-08-28 09:55:26 | INFO | dbgpt.component | Register component with name dbgpt_serve_libro_service and instance: <dbgpt_serve.libro.service.service.Service object at 0x000002406F651E40>
+2026-08-28 09:55:26 | INFO | dbgpt.component | Register component with name dbgpt_serve_libro_service and instance: <dbgpt_serve.libro.service.service.Service object at 0x000002406F651E40>
+2026-08-28 09:55:26 | INFO | dbgpt.component | Register component with name dbgpt_serve_model and instance: <dbgpt_serve.model.serve.Serve object at 0x000002406F652110>
+2026-08-28 09:55:26 | INFO | dbgpt.component | Register component with name dbgpt_serve_model and instance: <dbgpt_serve.model.serve.Serve object at 0x000002406F652110>
+2026-08-28 09:55:26 | INFO | dbgpt.component | Register component with name dbgpt_serve_model_service and instance: <dbgpt_serve.model.service.service.Service object at 0x000002406F6523E0>
+2026-08-28 09:55:26 | INFO | dbgpt.component | Register component with name dbgpt_serve_model_service and instance: <dbgpt_serve.model.service.service.Service object at 0x000002406F6523E0>
+2026-08-28 09:55:26 | INFO | dbgpt.component | Register component with name dbgpt_serve_connector and instance: <dbgpt_serve.connector.serve.ConnectorServe object at 0x000002406F6A3EE0>
+2026-08-28 09:55:26 | INFO | dbgpt.component | Register component with name dbgpt_serve_connector and instance: <dbgpt_serve.connector.serve.ConnectorServe object at 0x000002406F6A3EE0>
+2026-08-28 09:55:26 | INFO | dbgpt.component | Register component with name dbgpt_serve_connector_service and instance: <dbgpt_serve.connector.service.service.ConnectorService object at 0x000002406F7615A0>
+2026-08-28 09:55:26 | INFO | dbgpt.component | Register component with name dbgpt_serve_connector_service and instance: <dbgpt_serve.connector.service.service.ConnectorService object at 0x000002406F7615A0>
+2026-08-28 09:55:29 | INFO | dbgpt.component | Register component with name dbgpt_serve_scheduled_task and instance: <dbgpt_serve.scheduled_task.serve.ScheduledTaskServe object at 0x000002406F761840>
+2026-08-28 09:55:29 | INFO | dbgpt.component | Register component with name dbgpt_serve_scheduled_task and instance: <dbgpt_serve.scheduled_task.serve.ScheduledTaskServe object at 0x000002406F761840>
+2026-08-28 09:55:29 | INFO | dbgpt.component | Register component with name dbgpt_serve_session_file and instance: <dbgpt_serve.session_file.serve.SessionFileServe object at 0x000002406F88DED0>
+2026-08-28 09:55:29 | INFO | dbgpt.component | Register component with name dbgpt_serve_session_file and instance: <dbgpt_serve.session_file.serve.SessionFileServe object at 0x000002406F88DED0>
+2026-08-28 09:55:29 | INFO | dbgpt_serve.session_file.serve | No shared FileStorageClient registered; session file serve creates a default local storage client.
+2026-08-28 09:55:31 | INFO | dbgpt.component | Register component with name base_dbgpt_component and instance: <dbgpt.util.code.server.CodeServer object at 0x000002406F951240>
+2026-08-28 09:55:31 | INFO | dbgpt.component | Register component with name base_dbgpt_component and instance: <dbgpt.util.code.server.CodeServer object at 0x000002406F951240>
+2026-08-28 09:55:31 | INFO | dbgpt_app.component_configs | Initializing prompt templates...
+2026-08-28 09:55:31 | INFO | dbgpt_app.component_configs | Initializing prompt templates...
+2026-08-28 09:55:31 | INFO | dbgpt_app.component_configs | Successfully initialized prompt templates for scenes: ['chat_dashboard', 'chat_excel', 'excel_learning', 'chat_with_db_execute', 'chat_with_db_qa', 'extract_refine_summary', 'chat_knowledge', 'chat_normal']
+2026-08-28 09:55:31 | INFO | dbgpt_app.component_configs | Successfully initialized prompt templates for scenes: ['chat_dashboard', 'chat_excel', 'excel_learning', 'chat_with_db_execute', 'chat_with_db_qa', 'extract_refine_summary', 'chat_knowledge', 'chat_normal']
+2026-08-28 09:55:31 | INFO | dbgpt.component | Register component with name dbgpt_benchmark_data_manager and instance: <dbgpt_serve.evaluate.service.fetchdata.benchmark_data_manager.BenchmarkDataManager object at 0x000002406FAF00A0>
+2026-08-28 09:55:31 | INFO | dbgpt.component | Register component with name dbgpt_benchmark_data_manager and instance: <dbgpt_serve.evaluate.service.fetchdata.benchmark_data_manager.BenchmarkDataManager object at 0x000002406FAF00A0>
+2026-08-28 09:55:31 | WARNING | dbgpt.agent.resource.connector.credential | CredentialStore falling back to ephemeral master key because no dbgpt.app.global.encrypt_key or ENCRYPT_KEY was provided. Encrypted connector credentials will not survive process restarts.
+2026-08-28 09:55:31 | INFO | dbgpt.component | Register component with name connector_manager and instance: <dbgpt.agent.resource.connector.manager.ConnectorManager object at 0x000002406FB37820>
+2026-08-28 09:55:31 | INFO | dbgpt.component | Register component with name connector_manager and instance: <dbgpt.agent.resource.connector.manager.ConnectorManager object at 0x000002406FB37820>
+2026-08-28 09:55:31 | INFO | dbgpt.agent.resource.connector.manager | Connector catalog loaded from C:\Users\godisgirl\AppData\Roaming\TRAE SOLO CN\ModularData\ai-agent\vm\tools\python\lib\site-packages\dbgpt_ext\connector\catalog.json
+2026-08-28 09:55:31 | INFO | dbgpt_app.component_configs | External ConnectorManager registered successfully
+2026-08-28 09:55:31 | INFO | dbgpt_app.component_configs | External ConnectorManager registered successfully
+2026-08-28 09:55:33 | WARNING | dbgpt.util._db_migration_utils | Initialize and upgrade database metadata with alembic, just run this in your development environment, if you deploy this in production environment, please run webserver with --disable_alembic_upgrade(`python dbgpt/app/dbgpt_server.py --disable_alembic_upgrade`).
+we suggest you to use `dbgpt db migration` to initialize and upgrade database metadata with alembic, your can run `dbgpt db migration --help` to get more information.
+2026-08-28 09:55:33 | INFO | alembic.runtime.migration | Context impl SQLiteImpl.
+2026-08-28 09:55:33 | INFO | alembic.runtime.migration | Will assume non-transactional DDL.
+2026-08-28 09:55:33 | INFO | dbgpt.util._db_migration_utils | Migration versions and their file paths:
+========================================Migration versions========================================
+
+a9e9997d4dec (current): New migration (Path: D:\obsidian\demo\.dbgpt\workspace\pilot\meta_data\alembic\versions\a9e9997d4dec_new_migration.py)
+==========================================================================================
+2026-08-28 09:55:33 | INFO | alembic.runtime.migration | Context impl SQLiteImpl.
+2026-08-28 09:55:33 | INFO | alembic.runtime.migration | Will assume non-transactional DDL.
+2026-08-28 09:55:33 | INFO | alembic.runtime.migration | Context impl SQLiteImpl.
+2026-08-28 09:55:33 | INFO | alembic.runtime.migration | Will assume non-transactional DDL.
+2026-08-28 09:55:33 | INFO | dbgpt.util._db_migration_utils | alembic migration current revision: a9e9997d4dec, latest revision: a9e9997d4dec
+2026-08-28 09:55:33 | INFO | alembic.runtime.migration | Context impl SQLiteImpl.
+2026-08-28 09:55:33 | INFO | alembic.runtime.migration | Will assume non-transactional DDL.
+2026-08-28 09:55:33 | INFO | alembic.runtime.migration | Context impl SQLiteImpl.
+2026-08-28 09:55:33 | INFO | alembic.runtime.migration | Will assume non-transactional DDL.
+2026-08-28 09:55:33 | INFO | alembic.runtime.migration | Running upgrade a9e9997d4dec -> 066b95696850, New migration
+2026-08-28 09:55:33 | INFO | dbgpt.component | Register component with name dbgpt_file_storage_client and instance: <dbgpt.core.interface.file.FileStorageClient object at 0x00000240711A73D0>
+2026-08-28 09:55:33 | INFO | dbgpt.component | Register component with name dbgpt_file_storage_client and instance: <dbgpt.core.interface.file.FileStorageClient object at 0x00000240711A73D0>
+2026-08-28 09:55:34 | INFO | dbgpt_app.dbgpt_server | Model Unified Deployment Mode, run all services in the same process
+2026-08-28 09:55:34 | INFO | dbgpt_app.dbgpt_server | Model Unified Deployment Mode, run all services in the same process
+2026-08-28 09:55:34 | INFO | dbgpt.model.cluster.worker.manager | Register WorkerManager dbgpt_worker_manager_factory
+2026-08-28 09:55:34 | INFO | dbgpt.model.cluster.worker.manager | Register WorkerManager dbgpt_worker_manager_factory
+2026-08-28 09:55:34 | INFO | dbgpt.component | Register component with name dbgpt_worker_manager_factory and instance: <dbgpt.model.cluster.worker.manager._DefaultWorkerManagerFactory object at 0x00000240714142E0>
+2026-08-28 09:55:34 | INFO | dbgpt.component | Register component with name dbgpt_worker_manager_factory and instance: <dbgpt.model.cluster.worker.manager._DefaultWorkerManagerFactory object at 0x00000240714142E0>
+2026-08-28 09:55:34 | INFO | dbgpt.model.cluster.worker.manager | Worker params: 
+
+=========================== ModelWorkerParameters ===========================
+
+host: 0.0.0.0
+port: 5670
+daemon: False
+log: 
+
+=========================== LoggingParameters ===========================
+
+level: INFO
+file: None
+
+======================================================================
+
+
+trace: None
+worker_type: None
+worker_class: None
+standalone: True
+register: True
+worker_register_host: None
+controller_addr: None
+send_heartbeat: True
+heartbeat_interval: 20
+
+======================================================================
+
+
+2026-08-28 09:55:34 | INFO | dbgpt.model.cluster.worker.manager | Worker params: 
+
+=========================== ModelWorkerParameters ===========================
+
+host: 0.0.0.0
+port: 5670
+daemon: False
+log: 
+
+=========================== LoggingParameters ===========================
+
+level: INFO
+file: None
+
+======================================================================
+
+
+trace: None
+worker_type: None
+worker_class: None
+standalone: True
+register: True
+worker_register_host: None
+controller_addr: None
+send_heartbeat: True
+heartbeat_interval: 20
+
+======================================================================
+
+
+2026-08-28 09:55:34 | INFO | dbgpt.model.cluster.worker.manager | Run WorkerManager with standalone mode, controller_addr: http://127.0.0.1:5670
+2026-08-28 09:55:34 | INFO | dbgpt.model.cluster.worker.manager | Run WorkerManager with standalone mode, controller_addr: http://127.0.0.1:5670
+2026-08-28 09:55:34 | INFO | dbgpt.model.adapter.model_adapter | Current model qwen-plus use new adapter <_DynProxyLLMModelAdapter model_name=qwen-plus model_path=None>
+2026-08-28 09:55:34 | INFO | dbgpt.model.adapter.model_adapter | Current model qwen-plus use new adapter <_DynProxyLLMModelAdapter model_name=qwen-plus model_path=None>
+2026-08-28 09:55:34 | INFO | dbgpt.model.cluster.worker.default_worker | model_name: qwen-plus, model_path: None, model_param_class: <class 'dbgpt.model.proxy.llms.tongyi.TongyiDeployModelParameters'>
+2026-08-28 09:55:34 | INFO | dbgpt.model.cluster.worker.default_worker | model_name: qwen-plus, model_path: None, model_param_class: <class 'dbgpt.model.proxy.llms.tongyi.TongyiDeployModelParameters'>
+2026-08-28 09:55:34 | INFO | dbgpt.model.cluster.worker.manager | Init empty instances list for qwen-plus@llm
+2026-08-28 09:55:34 | INFO | dbgpt.model.cluster.worker.manager | Init empty instances list for qwen-plus@llm
+2026-08-28 09:55:34 | INFO | dbgpt.model.cluster.worker.manager | Start local embedding worker with embedding parameters
+
+
+=========================== ModelWorkerParameters ===========================
+
+host: 0.0.0.0
+port: 8001
+daemon: False
+log: 
+
+=========================== LoggingParameters ===========================
+
+level: ${env:DBGPT_LOG_LEVEL:-INFO}
+file: None
+
+======================================================================
+
+
+trace: None
+worker_type: text2vec
+worker_class: None
+standalone: False
+register: True
+worker_register_host: None
+controller_addr: None
+send_heartbeat: True
+heartbeat_interval: 20
+
+======================================================================
+
+
+2026-08-28 09:55:34 | INFO | dbgpt.model.cluster.worker.manager | Start local embedding worker with embedding parameters
+
+
+=========================== ModelWorkerParameters ===========================
+
+host: 0.0.0.0
+port: 8001
+daemon: False
+log: 
+
+=========================== LoggingParameters ===========================
+
+level: ${env:DBGPT_LOG_LEVEL:-INFO}
+file: None
+
+======================================================================
+
+
+trace: None
+worker_type: text2vec
+worker_class: None
+standalone: False
+register: True
+worker_register_host: None
+controller_addr: None
+send_heartbeat: True
+heartbeat_interval: 20
+
+======================================================================
+
+
+2026-08-28 09:55:34 | INFO | dbgpt.model.cluster.worker.manager | Init empty instances list for text-embedding-v2@text2vec
+2026-08-28 09:55:34 | INFO | dbgpt.model.cluster.worker.manager | Init empty instances list for text-embedding-v2@text2vec
+2026-08-28 09:55:35 | INFO | dbgpt.util.dbgpts.loader | Found 0 dbgpts packages from C:\Users\godisgirl\.dbgpts\packages\05b55fb2f89d211465fa6708324a7a74
+2026-08-28 09:55:35 | INFO | dbgpt_serve.flow.service.compat_service | Found compat file: 0.7.0, use latest: 0.7.0
