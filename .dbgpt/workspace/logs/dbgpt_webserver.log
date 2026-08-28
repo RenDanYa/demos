@@ -710,3 +710,115 @@ heartbeat_interval: 20
 2026-08-28 09:55:34 | INFO | dbgpt.model.cluster.worker.manager | Init empty instances list for text-embedding-v2@text2vec
 2026-08-28 09:55:35 | INFO | dbgpt.util.dbgpts.loader | Found 0 dbgpts packages from C:\Users\godisgirl\.dbgpts\packages\05b55fb2f89d211465fa6708324a7a74
 2026-08-28 09:55:35 | INFO | dbgpt_serve.flow.service.compat_service | Found compat file: 0.7.0, use latest: 0.7.0
+2026-08-28 09:55:36 | WARNING | dbgpt.util.api_utils | Health check failed for http://127.0.0.1:5670, error: HTTPConnectionPool(host='127.0.0.1', port=5670): Max retries exceeded with url: /api/health (Caused by NewConnectionError("HTTPConnection(host='127.0.0.1', port=5670): Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。"))
+2026-08-28 09:55:36 | WARNING | dbgpt.util.api_utils | Health check failed for http://127.0.0.1:5670, error: HTTPConnectionPool(host='127.0.0.1', port=5670): Max retries exceeded with url: /api/health (Caused by NewConnectionError("HTTPConnection(host='127.0.0.1', port=5670): Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。"))
+2026-08-28 09:55:38 | INFO | dbgpt.model.cluster.worker.manager | Begin start all worker, apply_req: None
+2026-08-28 09:55:38 | INFO | dbgpt.model.cluster.worker.manager | Begin start all worker, apply_req: None
+2026-08-28 09:55:38 | INFO | dbgpt.model.cluster.worker.manager | Apply req: None, apply_func: <function LocalWorkerManager._start_all_worker.<locals>._start_worker at 0x0000024071787520>
+2026-08-28 09:55:38 | INFO | dbgpt.model.cluster.worker.manager | Apply req: None, apply_func: <function LocalWorkerManager._start_all_worker.<locals>._start_worker at 0x0000024071787520>
+2026-08-28 09:55:38 | INFO | dbgpt.model.cluster.worker.manager | Apply to all workers
+2026-08-28 09:55:38 | INFO | dbgpt.model.cluster.worker.manager | Apply to all workers
+2026-08-28 09:55:38 | INFO | apscheduler.scheduler | Scheduler started
+2026-08-28 09:55:38 | INFO | dbgpt.util.scheduler.task_scheduler | TaskScheduler started.
+2026-08-28 09:55:38 | INFO | dbgpt_serve.scheduled_task.serve | TaskScheduler started in async_after_start.
+2026-08-28 09:55:38 | INFO | dbgpt_serve.scheduled_task.serve | Recovered 0 scheduled jobs from DB
+2026-08-28 09:55:38 | INFO | dbgpt.model.cluster.worker.default_worker | Begin load model, model params: 
+
+=========================== TongyiDeployModelParameters ===========================
+
+name: qwen-plus
+provider: proxy/tongyi
+verbose: False
+concurrency: 100
+backend: None
+prompt_template: None
+context_length: None
+reasoning_model: None
+api_base: https://dashscope.aliyuncs.com/compatible-mode/v1
+api_key: sk******ba
+api_type: None
+api_version: None
+http_proxy: None
+
+======================================================================
+
+
+2026-08-28 09:55:38 | INFO | dbgpt.model.cluster.worker.default_worker | Begin load model, model params: 
+
+=========================== TongyiDeployModelParameters ===========================
+
+name: qwen-plus
+provider: proxy/tongyi
+verbose: False
+concurrency: 100
+backend: None
+prompt_template: None
+context_length: None
+reasoning_model: None
+api_base: https://dashscope.aliyuncs.com/compatible-mode/v1
+api_key: sk******ba
+api_type: None
+api_version: None
+http_proxy: None
+
+======================================================================
+
+
+2026-08-28 09:55:38 | INFO | dbgpt.model.adapter.proxy_adapter | Load model from params: 
+
+=========================== TongyiDeployModelParameters ===========================
+
+name: qwen-plus
+provider: proxy/tongyi
+verbose: False
+concurrency: 100
+backend: None
+prompt_template: None
+context_length: None
+reasoning_model: None
+api_base: https://dashscope.aliyuncs.com/compatible-mode/v1
+api_key: sk******ba
+api_type: None
+api_version: None
+http_proxy: None
+
+======================================================================
+
+llm client class: <class 'dbgpt.model.proxy.llms.tongyi.TongyiLLMClient'>
+2026-08-28 09:55:38 | INFO | dbgpt.model.adapter.proxy_adapter | Load model from params: 
+
+=========================== TongyiDeployModelParameters ===========================
+
+name: qwen-plus
+provider: proxy/tongyi
+verbose: False
+concurrency: 100
+backend: None
+prompt_template: None
+context_length: None
+reasoning_model: None
+api_base: https://dashscope.aliyuncs.com/compatible-mode/v1
+api_key: sk******ba
+api_type: None
+api_version: None
+http_proxy: None
+
+======================================================================
+
+llm client class: <class 'dbgpt.model.proxy.llms.tongyi.TongyiLLMClient'>
+2026-08-28 09:55:43 | INFO | dbgpt.model.cluster.worker.embedding_worker | Load embeddings model: text-embedding-v2
+2026-08-28 09:55:48 | INFO | dbgpt.model.cluster.worker.manager | There has model storage, start the model from storage
+2026-08-28 09:55:48 | INFO | dbgpt.model.cluster.worker.manager | There has model storage, start the model from storage
+2026-08-28 09:56:04 | INFO | dbgpt.storage.base | Loading 1 chunks in 1 groups with 1 threads.
+2026-08-28 09:56:04 | INFO | dbgpt.storage.base | Loading 1 chunks in 1 groups with 1 threads.
+2026-08-28 09:56:04 | INFO | dbgpt_ext.storage.vector_store.chroma_store | ChromaStore load document
+2026-08-28 09:56:04 | INFO | dbgpt_ext.storage.vector_store.chroma_store | ChromaStore load document
+2026-08-28 09:56:04 | INFO | dbgpt.model.cluster.worker.embedding_worker | Receive embeddings request, model: text-embedding-v2
+2026-08-28 09:56:05 | WARNING | dbgpt.storage.base | Skipping chunk that failed to load: chunk_id=0caea4fe-507c-40db-9d8f-8991450c161b error='NoneType' object is not subscriptable
+2026-08-28 09:56:05 | WARNING | dbgpt.storage.base | Skipping chunk that failed to load: chunk_id=0caea4fe-507c-40db-9d8f-8991450c161b error='NoneType' object is not subscriptable
+2026-08-28 09:56:05 | INFO | dbgpt.storage.base | Loaded 0 chunks, total 1 chunks.
+2026-08-28 09:56:05 | INFO | dbgpt.storage.base | Loaded 0 chunks, total 1 chunks.
+2026-08-28 09:56:05 | WARNING | dbgpt.storage.base | Loaded 0/1 chunks in 0.2s; 1 chunk(s) skipped due to load errors.
+2026-08-28 09:56:05 | WARNING | dbgpt.storage.base | Loaded 0/1 chunks in 0.2s; 1 chunk(s) skipped due to load errors.
+2026-08-28 09:56:05 | INFO | dbgpt_serve.datasource.service.db_summary_client | initialize db summary profile success...
+2026-08-28 09:56:05 | INFO | dbgpt_serve.datasource.service.db_summary_client | db summary embedding success
