@@ -334,7 +334,7 @@
       "showTitle": false,
       "showShadow": false,
       "createAt": "2025-11-01T06:33:33.629Z",
-      "updateAt": "2026-08-31T22:43:55.848Z",
+      "updateAt": "2026-09-01T03:55:34.539Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}} ",
       "properties": [
@@ -626,7 +626,7 @@
             "operator": "time_after_or_equal",
             "property": "created",
             "value": {
-              "type": "$endOfMonth",
+              "type": "$startOfMonth",
               "unit": "day",
               "direction": "before",
               "value": ""
