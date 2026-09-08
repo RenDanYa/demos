@@ -934,3 +934,384 @@ autofix 技能并非纸上谈兵——它正在经过验证的本地修复后提
 
 ---
 
+<!-- zread:slug=6-about-contributors -->
+## 6. About Contributors（Buzz）
+
+OpenCLI 不是一个伪装成社区的独奏项目——它是一个生机勃勃的开源生态系统，拥有 **1,700+ 已合并的拉取请求**，以及一长串贡献者，他们各自负责 100+ 适配器层面中的某个角落。该项目目前拥有 [14,135 颗星](https://github.com/jackwener/opencli) 和 [1,302 个分叉](https://github.com/jackwener/opencli/pulls)，对于一个核心价值主张是*确定性浏览器复用 CLI*，而非又一个 LLM 封装的工具来说，这相当引人瞩目。
+
+让我们揭开促成这一切的幕后贡献者的面纱。
+
+## 创始人：jakevin (jackwener)
+
+[jakevin](https://github.com/jackwener) 是 OpenCLI 的创建者和终身仁慈独裁者（BDFL）。其 GitHub 账号 `jackwener` 对应邮箱 `jakevingoo@gmail.com`，在提交日志中使用的显示名为 `jakevin`。他们是最高产的唯一贡献者——近期的提交历史显示，他们在同一周内完成了版本发布、浏览器核心修复、新适配器（Gmail、Dribbble、Jike、Ctrip）、输出/渲染修复、LinkedIn 纠正以及文档编写。
+
+jakevin 最突出的是**其提交范围的广度**。仅在 8 月 25 日至 30 日期间，他们就交付了：
+
+| 提交 | 范围 | 内容 |
+|--------|-------|------|
+| [chore: release v1.8.8](https://github.com/jackwener/OpenCLI/commit/8271afc67e8504bda94c147f446ee29775d08274) | 发布 | v1.8.8 切片 |
+| [fix(browser): preserve structured network captures](https://github.com/jackwener/OpenCLI/commit/50902ffe6b06d63e6c2de00aef01cbc4256ffc42) | 核心 | 网络捕获 + 凭证脱敏 |
+| [fix(output): keep markdown rows intact for multi-line cells](https://github.com/jackwener/OpenCLI/commit/c2964f9572b719f56fcff863eac9e95291a1cc22) | 输出 | Markdown 表格渲染 |
+| [feat(gmail): add browser-backed Gmail adapter](https://github.com/jackwener/OpenCLI/commit/6b3dffd398b907c0a1437c8ad017068819fb401f) | 新适配器 | 完整的 Gmail 浏览器适配器 |
+| [feat(jike): use structured APIs](https://github.com/jackwener/OpenCLI/commit/35002644d3c8922973135a026d1e622ad5257a30) | 适配器 | Jike API 现代化 |
+| [fix(linkedin): make sent invitations and thread snapshots accurate](https://github.com/jackwener/OpenCLI/commit/0a4a863b36b4575322665594a5441eac9a3d80b3) | 适配器 | LinkedIn 数据准确性 |
+| [fix(dribbble): distinguish empty states from selector drift](https://github.com/jackwener/OpenCLI/commit/49907e53dc3ade5c223ff0c4c2c2785687cec4e6) | 适配器 | Dribbble 容错性 |
+
+这不是一个只审查 PR 的维护者。jakevin 编写适配器、修复浏览器桥接、改进输出层并裁剪发布版本——有时这一切都在同一天内完成。这种模式自项目最早的提交以来就始终如一。
+
+一个结构性的说明：jakevin 与 `OpenCLI-sol <opencli-sol@users.noreply.github.com>` 共同撰写了许多提交，后者似乎是一个 AI 辅助开发机器人。这在提交元数据中是透明的——`Co-authored-by` 尾注始终存在。这是一个务实的选择：适配器的面非常庞大（100+ 个站点，每个站点的 DOM 都会漂移），对于选择器修复，AI 辅助的补丁生成比手工逐一处理要快得多。关键约束在于，每一个此类提交仍然由人类审查并合入。
+
+## 深层技术专家
+
+### Vec — Webpack 倾听者
+
+[Vec](https://github.com/jackwener/OpenCLI/commit/487125028128344320c469c7bf5b11cbbed763af)（邮箱 `vecsat@foxmail.com`）交付了近期历史上技术上最成熟的单次提交：[fix(xiaohongshu): stop ask breaking on webpack chunk renumbering](https://github.com/jackwener/OpenCLI/commit/487125028128344320c469c7bf5b11cbbed763af) (#2420)。
+
+问题所在：小红书的前端使用 webpack，而 `ask` 命令依赖硬编码的模块 ID（`6404`）来访问会话存储。当 XHS 重新部署并重新对块进行编号（6404 → 32914）时，每次 `ask` 调用都会抛出 `Cannot read properties of undefined (reading 'call')`。Vec 的修复方案会扫描 `webpackRequire.m`，寻找源码中同时包含 `createConversation` 和 `sendMessage` 的工厂函数——这是一种结构指纹，而非脆弱的数字 ID。扫描过程调用 `.toString()`（无副作用），且候选对象仅在其源码匹配后才执行。正如他们在提交信息中指出的：*"硬编码的数字模块 ID 与站点没有契约关系。"*
+
+他们还修复了导航入口点：`ask` 之前通过 `search_result?keyword=...` 进入，这会在任何聊天发生之前触发不必要的笔记搜索 API 调用。切换到 `/ai_chat` 彻底消除了副效应请求——这已在同一会话的受控 A/B 测试中验证。
+
+这就是那种将网站的 JavaScript 包视为逆向工程目标，而非黑盒的贡献者。
+
+### Zhongyue Lin — 风控韧性
+
+Zhongyue Lin 提交了 [fix(xiaohongshu): retry once through a cooldown on risk-control soft blocks](https://github.com/jackwener/OpenCLI/commit/75c85e578147073372b09091f456d3b7baaab0d8) (#2207，引用 #1825)。XHS 基于速度的风控会触发 "安全限制" / "访问链接异常" 重定向。Lin 的修复引入了一个共享的 `readXhsDetailPage` 辅助函数——在遇到安全拦截时，等待一个随机冷却时间（8–18 秒）并重新加载**恰好一次**，然后才抛出 `SECURITY_BLOCK`。单次重试上限是结构性的：一个守卫 `if`，没有调用方可调的重试次数。这防止了无人值守的锤击循环，这种循环将导致违规升级至账号层面。
+
+### 万物生腾·Omnisurge — 跨包错误处理
+
+万物生腾·Omnisurge（一个富有诗意的账号名，大意是 "万物生长 · Omnisurge"）贡献了 [fix(errors): duck-typing for cross-package CliError in toEnvelope](https://github.com/jackwener/OpenCLI/commit/1c66cc9eaba4b62789897869358ca992d5a0f50a) (#2388)。插件会解析各自拷贝的 `@jackwener/opencli`（各自的 `node_modules`），因此跨包副本的 `instanceof CliError` 会失效，导致每个插件错误降级为 `UNKNOWN`。其修复方案：基于形状的检测（`code` + `message` 字符串，可选 `hint`），并带有 `exitCode` 守卫，以区分真正的跨包 `CliError` 副本与 `ENOENT` 等 Node 系统错误。这种修复只有在真正的插件作者遇到真正的边缘情况时才会浮现。
+
+## 适配器专家
+
+OpenCLI 的价值存在于其适配器中，而适配器工作是一种特殊的苦差事——你是在追逐一个你无法控制的网站上随时可能变更的 DOM。以下是从事这些工作的人员：
+
+| 贡献者 | 适配器 | 近期 PR | 工作性质 |
+|-------------|-----------|-----------|----------------|
+| **Jamie** | Dribbble | [feat(dribbble): add browser adapter commands](https://github.com/jackwener/OpenCLI/commit/5767c07bd84304983bac6ad994039f020c5d6053) (#2403) | 从零开始构建完整适配器 |
+| **Loturs** | Linux.do | [fix(linux-do): use current session for whoami](https://github.com/jackwener/OpenCLI/commit/2a6929f8f120deb4ccc8e6989cf9df97a1db6b86) (#2397) | 会话身份修复 |
+| **RusianHu** | ChatGPT, Doubao | [fix(chatgpt): adapt to 2026-08 UI](https://github.com/jackwener/OpenCLI/pull/2436), [feat(doubao): add edit-image](https://github.com/jackwener/OpenCLI/pull/2447) | DOM 漂移修复 + 新功能 |
+| **lorenzozanee** | 浏览器核心 | [fix(browser): resolve out-of-process iframe targets](https://github.com/jackwener/OpenCLI/pull/2452) | CDP/iframe 修复 |
+| **ele-yufo** | Twitter | [fix(twitter): stop bookmarks/likes failing on terminal repeated cursor](https://github.com/jackwener/OpenCLI/pull/2439) | 分页边缘情况 |
+| **vecyang1** | 小红书, Clarity | [fix(xiaohongshu): give ask citation URLs that actually open](https://github.com/jackwener/OpenCLI/pull/2424), [feat(clarity): add Microsoft Clarity adapter](https://github.com/jackwener/OpenCLI/pull/2402) | 修复 + 新适配器 |
+| **yisiliu** | 微博 | [fix(weibo): persistent site session](https://github.com/jackwener/OpenCLI/pull/2442) | 停止重新打开主页 |
+| **BoYanZh** | 知乎 | [fix(zhihu): modernize hot adapter](https://github.com/jackwener/OpenCLI/pull/2409) | 适配器现代化 |
+| **KtzeAbyss** | DeepSeek | [fix(deepseek): guarantee ask --new starts fresh](https://github.com/jackwener/OpenCLI/pull/2405) | 会话状态修复 |
+| **albemiglio** | Instagram | [feat(instagram): expose public contact fields](https://github.com/jackwener/OpenCLI/pull/2399) | 新数据面 |
+| **luckydududu** | Twitter | [feat(twitter): allow post to attach a video](https://github.com/jackwener/OpenCLI/pull/2430) | 新写入能力 |
+| **wuyak** | 小红书 | [fix(xiaohongshu): accept overlapping duplicate filter options](https://github.com/jackwener/OpenCLI/pull/2446) | DOM 歧义修复 |
+| **asts-top** | 抖音 | [fix(douyin): make fast_detect retries independent of error wording](https://github.com/jackwener/OpenCLI/pull/2444) | 反机器人韧性 |
+| **miakh** | Facebook | [fix(facebook): support current feed DOM](https://github.com/jackwener/OpenCLI/pull/2453) | DOM 漂移修复 |
+
+模式很清晰：**适配器维护是一项西西弗斯式的任务**。每次网站重新设计都会破坏选择器，而修复总是特定于站点的。这就是为什么贡献者名单很长，而人均提交数适中的原因——每个人通常只负责一两个适配器，并在这类站点发生变更时出现。
+
+## 基础设施构建者
+
+一些贡献者致力于*引擎*而非适配器——即让所有 100+ 适配器运转起来的内容：
+
+| 贡献者 | 领域 | 提交 |
+|-------------|------|--------|
+| **Jiacheng** | 打包 | [chore(pack): exclude test files from npm package](https://github.com/jackwener/OpenCLI/commit/c9fb444c0ceaa4f60580cd469bfb0b44359d6068) (#2410) — 将包体积从 14.0 MB / 2340 个文件缩减至 9.2 MB / 1638 个文件 |
+| **Jiacheng** | 打包 | [chore(pack): prune @mixmark-io/domino's vendored test suite](https://github.com/jackwener/OpenCLI/commit/439945fd3de31a059c481496e29188a5337872e1) (#2411) — 从传递依赖中移除了 959 个不必要的文件 |
+| **axxop** | 浏览器核心 | [fix: honor manual CDP endpoint for web adapters](https://github.com/jackwener/OpenCLI/commit/4e8109b6c84afea5e535a7b9a35bc352d1b92fc2) (#2148) |
+| **陈家名** | 流水线 | [fix(pipeline): reject invalid concurrency limits](https://github.com/jackwener/OpenCLI/commit/25dece3f182a5beb39ef55281f77fd443f03d1b) (#2407) |
+| **cat0825** | 诊断 | [feat(doctor): add --strict exit code and -f json output](https://github.com/jackwener/OpenCLI/pull/2427), [fix(update-check): stop failed extension lookup from silencing notice](https://github.com/jackwener/OpenCLI/pull/2426), [fix(errors): stop suggesting --timeout](https://github.com/jackwener/OpenCLI/pull/2425) |
+| **wstczyw** | 跨平台 | [fix(windows): make path handling and tests portable](https://github.com/jackwener/OpenCLI/pull/2438) |
+| **Anupam Mediratta** | 安全 | [fix: javascript.lang.security.detect-child-process](https://github.com/jackwener/OpenCLI/commit/2c598f5865fc4a5fd266e11aa3f30a4f96eb2b1c) (#2318) — 通过 OrbisAI Security 自动化 |
+
+Jiacheng 的打包工作值得特别提及。发布出的 tarball 包含了 **601 个编译后的 `*.test.js` 文件**和零散的 `__fixtures__` HTML 快照——这些在运行时均未使用。将它们排除在外后，npm 包的 tarball 体积从 3.1 MB 缩减至 2.2 MB。对于一个全局安装的 CLI 来说，这是在安装时间上极具意义的改进。
+
+cat0825 在诊断领域的连续三个 PR 也值得关注：他们独立发现了 `doctor` 会静默吞噬扩展更新失败，以及错误信息会向不接受 `--timeout` 的适配器命令建议使用 `--timeout`。这些都是只有真正阅读错误输出的用户才会发现的用户体验微瑕。
+
+## AI 辅助贡献者：OpenCLI-sol
+
+`OpenCLI-sol <opencli-sol@users.noreply.github.com>` 作为 `Co-authored-by` 出现在近期很大一部分提交中。这是一个用于 AI 辅助适配器开发的机器人账号。它的存在是透明的——它从不作为提交的唯一作者出现，总是与人类审查者并列。
+
+模式是一致的：人类识别适配器的故障（通常通过自动修复 issue，如 [#2428](https://github.com/jackwener/OpenCLI/issues/2428) 或 [#2421](https://github.com/jackwener/OpenCLI/issues/2421)），AI 为选择器/API 变更生成候选补丁，人类审查并合入。对于在 100+ 个站点中追逐 DOM 漂移的重复性工作而言，这是一种合理的分工——AI 处理样板式的选择器更新，人类对照真实页面进行验证。
+
+## 贡献者流转可视化
+
+```mermaid
+flowchart TD
+    A[站点破坏适配器] --> B{如何发现?}
+    B -->|自动修复机器人| C[提交自动修复 issue]
+    B -->|用户报告| D[手动提交缺陷 issue]
+    B -->|CI 回归| E[测试失败]
+    
+    C --> F[AI 生成候选补丁]
+    F --> G[人类审查并合入]
+    
+    D --> H[贡献者诊断]
+    H --> I{范围?}
+    I -->|选择器漂移| J[适配器修复 PR]
+    I -->|引擎缺陷| K[核心修复 PR]
+    I -->|新功能| L[功能 PR]
+    
+    E --> M[维护者二分排查]
+    M --> J
+    
+    J --> N[jakevin 审查]
+    K --> N
+    L --> N
+    G --> N
+    
+    N --> O[合并并发布]
+```
+
+## 社区形态
+
+查看[开放的 PR 列表](https://github.com/jackwener/opencli/pulls)（145 个开放，1,711 个已关闭），贡献者基础可分为三个层次：
+
+1. **核心（1–2 人）** — jakevin 负责版本发布、核心引擎工作以及新适配器脚手架。这既是瓶颈也是保障：每个 PR 都经由他们合入。
+
+2. **常客（10–15 人）** — 像 Vec、Zhongyue Lin、cat0825、Jiacheng、vecyang1 这样的贡献者，他们跨越多个 PR 周期持续贡献，并在特定适配器或子系统上积累领域专业知识。
+
+3. **长尾（100+ 人）** — 大多数贡献者只提交单个 PR：一次适配器修复，一次打包改进，一次 Windows 可移植性补丁。这是健康的——这意味着项目的准入门槛低，人们无需理解完整架构即可贡献。
+
+[自动修复系统](https://github.com/jackwener/OpenCLI/issues/2428) 增加了一个有趣的转折：OpenCLI 可以自动检测适配器故障并提交带有修复建议的 issue。标记为 `[autofix]` 的 issue（如 [#2408](https://github.com/jackwener/OpenCLI/issues/2408)、[#2428](https://github.com/jackwener/OpenCLI/issues/2428)、[#2421](https://github.com/jackwener/OpenCLI/issues/2421)）代表了项目自身的运行时自诊断故障。这将传统的 "用户报告缺陷 → 贡献者修复" 流程转变为更紧密的闭环，工具本身就能精确暴露故障模式。
+
+## 此贡献者群体的非凡之处
+
+大多数拥有 14K+ 星标的 CLI 工具都有企业支持或基金会背书。OpenCLI 两者皆无——它是一个人加上一个由站点特定专家组成的社区。其架构使这成为可能：适配器是隔离的（`clis/<site>/`），命令注册表会自动发现它们，并且测试夹具是按站点划分的。你可以在对 Twitter 适配器或浏览器桥接内部一无所知的情况下，贡献一个小红书修复。
+
+这种架构隔离并非偶然。正是它让[长尾贡献者](https://github.com/jackwener/opencli/pulls?q=is%3Apr+is%3Aclosed)得以存在——也正是它让项目在适配器维护具有西西弗斯式特性的情况下仍具可持续性。每个站点终将再次出故障。问题在于，当故障发生时，了解该站点的贡献者是否还在。OpenCLI 的设计让*新*贡献者在老贡献者离开时能够轻松介入。
+
+这才是贡献者名单背后的真实故事：不是英雄名册，而是一个让英雄主义变得不必要的系统。
+
+---
+
+<!-- zread:slug=7-architecture-overview -->
+## 7. Architecture Overview（Deep Dive）
+
+OpenCLI 是一个**统一的 CLI 接口**，能将任何网站、浏览器会话、Electron 应用或本地工具转换为确定性的命令行界面——人类与 AI Agent 皆可使用。其架构围绕五个内聚层展开：快速路径入口点、命令注册表、管道执行器、浏览器自动化桥接和可扩展系统。每一层均具备单一职责，并通过定义良好的接口进行通信，使得系统具备可组合性、可测试性及抗变性。
+
+来源: [main.ts](/src/main.ts#L1-L183), [README.md](/README.md#L1-L18)
+
+## 启动架构：两阶段引导
+
+OpenCLI 采用**两阶段启动**策略以最小化感知延迟。第一阶段处理完全绕过完整发现的超快速路径；第二阶段仅在需要执行真实命令时，才支付完整的启动开销。
+
+```mermaid
+flowchart TD
+    A["main.ts entry"] --> B{"Fast-path check"}
+    B -->|"--version"| C["Print version → exit"]
+    B -->|"completion <shell>"| D["Print shell script → exit"]
+    B -->|"--get-completions"| E{"Manifest available?"}
+    E -->|Yes| F["Read manifest → complete → exit"]
+    E -->|No| G["Fall through to full path"]
+    B -->|"All other commands"| G
+    G --> H["Dynamic import: discovery, cli, hooks, runtime"]
+    H --> I["Parallel: discoverClis(builtin) ∥ ensureUserShims ∥ ensureUserAdapters"]
+    I --> J["discoverClIs(user) → discoverPlugins()"]
+    J --> K["emitHook('onStartup') → runCli()"]
+```
+
+**阶段 1**（`main.ts` 第 35–97 行）仅针对预编译的 `cli-manifest.json` 执行同步文件读取，处理 `--version`、`completion` 和 `--get-completions`。无动态导入，无发现过程，无注册表——进程在微秒级内退出。
+
+**阶段 2**（第 99–182 行）为完整启动路径。它动态导入所有重型模块（`discovery`、`cli`、`hooks`、`runtime`），随后并行化三个独立的 I/O 操作：内置适配器发现、用户目录 shim 设置及用户适配器目录创建。用户 CLI 发现运行于内置发现**之后**，以保持预期的覆盖顺序（当名称冲突时，用户适配器会遮蔽内置适配器）。插件发现最后运行，因为插件可能同时覆盖两者。
+
+来源: [main.ts](/src/main.ts#L33-L129)
+
+## 核心层：命令注册表
+
+**命令注册表**是 OpenCLI 的中枢神经系统。它是一个存储在 `globalThis.__opencli_registry__` 上的全局单例 `Map<string, CliCommand>`，用于确保在所有模块副本间共享唯一实例——对于通过 `npm link` 或 `peerDependency` 符号链接加载的插件而言，这是一项关键设计决策，否则它们将在独立的模块图中创建重复的 `Map` 实例。
+
+每个适配器——无论是内置、用户定义还是插件提供——均通过相同的 `cli()` 函数进行注册，该函数将命令规范化并将其插入注册表。键格式为 `site/name`（例如 `hackernews/top`），后续具有相同键的注册会覆盖先前的注册，从而确立确定性的**覆盖级联**：内置 → 用户 → 插件。
+
+注册表的类型系统区分了**浏览器命令**（接收 `IPage` 接口）与**非浏览器命令**（纯参数操作）。这一区分驱动了每个下游层的能力路由、会话管理和执行策略。
+
+| 字段 | 用途 | 示例 |
+|-------|---------|---------|
+| `site` | 命名空间 / 网站标识 | `hackernews` |
+| `name` | 站点内的子命令 | `top` |
+| `strategy` | 访问模式: `public`, `local`, `cookie`, `intercept`, `ui` | `cookie` |
+| `browser` | 命令是否需要 `IPage` | `true` |
+| `pipeline` | YAML 步骤定义（`func` 的替代方案） | `[{fetch: ...}, {select: ...}]` |
+| `navigateBefore` | 预导航 URL 或会话标志 | `"https://x.com"` |
+| `access` | 用于会话租约的读/写分类 | `read` |
+| `args` | 用于验证与帮助的参数模式 | `[{name: "limit", type: "int"}]` |
+
+`normalizeCommand()` 函数是将 `strategy` 解码为具体运行时字段（`browser`、`navigateBefore`）的**唯一权威**。规范化后，下游执行代码绝不直接读取 `cmd.strategy`——而是读取已解析的字段。覆盖优先级为：显式命令字段 > 策略派生默认值。
+
+来源: [registry.ts](/src/registry.ts#L1-L200)
+
+## 适配器发现：清单优先加载
+
+适配器发现遵循**清单优先**策略并辅以文件系统回退。在生产环境（构建后）中，预编译的 `cli-manifest.json` 与 `clis/` 目录并存，无需加载任何 JavaScript 模块即可实现所有命令的即时注册。TypeScript 模块被标记为 `_lazy: true` 并存储其 `_modulePath`——仅在命令实际执行时才按需导入。
+
+```mermaid
+flowchart LR
+    A["discoverClis(dir)"] --> B{"cli-manifest.json exists?"}
+    B -->|Yes| C["loadFromManifest()"]
+    C --> D["Register commands as lazy stubs"]
+    B -->|No| E["discoverClisFromFs()"]
+    E --> F["Scan site dirs → import .js modules"]
+    F --> G["Modules call cli() → registerCommand()"]
+    D --> H["Registry populated"]
+    G --> H
+```
+
+发现系统识别三种适配器来源：
+
+| 来源 | 位置 | 加载方式 | 覆盖优先级 |
+|--------|----------|---------|-------------------|
+| **内置** | `<package-root>/clis/` | 清单（延迟）或文件系统扫描 | 最低 |
+| **用户** | `~/.opencli/clis/` | 与内置相同 | 中（遮蔽内置） |
+| **插件** | `~/.opencli/plugins/<name>/` | 逐插件子目录扁平扫描 | 最高（遮蔽所有） |
+
+用户 CLI 的兼容性通过位于 `~/.opencli/node_modules/@jackwener/opencli` 的**符号链接 shim** 维持，该 shim 指向已安装的包根目录，允许用户适配器通过标准 Node.js ESM 解析执行 `import { cli } from '@jackwener/opencli/registry'`。
+
+来源: [discovery.ts](/src/discovery.ts#L1-L194)
+
+## 执行引擎：命令调度管道
+
+当用户调用 `opencli hackernews top --limit 5` 时，执行流程将按照由 `execution.ts` 编排的验证、会话管理与调度步骤的精确序列进行：
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant CommanderAdapter
+    participant Execution
+    participant Registry
+    participant Pipeline
+    participant BrowserBridge
+
+    User->>CommanderAdapter: opencli hackernews top --limit 5
+    CommanderAdapter->>CommanderAdapter: Collect kwargs from Commander args
+    CommanderAdapter->>Execution: executeCommand(cmd, kwargs)
+    Execution->>Execution: coerceAndValidateArgs()
+    Execution->>Execution: shouldUseBrowserSession(cmd)?
+    alt Browser needed
+        Execution->>BrowserBridge: "browserSession(factory, fn)"
+        BrowserBridge-->>Execution: IPage
+        Execution->>Execution: "resolvePreNav() → page.goto()"
+    end
+    alt cmd.func exists
+        Execution->>Execution: "cmd.func(page, kwargs)"
+    else cmd.pipeline exists
+        Execution->>Pipeline: "executePipeline(page, pipeline, {args})"
+    else Lazy module
+        Execution->>Execution: "import(modulePath) → re-lookup registry"
+    end
+    Execution-->>CommanderAdapter: result
+    CommanderAdapter->>CommanderAdapter: "renderOutput(result, format)"
+```
+
+`executeCommand()` 函数是所有命令执行的**单一入口点**。它负责处理：(1) 依据 `Arg[]` 模式进行参数强制转换与验证，(2) 通过 `shouldUseBrowserSession()` 能力路由管理浏览器会话生命周期，(3) 针对基于 cookie 策略的域名预导航，(4) 超时强制执行，(5) 支持用户适配器热重载的延迟模块加载，以及 (6) 生命周期钩子触发（`onBeforeExecute`、`onAfterExecute`）。
+
+**延迟加载与热重载**：当命令通过清单以 `_lazy: true` 注册时，其模块将在首次执行时导入。对于用户适配器，系统会跟踪文件 `mtime`，并在磁盘上的源文件发生更改时使缓存失效——无需重启守护进程即可实现适配器的迭代开发。
+
+来源: [execution.ts](/src/execution.ts#L1-L200), [commanderAdapter.ts](/src/commanderAdapter.ts#L1-L150)
+
+## 管道执行器：声明式适配器 DSL
+
+管道系统提供了一种**声明式 YAML DSL**，作为命令式 JavaScript 函数的替代方案。每个管道都是一个有序的步骤序列，其中一步的输出将作为 `data` 输入至下一步。这使得适配器能够完全以数据形式表达——无需编写代码。
+
+| 步骤类别 | 步骤 | 需要浏览器 |
+|---------------|-------|-----------------|
+| **导航与交互** | `navigate`, `click`, `type`, `fill`, `wait`, `press` | ✅ |
+| **观察** | `snapshot`, `evaluate`, `intercept` | ✅ |
+| **数据获取** | `fetch` | ❌ |
+| **转换** | `select`, `map`, `filter`, `sort`, `limit` | ❌ |
+| **控制流** | `tap`, `download` | ❌ / ✅ |
+
+管道注册表是**动态可扩展的**——插件可调用 `registerStep()` 以添加自定义操作。`capabilityRouting` 模块维护了一个 `BROWSER_ONLY_STEPS` 集合，该集合作为完整注册表的子集接受验证，确保系统能在无需检查步骤内部细节的情况下，准确判断某管道是否需要浏览器会话。
+
+**步骤重试**：纯浏览器步骤在遇到瞬态错误（例如元素尚未挂载）时会自动重试最多 2 次，两次尝试间隔 1 秒。非浏览器步骤默认不进行重试。
+
+来源: [pipeline/executor.ts](/src/pipeline/executor.ts#L1-L111), [pipeline/registry.ts](/src/pipeline/registry.ts#L1-L76), [capabilityRouting.ts](/src/capabilityRouting.ts#L1-L56)
+
+## 浏览器自动化：守护进程桥接架构
+
+OpenCLI 的浏览器自动化采用**微守护进程**架构，通过轻量级 HTTP + WebSocket 守护进程及配套的 Chrome 扩展，在 CLI 进程与 Chrome 之间建立桥接：
+
+```mermaid
+flowchart TD
+    subgraph "CLI Process"
+        A["executeCommand()"] --> B["daemon-client.ts"]
+        B -->|"HTTP POST /command"| C["localhost:19825"]
+    end
+    subgraph "Daemon Process"
+        C --> D["HTTP Server"]
+        D --> E["WebSocket dispatch"]
+        E -->|"WS message"| F["Chrome Extension"]
+        F -->|"WS result"| G["Pending settlers"]
+        G -->|"HTTP response"| B
+    end
+    subgraph "Chrome Browser"
+        F --> H["chrome.debugger CDP"]
+        H --> I["IPage operations"]
+    end
+```
+
+守护进程提供了**深度防御安全**：(1) 源检查拒绝非扩展来源，(2) 要求自定义 `X-OpenCLI` 头，(3) 命令端点无 CORS 头，(4) 1 MB 请求体大小限制，以及 (5) WebSocket 在升级前执行 `verifyClient` 拒绝。
+
+**会话租约**将针对同一 Chrome 标签页的并发写入命令序列化。`SessionLeaseRegistry` 通过基于 TTL 的过期机制追踪活跃持有者，因此崩溃的 CLI 进程无法永久锁定标签页。若持有陈旧租约的持有者仍有命令在执行中，则视为活跃——命令完成结算会刷新租约 TTL。
+
+**`IPage` 接口**是浏览器操作的统一抽象。它定义了涵盖导航、DOM 交互（`click`、`fillText`、`typeText`）、观察（`snapshot`、`evaluate`）、网络捕获、标签页管理及 CDP 透传的 40 余种方法。所有管道步骤与适配器函数均针对此接口操作，使其与底层传输机制解耦。
+
+来源: [daemon.ts](/src/daemon.ts#L1-L100), [types.ts](/src/types.ts#L72-L157), [runtime.ts](/src/runtime.ts#L1-L80)
+
+## 策略模型：适配器如何访问数据
+
+`Strategy` 枚举定义了五种访问模式，决定了适配器从目标网站检索数据的方式：
+
+| 策略 | 机制 | 需要浏览器 | 典型用途 |
+|----------|-----------|---------------|-------------|
+| `PUBLIC` | 直接 HTTP 获取（无需认证） | ❌ | 公开 API，RSS 订阅源 |
+| `LOCAL` | 本地二进制调用 | ❌ | `gh`、`docker`，CLI 工具 |
+| `COOKIE` | 携带 cookie 的浏览器上下文获取 | ✅ | 需认证的 API 端点 |
+| `INTERCEPT` | 导航 + 拦截网络响应 | ✅ | 包含 XHR/SPA 模式的站点 |
+| `UI` | 完整 DOM 交互（点击、填充、提取） | ✅ | 无 API 端点的站点 |
+
+`normalizeCommand()` 函数将策略展开为具体的运行时字段。例如，`domain` 为 `"x.com"` 的 `COOKIE` 策略会设置 `navigateBefore: "https://x.com"`——执行引擎将预导航至该 URL，确保浏览器的 cookie jar 已填充，以便后续的 `fetchJson()` 调用。`INTERCEPT` 策略设置 `navigateBefore: true`，表明需要经过认证的浏览器上下文，但没有具体的预导航 URL。
+
+来源: [registry.ts](/src/registry.ts#L7-L13), [registry.ts](/src/registry.ts#L184-L200)
+
+## 可扩展层：插件、技能与钩子
+
+OpenCLI 提供了三种互补的可扩展机制：
+
+**插件**是从 Git 仓库、本地目录或单体仓库安装的独立包。它们位于 `~/.opencli/plugins/<name>/`，可以注册命令、生命周期钩子及自定义管道步骤。插件系统管理安装、版本锁定（`plugins.lock.json`）、兼容性检查及卸载。在命令注册表中，插件具有**最高覆盖优先级**。
+
+**AI Agent 技能**是基于 Markdown 的知识包（例如 `opencli-browser`、`opencli-adapter-author`、`opencli-autofix`），用于指导 Claude Code 或 Cursor 等 AI 编码 Agent。每项技能位于 `skills/<name>/` 目录，包含一个 `SKILL.md` 前置元数据文件及可选的辅助文档。它们通过 `opencli skills read <skill>` 读取，并注入到 Agent 上下文中。
+
+**生命周期钩子**采用与命令注册表相同的 `globalThis` 单例模式，以确保跨模块实例的一致性。提供三个钩子点：
+
+| 钩子 | 时机 | 用例 |
+|------|--------|-----------|
+| `onStartup` | 所有发现完成后，首个命令执行前 | 初始化外部服务，注册自定义步骤 |
+| `onBeforeExecute` | 每次命令执行前 | 日志记录，参数修改，访问控制 |
+| `onAfterExecute` | 每次命令执行后 | 指标收集，结果后处理 |
+
+钩子处理程序被 try/catch 包裹——失败的钩子**绝不阻塞**命令执行，从而维持系统的故障隔离保证。
+
+来源: [plugin.ts](/src/plugin.ts#L1-L69), [skills.ts](/src/skills.ts#L1-L42), [hooks.ts](/src/hooks.ts#L1-L92)
+
+## 架构原则
+
+| 原则 | 实现 |
+|-----------|---------------|
+| **单例一致性** | 注册表与钩子使用 `globalThis` 以在跨符号链接边界的模块去重中存活 |
+| **覆盖级联** | 内置 → 用户 → 插件，采用后注册者胜出的语义 |
+| **默认延迟** | 基于清单的发现将模块加载推迟至执行时 |
+| **能力路由** | 策略与管道分析决定浏览器需求，无需运行时探测 |
+| **故障隔离** | 钩子被防火墙隔离；瞬态浏览器错误触发步骤级重试；守护进程租约自动过期 |
+| **并行启动** | 独立 I/O 操作通过 `Promise.all` 并发运行以缩减启动时间 |
+
+<CgxTip>`globalThis.__opencli_registry__` 模式绝非偶然——它是使插件在通过 `npm link` 加载时仍能正确工作的关键枢纽。若无此机制，每个模块副本将拥有各自的空 `Map`，插件注册的命令将从 CLI 视图中消失。此模式同样适用于钩子存储。</CgxTip>
+
+<CgxTip>编写新适配器时，选择正确的 `strategy` 是最具影响力的设计决策。`PUBLIC` 适配器启动极快（无需浏览器会话）。`COOKIE` 适配器速度快但需登录。`INTERCEPT` 与 `UI` 适配器最为强大，但需支付完整的浏览器会话开销。基于管道的适配器（使用 `pipeline` 字段而非 `func`）在遇到瞬态浏览器错误时，会自动执行步骤级重试。</CgxTip>
+
+## 接下来去往何处
+
+架构概述确立了概念框架。若要深入了解特定子系统：
+
+- **[命令注册表系统](8-command-registry-system)** — `cli()`、`normalizeCommand()` 及覆盖级联的详细工作原理
+- **[管道执行器](9-pipeline-executor)** — YAML DSL、步骤处理程序、模板渲染及重试语义
+- **[适配器发现与加载](10-adapter-discovery-and-loading)** — 清单编译、文件系统回退及插件扫描
+- **[浏览器桥接与守护进程](11-browser-bridge-and-daemon)** — 守护进程协议、会话租约及配置文件管理
+- **[管道 DSL 语法](14-pipeline-dsl-syntax)** — 编写基于管道适配器的实用参考
+- **[插件系统](17-plugin-system)** — 插件清单、安装及生命周期
+
+---
+
