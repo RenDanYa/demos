@@ -17,6 +17,11 @@ zread_read.py — 读取 GitHub 仓库在 zread.ai 的 AI 解读 wiki。
   python zread_read.py --repo pymupdf/PyMuPDF --page 1
   python zread_read.py --repo pymupdf/PyMuPDF --slug 2-quick-start --lang zh
   python zread_read.py --repo pymupdf/PyMuPDF --all --save d:\\obsidian\\demo\\inbox
+
+--all 模式行为（应对 zread 偶发 502/504）：
+  - 增量写入：每读完一页立刻落盘（flush），中途崩溃不丢已读内容
+  - 失败跳过：单页失败只记 warning 占位，继续下一页，不中断整轮
+  - 断点续跑：重跑同一命令时，已成功的页从文件缓存复用，只补拉失败/缺失的页
 """
 import argparse
 import json
@@ -33,8 +38,8 @@ NODE_CANDIDATES = ["node", r"D:\软件安装\nodejs\node.exe"]
 CLI_ENTRY = r"d:\voice\opencli-upstream\dist\src\main.js"
 CLI_CWD = r"d:\voice\opencli-upstream"
 REQUEST_TIMEOUT = 120   # 单次请求超时（秒）
-RETRY_ATTEMPTS = 2      # zread 偶发瞬时 504，自动重试一次
-RETRY_WAIT = 3
+RETRY_ATTEMPTS = 3      # zread 偶发瞬时 502/504，自动重试
+RETRY_WAIT = 5
 
 
 def find_node() -> str:
@@ -111,6 +116,29 @@ def sanitize(name: str) -> str:
     return re.sub(r"[^\w.-]+", "_", name).strip("_") or "repo"
 
 
+def load_cached_sections(path) -> dict:
+    """断点续跑：从上次增量写入的文件里解析已成功的章节（slug → 正文块）。
+
+    每节以 <!-- zread:slug=xxx --> 开头；含「此页获取失败」的节视为失败，不进缓存；
+    文件尾部的汇总块以 <!-- zread:summary --> 开始，切掉避免污染最后一节。
+    """
+    if not Path(path).exists():
+        return {}
+    try:
+        text = Path(path).read_text(encoding="utf-8")
+    except OSError:
+        return {}
+    parts = re.split(r"<!-- zread:slug=([\w-]+) -->", text)
+    cache = {}
+    for i in range(1, len(parts) - 1, 2):
+        slug, sec = parts[i], parts[i + 1]
+        sec = sec.split("<!-- zread:summary -->")[0]
+        if "此页获取失败" in sec[:300]:
+            continue
+        cache[slug] = sec
+    return cache
+
+
 def build_markdown(repo: str, lang: str, rows: list) -> str:
     lines = [
         "---",
@@ -165,21 +193,81 @@ def main():
             print(f"  {str(r['page']):>3}. {r['topic']:<32} [{r.get('section', '')}]  slug={r['content']}")
         return
 
-    # 模式二：--all 读全部页面
+    # 模式二：--all 读全部页面（增量写入 + 失败跳过 + 断点续跑）
     if args.all:
         pages = fetch_page_list(repo, args.lang)
         pages = sorted(pages, key=lambda r: int(r["page"]) if str(r["page"]).isdigit() else 999)
+
+        f = None
+        path = None
+        cache = {}
+        if args.save:
+            out_dir = Path(args.save)
+            out_dir.mkdir(parents=True, exist_ok=True)
+            owner, name = repo.split("/")
+            suffix = f"_{args.lang}" if args.lang else ""
+            path = out_dir / f"{sanitize(owner)}_{sanitize(name)}_zread{suffix}.md"
+            cache = load_cached_sections(path)
+            f = path.open("w", encoding="utf-8", newline="\n")
+            f.write("---\n")
+            f.write(f"source: https://zread.ai/{repo}\n")
+            f.write(f"repo: {repo}\n")
+            f.write(f"fetched: {date.today().isoformat()}\n")
+            f.write(f"pages: {len(pages)}\n")
+            if args.lang:
+                f.write(f"lang: {args.lang}\n")
+            f.write("---\n\n")
+            f.write(f"# {repo} — zread.ai 解读\n")
+            f.flush()
+            if cache:
+                print(f"[续跑] 复用上次已成功的 {len(cache)} 页，只补拉失败/缺失的页")
+
+        ok_count = cached_count = failed_count = 0
+        failed_slugs = []
         collected = []
         for i, r in enumerate(pages, 1):
-            print(f"[{i}/{len(pages)}] 读取 {r['content']}（{r['topic']}）…", flush=True)
-            row = fetch_page_by_slug(repo, r["content"], args.lang)
-            collected.append(row)
-        md = build_markdown(repo, args.lang, collected)
-        if args.save:
-            path = save_markdown(repo, args.lang, md, args.save)
-            print(f"[完成] {len(collected)} 页已保存 → {path}")
+            slug = str(r["content"])
+            label = f"（{r['section']}）" if r.get("section") else ""
+            heading = f"## {r['page']}. {r['topic']}{label}\n\n"
+            note = f"[{i}/{len(pages)}] 读取 {slug}（{r['topic']}）"
+            if slug in cache:
+                cached_count += 1
+                if f:
+                    f.write(f"<!-- zread:slug={slug} -->\n{heading}{cache[slug]}")
+                print(f"{note} → 缓存命中，跳过", flush=True)
+                continue
+            print(f"{note}…", flush=True)
+            try:
+                row = fetch_page_by_slug(repo, slug, args.lang)
+                ok_count += 1
+                collected.append(row)
+                if f:
+                    f.write(f"<!-- zread:slug={slug} -->\n{heading}{row['content']}\n\n---\n\n")
+                    f.flush()
+            except RuntimeError as e:
+                failed_count += 1
+                failed_slugs.append(slug)
+                print(f"    ⚠ 此页失败（已跳过，继续下一页）：{e}", flush=True)
+                if f:
+                    f.write(f"<!-- zread:slug={slug} -->\n{heading}"
+                            f"> [!warning] 此页获取失败：{e}\n"
+                            f"> zread 服务端偶发故障。重跑同一命令可断点续跑（已成功页自动跳过）。\n\n---\n\n")
+                    f.flush()
+
+        if f:
+            if failed_count:
+                f.write(f"\n<!-- zread:summary -->\n> [!warning] 共 {failed_count} 页获取失败："
+                        f"{', '.join(failed_slugs)}。重跑同一命令可断点续跑补全。\n")
+            f.close()
+            msg = f"[完成] 新拉 {ok_count} + 缓存 {cached_count} / 共 {len(pages)} 页 → {path}"
+            if failed_count:
+                msg += f"（失败 {failed_count} 页：{', '.join(failed_slugs)}）"
+            print(msg)
         else:
-            print(md)
+            if collected:
+                print(build_markdown(repo, args.lang, collected))
+            if failed_count:
+                print(f"\n[提示] {failed_count} 页失败：{', '.join(failed_slugs)}，重跑可重试", flush=True)
         return
 
     # 模式三：单页（--slug 优先，否则 --page）
