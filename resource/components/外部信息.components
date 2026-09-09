@@ -25,6 +25,9 @@
           "componentId": "50a43a85-9939-45db-a0fa-350f835eea45"
         },
         {
+          "componentId": "255f2a6d-8222-40c3-afdf-bd6788bfcf2d"
+        },
+        {
           "componentId": "00daf986-5db8-45ab-a263-f4d5227ce161"
         },
         {
@@ -32,9 +35,6 @@
         },
         {
           "componentId": "57a14d3c-8d84-42bf-9ef6-62234c9daa51"
-        },
-        {
-          "componentId": "255f2a6d-8222-40c3-afdf-bd6788bfcf2d"
         },
         {
           "componentId": "fd980de6-efc4-408d-9999-a693ccb74bc6"
@@ -2536,14 +2536,14 @@
       "id": "8088e7c9-ae3d-4a6d-8b5a-05b97a30a1db",
       "type": "dynamicDataView",
       "titleAlign": "center",
-      "tabTitle": "明细",
+      "tabTitle": "项目解读",
       "maxWidthRatio": -1,
       "showBorder": false,
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-28T08:12:02.052Z",
-      "viewType": "gallary",
+      "updateAt": "2026-09-08T12:21:04.034Z",
+      "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
         {
@@ -2555,27 +2555,32 @@
           "options": {}
         },
         {
-          "id": "277960f4-331d-49a5-ba53-e9d2a6f916ef",
-          "name": "count",
-          "type": "number",
-          "isShow": false,
+          "id": "3a2df1a0-5a70-42e3-b2ef-7f61fb36712a",
+          "name": "source",
+          "type": "link",
+          "isShow": true,
           "wrap": false,
           "options": {
-            "width": "98"
+            "width": "176"
           }
         },
         {
-          "id": "481f2589-e04e-4362-a405-13fe81824800",
-          "name": "content",
+          "id": "a51c7876-cb58-461b-9630-c6148dd0f8cd",
+          "name": "fetched",
+          "type": "datetime",
           "isShow": true,
-          "type": "formula",
+          "wrap": false,
           "options": {
-            "formula": "extractHeadingContent('## 商品列表')",
-            "renderType": "markdown",
-            "width": "661"
-          },
-          "alias": "列表",
-          "wrap": true
+            "width": "144"
+          }
+        },
+        {
+          "id": "077c87e5-1135-4fdb-8952-3e8ad2ded139",
+          "name": "pages",
+          "type": "number",
+          "isShow": true,
+          "wrap": false,
+          "options": {}
         }
       ],
       "templates": [],
@@ -2609,7 +2614,10 @@
         "statics": [],
         "orders": [],
         "hiddens": [],
-        "collapseds": []
+        "collapseds": [
+          "05_long_project/zread/jackwener_opencli",
+          "__$uncategorizedGroup"
+        ]
       },
       "filter": {
         "id": "3d4e5f6a-7b8c-4c9d-1f2a-3b4c5d6e7f81",
@@ -2621,28 +2629,12 @@
             "type": "filter",
             "operator": "contains",
             "property": "${file.parent}",
-            "value": "05_long_project/拼多多",
-            "conditions": []
-          },
-          {
-            "id": "5f6a7b8c-9d0e-4e1f-3b4c-5d6e7f809103",
-            "type": "filter",
-            "operator": "equals",
-            "property": "${file.extension}",
-            "value": "md",
-            "conditions": []
-          },
-          {
-            "id": "21dacd44-28fe-4619-a510-d7661c9d5b4b",
-            "type": "filter",
-            "operator": "not_contains",
-            "property": "${file.basename}",
-            "value": "低价",
+            "value": "05_long_project/zread",
             "conditions": []
           }
         ]
       },
-      "title": "拼多多商品采集",
+      "title": "项目解读",
       "sort": {
         "orders": [
           {
@@ -2653,134 +2645,7 @@
           }
         ]
       },
-      "groupBy": "",
-      "icon": "SlidersHorizontal",
-      "components": []
-    },
-    {
-      "id": "52d5ecc2-1daf-489b-ba01-d0e1b2fb04dd",
-      "type": "dynamicDataView",
-      "titleAlign": "center",
-      "tabTitle": "拼多多商品采集（低价）",
-      "maxWidthRatio": -1,
-      "showBorder": false,
-      "showTitle": true,
-      "showShadow": false,
-      "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-19T01:56:22.886Z",
-      "viewType": "gallary",
-      "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
-      "properties": [
-        {
-          "id": "__componentsTitleProperty_0x7c00",
-          "name": "文件名",
-          "type": "text",
-          "isShow": true,
-          "wrap": false,
-          "options": {
-            "width": "173"
-          }
-        },
-        {
-          "id": "277960f4-331d-49a5-ba53-e9d2a6f916ef",
-          "name": "count",
-          "type": "number",
-          "isShow": false,
-          "wrap": false,
-          "options": {
-            "width": "100"
-          }
-        },
-        {
-          "id": "481f2589-e04e-4362-a405-13fe81824800",
-          "name": "content",
-          "isShow": true,
-          "type": "formula",
-          "options": {
-            "formula": "extractHeadingContent('## 商品列表 (价格从低到高)')",
-            "renderType": "markdown",
-            "width": "661"
-          },
-          "alias": "## 商品列表",
-          "wrap": true
-        }
-      ],
-      "templates": [],
-      "groups": [],
-      "colorfulGroups": true,
-      "viewOptions": {
-        "openPageIn": "modal",
-        "openPageAfterCreate": true,
-        "itemSize": "components--page-card-large",
-        "showPropertyName": false,
-        "showAllProperties": false,
-        "items": [],
-        "cover": {
-          "type": "none",
-          "source": "property",
-          "fit": "cover",
-          "layout": "components--page-card-cover-landscape",
-          "position": "left",
-          "sourceValue": "imageUrl"
-        },
-        "pinFiltersToMenuBar": true,
-        "hideHeaderMenu": false,
-        "showGrid": false,
-        "heightType": "fixed",
-        "heightValue": 500,
-        "rowHeight": 32
-      },
-      "groupStates": {
-        "sort": "nameAsc",
-        "format": "none",
-        "statics": [],
-        "orders": [],
-        "hiddens": [],
-        "collapseds": []
-      },
-      "filter": {
-        "id": "3d4e5f6a-7b8c-4c9d-1f2a-3b4c5d6e7f81",
-        "type": "group",
-        "operator": "and",
-        "conditions": [
-          {
-            "id": "4e5f6a7b-8c9d-4d0e-2a3b-4c5d6e7f8092",
-            "type": "filter",
-            "operator": "contains",
-            "property": "${file.parent}",
-            "value": "05_long_project/拼多多",
-            "conditions": []
-          },
-          {
-            "id": "5f6a7b8c-9d0e-4e1f-3b4c-5d6e7f809103",
-            "type": "filter",
-            "operator": "equals",
-            "property": "${file.extension}",
-            "value": "md",
-            "conditions": []
-          },
-          {
-            "id": "21dacd44-28fe-4619-a510-d7661c9d5b4b",
-            "type": "filter",
-            "operator": "contains",
-            "property": "${file.basename}",
-            "value": "低价",
-            "conditions": []
-          }
-        ]
-      },
-      "title": "拼多多商品采集（低价）",
-      "sort": {
-        "orders": [
-          {
-            "id": "7b8c9d0e-1f2a-4a3b-5d6e-7f8091021325",
-            "property": "${file.ctime}",
-            "direction": "desc",
-            "disabled": false
-          }
-        ]
-      },
-      "groupBy": "",
+      "groupBy": "${file.parent}",
       "icon": "SlidersHorizontal",
       "components": []
     },
@@ -2798,23 +2663,6 @@
       "components": [
         {
           "componentId": "8088e7c9-ae3d-4a6d-8b5a-05b97a30a1db"
-        },
-        {
-          "componentId": "52d5ecc2-1daf-489b-ba01-d0e1b2fb04dd",
-          "layout": {
-            "mobile": {
-              "x": 0,
-              "y": 0,
-              "w": 4,
-              "h": 4
-            },
-            "laptop": {
-              "x": 0,
-              "y": 4,
-              "w": 4,
-              "h": 4
-            }
-          }
         }
       ],
       "layoutType": "column",
@@ -2826,13 +2674,13 @@
       "id": "50a43a85-9939-45db-a0fa-350f835eea45",
       "type": "multi",
       "titleAlign": "center",
-      "tabTitle": "github",
+      "tabTitle": "zread",
       "maxWidthRatio": -1,
       "showBorder": false,
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T10:37:12.400Z",
-      "updateAt": "2026-09-08T07:57:40.080Z",
+      "updateAt": "2026-09-08T12:18:56.039Z",
       "components": [
         {
           "componentId": "39fff9c3-2686-4e1f-9c68-27d9b025d8ce"
@@ -2841,7 +2689,7 @@
       "layoutType": "list",
       "locked": false,
       "layoutOptions": {},
-      "title": "github"
+      "title": "zread"
     }
   ],
   "rootComponentId": "7a1b2c3d-4e5f-4a6b-8c9d-0e1f2a3b4c5d",
