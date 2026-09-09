@@ -1,6 +1,6 @@
 # Obsidian 数据采集工具集
 
-基于 [opencli](https://github.com/jackwener/opencli) 的 Obsidian 数据采集脚本集合，覆盖小红书、BOSS直聘、B站、拼多多、GitHub 五个平台。
+基于 [opencli](https://github.com/jackwener/opencli) 的 Obsidian 数据采集脚本集合，覆盖小红书、BOSS直聘、B站、拼多多、GitHub、zread.ai 六个平台。
 
 所有脚本输出到 `d:/obsidian/demo/05_long_project/` 下对应子目录，日志写入 `05_long_project/程序运行日志/`。
 
@@ -23,6 +23,8 @@
 | B站 | `bilibili_weekly_by_partition.py` | 每周必看按分区归档 |
 | GitHub | `github_trending.py` | Trending 仓库采集 |
 | GitHub | `github_topic.py` | Topic 仓库采集 |
+| zread | `zread_read.py` | zread.ai 解读读取（单页/全量） |
+| zread | `zread_getstarted.py` | Get Started 分区采集 |
 | 拼多多 | `pdd_search.py` | 商品搜索（综合排序） |
 | 拼多多 | `pdd_search_cheap.py` | 商品搜索（价格升序） |
 | 拼多多 | `pdd_search_batch.py` | 批量低价搜索 |
@@ -65,6 +67,7 @@ d:/obsidian/demo/
 │   ├── GitHub/              # GitHub 采集输出
 │   │   ├── Trending/        # Trending 仓库
 │   │   └── Topic/           # Topic 仓库
+│   ├── zread/               # zread.ai 解读输出（每项目一个目录）
 │   ├── 拼多多/              # 拼多多采集输出
 │   └── 程序运行日志/         # 每次运行的独立日志
 ```
@@ -373,6 +376,52 @@ python github_topic.py machine-learning --no-translate  # 跳过翻译
 
 ---
 
+## zread 系列
+
+读取 GitHub 仓库在 [zread.ai](https://zread.ai) 的 AI 解读 wiki。底层调用 **opencli-upstream** 的 `zread read` 适配器（纯 HTTP 公开接口，无需浏览器、无需登录），与全局 opencli 命令完全隔离（绝对路径调用 `d:/voice/opencli-upstream/dist/src/main.js`）。
+
+zread wiki 固定三段结构：**Get Started**（第 1-3 页入门）、**Buzz**（动态资讯）、**Deep Dive**（架构深入）。
+
+### zread_read.py — 解读读取（基础模块）
+
+支持目录浏览、单页读取、全量拉取三种模式。
+
+```bash
+python zread_read.py --repo pymupdf/PyMuPDF --list                    # 只看目录
+python zread_read.py --repo pymupdf/PyMuPDF --page 1                  # 读第 1 页
+python zread_read.py --repo pymupdf/PyMuPDF --slug 2-quick-start --lang zh  # 按 slug 精确读
+python zread_read.py --repo pymupdf/PyMuPDF --all --lang zh --save d:/obsidian/demo/inbox  # 全量保存
+```
+
+`--repo` 也接受完整 zread.ai URL。`--all` 模式应对 zread 偶发 502/504：增量写入（每页读完立刻落盘）、失败跳过（占位不中断）、断点续跑（重跑同一命令自动补拉缺失页）。
+
+### zread_getstarted.py — Get Started 分区采集
+
+弹窗输入 repo，固定拉取中文 wiki 的 Get Started 分区到独立目录（入门场景的最小集，通常 3 页）。
+
+```bash
+python zread_getstarted.py              # 弹窗输入 repo（主用法）
+python zread_getstarted.py owner/name   # 命令行指定（tkinter 不可用时回退）
+```
+
+输出结构（每项目一个目录）：
+
+```
+05_long_project/zread/{owner}_{name}/
+├── 00_目录.md              # 全部页面目录：Get Started 行双链本地笔记，其余标 —
+├── 1-overview.md           # 每页一个笔记（slug 命名）
+├── 2-quick-start.md
+└── 3-xxx.md
+```
+
+**关键特性**：
+- 固定参数：`--lang zh` + Get Started 分区（按 `section` 字段筛选），无需交互选择
+- 幂等：重复运行同一 repo 时已存在的页面文件跳过，只补失败/缺失的页
+- 逐页请求间隔 2-4 秒轻量防限流；单页失败跳过继续，完成后弹窗汇总结果
+- 复用 zread_read.py 的 CLI 调用（含 3 次重试）
+
+---
+
 ## 拼多多系列
 
 ### pdd_search.py — 商品搜索（综合排序）
@@ -450,6 +499,9 @@ xiaohongshu_collect.py  ← 核心基础模块
 boss_search.py  ← 独立（仅导入 xiaohongshu_collect 的基础工具）
 boss_resume.py  ← 独立（仅导入 xiaohongshu_collect 的基础工具）
 boss_fix_status.py  ← 完全独立（仅用标准库 re + pathlib）
+
+zread_read.py  ← 独立基础模块（自带 CLI 调用，不走 xiaohongshu_collect）
+└── zread_getstarted.py
 ```
 
 ## 日志机制

@@ -2542,7 +2542,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-09-08T12:21:04.034Z",
+      "updateAt": "2026-09-09T23:15:56.619Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -2613,7 +2613,9 @@
         "format": "none",
         "statics": [],
         "orders": [],
-        "hiddens": [],
+        "hiddens": [
+          "__$uncategorizedGroup"
+        ],
         "collapseds": [
           "05_long_project/zread/jackwener_opencli",
           "__$uncategorizedGroup"
