@@ -19,6 +19,9 @@
           "componentId": "2d393d0a-3527-4486-8317-4a7bdb1cd8b7"
         },
         {
+          "componentId": "e8f46ef0-627a-4a20-82a6-6cd4fe64f18c"
+        },
+        {
           "componentId": "0ab9930c-71b9-4ea2-979a-7a1c39f5bd0f"
         },
         {
@@ -31,50 +34,16 @@
           "componentId": "00daf986-5db8-45ab-a263-f4d5227ce161"
         },
         {
-          "componentId": "e8f46ef0-627a-4a20-82a6-6cd4fe64f18c"
-        },
-        {
           "componentId": "57a14d3c-8d84-42bf-9ef6-62234c9daa51"
         },
         {
           "componentId": "fd980de6-efc4-408d-9999-a693ccb74bc6"
-        },
-        {
-          "componentId": "728c922e-724f-4264-a082-992f37786046"
         }
       ],
       "layoutType": "tab",
       "locked": true,
       "layoutOptions": {},
       "title": "小红书采集"
-    },
-    {
-      "id": "2f6a7b8c-9d0e-4f1a-3b4c-5d6e7f809102",
-      "type": "button",
-      "titleAlign": "center",
-      "tabTitle": "采集多篇笔记",
-      "maxWidthRatio": -1,
-      "showBorder": true,
-      "showTitle": true,
-      "showShadow": true,
-      "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-17T00:26:24.741Z",
-      "text": "🔍 采集多篇笔记",
-      "buttonType": "common",
-      "clickActions": [
-        {
-          "type": "RunScript",
-          "id": "f1a2b3c4-d5e6-4f7a-8b9c-0d1e2f3a4b5c",
-          "options": {
-            "expression": "runPython('D:/obsidian/demo/inbox/python/xiaohongshu_collect.py', {timeout: 600000})"
-          }
-        }
-      ],
-      "checkActions": [],
-      "uncheckActions": [],
-      "isChecked": false,
-      "fullWidth": true,
-      "title": "采集多篇笔记"
     },
     {
       "id": "9c3d4e5f-6a7b-4c8d-0e1f-2a3b4c5d6e7f",
@@ -457,62 +426,6 @@
       "loadLimitPerPage": "25"
     },
     {
-      "id": "ai-btn-button-0002-0000-000000000002",
-      "type": "button",
-      "titleAlign": "center",
-      "tabTitle": "",
-      "maxWidthRatio": -1,
-      "showBorder": true,
-      "showTitle": true,
-      "showShadow": true,
-      "createAt": "2026-06-28T20:00:00.000Z",
-      "updateAt": "2026-06-28T13:20:43.828Z",
-      "text": "🤖 问点点AI",
-      "buttonType": "common",
-      "clickActions": [
-        {
-          "type": "RunScript",
-          "id": "ai-runscript-id-0004-0000-000000000004",
-          "options": {
-            "expression": "runPython('D:/obsidian/demo/inbox/python/xiaohongshu_ai.py', {timeout: 180000})"
-          }
-        }
-      ],
-      "checkActions": [],
-      "uncheckActions": [],
-      "isChecked": false,
-      "fullWidth": true,
-      "title": "问点点AI"
-    },
-    {
-      "id": "single-btn-button-0002-0000-000000000020",
-      "type": "button",
-      "titleAlign": "center",
-      "tabTitle": "",
-      "maxWidthRatio": -1,
-      "showBorder": true,
-      "showTitle": true,
-      "showShadow": true,
-      "createAt": "2026-06-28T20:30:00.000Z",
-      "updateAt": "2026-06-28T20:30:00.000Z",
-      "text": "📥 采集单篇笔记",
-      "buttonType": "common",
-      "clickActions": [
-        {
-          "type": "RunScript",
-          "id": "single-runscript-id-0004-0000-000000000040",
-          "options": {
-            "expression": "runPython('D:/obsidian/demo/inbox/python/xiaohongshu_note.py', {timeout: 120000})"
-          }
-        }
-      ],
-      "checkActions": [],
-      "uncheckActions": [],
-      "isChecked": false,
-      "fullWidth": true,
-      "title": "采集单篇笔记"
-    },
-    {
       "id": "2d393d0a-3527-4486-8317-4a7bdb1cd8b7",
       "type": "multi",
       "titleAlign": "center",
@@ -556,62 +469,6 @@
       "locked": false,
       "layoutOptions": {},
       "title": "B站关注视频"
-    },
-    {
-      "id": "01b4cd00-1f06-49c0-9d8f-96b7abc27293",
-      "type": "button",
-      "titleAlign": "center",
-      "tabTitle": "拉取近期视频",
-      "maxWidthRatio": -1,
-      "showBorder": true,
-      "showTitle": true,
-      "showShadow": true,
-      "createAt": "2026-06-28T21:00:00.000Z",
-      "updateAt": "2026-06-28T13:31:59.851Z",
-      "text": "🎬 拉取近期视频",
-      "buttonType": "common",
-      "clickActions": [
-        {
-          "type": "RunScript",
-          "id": "bv-runscript-id-0005-0000-000000000005",
-          "options": {
-            "expression": "runPython('D:/obsidian/demo/inbox/python/bilibili_videos.py', {timeout: 600000})"
-          }
-        }
-      ],
-      "checkActions": [],
-      "uncheckActions": [],
-      "isChecked": false,
-      "fullWidth": true,
-      "title": "拉取近期视频"
-    },
-    {
-      "id": "010dfa44-78e2-45c8-b8ef-5ff11c59b791",
-      "type": "button",
-      "titleAlign": "center",
-      "tabTitle": "先刷新关注列表缓存, 再拉视频",
-      "maxWidthRatio": -1,
-      "showBorder": true,
-      "showTitle": true,
-      "showShadow": true,
-      "createAt": "2026-06-28T21:00:00.000Z",
-      "updateAt": "2026-06-28T13:32:18.763Z",
-      "text": "🔄 先刷新关注列表",
-      "buttonType": "common",
-      "clickActions": [
-        {
-          "type": "RunScript",
-          "id": "bv-runscript-id-0006-0000-000000000006",
-          "options": {
-            "expression": "runPython('D:/obsidian/demo/inbox/python/bilibili_videos.py', {args: ['--refresh'], timeout: 600000})"
-          }
-        }
-      ],
-      "checkActions": [],
-      "uncheckActions": [],
-      "isChecked": false,
-      "fullWidth": true,
-      "title": "先刷新关注列表缓存, 再拉视频"
     },
     {
       "id": "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d",
@@ -699,7 +556,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-30T08:38:59.638Z",
+      "updateAt": "2026-09-10T01:45:17.251Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -836,10 +693,9 @@
         ],
         "collapseds": [
           "__$uncategorizedGroup",
-          "婚纱酒店出嫁房需要租几天？",
           "跟妆如何确定自己的妆造",
           "可以给跟妆提供的风格",
-          "求职渠道"
+          "婚纱酒店出嫁房需要租几天？"
         ]
       },
       "filter": {
@@ -995,34 +851,6 @@
         ]
       },
       "title": "待办"
-    },
-    {
-      "id": "ac19453e-f917-4d7a-9e18-f54046dbac97",
-      "type": "button",
-      "titleAlign": "center",
-      "tabTitle": "采集博主笔记",
-      "maxWidthRatio": -1,
-      "showBorder": true,
-      "showTitle": true,
-      "showShadow": true,
-      "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-17T00:28:41.966Z",
-      "text": "🧑‍💻 采集博主笔记",
-      "buttonType": "common",
-      "clickActions": [
-        {
-          "type": "RunScript",
-          "id": "f1a2b3c4-d5e6-4f7a-8b9c-0d1e2f3a4b5c",
-          "options": {
-            "expression": "runPython('D:/obsidian/demo/inbox/python/xiaohongshu_user.py', {timeout: 600000})"
-          }
-        }
-      ],
-      "checkActions": [],
-      "uncheckActions": [],
-      "isChecked": false,
-      "fullWidth": true,
-      "title": "采集博主笔记"
     },
     {
       "id": "787da771-996a-4295-86f3-c5e084028731",
@@ -1217,39 +1045,6 @@
       "icon": "Airplay"
     },
     {
-      "id": "1d88fc01-6e2c-4ff2-9c16-72cc40949fcc",
-      "type": "multi",
-      "titleAlign": "center",
-      "tabTitle": "一键触发",
-      "maxWidthRatio": -1,
-      "showBorder": false,
-      "showTitle": true,
-      "showShadow": false,
-      "createAt": "2026-07-17T00:59:43.323Z",
-      "updateAt": "2026-07-19T07:30:13.349Z",
-      "components": [
-        {
-          "componentId": "ai-btn-button-0002-0000-000000000002"
-        },
-        {
-          "componentId": "6b94394f-23c6-4003-8ac8-538a860bc302"
-        },
-        {
-          "componentId": "single-btn-button-0002-0000-000000000020"
-        },
-        {
-          "componentId": "2f6a7b8c-9d0e-4f1a-3b4c-5d6e7f809102"
-        },
-        {
-          "componentId": "ac19453e-f917-4d7a-9e18-f54046dbac97"
-        }
-      ],
-      "layoutType": "column",
-      "locked": false,
-      "layoutOptions": {},
-      "title": "一键触发"
-    },
-    {
       "id": "e8f46ef0-627a-4a20-82a6-6cd4fe64f18c",
       "type": "dynamicDataView",
       "titleAlign": "center",
@@ -1259,7 +1054,7 @@
       "showTitle": true,
       "showShadow": false,
       "createAt": "2026-06-28T19:30:00.000Z",
-      "updateAt": "2026-07-30T08:39:28.122Z",
+      "updateAt": "2026-09-10T01:17:32.675Z",
       "viewType": "table",
       "newPageNameFormat": "{{date:YYYYMMDDHHmmss}}",
       "properties": [
@@ -1402,7 +1197,6 @@
           "婚纱照是怎么做到一张片都没加的",
           "婚纱照探店主要谈什么？",
           "婚纱照预算",
-          "婚纱主纱按领口和材质区别",
           "买婚鞋攻略",
           "女方陪嫁清单",
           "拍的婚纱照哪里要用",
@@ -1417,7 +1211,8 @@
           "异地租纱攻略怎么租",
           "准备结婚的速看，可避雷99%的大坑",
           "租赁婚纱预算",
-          "__$uncategorizedGroup"
+          "__$uncategorizedGroup",
+          "婚纱主纱按领口和材质区别"
         ]
       },
       "filter": {
@@ -1550,65 +1345,6 @@
       "locked": false,
       "layoutOptions": {},
       "title": "预览"
-    },
-    {
-      "id": "dd45582b-779f-40a2-8cd9-ed0afa4bbbfd",
-      "type": "button",
-      "titleAlign": "center",
-      "tabTitle": "搜索商品",
-      "maxWidthRatio": -1,
-      "showBorder": true,
-      "showTitle": true,
-      "showShadow": true,
-      "createAt": "2026-06-28T20:00:00.000Z",
-      "updateAt": "2026-07-19T01:23:58.184Z",
-      "text": "🤖 搜索商品",
-      "buttonType": "common",
-      "clickActions": [
-        {
-          "type": "RunScript",
-          "id": "ai-runscript-id-0004-0000-000000000004",
-          "options": {
-            "expression": "runPython('D:/obsidian/demo/inbox/python/pdd_search.py', {timeout: 180000})"
-          }
-        }
-      ],
-      "checkActions": [],
-      "uncheckActions": [],
-      "isChecked": false,
-      "fullWidth": true,
-      "title": "搜索商品",
-      "components": []
-    },
-    {
-      "id": "996e06af-a690-4f36-8140-30e253f67c8f",
-      "type": "multi",
-      "titleAlign": "center",
-      "tabTitle": "一键触发",
-      "maxWidthRatio": -1,
-      "showBorder": false,
-      "showTitle": true,
-      "showShadow": false,
-      "createAt": "2026-07-17T00:59:43.323Z",
-      "updateAt": "2026-07-19T07:55:18.863Z",
-      "components": [
-        {
-          "componentId": "dd45582b-779f-40a2-8cd9-ed0afa4bbbfd"
-        },
-        {
-          "componentId": "6b102a95-1b64-4cdf-9835-a74e6dbfac7a"
-        },
-        {
-          "componentId": "cc8c61ba-193d-4218-826f-3bf3469a71c8"
-        },
-        {
-          "componentId": "7e256997-7072-4e85-aa5a-75c80b59037c"
-        }
-      ],
-      "layoutType": "column",
-      "locked": false,
-      "layoutOptions": {},
-      "title": "一键触发"
     },
     {
       "id": "3ae040f8-6e77-42dc-af31-d9b5e84e782d",
@@ -1797,35 +1533,6 @@
       "title": "拼多多"
     },
     {
-      "id": "cc8c61ba-193d-4218-826f-3bf3469a71c8",
-      "type": "button",
-      "titleAlign": "center",
-      "tabTitle": "搜索商品（低价）",
-      "maxWidthRatio": -1,
-      "showBorder": true,
-      "showTitle": true,
-      "showShadow": true,
-      "createAt": "2026-06-28T20:00:00.000Z",
-      "updateAt": "2026-07-19T01:41:52.326Z",
-      "text": "🤖 搜索商品(低价)",
-      "buttonType": "common",
-      "clickActions": [
-        {
-          "type": "RunScript",
-          "id": "ai-runscript-id-0004-0000-000000000004",
-          "options": {
-            "expression": "runPython('D:/obsidian/demo/inbox/python/pdd_search_cheap.py', {timeout: 180000})"
-          }
-        }
-      ],
-      "checkActions": [],
-      "uncheckActions": [],
-      "isChecked": false,
-      "fullWidth": true,
-      "title": "搜索商品（低价）",
-      "components": []
-    },
-    {
       "id": "d7cdbfb2-613b-4f2a-87aa-bfcbed68ff92",
       "type": "dynamicDataView",
       "titleAlign": "center",
@@ -1951,35 +1658,6 @@
       "components": []
     },
     {
-      "id": "7e256997-7072-4e85-aa5a-75c80b59037c",
-      "type": "button",
-      "titleAlign": "center",
-      "tabTitle": "搜索商品（低价批量）",
-      "maxWidthRatio": -1,
-      "showBorder": true,
-      "showTitle": true,
-      "showShadow": true,
-      "createAt": "2026-06-28T20:00:00.000Z",
-      "updateAt": "2026-07-19T07:55:07.727Z",
-      "text": "🤖 搜索商品(低价批量)",
-      "buttonType": "common",
-      "clickActions": [
-        {
-          "type": "RunScript",
-          "id": "ai-runscript-id-0004-0000-000000000004",
-          "options": {
-            "expression": "runPython('D:/obsidian/demo/inbox/python/pdd_search_batch.py', {timeout: 180000})"
-          }
-        }
-      ],
-      "checkActions": [],
-      "uncheckActions": [],
-      "isChecked": false,
-      "fullWidth": true,
-      "title": "搜索商品（低价批量）",
-      "components": []
-    },
-    {
       "id": "f67c70ee-b389-4a40-b42a-67bcf9b1b428",
       "type": "markdown",
       "titleAlign": "center",
@@ -1995,63 +1673,6 @@
       "markdownsSource": "file",
       "markdownValue": "inbox/商品购买清单.md",
       "title": "拼多多购买清单"
-    },
-    {
-      "id": "6b94394f-23c6-4003-8ac8-538a860bc302",
-      "type": "button",
-      "titleAlign": "center",
-      "tabTitle": "问点点AI（多问题）",
-      "maxWidthRatio": -1,
-      "showBorder": true,
-      "showTitle": true,
-      "showShadow": true,
-      "createAt": "2026-06-28T20:00:00.000Z",
-      "updateAt": "2026-07-19T07:31:07.448Z",
-      "text": "🎯 问点点AI（多问题）",
-      "buttonType": "common",
-      "clickActions": [
-        {
-          "type": "RunScript",
-          "id": "ai-runscript-id-0004-0000-000000000004",
-          "options": {
-            "expression": "runPython('D:/obsidian/demo/inbox/python/xiaohongshu_ai_batch.py', {timeout: 180000})"
-          }
-        }
-      ],
-      "checkActions": [],
-      "uncheckActions": [],
-      "isChecked": false,
-      "fullWidth": true,
-      "title": "问点点AI（多问题）"
-    },
-    {
-      "id": "6b102a95-1b64-4cdf-9835-a74e6dbfac7a",
-      "type": "button",
-      "titleAlign": "center",
-      "tabTitle": "搜索商品（批量）",
-      "maxWidthRatio": -1,
-      "showBorder": true,
-      "showTitle": true,
-      "showShadow": true,
-      "createAt": "2026-06-28T20:00:00.000Z",
-      "updateAt": "2026-07-19T08:17:53.170Z",
-      "text": "🤖 搜索商品（批量）",
-      "buttonType": "common",
-      "clickActions": [
-        {
-          "type": "RunScript",
-          "id": "ai-runscript-id-0004-0000-000000000004",
-          "options": {
-            "expression": "runPython('D:/obsidian/demo/inbox/python/pdd_search_batch_default.py', {timeout: 180000})"
-          }
-        }
-      ],
-      "checkActions": [],
-      "uncheckActions": [],
-      "isChecked": false,
-      "fullWidth": true,
-      "title": "搜索商品（批量）",
-      "components": []
     },
     {
       "id": "2d401686-b6c2-4409-b553-87d0867586b2",
@@ -2093,59 +1714,6 @@
       "markdownsSource": "file",
       "markdownValue": "inbox/问题清单.md",
       "title": "小红书问题清单"
-    },
-    {
-      "id": "fc600967-603d-4310-bec7-9603619e7935",
-      "type": "button",
-      "titleAlign": "center",
-      "tabTitle": "搜索职位",
-      "maxWidthRatio": -1,
-      "showBorder": true,
-      "showTitle": true,
-      "showShadow": true,
-      "createAt": "2026-06-28T20:00:00.000Z",
-      "updateAt": "2026-07-28T01:55:11.715Z",
-      "text": "🤖 搜索职位",
-      "buttonType": "common",
-      "clickActions": [
-        {
-          "type": "RunScript",
-          "id": "ai-runscript-id-0004-0000-000000000004",
-          "options": {
-            "expression": "runPython('D:/obsidian/demo/inbox/python/boss_search.py', {timeout: 180000})"
-          }
-        }
-      ],
-      "checkActions": [],
-      "uncheckActions": [],
-      "isChecked": false,
-      "fullWidth": true,
-      "title": "搜索职位",
-      "components": []
-    },
-    {
-      "id": "b1ef47e8-3ea4-4869-8658-c40f9b69c82a",
-      "type": "multi",
-      "titleAlign": "center",
-      "tabTitle": "一键触发",
-      "maxWidthRatio": -1,
-      "showBorder": false,
-      "showTitle": true,
-      "showShadow": false,
-      "createAt": "2026-07-17T00:59:43.323Z",
-      "updateAt": "2026-07-28T01:55:04.782Z",
-      "components": [
-        {
-          "componentId": "fc600967-603d-4310-bec7-9603619e7935"
-        },
-        {
-          "componentId": "6126f602-1201-4ae0-b133-a847e13e837f"
-        }
-      ],
-      "layoutType": "column",
-      "locked": false,
-      "layoutOptions": {},
-      "title": "一键触发"
     },
     {
       "id": "66ab4287-04d8-48ff-913f-0c8e9e8d6254",
@@ -2327,89 +1895,6 @@
       "locked": false,
       "layoutOptions": {},
       "title": "简历"
-    },
-    {
-      "id": "6126f602-1201-4ae0-b133-a847e13e837f",
-      "type": "button",
-      "titleAlign": "center",
-      "tabTitle": "搜索职位（续）",
-      "maxWidthRatio": -1,
-      "showBorder": true,
-      "showTitle": true,
-      "showShadow": true,
-      "createAt": "2026-06-28T20:00:00.000Z",
-      "updateAt": "2026-07-28T01:55:43.279Z",
-      "text": "🤖 搜索职位（续）",
-      "buttonType": "common",
-      "clickActions": [
-        {
-          "type": "RunScript",
-          "id": "ai-runscript-id-0004-0000-000000000004",
-          "options": {
-            "expression": "runPython('D:/obsidian/demo/inbox/python/boss_resume.py', {timeout: 180000})"
-          }
-        }
-      ],
-      "checkActions": [],
-      "uncheckActions": [],
-      "isChecked": false,
-      "fullWidth": true,
-      "title": "搜索职位（续）",
-      "components": []
-    },
-    {
-      "id": "728c922e-724f-4264-a082-992f37786046",
-      "type": "multi",
-      "titleAlign": "center",
-      "tabTitle": "程序按钮",
-      "maxWidthRatio": -1,
-      "showBorder": false,
-      "showTitle": true,
-      "showShadow": false,
-      "createAt": "2026-07-30T08:41:32.057Z",
-      "updateAt": "2026-07-30T08:43:14.248Z",
-      "components": [
-        {
-          "componentId": "1d88fc01-6e2c-4ff2-9c16-72cc40949fcc"
-        },
-        {
-          "componentId": "996e06af-a690-4f36-8140-30e253f67c8f"
-        },
-        {
-          "componentId": "b1ef47e8-3ea4-4869-8658-c40f9b69c82a"
-        },
-        {
-          "componentId": "efc7e942-0ce8-4793-8a9e-146f0ea547dc"
-        }
-      ],
-      "layoutType": "list",
-      "locked": false,
-      "layoutOptions": {},
-      "title": "程序按钮"
-    },
-    {
-      "id": "efc7e942-0ce8-4793-8a9e-146f0ea547dc",
-      "type": "multi",
-      "titleAlign": "center",
-      "tabTitle": "一键触发",
-      "maxWidthRatio": -1,
-      "showBorder": false,
-      "showTitle": true,
-      "showShadow": false,
-      "createAt": "2026-07-17T00:59:43.323Z",
-      "updateAt": "2026-07-28T01:55:04.782Z",
-      "components": [
-        {
-          "componentId": "010dfa44-78e2-45c8-b8ef-5ff11c59b791"
-        },
-        {
-          "componentId": "01b4cd00-1f06-49c0-9d8f-96b7abc27293"
-        }
-      ],
-      "layoutType": "column",
-      "locked": false,
-      "layoutOptions": {},
-      "title": "一键触发"
     },
     {
       "id": "13a5bf67-9ad6-4cc3-b9e2-3ab9066a8d35",

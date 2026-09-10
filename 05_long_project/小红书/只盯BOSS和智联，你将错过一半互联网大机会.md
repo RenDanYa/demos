@@ -1,14 +1,18 @@
 ---
-tags: ["互联网求职", "大厂", "互联网", "大厂求职"]
-title: "只盯BOSS和智联，你将错过一半互联网大机会"
-query: "求职渠道"
-source: "多篇采集"
+tags:
+  - 互联网求职
+  - 大厂
+  - 互联网
+  - 大厂求职
+title: 只盯BOSS和智联，你将错过一半互联网大机会
+query: 求职渠道
+source: 多篇采集
 likes: 0
-publishedAt: "2025-12-05"
-url: "https://www.xiaohongshu.com/search_result/69327b10000000000d00db68?xsec_token=AB7K7nsBRxn9OGsgNbMD75aemF8sEPojYm3gsBAxvqgUQ=&xsec_source="
-imageUrl: "附件/69327b10000000000d00db68/69327b10000000000d00db68_1.jpg"
+publishedAt: 2025-12-05
+url: https://www.xiaohongshu.com/search_result/69327b10000000000d00db68?xsec_token=AB7K7nsBRxn9OGsgNbMD75aemF8sEPojYm3gsBAxvqgUQ=&xsec_source=
+imageUrl: 附件/69327b10000000000d00db68/69327b10000000000d00db68_1.jpg
 createTime: 2026-07-28T14:49:58
-status: 已采集
+status: 已看完
 todo_generated: 2026-07-28 17:04:13
 note_generated: 2026-07-29 08:15:05
 ---

@@ -1,14 +1,23 @@
 ---
-tags: ["宝妈重回职场", "裸辞的生活", "斩获offer的秘诀", "收到offer", "宝妈重启人生", "我的找工作日记", "面试技巧", "一边工作一边带娃", "工作与孩子"]
-title: "34岁全职妈妈终于接到了第一份offer！"
-query: "求职渠道"
-source: "多篇采集"
+tags:
+  - 宝妈重回职场
+  - 裸辞的生活
+  - 斩获offer的秘诀
+  - 收到offer
+  - 宝妈重启人生
+  - 我的找工作日记
+  - 面试技巧
+  - 一边工作一边带娃
+  - 工作与孩子
+title: 34岁全职妈妈终于接到了第一份offer！
+query: 求职渠道
+source: 多篇采集
 likes: 1
-publishedAt: "2025-05-11"
-url: "https://www.xiaohongshu.com/search_result/6820307d000000002301ff60?xsec_token=ABdd6VXAJd3Eso5_YMPykYgPdEbVB0gkOY2Jfy-mYl8Uk=&xsec_source="
-imageUrl: "附件/6820307d000000002301ff60/6820307d000000002301ff60_1.jpg"
+publishedAt: 2025-05-11
+url: https://www.xiaohongshu.com/search_result/6820307d000000002301ff60?xsec_token=ABdd6VXAJd3Eso5_YMPykYgPdEbVB0gkOY2Jfy-mYl8Uk=&xsec_source=
+imageUrl: 附件/6820307d000000002301ff60/6820307d000000002301ff60_1.jpg
 createTime: 2026-07-28T14:51:11
-status: 已采集
+status: 已看完
 todo_generated: 2026-07-28 17:04:13
 note_generated: 2026-07-29 07:44:27
 ---

@@ -1,14 +1,19 @@
 ---
-tags: ["计算机", "找工作", "程序员", "应届生求职", "求职干货"]
-title: "过来人再强调一次：计算机好工作不在boss上"
-query: "求职渠道"
-source: "多篇采集"
+tags:
+  - 计算机
+  - 找工作
+  - 程序员
+  - 应届生求职
+  - 求职干货
+title: 过来人再强调一次：计算机好工作不在boss上
+query: 求职渠道
+source: 多篇采集
 likes: 67
-publishedAt: "2025-11-04"
-url: "https://www.xiaohongshu.com/search_result/690a0a0b0000000004011666?xsec_token=ABo6nA4Cz_RqkGLIm9h-dcXgkgGZltIaiv7U5dX6kVsp8=&xsec_source="
-imageUrl: "附件/690a0a0b0000000004011666/690a0a0b0000000004011666_1.jpg"
+publishedAt: 2025-11-04
+url: https://www.xiaohongshu.com/search_result/690a0a0b0000000004011666?xsec_token=ABo6nA4Cz_RqkGLIm9h-dcXgkgGZltIaiv7U5dX6kVsp8=&xsec_source=
+imageUrl: 附件/690a0a0b0000000004011666/690a0a0b0000000004011666_1.jpg
 createTime: 2026-07-28T14:40:30
-status: 已采集
+status: 已看完
 todo_generated: 2026-07-28 17:04:13
 note_generated: 2026-07-29 07:59:50
 ---

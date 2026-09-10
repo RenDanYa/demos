@@ -1,14 +1,14 @@
 ---
 tags: []
-title: "找工作信息差‼求职一周狂揽上百offer"
-query: "求职渠道"
-source: "多篇采集"
+title: 找工作信息差‼求职一周狂揽上百offer
+query: 求职渠道
+source: 多篇采集
 likes: 16
-publishedAt: "2025-07-14"
-url: "https://www.xiaohongshu.com/search_result/6874d3f300000000120158fc?xsec_token=AB0F_yJdfJu3NJinNYM1dqeKKw63LR4HX_xnfcZmizglQ=&xsec_source="
-imageUrl: "附件/6874d3f300000000120158fc/6874d3f300000000120158fc_1.jpg"
+publishedAt: 2025-07-14
+url: https://www.xiaohongshu.com/search_result/6874d3f300000000120158fc?xsec_token=AB0F_yJdfJu3NJinNYM1dqeKKw63LR4HX_xnfcZmizglQ=&xsec_source=
+imageUrl: 附件/6874d3f300000000120158fc/6874d3f300000000120158fc_1.jpg
 createTime: 2026-07-28T14:36:38
-status: 已采集
+status: 已看完
 todo_generated: 2026-07-28T16:42:12
 note_generated: 2026-07-29 08:14:29
 ---

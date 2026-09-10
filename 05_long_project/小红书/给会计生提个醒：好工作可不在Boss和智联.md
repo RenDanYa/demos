@@ -1,14 +1,18 @@
 ---
-tags: ["会计求职", "应届生求职", "会计应届生", "会计找工作"]
-title: "给会计生提个醒：好工作可不在Boss和智联"
-query: "求职渠道"
-source: "多篇采集"
+tags:
+  - 会计求职
+  - 应届生求职
+  - 会计应届生
+  - 会计找工作
+title: 给会计生提个醒：好工作可不在Boss和智联
+query: 求职渠道
+source: 多篇采集
 likes: 0
-publishedAt: "编辑于 昨天 15:06 贵州"
-url: "https://www.xiaohongshu.com/search_result/6a5737c0000000002101b0c7?xsec_token=AB4KoC3wz7E9SPvXwn__fSwjFcn4w33kuGWzfozlXTwo0=&xsec_source="
-imageUrl: "附件/6a5737c0000000002101b0c7/6a5737c0000000002101b0c7_1.jpg"
+publishedAt: 编辑于 昨天 15:06 贵州
+url: https://www.xiaohongshu.com/search_result/6a5737c0000000002101b0c7?xsec_token=AB4KoC3wz7E9SPvXwn__fSwjFcn4w33kuGWzfozlXTwo0=&xsec_source=
+imageUrl: 附件/6a5737c0000000002101b0c7/6a5737c0000000002101b0c7_1.jpg
 createTime: 2026-07-28T14:48:37
-status: 已采集
+status: 已看完
 todo_generated: 2026-07-28 17:04:13
 note_generated: 2026-07-29 08:15:13
 ---

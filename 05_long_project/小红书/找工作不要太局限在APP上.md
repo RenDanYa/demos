@@ -1,14 +1,26 @@
 ---
-tags: ["互联网大厂", "找工作", "外企", "就业", "职场新出路", "拓宽就业选择", "找工作啊找工作", "裸辞", "重启人生", "工作", "找工作别走弯路", "offer先生社招版"]
-title: "找工作不要太局限在APP上"
-query: "求职渠道"
-source: "多篇采集"
+tags:
+  - 互联网大厂
+  - 找工作
+  - 外企
+  - 就业
+  - 职场新出路
+  - 拓宽就业选择
+  - 找工作啊找工作
+  - 裸辞
+  - 重启人生
+  - 工作
+  - 找工作别走弯路
+  - offer先生社招版
+title: 找工作不要太局限在APP上
+query: 求职渠道
+source: 多篇采集
 likes: 1
-publishedAt: "2025-05-19"
-url: "https://www.xiaohongshu.com/search_result/682b4a200000000022024d30?xsec_token=AB4IHW5PRWrucAqmX3kBTblto9Zv3bqN7mFZzQ-vzj-rI=&xsec_source="
-imageUrl: "附件/682b4a200000000022024d30/682b4a200000000022024d30_1.jpg"
+publishedAt: 2025-05-19
+url: https://www.xiaohongshu.com/search_result/682b4a200000000022024d30?xsec_token=AB4IHW5PRWrucAqmX3kBTblto9Zv3bqN7mFZzQ-vzj-rI=&xsec_source=
+imageUrl: 附件/682b4a200000000022024d30/682b4a200000000022024d30_1.jpg
 createTime: 2026-07-28T14:39:13
-status: 已采集
+status: 已看完
 todo_generated: 2026-07-28T16:42:12
 note_generated: 2026-07-29 08:14:29
 ---

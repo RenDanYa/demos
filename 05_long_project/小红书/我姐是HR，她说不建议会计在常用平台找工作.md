@@ -1,14 +1,20 @@
 ---
-tags: ["会计", "财务", "会计实操", "会计工作", "财务会计", "会计发展前景"]
-title: "我姐是HR，她说不建议会计在常用平台找工作"
-query: "求职渠道"
-source: "多篇采集"
+tags:
+  - 会计
+  - 财务
+  - 会计实操
+  - 会计工作
+  - 财务会计
+  - 会计发展前景
+title: 我姐是HR，她说不建议会计在常用平台找工作
+query: 求职渠道
+source: 多篇采集
 likes: 2
-publishedAt: "05-22"
-url: "https://www.xiaohongshu.com/search_result/6a0fce01000000003701d140?xsec_token=AB3glrOoyweK6PA6uFzxxfm9q2JaFtKtLogrKHEV5c_5A=&xsec_source="
-imageUrl: "附件/6a0fce01000000003701d140/6a0fce01000000003701d140_1.jpg"
+publishedAt: 05-22
+url: https://www.xiaohongshu.com/search_result/6a0fce01000000003701d140?xsec_token=AB3glrOoyweK6PA6uFzxxfm9q2JaFtKtLogrKHEV5c_5A=&xsec_source=
+imageUrl: 附件/6a0fce01000000003701d140/6a0fce01000000003701d140_1.jpg
 createTime: 2026-07-28T14:50:23
-status: 已采集
+status: 已看完
 todo_generated: 2026-07-28 17:04:13
 note_generated: 2026-07-29 08:14:29
 ---

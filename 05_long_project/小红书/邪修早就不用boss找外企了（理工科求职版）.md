@@ -1,14 +1,19 @@
 ---
-tags: ["理工科求职", "外企求职", "留学生回国", "留学生就业", "回国求职"]
-title: "邪修早就不用boss找外企了（理工科求职版）"
-query: "求职渠道"
-source: "多篇采集"
+tags:
+  - 理工科求职
+  - 外企求职
+  - 留学生回国
+  - 留学生就业
+  - 回国求职
+title: 邪修早就不用boss找外企了（理工科求职版）
+query: 求职渠道
+source: 多篇采集
 likes: 12
-publishedAt: "2025-11-04"
-url: "https://www.xiaohongshu.com/search_result/6909c20100000000030125d9?xsec_token=AB1x5FaPLTXCDHkHA-yBO0FXicoKZN6dZ3KeXHPkSPY_w=&xsec_source="
-imageUrl: "附件/6909c20100000000030125d9/6909c20100000000030125d9_1.jpg"
+publishedAt: 2025-11-04
+url: https://www.xiaohongshu.com/search_result/6909c20100000000030125d9?xsec_token=AB1x5FaPLTXCDHkHA-yBO0FXicoKZN6dZ3KeXHPkSPY_w=&xsec_source=
+imageUrl: 附件/6909c20100000000030125d9/6909c20100000000030125d9_1.jpg
 createTime: 2026-07-28T14:43:17
-status: 已采集
+status: 已看完
 todo_generated: 2026-07-28 17:04:13
 note_generated: 2026-07-29 08:15:13
 ---
